@@ -1,1043 +1,567 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+// ===============================
+// NAVIGASI HALAMAN
+// ===============================
+
+const pages = document.querySelectorAll(".page");
+const navButtons = document.querySelectorAll(".nav-btn");
+
+const pageProgress = {
+    beranda: "1 / 4",
+    materi: "2 / 4",
+    contoh: "3 / 4",
+    kuis: "4 / 4"
+};
+
+
+function showPage(pageId, button) {
+
+    // Sembunyikan semua halaman
+    pages.forEach(function(page) {
+        page.classList.remove("active-page");
+    });
+
+
+    // Tampilkan halaman yang dipilih
+    document
+        .getElementById(pageId)
+        .classList
+        .add("active-page");
+
+
+    // Hapus status aktif navigasi
+    navButtons.forEach(function(btn) {
+        btn.classList.remove("active");
+    });
+
+
+    // Tambahkan status aktif
+    if (button) {
+        button.classList.add("active");
+    }
+
+
+    // Ubah progress
+    document.getElementById("progressText").textContent =
+        pageProgress[pageId];
+
+
+    // Scroll ke atas
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
 }
 
-:root {
-    --primary: #4f46e5;
-    --primary-dark: #3730a3;
-    --secondary: #06b6d4;
-    --background: #f4f7ff;
-    --card: #ffffff;
-    --text: #1e293b;
-    --muted: #64748b;
-    --success: #16a34a;
-    --danger: #dc2626;
-    --warning: #f59e0b;
-    --border: #e2e8f0;
-}
 
-body {
-    font-family: "Nunito", sans-serif;
-    background:
-        radial-gradient(
-            circle at top left,
-            #dbeafe,
-            transparent 35%
-        ),
-        var(--background);
 
-    color: var(--text);
+// ===============================
+// TOMBOL MULAI BELAJAR
+// ===============================
 
-    min-height: 100vh;
+function goMateri() {
+
+    const materiButton = document.querySelectorAll(".nav-btn")[1];
+
+    showPage(
+        "materi",
+        materiButton
+    );
+
 }
 
 
-/* ================= APP ================= */
 
-.app {
-    width: 100%;
-    max-width: 600px;
-    margin: auto;
-    padding-bottom: 30px;
+// ===============================
+// DATA KUIS
+// ===============================
+
+const questions = [
+
+    {
+        question:
+            "Apa nama jarak dari titik tengah lingkaran ke tepi lingkaran?",
+
+        options: [
+            "Diameter",
+            "Jari-jari",
+            "Keliling",
+            "Luas"
+        ],
+
+        answer: 1
+    },
+
+
+    {
+        question:
+            "Sebuah lingkaran memiliki jari-jari 7 cm. Berapakah diameternya?",
+
+        options: [
+            "7 cm",
+            "9 cm",
+            "14 cm",
+            "21 cm"
+        ],
+
+        answer: 2
+    },
+
+
+    {
+        question:
+            "Rumus keliling lingkaran adalah...",
+
+        options: [
+            "L = π × r × r",
+            "K = 2 × π × r",
+            "d = π × r",
+            "r = 2 × d"
+        ],
+
+        answer: 1
+    },
+
+
+    {
+        question:
+            "Sebuah lingkaran memiliki jari-jari 7 cm. Berapakah kelilingnya? Gunakan π = 22/7.",
+
+        options: [
+            "22 cm",
+            "44 cm",
+            "77 cm",
+            "154 cm"
+        ],
+
+        answer: 1
+    },
+
+
+    {
+        question:
+            "Sebuah lingkaran memiliki jari-jari 7 cm. Berapakah luasnya? Gunakan π = 22/7.",
+
+        options: [
+            "44 cm²",
+            "77 cm²",
+            "154 cm²",
+            "308 cm²"
+        ],
+
+        answer: 2
+    }
+
+];
+
+
+
+// ===============================
+// VARIABEL KUIS
+// ===============================
+
+let currentQuestion = 0;
+
+let score = 0;
+
+let answered = false;
+
+
+
+// ===============================
+// MULAI KUIS
+// ===============================
+
+function startQuiz() {
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    answered = false;
+
+
+    document
+        .getElementById("quizStart")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("resultContainer")
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById("quizContainer")
+        .classList
+        .remove("hidden");
+
+
+    showQuestion();
+
 }
 
 
-/* ================= HEADER ================= */
 
-.header {
-    padding: 28px 20px 22px;
+// ===============================
+// TAMPILKAN SOAL
+// ===============================
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--primary),
-            var(--secondary)
+function showQuestion() {
+
+    answered = false;
+
+
+    const question =
+        questions[currentQuestion];
+
+
+    document
+        .getElementById("questionNumber")
+        .textContent =
+        "Soal " +
+        (currentQuestion + 1) +
+        " dari " +
+        questions.length;
+
+
+    document
+        .getElementById("questionText")
+        .textContent =
+        question.question;
+
+
+    document
+        .getElementById("score")
+        .textContent =
+        score;
+
+
+    const optionsContainer =
+        document.getElementById(
+            "optionsContainer"
         );
 
-    color: white;
 
-    border-radius:
-        0 0 30px 30px;
+    optionsContainer.innerHTML = "";
 
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
 
-    gap: 15px;
+    question.options.forEach(
+        function(option, index) {
 
-    box-shadow:
-        0 8px 30px rgba(79, 70, 229, 0.25);
-}
+            const button =
+                document.createElement("button");
 
-.kelas {
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 1px;
 
-    opacity: 0.8;
+            button.classList.add(
+                "option"
+            );
 
-    margin-bottom: 5px;
-}
 
-.header h1 {
-    font-size: 30px;
-    font-weight: 900;
-}
+            button.textContent =
+                option;
 
-.subtitle {
-    font-size: 14px;
 
-    margin-top: 5px;
+            button.onclick =
+                function() {
 
-    opacity: 0.9;
-}
+                    selectAnswer(
+                        index,
+                        button
+                    );
 
-.progress-box {
-    background: rgba(255, 255, 255, 0.2);
+                };
 
-    padding: 10px 12px;
 
-    border-radius: 15px;
+            optionsContainer.appendChild(
+                button
+            );
 
-    font-weight: 800;
-    font-size: 13px;
+        }
+    );
 
-    backdrop-filter: blur(8px);
-}
 
+    // Reset feedback
 
-/* ================= NAVIGATION ================= */
-
-.navigation {
-    display: flex;
-
-    justify-content: space-around;
-
-    gap: 5px;
-
-    padding: 15px;
-
-    background: white;
-
-    margin: -5px 15px 20px;
-
-    border-radius: 20px;
-
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.08);
-
-    position: sticky;
-    top: 10px;
-
-    z-index: 100;
-}
-
-.nav-btn {
-    border: none;
-
-    background: transparent;
-
-    padding: 10px 8px;
-
-    border-radius: 14px;
-
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-
-    gap: 4px;
-
-    cursor: pointer;
-
-    color: var(--muted);
-
-    font-family: inherit;
-
-    font-size: 11px;
-
-    transition: 0.3s;
-
-    flex: 1;
-}
-
-.nav-btn:hover {
-    background: #eef2ff;
-}
-
-.nav-btn.active {
-    background: var(--primary);
-
-    color: white;
-
-    box-shadow:
-        0 5px 15px rgba(79, 70, 229, 0.3);
-}
-
-
-/* ================= PAGE ================= */
-
-.page {
-    display: none;
-
-    padding: 0 15px;
-
-    animation: fade 0.4s ease;
-}
-
-.active-page {
-    display: block;
-}
-
-@keyframes fade {
-
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-}
-
-
-/* ================= HERO ================= */
-
-.hero-card {
-    background: white;
-
-    border-radius: 25px;
-
-    padding: 30px 20px;
-
-    text-align: center;
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.06);
-
-    margin-bottom: 20px;
-}
-
-.hero-card h2 {
-    font-size: 23px;
-
-    margin-bottom: 10px;
-}
-
-.hero-card p {
-    color: var(--muted);
-
-    line-height: 1.6;
-
-    margin-bottom: 20px;
-}
-
-
-/* ================= BUTTON ================= */
-
-.primary-btn {
-    border: none;
-
-    width: 100%;
-
-    padding: 15px;
-
-    border-radius: 15px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--primary),
-            var(--secondary)
+    const feedback =
+        document.getElementById(
+            "feedback"
         );
 
-    color: white;
 
-    font-family: inherit;
+    feedback.className =
+        "feedback";
 
-    font-size: 16px;
 
-    font-weight: 800;
+    feedback.textContent =
+        "";
 
-    cursor: pointer;
 
-    transition: 0.3s;
+    // Sembunyikan tombol berikutnya
 
-    box-shadow:
-        0 7px 20px rgba(79, 70, 229, 0.25);
-}
+    document
+        .getElementById(
+            "nextButton"
+        )
+        .classList
+        .add("hidden");
 
-.primary-btn:hover {
-    transform: translateY(-2px);
-}
-
-.primary-btn:active {
-    transform: scale(0.98);
 }
 
 
-/* ================= CIRCLE ANIMATION ================= */
 
-.circle-animation {
-    display: flex;
+// ===============================
+// PILIH JAWABAN
+// ===============================
 
-    justify-content: center;
+function selectAnswer(
+    selectedIndex,
+    selectedButton
+) {
 
-    margin-bottom: 25px;
-}
+    if (answered) {
+        return;
+    }
 
-.circle {
-    width: 160px;
-    height: 160px;
 
-    border-radius: 50%;
+    answered = true;
 
-    background:
-        linear-gradient(
-            135deg,
-            #6366f1,
-            #22d3ee
+
+    const correctAnswer =
+        questions[currentQuestion]
+        .answer;
+
+
+    const optionButtons =
+        document.querySelectorAll(
+            ".option"
         );
 
-    position: relative;
 
-    box-shadow:
-        0 15px 35px rgba(79, 70, 229, 0.3);
+    optionButtons.forEach(
+        function(button, index) {
 
-    animation: floating 3s ease-in-out infinite;
-}
+            button.disabled = true;
 
-@keyframes floating {
 
-    0% {
-        transform: translateY(0);
-    }
+            if (index === correctAnswer) {
 
-    50% {
-        transform: translateY(-10px);
-    }
+                button.classList.add(
+                    "correct"
+                );
 
-    100% {
-        transform: translateY(0);
-    }
+            }
 
-}
 
-.radius-line {
-    position: absolute;
+            if (
+                index === selectedIndex &&
+                index !== correctAnswer
+            ) {
 
-    width: 70px;
-    height: 3px;
+                button.classList.add(
+                    "wrong"
+                );
 
-    background: white;
+            }
 
-    top: 50%;
-    left: 50%;
+        }
+    );
 
-    transform-origin: left;
-}
 
-.r-label {
-    position: absolute;
-
-    top: 42%;
-    right: 35px;
-
-    color: white;
-
-    font-size: 22px;
-
-    font-weight: 900;
-}
-
-
-/* ================= INFO GRID ================= */
-
-.info-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 10px;
-}
-
-.info-card {
-    background: white;
-
-    padding: 15px 10px;
-
-    border-radius: 18px;
-
-    text-align: center;
-
-    box-shadow:
-        0 5px 20px rgba(0, 0, 0, 0.05);
-}
-
-.icon {
-    font-size: 28px;
-
-    margin-bottom: 8px;
-}
-
-.info-card h3 {
-    font-size: 13px;
-
-    margin-bottom: 5px;
-}
-
-.info-card p {
-    font-size: 11px;
-
-    color: var(--muted);
-
-    line-height: 1.4;
-}
-
-
-/* ================= SECTION TITLE ================= */
-
-.section-title {
-    display: flex;
-
-    gap: 12px;
-
-    align-items: center;
-
-    margin-bottom: 18px;
-}
-
-.section-title span {
-    font-size: 32px;
-}
-
-.section-title h2 {
-    font-size: 22px;
-}
-
-.section-title p {
-    color: var(--muted);
-
-    font-size: 13px;
-
-    margin-top: 3px;
-}
-
-
-/* ================= CARD ================= */
-
-.card,
-.example-card,
-.tips-card {
-    background: white;
-
-    padding: 20px;
-
-    border-radius: 22px;
-
-    margin-bottom: 18px;
-
-    box-shadow:
-        0 7px 25px rgba(0, 0, 0, 0.05);
-}
-
-.card h3 {
-    margin-bottom: 15px;
-
-    font-size: 18px;
-}
-
-
-/* ================= DIAGRAM ================= */
-
-.diagram-container {
-    display: flex;
-
-    justify-content: center;
-
-    padding: 20px 0;
-}
-
-.circle-diagram {
-    width: 190px;
-    height: 190px;
-
-    border-radius: 50%;
-
-    border: 5px solid var(--primary);
-
-    position: relative;
-
-    background:
-        rgba(99, 102, 241, 0.08);
-}
-
-.center-dot {
-    position: absolute;
-
-    width: 12px;
-    height: 12px;
-
-    background: var(--danger);
-
-    border-radius: 50%;
-
-    top: 50%;
-    left: 50%;
-
-    transform:
-        translate(-50%, -50%);
-}
-
-.radius-diagram {
-    position: absolute;
-
-    width: 92px;
-    height: 3px;
-
-    background: var(--danger);
-
-    top: 50%;
-    left: 50%;
-}
-
-.diameter-diagram {
-    position: absolute;
-
-    width: 180px;
-    height: 3px;
-
-    background: var(--secondary);
-
-    top: 50%;
-    left: 0;
-}
-
-
-/* ================= FORMULA LIST ================= */
-
-.formula-list {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 12px;
-}
-
-.formula-item {
-    display: flex;
-
-    gap: 12px;
-
-    align-items: center;
-
-    padding: 12px;
-
-    background: #f8fafc;
-
-    border-radius: 15px;
-}
-
-.formula-badge {
-    min-width: 40px;
-    height: 40px;
-
-    border-radius: 50%;
-
-    background: var(--primary);
-
-    color: white;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 18px;
-
-    font-weight: 900;
-}
-
-.formula-item p {
-    color: var(--muted);
-
-    font-size: 13px;
-
-    margin-top: 3px;
-}
-
-
-/* ================= TOPIC ================= */
-
-.topic-card p {
-    color: var(--muted);
-
-    line-height: 1.6;
-
-    margin-bottom: 15px;
-}
-
-.topic-icon {
-    font-size: 35px;
-
-    margin-bottom: 8px;
-}
-
-
-/* ================= FORMULA ================= */
-
-.formula-box {
-    padding: 20px;
-
-    border-radius: 18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #eef2ff,
-            #ecfeff
+    const feedback =
+        document.getElementById(
+            "feedback"
         );
 
-    text-align: center;
 
-    margin-top: 15px;
-}
-
-.formula-title {
-    display: block;
-
-    color: var(--muted);
-
-    font-size: 13px;
-
-    margin-bottom: 10px;
-}
-
-.formula {
-    font-size: 23px;
-
-    font-weight: 900;
-
-    color: var(--primary);
-}
-
-.alternative {
-    margin: 10px 0;
-
-    font-size: 12px;
-}
+    feedback.classList.add(
+        "show"
+    );
 
 
-/* ================= RUMUS INFO ================= */
+    if (
+        selectedIndex === correctAnswer
+    ) {
 
-.rumus-info {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap: 10px;
-
-    margin-top: 15px;
-}
-
-.rumus-info div {
-    background: #f8fafc;
-
-    padding: 12px;
-
-    border-radius: 14px;
-}
-
-.rumus-info strong {
-    display: block;
-
-    font-size: 18px;
-
-    color: var(--primary);
-}
-
-.rumus-info span {
-    font-size: 11px;
-
-    color: var(--muted);
-}
+        score += 20;
 
 
-/* ================= NOTE ================= */
-
-.note {
-    margin-top: 15px;
-
-    background: #fef3c7;
-
-    padding: 12px;
-
-    border-radius: 12px;
-
-    font-size: 13px;
-
-    color: #92400e;
-}
+        feedback.textContent =
+            "🎉 Benar! Hebat sekali!";
 
 
-/* ================= TIPS ================= */
-
-.tips-card {
-    background:
-        linear-gradient(
-            135deg,
-            #fefce8,
-            #fff7ed
+        feedback.classList.add(
+            "correct-feedback"
         );
-}
 
-.tips-card h3 {
-    margin-bottom: 15px;
-}
+    } else {
 
-.tips-item {
-    padding: 12px;
+        feedback.textContent =
+            "❌ Jawaban belum tepat. Jangan menyerah, coba pelajari lagi!";
 
-    background: rgba(255, 255, 255, 0.7);
 
-    border-radius: 12px;
+        feedback.classList.add(
+            "wrong-feedback"
+        );
 
-    margin-bottom: 10px;
-}
-
-.tips-item p {
-    color: var(--muted);
-
-    font-size: 13px;
-
-    margin-top: 4px;
-}
-
-
-/* ================= EXAMPLE ================= */
-
-.example-number {
-    display: inline-block;
-
-    background: var(--primary);
-
-    color: white;
-
-    padding: 6px 12px;
-
-    border-radius: 20px;
-
-    font-size: 12px;
-
-    font-weight: 800;
-
-    margin-bottom: 12px;
-}
-
-.example-card h3 {
-    margin-bottom: 10px;
-}
-
-.question {
-    background: #f8fafc;
-
-    padding: 14px;
-
-    border-radius: 14px;
-
-    line-height: 1.6;
-
-    margin-bottom: 15px;
-}
-
-.solution {
-    font-size: 14px;
-
-    line-height: 1.9;
-}
-
-.answer {
-    margin-top: 15px;
-
-    padding: 14px;
-
-    background: #dcfce7;
-
-    border-radius: 12px;
-
-    color: #166534;
-}
-
-
-/* ================= QUIZ ================= */
-
-.quiz-start,
-.result-container {
-    background: white;
-
-    padding: 35px 25px;
-
-    border-radius: 25px;
-
-    text-align: center;
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.06);
-}
-
-.quiz-icon,
-.result-icon {
-    font-size: 60px;
-
-    margin-bottom: 15px;
-}
-
-.quiz-start h2,
-.result-container h2 {
-    margin-bottom: 10px;
-}
-
-.quiz-start p,
-.result-container p {
-    color: var(--muted);
-
-    line-height: 1.6;
-
-    margin-bottom: 25px;
-}
-
-
-.quiz-container {
-    background: white;
-
-    padding: 20px;
-
-    border-radius: 25px;
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.06);
-}
-
-.quiz-top {
-    display: flex;
-
-    justify-content: space-between;
-
-    gap: 10px;
-
-    margin-bottom: 25px;
-}
-
-#questionNumber {
-    color: var(--primary);
-
-    font-weight: 800;
-
-    font-size: 13px;
-}
-
-#questionText {
-    margin-top: 5px;
-
-    font-size: 20px;
-
-    line-height: 1.4;
-}
-
-.score-display {
-    background: #fef3c7;
-
-    padding: 8px 12px;
-
-    border-radius: 12px;
-
-    height: fit-content;
-
-    font-weight: 800;
-}
-
-
-/* ================= OPTIONS ================= */
-
-.options-container {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 12px;
-}
-
-.option {
-    width: 100%;
-
-    border: 2px solid var(--border);
-
-    background: white;
-
-    padding: 15px;
-
-    border-radius: 15px;
-
-    text-align: left;
-
-    font-family: inherit;
-
-    font-size: 15px;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition: 0.25s;
-}
-
-.option:hover {
-    border-color: var(--primary);
-
-    background: #eef2ff;
-}
-
-.option.correct {
-    background: #dcfce7;
-
-    border-color: var(--success);
-
-    color: #166534;
-}
-
-.option.wrong {
-    background: #fee2e2;
-
-    border-color: var(--danger);
-
-    color: #991b1b;
-}
-
-.option:disabled {
-    cursor: default;
-}
-
-
-/* ================= FEEDBACK ================= */
-
-.feedback {
-    margin-top: 15px;
-
-    padding: 13px;
-
-    border-radius: 12px;
-
-    font-weight: 700;
-
-    text-align: center;
-
-    display: none;
-}
-
-.feedback.show {
-    display: block;
-}
-
-.feedback.correct-feedback {
-    background: #dcfce7;
-
-    color: #166534;
-}
-
-.feedback.wrong-feedback {
-    background: #fee2e2;
-
-    color: #991b1b;
-}
-
-.next-btn {
-    margin-top: 15px;
-}
-
-
-/* ================= RESULT ================= */
-
-.final-score {
-    font-size: 55px;
-
-    font-weight: 900;
-
-    color: var(--primary);
-
-    margin: 15px 0;
-}
-
-.final-score small {
-    font-size: 20px;
-
-    color: var(--muted);
-}
-
-
-/* ================= FOOTER ================= */
-
-footer {
-    text-align: center;
-
-    margin-top: 25px;
-
-    padding: 15px;
-
-    color: var(--muted);
-
-    font-size: 11px;
-
-    line-height: 1.7;
-}
-
-
-/* ================= UTILITY ================= */
-
-.hidden {
-    display: none !important;
-}
-
-
-/* ================= DESKTOP ================= */
-
-@media (min-width: 700px) {
-
-    body {
-        padding: 20px 0;
     }
 
-    .app {
-        background: transparent;
+
+    document
+        .getElementById("score")
+        .textContent =
+        score;
+
+
+    document
+        .getElementById(
+            "nextButton"
+        )
+        .classList
+        .remove("hidden");
+
+
+    // Ubah tulisan tombol terakhir
+
+    if (
+        currentQuestion ===
+        questions.length - 1
+    ) {
+
+        document
+            .getElementById(
+                "nextButton"
+            )
+            .textContent =
+            "Lihat Hasil 🏆";
+
     }
 
 }
 
 
-/* ================= MOBILE KECIL ================= */
 
-@media (max-width: 360px) {
+// ===============================
+// SOAL BERIKUTNYA
+// ===============================
 
-    .header h1 {
-        font-size: 25px;
-    }
+function nextQuestion() {
 
-    .info-grid {
-        grid-template-columns: 1fr;
-    }
+    currentQuestion++;
 
-    .navigation {
-        padding: 10px 5px;
-    }
 
-    .nav-btn {
-        font-size: 10px;
+    if (
+        currentQuestion <
+        questions.length
+    ) {
+
+        showQuestion();
+
+    } else {
+
+        showResult();
+
     }
 
 }
+
+
+
+// ===============================
+// HASIL KUIS
+// ===============================
+
+function showResult() {
+
+    document
+        .getElementById(
+            "quizContainer"
+        )
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById(
+            "resultContainer"
+        )
+        .classList
+        .remove("hidden");
+
+
+    document
+        .getElementById(
+            "finalScore"
+        )
+        .textContent =
+        score;
+
+
+    const resultMessage =
+        document.getElementById(
+            "resultMessage"
+        );
+
+
+    if (score === 100) {
+
+        resultMessage.textContent =
+            "🎉 Luar biasa! Kamu sudah sangat memahami materi lingkaran!";
+
+    } else if (score >= 80) {
+
+        resultMessage.textContent =
+            "👏 Hebat! Pemahamanmu tentang lingkaran sudah sangat baik.";
+
+    } else if (score >= 60) {
+
+        resultMessage.textContent =
+            "👍 Bagus! Tetap belajar agar semakin memahami lingkaran.";
+
+    } else {
+
+        resultMessage.textContent =
+            "💪 Jangan menyerah! Yuk pelajari kembali materi dan coba lagi.";
+
+    }
+
+}
+
+
+
+// ===============================
+// ULANGI KUIS
+// ===============================
+
+function restartQuiz() {
+
+    document
+        .getElementById(
+            "resultContainer"
+        )
+        .classList
+        .add("hidden");
+
+
+    document
+        .getElementById(
+            "quizStart"
+        )
+        .classList
+        .remove("hidden");
+
+
+    score = 0;
+
+    currentQuestion = 0;
+
+    document
+        .getElementById(
+            "score"
+        )
+        .textContent =
+        "0";
+
+                }
