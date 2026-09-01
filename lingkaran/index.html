@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>MPI Keliling dan Luas Lingkaran SD</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div class="brand">
+            <div class="logo">π</div>
+
+            <div>
+                <h1>Keliling & Luas Lingkaran</h1>
+                <p>MPI Matematika SD • PID / IFP</p>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress">
+                <div id="progressBar"></div>
+            </div>
+        </div>
+
+    </header>
+
+
+    <!-- KONTEN -->
+    <main id="mainContent">
+
+
+        <!-- SLIDE 1 -->
+        <section class="slide active">
+
+            <div class="hero">
+
+                <div class="card">
+
+                    <span class="badge">
+                        MATEMATIKA SD
+                    </span>
+
+                    <h2>
+                        Lingkaran di Sekitar Kita
+                    </h2>
+
+                    <p>
+                        Yuk belajar mengenal lingkaran,
+                        menghitung keliling, dan menghitung
+                        luas lingkaran.
+                    </p>
+
+                    <p>
+                        🎯 <b>Tujuan Pembelajaran</b>
+                    </p>
+
+                    <ul>
+                        <li>Mengenal jari-jari dan diameter.</li>
+                        <li>Menghitung keliling lingkaran.</li>
+                        <li>Menghitung luas lingkaran.</li>
+                        <li>Menyelesaikan soal melalui kuis 2 tim.</li>
+                    </ul>
+
+                    <button class="btn"
+                            onclick="goToSlide(1)">
+                        ▶ Mulai Belajar
+                    </button>
+
+                </div>
+
+
+                <div class="card circle-card">
+
+                    <div class="big-circle">
+
+                        <span class="radius-line"></span>
+
+                        <span class="radius-label">
+                            r
+                        </span>
+
+                    </div>
+
+                    <p>
+                        <b>r = jari-jari</b>
+                    </p>
+
+                    <p>
+                        Jarak dari titik pusat
+                        ke tepi lingkaran.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SLIDE 2 -->
+        <section class="slide">
+
+            <h2 class="section-title">
+                🔵 Mengenal Bagian Lingkaran
+            </h2>
+
+            <div class="grid-3">
+
+                <div class="card">
+
+                    <div class="icon">
+                        🎯
+                    </div>
+
+                    <h3>Titik Pusat</h3>
+
+                    <p>
+                        Titik yang berada tepat
+                        di tengah lingkaran.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="icon">
+                        📏
+                    </div>
+
+                    <h3>Jari-jari (r)</h3>
+
+                    <p>
+                        Jarak dari titik pusat
+                        menuju tepi lingkaran.
+                    </p>
+
+                    <div class="formula">
+                        r = ½ × d
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="icon">
+                        📐
+                    </div>
+
+                    <h3>Diameter (d)</h3>
+
+                    <p>
+                        Garis yang melewati titik pusat
+                        dan menghubungkan dua titik
+                        pada lingkaran.
+                    </p>
+
+                    <div class="formula">
+                        d = 2 × r
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                💡 <b>Contoh:</b>
+
+                Jika diameter sebuah lingkaran
+                adalah 20 cm, maka:
+
+                <strong>
+                    r = 20 ÷ 2 = 10 cm
+                </strong>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SLIDE 3 -->
+        <section class="slide">
+
+            <h2 class="section-title">
+                📏 Keliling Lingkaran
+            </h2>
+
+            <div class="content-card card">
+
+                <p>
+                    Keliling adalah panjang garis
+                    yang mengelilingi lingkaran.
+                </p>
+
+                <div class="formula large">
+                    K = 2 × π × r
+                </div>
+
+                <p>
+                    atau
+                </p>
+
+                <div class="formula large">
+                    K = π × d
+                </div>
+
+
+                <div class="note-box">
+
+                    Gunakan:
+
+                    <br><br>
+
+                    <b>π = 22/7</b>
+                    jika r atau d sesuai untuk
+                    menggunakan 22/7.
+
+                    <br><br>
+
+                    <b>π = 3,14</b>
+                    untuk bilangan lainnya.
+
+                </div>
+
+
+                <h3>
+                    Contoh
+                </h3>
+
+                <p>
+                    Sebuah lingkaran mempunyai
+                    jari-jari 7 cm.
+                </p>
+
+                <div class="answer-box">
+
+                    K = 2 × 22/7 × 7
+
+                    <br>
+
+                    K = <b>44 cm</b>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SLIDE 4 -->
+        <section class="slide">
+
+            <h2 class="section-title">
+                🟢 Luas Lingkaran
+            </h2>
+
+            <div class="content-card card">
+
+                <p>
+                    Luas adalah ukuran seluruh
+                    daerah yang berada di dalam
+                    lingkaran.
+                </p>
+
+                <div class="formula large">
+                    L = π × r × r
+                </div>
+
+                <div class="formula large">
+                    L = πr²
+                </div>
+
+
+                <h3>
+                    Contoh
+                </h3>
+
+                <p>
+                    Diketahui:
+                </p>
+
+                <ul>
+                    <li>r = 7 cm</li>
+                    <li>π = 22/7</li>
+                </ul>
+
+
+                <div class="answer-box">
+
+                    L = 22/7 × 7 × 7
+
+                    <br>
+
+                    L = <b>154 cm²</b>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    💡 Ingat!
+
+                    <br>
+
+                    Keliling menggunakan satuan
+                    <b>cm, m, dan sebagainya</b>.
+
+                    <br>
+
+                    Luas menggunakan satuan
+                    <b>cm², m², dan sebagainya</b>.
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SLIDE 5 -->
+        <section class="slide">
+
+            <h2 class="section-title">
+                🧠 Pilih Rumus yang Tepat
+            </h2>
+
+            <div class="grid-3">
+
+                <div class="card">
+
+                    <h3>
+                        Jika diketahui diameter
+                    </h3>
+
+                    <div class="formula">
+                        K = π × d
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Jika diketahui jari-jari
+                    </h3>
+
+                    <div class="formula">
+                        K = 2 × π × r
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Untuk menghitung luas
+                    </h3>
+
+                    <div class="formula">
+                        L = π × r²
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="content-card card">
+
+                <h3>
+                    Contoh Cepat
+                </h3>
+
+                <p>
+                    Sebuah roda memiliki
+                    jari-jari 14 cm.
+                    Berapa kelilingnya?
+                </p>
+
+                <div class="answer-box">
+
+                    K = 2 × 22/7 × 14
+
+                    <br>
+
+                    <b>88 cm</b>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SLIDE 6 : KUIS -->
+        <section class="slide">
+
+            <h2 class="section-title">
+                🏆 Kuis 2 Tim
+            </h2>
+
+            <p class="quiz-instruction">
+                Adu cepat! Jawab pertanyaan secara bergantian.
+                Jawaban benar mendapatkan <b>10 poin</b>.
+            </p>
+
+
+            <div class="teams">
+
+                <div class="team team-a">
+
+                    <h3>
+                        🔵 TIM A
+                    </h3>
+
+                    <div id="scoreA"
+                         class="score">
+                        0
+                    </div>
+
+                    <span>
+                        Poin
+                    </span>
+
+                </div>
+
+
+                <div class="team team-b">
+
+                    <h3>
+                        🟢 TIM B
+                    </h3>
+
+                    <div id="scoreB"
+                         class="score">
+                        0
+                    </div>
+
+                    <span>
+                        Poin
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="quiz-card card">
+
+                <div id="turn"
+                     class="turn">
+                    Giliran TIM A
+                </div>
+
+
+                <div id="question"
+                     class="question">
+
+                    Tekan tombol
+                    <b>Mulai Kuis</b>
+                    untuk memulai.
+
+                </div>
+
+
+                <div id="choices"
+                     class="choices">
+                </div>
+
+
+                <div id="feedback"
+                     class="feedback">
+                </div>
+
+
+                <button id="startQuizButton"
+                        class="btn orange"
+                        onclick="startQuiz()">
+
+                    ▶ Mulai Kuis
+
+                </button>
+
+
+                <button id="nextQuestionButton"
+                        class="btn green hidden"
+                        onclick="nextQuestion()">
+
+                    Soal Berikutnya →
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- SLIDE 7 -->
+        <section class="slide">
+
+            <div class="end-card card">
+
+                <div class="trophy">
+                    🎉🏆
+                </div>
+
+                <h2>
+                    Hebat!
+                </h2>
+
+                <p>
+                    Kamu sudah belajar tentang
+                    keliling dan luas lingkaran.
+                </p>
+
+                <div class="formula">
+                    Keliling → πd atau 2πr
+                    <br><br>
+                    Luas → πr²
+                </div>
+
+                <button class="btn"
+                        onclick="goToSlide(0)">
+
+                    ↻ Belajar Lagi
+
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- NAVIGASI -->
+    <nav class="navigation">
+
+        <button class="btn gray"
+                onclick="previousSlide()">
+
+            ← Kembali
+
+        </button>
+
+
+        <div id="pageNumber"
+             class="page-number">
+
+            1 / 7
+
+        </div>
+
+
+        <button class="btn"
+                onclick="nextSlide()">
+
+            Lanjut →
+
+        </button>
+
+    </nav>
+
+</div>
+
+
+<!-- JAVASCRIPT -->
+<script src="script.js"></script>
+
+</body>
+</html>
