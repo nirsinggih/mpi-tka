@@ -1,562 +1,1043 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    <title>Belajar Lingkaran</title>
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #3730a3;
+    --secondary: #06b6d4;
+    --background: #f4f7ff;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --warning: #f59e0b;
+    --border: #e2e8f0;
+}
 
-    <link rel="stylesheet" href="style.css">
+body {
+    font-family: "Nunito", sans-serif;
+    background:
+        radial-gradient(
+            circle at top left,
+            #dbeafe,
+            transparent 35%
+        ),
+        var(--background);
 
-    <!-- Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    color: var(--text);
 
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-</head>
+    min-height: 100vh;
+}
 
-<body>
 
-    <main class="app">
+/* ================= APP ================= */
 
-        <!-- HEADER -->
-        <header class="header">
-            <div>
-                <p class="kelas">MATEMATIKA SD</p>
-                <h1>🔵 Lingkaran</h1>
-                <p class="subtitle">
-                    Belajar Keliling dan Luas Lingkaran
-                </p>
-            </div>
+.app {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    padding-bottom: 30px;
+}
 
-            <div class="progress-box">
-                <span id="progressText">1 / 4</span>
-            </div>
-        </header>
 
+/* ================= HEADER ================= */
 
-        <!-- NAVIGATION -->
-        <nav class="navigation">
+.header {
+    padding: 28px 20px 22px;
 
-            <button class="nav-btn active" onclick="showPage('beranda', this)">
-                🏠
-                <span>Beranda</span>
-            </button>
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--secondary)
+        );
 
-            <button class="nav-btn" onclick="showPage('materi', this)">
-                📚
-                <span>Materi</span>
-            </button>
+    color: white;
 
-            <button class="nav-btn" onclick="showPage('contoh', this)">
-                ✏️
-                <span>Contoh</span>
-            </button>
+    border-radius:
+        0 0 30px 30px;
 
-            <button class="nav-btn" onclick="showPage('kuis', this)">
-                🧠
-                <span>Kuis</span>
-            </button>
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 
-        </nav>
+    gap: 15px;
 
+    box-shadow:
+        0 8px 30px rgba(79, 70, 229, 0.25);
+}
 
-        <!-- ================= BERANDA ================= -->
+.kelas {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
 
-        <section id="beranda" class="page active-page">
+    opacity: 0.8;
 
-            <div class="hero-card">
+    margin-bottom: 5px;
+}
 
-                <div class="circle-animation">
-                    <div class="circle">
-                        <div class="radius-line"></div>
-                        <span class="r-label">r</span>
-                    </div>
-                </div>
+.header h1 {
+    font-size: 30px;
+    font-weight: 900;
+}
 
-                <h2>Halo, Sobat Matematika! 👋</h2>
+.subtitle {
+    font-size: 14px;
 
-                <p>
-                    Hari ini kita akan belajar tentang
-                    <strong>Keliling dan Luas Lingkaran</strong>.
-                </p>
+    margin-top: 5px;
 
-                <button class="primary-btn" onclick="goMateri()">
-                    Mulai Belajar 🚀
-                </button>
+    opacity: 0.9;
+}
 
-            </div>
+.progress-box {
+    background: rgba(255, 255, 255, 0.2);
 
+    padding: 10px 12px;
 
-            <div class="info-grid">
+    border-radius: 15px;
 
-                <div class="info-card">
-                    <div class="icon">⭕</div>
-                    <h3>Apa itu Lingkaran?</h3>
-                    <p>
-                        Bangun datar berbentuk bulat.
-                    </p>
-                </div>
+    font-weight: 800;
+    font-size: 13px;
 
-                <div class="info-card">
-                    <div class="icon">📏</div>
-                    <h3>Keliling</h3>
-                    <p>
-                        Panjang garis yang mengelilingi lingkaran.
-                    </p>
-                </div>
+    backdrop-filter: blur(8px);
+}
 
-                <div class="info-card">
-                    <div class="icon">🟦</div>
-                    <h3>Luas</h3>
-                    <p>
-                        Besarnya daerah di dalam lingkaran.
-                    </p>
-                </div>
 
-            </div>
+/* ================= NAVIGATION ================= */
 
-        </section>
+.navigation {
+    display: flex;
 
+    justify-content: space-around;
 
-        <!-- ================= MATERI ================= -->
+    gap: 5px;
 
-        <section id="materi" class="page">
+    padding: 15px;
 
-            <div class="section-title">
-                <span>📚</span>
-                <div>
-                    <h2>Materi Lingkaran</h2>
-                    <p>Yuk kenali bagian dan rumusnya!</p>
-                </div>
-            </div>
+    background: white;
 
+    margin: -5px 15px 20px;
 
-            <!-- BAGIAN LINGKARAN -->
+    border-radius: 20px;
 
-            <div class="card">
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.08);
 
-                <h3>1. Bagian Lingkaran</h3>
+    position: sticky;
+    top: 10px;
 
-                <div class="diagram-container">
+    z-index: 100;
+}
 
-                    <div class="circle-diagram">
+.nav-btn {
+    border: none;
 
-                        <div class="center-dot"></div>
+    background: transparent;
 
-                        <div class="radius-diagram"></div>
+    padding: 10px 8px;
 
-                        <div class="diameter-diagram"></div>
+    border-radius: 14px;
 
-                    </div>
+    display: flex;
+    flex-direction: column;
 
-                </div>
+    align-items: center;
 
+    gap: 4px;
 
-                <div class="formula-list">
+    cursor: pointer;
 
-                    <div class="formula-item">
-                        <span class="formula-badge">r</span>
+    color: var(--muted);
 
-                        <div>
-                            <strong>Jari-jari</strong>
-                            <p>
-                                Jarak dari titik tengah ke tepi lingkaran.
-                            </p>
-                        </div>
-                    </div>
+    font-family: inherit;
 
+    font-size: 11px;
 
-                    <div class="formula-item">
-                        <span class="formula-badge">d</span>
+    transition: 0.3s;
 
-                        <div>
-                            <strong>Diameter</strong>
-                            <p>
-                                Garis lurus yang melewati titik tengah.
-                            </p>
-                        </div>
-                    </div>
+    flex: 1;
+}
 
-                </div>
+.nav-btn:hover {
+    background: #eef2ff;
+}
 
+.nav-btn.active {
+    background: var(--primary);
 
-                <div class="note">
-                    💡 Diameter = 2 × Jari-jari
-                </div>
+    color: white;
 
-            </div>
+    box-shadow:
+        0 5px 15px rgba(79, 70, 229, 0.3);
+}
 
 
-            <!-- KELILING -->
+/* ================= PAGE ================= */
 
-            <div class="card topic-card">
+.page {
+    display: none;
 
-                <div class="topic-icon">
-                    📏
-                </div>
+    padding: 0 15px;
 
-                <h3>2. Keliling Lingkaran</h3>
+    animation: fade 0.4s ease;
+}
 
-                <p>
-                    Keliling adalah panjang garis yang mengelilingi sebuah lingkaran.
-                </p>
+.active-page {
+    display: block;
+}
 
-                <div class="formula-box">
+@keyframes fade {
 
-                    <span class="formula-title">
-                        Rumus Keliling
-                    </span>
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
 
-                    <div class="formula">
-                        K = 2 × π × r
-                    </div>
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-                    <p class="alternative">
-                        atau
-                    </p>
+}
 
-                    <div class="formula">
-                        K = π × d
-                    </div>
 
-                </div>
+/* ================= HERO ================= */
 
+.hero-card {
+    background: white;
 
-                <div class="rumus-info">
+    border-radius: 25px;
 
-                    <div>
-                        <strong>K</strong>
-                        <span>Keliling</span>
-                    </div>
+    padding: 30px 20px;
 
-                    <div>
-                        <strong>π</strong>
-                        <span>22/7 atau 3,14</span>
-                    </div>
+    text-align: center;
 
-                    <div>
-                        <strong>r</strong>
-                        <span>Jari-jari</span>
-                    </div>
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.06);
 
-                    <div>
-                        <strong>d</strong>
-                        <span>Diameter</span>
-                    </div>
+    margin-bottom: 20px;
+}
 
-                </div>
+.hero-card h2 {
+    font-size: 23px;
 
-            </div>
+    margin-bottom: 10px;
+}
 
+.hero-card p {
+    color: var(--muted);
 
-            <!-- LUAS -->
+    line-height: 1.6;
 
-            <div class="card topic-card">
+    margin-bottom: 20px;
+}
 
-                <div class="topic-icon">
-                    🟦
-                </div>
 
-                <h3>3. Luas Lingkaran</h3>
+/* ================= BUTTON ================= */
 
-                <p>
-                    Luas adalah ukuran daerah yang berada di dalam lingkaran.
-                </p>
+.primary-btn {
+    border: none;
 
-                <div class="formula-box">
+    width: 100%;
 
-                    <span class="formula-title">
-                        Rumus Luas
-                    </span>
+    padding: 15px;
 
-                    <div class="formula">
-                        L = π × r × r
-                    </div>
+    border-radius: 15px;
 
-                </div>
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--secondary)
+        );
 
+    color: white;
 
-                <div class="note">
-                    💡 Ingat: r × r artinya jari-jari dikalikan dengan jari-jari.
-                </div>
+    font-family: inherit;
 
-            </div>
+    font-size: 16px;
 
+    font-weight: 800;
 
-            <!-- TIPS -->
+    cursor: pointer;
 
-            <div class="tips-card">
+    transition: 0.3s;
 
-                <h3>⭐ Tips Memilih Nilai π</h3>
+    box-shadow:
+        0 7px 20px rgba(79, 70, 229, 0.25);
+}
 
-                <div class="tips-item">
-                    <strong>Gunakan π = 22/7</strong>
-                    <p>
-                        Jika jari-jari atau diameter dapat dibagi 7.
-                    </p>
-                </div>
+.primary-btn:hover {
+    transform: translateY(-2px);
+}
 
-                <div class="tips-item">
-                    <strong>Gunakan π = 3,14</strong>
-                    <p>
-                        Jika tidak dapat dibagi 7.
-                    </p>
-                </div>
+.primary-btn:active {
+    transform: scale(0.98);
+}
 
-            </div>
 
-        </section>
+/* ================= CIRCLE ANIMATION ================= */
 
+.circle-animation {
+    display: flex;
 
-        <!-- ================= CONTOH ================= -->
+    justify-content: center;
 
-        <section id="contoh" class="page">
+    margin-bottom: 25px;
+}
 
-            <div class="section-title">
-                <span>✏️</span>
+.circle {
+    width: 160px;
+    height: 160px;
 
-                <div>
-                    <h2>Contoh Soal</h2>
-                    <p>Pelajari langkah penyelesaiannya!</p>
-                </div>
-            </div>
+    border-radius: 50%;
 
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #22d3ee
+        );
 
-            <!-- CONTOH 1 -->
+    position: relative;
 
-            <div class="example-card">
+    box-shadow:
+        0 15px 35px rgba(79, 70, 229, 0.3);
 
-                <div class="example-number">
-                    Contoh 1
-                </div>
+    animation: floating 3s ease-in-out infinite;
+}
 
-                <h3>Keliling Lingkaran</h3>
+@keyframes floating {
 
-                <p class="question">
-                    Sebuah lingkaran memiliki jari-jari 7 cm.
-                    Berapakah kelilingnya?
-                </p>
+    0% {
+        transform: translateY(0);
+    }
 
-                <div class="solution">
+    50% {
+        transform: translateY(-10px);
+    }
 
-                    <p><strong>Diketahui:</strong></p>
+    100% {
+        transform: translateY(0);
+    }
 
-                    <p>r = 7 cm</p>
+}
 
-                    <p><strong>Rumus:</strong></p>
+.radius-line {
+    position: absolute;
 
-                    <p>K = 2 × π × r</p>
+    width: 70px;
+    height: 3px;
 
-                    <p><strong>Penyelesaian:</strong></p>
+    background: white;
 
-                    <p>K = 2 × 22/7 × 7</p>
+    top: 50%;
+    left: 50%;
 
-                    <p>K = 44 cm</p>
+    transform-origin: left;
+}
 
-                    <div class="answer">
-                        Jadi, keliling lingkaran adalah
-                        <strong>44 cm</strong>.
-                    </div>
+.r-label {
+    position: absolute;
 
-                </div>
+    top: 42%;
+    right: 35px;
 
-            </div>
+    color: white;
 
+    font-size: 22px;
 
-            <!-- CONTOH 2 -->
+    font-weight: 900;
+}
 
-            <div class="example-card">
 
-                <div class="example-number">
-                    Contoh 2
-                </div>
+/* ================= INFO GRID ================= */
 
-                <h3>Luas Lingkaran</h3>
+.info-grid {
+    display: grid;
 
-                <p class="question">
-                    Sebuah lingkaran memiliki jari-jari 7 cm.
-                    Berapakah luasnya?
-                </p>
+    grid-template-columns:
+        repeat(3, 1fr);
 
-                <div class="solution">
+    gap: 10px;
+}
 
-                    <p><strong>Diketahui:</strong></p>
+.info-card {
+    background: white;
 
-                    <p>r = 7 cm</p>
+    padding: 15px 10px;
 
-                    <p><strong>Rumus:</strong></p>
+    border-radius: 18px;
 
-                    <p>L = π × r × r</p>
+    text-align: center;
 
-                    <p><strong>Penyelesaian:</strong></p>
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.05);
+}
 
-                    <p>L = 22/7 × 7 × 7</p>
+.icon {
+    font-size: 28px;
 
-                    <p>L = 154 cm²</p>
+    margin-bottom: 8px;
+}
 
-                    <div class="answer">
-                        Jadi, luas lingkaran adalah
-                        <strong>154 cm²</strong>.
-                    </div>
+.info-card h3 {
+    font-size: 13px;
 
-                </div>
+    margin-bottom: 5px;
+}
 
-            </div>
+.info-card p {
+    font-size: 11px;
 
+    color: var(--muted);
 
-            <!-- CONTOH 3 -->
+    line-height: 1.4;
+}
 
-            <div class="example-card">
 
-                <div class="example-number">
-                    Contoh 3
-                </div>
+/* ================= SECTION TITLE ================= */
 
-                <h3>Mencari Diameter</h3>
+.section-title {
+    display: flex;
 
-                <p class="question">
-                    Sebuah lingkaran mempunyai jari-jari 10 cm.
-                    Berapakah diameternya?
-                </p>
+    gap: 12px;
 
-                <div class="solution">
+    align-items: center;
 
-                    <p><strong>Rumus:</strong></p>
+    margin-bottom: 18px;
+}
 
-                    <p>d = 2 × r</p>
+.section-title span {
+    font-size: 32px;
+}
 
-                    <p><strong>Penyelesaian:</strong></p>
+.section-title h2 {
+    font-size: 22px;
+}
 
-                    <p>d = 2 × 10</p>
+.section-title p {
+    color: var(--muted);
 
-                    <p>d = 20 cm</p>
+    font-size: 13px;
 
-                    <div class="answer">
-                        Jadi, diameter lingkaran adalah
-                        <strong>20 cm</strong>.
-                    </div>
+    margin-top: 3px;
+}
 
-                </div>
 
-            </div>
+/* ================= CARD ================= */
 
-        </section>
+.card,
+.example-card,
+.tips-card {
+    background: white;
 
+    padding: 20px;
 
-        <!-- ================= KUIS ================= -->
+    border-radius: 22px;
 
-        <section id="kuis" class="page">
+    margin-bottom: 18px;
 
-            <div id="quizStart" class="quiz-start">
+    box-shadow:
+        0 7px 25px rgba(0, 0, 0, 0.05);
+}
 
-                <div class="quiz-icon">
-                    🧠
-                </div>
+.card h3 {
+    margin-bottom: 15px;
 
-                <h2>Siap Menguji Kemampuan?</h2>
+    font-size: 18px;
+}
 
-                <p>
-                    Jawab 5 pertanyaan tentang
-                    keliling dan luas lingkaran.
-                </p>
 
-                <button class="primary-btn" onclick="startQuiz()">
-                    Mulai Kuis 🎯
-                </button>
+/* ================= DIAGRAM ================= */
 
-            </div>
+.diagram-container {
+    display: flex;
 
+    justify-content: center;
 
-            <div id="quizContainer" class="quiz-container hidden">
+    padding: 20px 0;
+}
 
-                <div class="quiz-top">
+.circle-diagram {
+    width: 190px;
+    height: 190px;
 
-                    <div>
-                        <span id="questionNumber">
-                            Soal 1
-                        </span>
+    border-radius: 50%;
 
-                        <h2 id="questionText">
-                            Pertanyaan
-                        </h2>
-                    </div>
+    border: 5px solid var(--primary);
 
-                    <div class="score-display">
-                        ⭐ <span id="score">0</span>
-                    </div>
+    position: relative;
 
-                </div>
+    background:
+        rgba(99, 102, 241, 0.08);
+}
 
+.center-dot {
+    position: absolute;
 
-                <div id="optionsContainer" class="options-container">
+    width: 12px;
+    height: 12px;
 
-                </div>
+    background: var(--danger);
 
+    border-radius: 50%;
 
-                <div id="feedback" class="feedback">
+    top: 50%;
+    left: 50%;
 
-                </div>
+    transform:
+        translate(-50%, -50%);
+}
 
+.radius-diagram {
+    position: absolute;
 
-                <button
-                    id="nextButton"
-                    class="primary-btn next-btn hidden"
-                    onclick="nextQuestion()">
+    width: 92px;
+    height: 3px;
 
-                    Soal Berikutnya ➡️
+    background: var(--danger);
 
-                </button>
+    top: 50%;
+    left: 50%;
+}
 
-            </div>
+.diameter-diagram {
+    position: absolute;
 
+    width: 180px;
+    height: 3px;
 
-            <!-- HASIL -->
+    background: var(--secondary);
 
-            <div id="resultContainer" class="result-container hidden">
+    top: 50%;
+    left: 0;
+}
 
-                <div class="result-icon">
-                    🏆
-                </div>
 
-                <h2>Kuis Selesai!</h2>
+/* ================= FORMULA LIST ================= */
 
-                <p>
-                    Nilai kamu adalah
-                </p>
+.formula-list {
+    display: flex;
 
-                <div class="final-score">
-                    <span id="finalScore">0</span>
-                    <small>/ 100</small>
-                </div>
+    flex-direction: column;
 
-                <p id="resultMessage"></p>
+    gap: 12px;
+}
 
-                <button class="primary-btn" onclick="restartQuiz()">
-                    🔄 Ulangi Kuis
-                </button>
+.formula-item {
+    display: flex;
 
-            </div>
+    gap: 12px;
 
-        </section>
+    align-items: center;
 
+    padding: 12px;
 
-        <!-- FOOTER -->
+    background: #f8fafc;
 
-        <footer>
-            <p>
-                🎓 Multimedia Pembelajaran Interaktif
-            </p>
+    border-radius: 15px;
+}
 
-            <p>
-                Matematika SD • Keliling & Luas Lingkaran
-            </p>
-        </footer>
+.formula-badge {
+    min-width: 40px;
+    height: 40px;
 
-    </main>
+    border-radius: 50%;
 
+    background: var(--primary);
 
-    <script src="script.js"></script>
+    color: white;
 
-</body>
-</html>
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+
+    font-weight: 900;
+}
+
+.formula-item p {
+    color: var(--muted);
+
+    font-size: 13px;
+
+    margin-top: 3px;
+}
+
+
+/* ================= TOPIC ================= */
+
+.topic-card p {
+    color: var(--muted);
+
+    line-height: 1.6;
+
+    margin-bottom: 15px;
+}
+
+.topic-icon {
+    font-size: 35px;
+
+    margin-bottom: 8px;
+}
+
+
+/* ================= FORMULA ================= */
+
+.formula-box {
+    padding: 20px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #ecfeff
+        );
+
+    text-align: center;
+
+    margin-top: 15px;
+}
+
+.formula-title {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    margin-bottom: 10px;
+}
+
+.formula {
+    font-size: 23px;
+
+    font-weight: 900;
+
+    color: var(--primary);
+}
+
+.alternative {
+    margin: 10px 0;
+
+    font-size: 12px;
+}
+
+
+/* ================= RUMUS INFO ================= */
+
+.rumus-info {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+.rumus-info div {
+    background: #f8fafc;
+
+    padding: 12px;
+
+    border-radius: 14px;
+}
+
+.rumus-info strong {
+    display: block;
+
+    font-size: 18px;
+
+    color: var(--primary);
+}
+
+.rumus-info span {
+    font-size: 11px;
+
+    color: var(--muted);
+}
+
+
+/* ================= NOTE ================= */
+
+.note {
+    margin-top: 15px;
+
+    background: #fef3c7;
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    font-size: 13px;
+
+    color: #92400e;
+}
+
+
+/* ================= TIPS ================= */
+
+.tips-card {
+    background:
+        linear-gradient(
+            135deg,
+            #fefce8,
+            #fff7ed
+        );
+}
+
+.tips-card h3 {
+    margin-bottom: 15px;
+}
+
+.tips-item {
+    padding: 12px;
+
+    background: rgba(255, 255, 255, 0.7);
+
+    border-radius: 12px;
+
+    margin-bottom: 10px;
+}
+
+.tips-item p {
+    color: var(--muted);
+
+    font-size: 13px;
+
+    margin-top: 4px;
+}
+
+
+/* ================= EXAMPLE ================= */
+
+.example-number {
+    display: inline-block;
+
+    background: var(--primary);
+
+    color: white;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    margin-bottom: 12px;
+}
+
+.example-card h3 {
+    margin-bottom: 10px;
+}
+
+.question {
+    background: #f8fafc;
+
+    padding: 14px;
+
+    border-radius: 14px;
+
+    line-height: 1.6;
+
+    margin-bottom: 15px;
+}
+
+.solution {
+    font-size: 14px;
+
+    line-height: 1.9;
+}
+
+.answer {
+    margin-top: 15px;
+
+    padding: 14px;
+
+    background: #dcfce7;
+
+    border-radius: 12px;
+
+    color: #166534;
+}
+
+
+/* ================= QUIZ ================= */
+
+.quiz-start,
+.result-container {
+    background: white;
+
+    padding: 35px 25px;
+
+    border-radius: 25px;
+
+    text-align: center;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.quiz-icon,
+.result-icon {
+    font-size: 60px;
+
+    margin-bottom: 15px;
+}
+
+.quiz-start h2,
+.result-container h2 {
+    margin-bottom: 10px;
+}
+
+.quiz-start p,
+.result-container p {
+    color: var(--muted);
+
+    line-height: 1.6;
+
+    margin-bottom: 25px;
+}
+
+
+.quiz-container {
+    background: white;
+
+    padding: 20px;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.quiz-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 25px;
+}
+
+#questionNumber {
+    color: var(--primary);
+
+    font-weight: 800;
+
+    font-size: 13px;
+}
+
+#questionText {
+    margin-top: 5px;
+
+    font-size: 20px;
+
+    line-height: 1.4;
+}
+
+.score-display {
+    background: #fef3c7;
+
+    padding: 8px 12px;
+
+    border-radius: 12px;
+
+    height: fit-content;
+
+    font-weight: 800;
+}
+
+
+/* ================= OPTIONS ================= */
+
+.options-container {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.option {
+    width: 100%;
+
+    border: 2px solid var(--border);
+
+    background: white;
+
+    padding: 15px;
+
+    border-radius: 15px;
+
+    text-align: left;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.option:hover {
+    border-color: var(--primary);
+
+    background: #eef2ff;
+}
+
+.option.correct {
+    background: #dcfce7;
+
+    border-color: var(--success);
+
+    color: #166534;
+}
+
+.option.wrong {
+    background: #fee2e2;
+
+    border-color: var(--danger);
+
+    color: #991b1b;
+}
+
+.option:disabled {
+    cursor: default;
+}
+
+
+/* ================= FEEDBACK ================= */
+
+.feedback {
+    margin-top: 15px;
+
+    padding: 13px;
+
+    border-radius: 12px;
+
+    font-weight: 700;
+
+    text-align: center;
+
+    display: none;
+}
+
+.feedback.show {
+    display: block;
+}
+
+.feedback.correct-feedback {
+    background: #dcfce7;
+
+    color: #166534;
+}
+
+.feedback.wrong-feedback {
+    background: #fee2e2;
+
+    color: #991b1b;
+}
+
+.next-btn {
+    margin-top: 15px;
+}
+
+
+/* ================= RESULT ================= */
+
+.final-score {
+    font-size: 55px;
+
+    font-weight: 900;
+
+    color: var(--primary);
+
+    margin: 15px 0;
+}
+
+.final-score small {
+    font-size: 20px;
+
+    color: var(--muted);
+}
+
+
+/* ================= FOOTER ================= */
+
+footer {
+    text-align: center;
+
+    margin-top: 25px;
+
+    padding: 15px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    line-height: 1.7;
+}
+
+
+/* ================= UTILITY ================= */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* ================= DESKTOP ================= */
+
+@media (min-width: 700px) {
+
+    body {
+        padding: 20px 0;
+    }
+
+    .app {
+        background: transparent;
+    }
+
+}
+
+
+/* ================= MOBILE KECIL ================= */
+
+@media (max-width: 360px) {
+
+    .header h1 {
+        font-size: 25px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .navigation {
+        padding: 10px 5px;
+    }
+
+    .nav-btn {
+        font-size: 10px;
+    }
+
+    }
