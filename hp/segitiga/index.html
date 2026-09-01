@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Belajar Segitiga</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+<body>
+
+    <main class="app">
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+            <div>
+
+                <p class="kelas">
+                    MATEMATIKA SEKOLAH DASAR
+                </p>
+
+                <h1>🔺 Segitiga</h1>
+
+                <p class="subtitle">
+                    Belajar Jenis, Keliling, dan Luas Segitiga
+                </p>
+
+            </div>
+
+
+            <div class="progress-box">
+
+                <span id="progressText">
+                    1 / 4
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- NAVIGASI -->
+
+        <nav class="navigation">
+
+            <button
+                class="nav-btn active"
+                onclick="showPage('beranda', this)"
+            >
+                🏠
+                <span>Beranda</span>
+            </button>
+
+
+            <button
+                class="nav-btn"
+                onclick="showPage('materi', this)"
+            >
+                📚
+                <span>Materi</span>
+            </button>
+
+
+            <button
+                class="nav-btn"
+                onclick="showPage('contoh', this)"
+            >
+                ✏️
+                <span>Contoh</span>
+            </button>
+
+
+            <button
+                class="nav-btn"
+                onclick="showPage('kuis', this)"
+            >
+                🧠
+                <span>Kuis</span>
+            </button>
+
+        </nav>
+
+
+
+        <!-- =========================
+             BERANDA
+        ========================== -->
+
+        <section
+            id="beranda"
+            class="page active-page"
+        >
+
+            <div class="hero-card">
+
+                <div class="triangle-animation">
+
+                    <div class="triangle-shape"></div>
+
+                </div>
+
+
+                <h2>
+                    Halo, Sobat Matematika! 👋
+                </h2>
+
+
+                <p>
+                    Yuk belajar tentang
+                    <strong>Segitiga</strong>!
+                    Kita akan mengenal jenis-jenis segitiga,
+                    keliling, dan luasnya.
+                </p>
+
+
+                <button
+                    class="primary-btn"
+                    onclick="goMateri()"
+                >
+                    Mulai Belajar 🚀
+                </button>
+
+            </div>
+
+
+
+            <div class="info-grid">
+
+                <div class="info-card">
+
+                    <div class="icon">
+                        🔺
+                    </div>
+
+                    <h3>Segitiga</h3>
+
+                    <p>
+                        Memiliki 3 sisi dan 3 sudut.
+                    </p>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="icon">
+                        📏
+                    </div>
+
+                    <h3>Keliling</h3>
+
+                    <p>
+                        Jumlah seluruh sisi segitiga.
+                    </p>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="icon">
+                        🟦
+                    </div>
+
+                    <h3>Luas</h3>
+
+                    <p>
+                        Besar daerah di dalam segitiga.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             MATERI
+        ========================== -->
+
+        <section
+            id="materi"
+            class="page"
+        >
+
+            <div class="section-title">
+
+                <span>📚</span>
+
+                <div>
+
+                    <h2>
+                        Materi Segitiga
+                    </h2>
+
+                    <p>
+                        Yuk mengenal segitiga!
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PENGERTIAN -->
+
+            <div class="card">
+
+                <h3>
+                    1. Apa Itu Segitiga?
+                </h3>
+
+
+                <p class="description">
+
+                    Segitiga adalah bangun datar yang memiliki
+                    <strong>3 sisi</strong>,
+                    <strong>3 titik sudut</strong>,
+                    dan
+                    <strong>3 sudut</strong>.
+
+                </p>
+
+
+                <div class="triangle-diagram">
+
+                    <div class="triangle-line"></div>
+
+                    <span class="point point-a">
+                        A
+                    </span>
+
+                    <span class="point point-b">
+                        B
+                    </span>
+
+                    <span class="point point-c">
+                        C
+                    </span>
+
+                </div>
+
+
+                <div class="note">
+
+                    💡 Ingat!
+                    Segitiga selalu memiliki
+                    3 sisi dan 3 sudut.
+
+                </div>
+
+            </div>
+
+
+
+            <!-- JENIS SEGITIGA -->
+
+            <div class="card">
+
+                <h3>
+                    2. Jenis-Jenis Segitiga
+                </h3>
+
+
+                <div class="type-card">
+
+                    <div class="mini-triangle sama-sisi"></div>
+
+                    <div>
+
+                        <strong>
+                            Segitiga Sama Sisi
+                        </strong>
+
+                        <p>
+                            Memiliki 3 sisi yang sama panjang.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="type-card">
+
+                    <div class="mini-triangle sama-kaki"></div>
+
+                    <div>
+
+                        <strong>
+                            Segitiga Sama Kaki
+                        </strong>
+
+                        <p>
+                            Memiliki 2 sisi yang sama panjang.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="type-card">
+
+                    <div class="mini-triangle sembarang"></div>
+
+                    <div>
+
+                        <strong>
+                            Segitiga Sembarang
+                        </strong>
+
+                        <p>
+                            Ketiga sisinya memiliki panjang berbeda.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="type-card">
+
+                    <div class="right-symbol">
+                        ∟
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Segitiga Siku-Siku
+                        </strong>
+
+                        <p>
+                            Memiliki salah satu sudut sebesar 90°.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- KELILING -->
+
+            <div class="card topic-card">
+
+                <div class="topic-icon">
+                    📏
+                </div>
+
+
+                <h3>
+                    3. Keliling Segitiga
+                </h3>
+
+
+                <p>
+                    Keliling segitiga adalah jumlah panjang
+                    semua sisi segitiga.
+                </p>
+
+
+                <div class="formula-box">
+
+                    <span class="formula-title">
+                        Rumus Keliling
+                    </span>
+
+
+                    <div class="formula">
+
+                        K = a + b + c
+
+                    </div>
+
+                </div>
+
+
+                <div class="rumus-info">
+
+                    <div>
+
+                        <strong>a</strong>
+
+                        <span>
+                            Sisi pertama
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>b</strong>
+
+                        <span>
+                            Sisi kedua
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>c</strong>
+
+                        <span>
+                            Sisi ketiga
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>K</strong>
+
+                        <span>
+                            Keliling
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- LUAS -->
+
+            <div class="card topic-card">
+
+                <div class="topic-icon">
+                    🟦
+                </div>
+
+
+                <h3>
+                    4. Luas Segitiga
+                </h3>
+
+
+                <p>
+                    Luas adalah ukuran daerah
+                    yang berada di dalam segitiga.
+                </p>
+
+
+                <div class="formula-box">
+
+                    <span class="formula-title">
+                        Rumus Luas
+                    </span>
+
+
+                    <div class="formula">
+
+                        L = ½ × alas × tinggi
+
+                    </div>
+
+                </div>
+
+
+                <div class="note">
+
+                    💡 Alas dan tinggi harus saling tegak lurus.
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TIPS -->
+
+            <div class="tips-card">
+
+                <h3>
+                    ⭐ Tips Menghitung
+                </h3>
+
+
+                <div class="tips-item">
+
+                    <strong>
+                        Untuk Keliling
+                    </strong>
+
+                    <p>
+                        Jumlahkan semua panjang sisi.
+                    </p>
+
+                </div>
+
+
+                <div class="tips-item">
+
+                    <strong>
+                        Untuk Luas
+                    </strong>
+
+                    <p>
+                        Kalikan alas dengan tinggi,
+                        kemudian bagi 2.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             CONTOH
+        ========================== -->
+
+        <section
+            id="contoh"
+            class="page"
+        >
+
+            <div class="section-title">
+
+                <span>✏️</span>
+
+                <div>
+
+                    <h2>
+                        Contoh Soal
+                    </h2>
+
+                    <p>
+                        Yuk pelajari cara menghitungnya!
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CONTOH 1 -->
+
+            <div class="example-card">
+
+                <div class="example-number">
+                    Contoh 1
+                </div>
+
+
+                <h3>
+                    Menghitung Keliling
+                </h3>
+
+
+                <p class="question">
+
+                    Sebuah segitiga memiliki sisi
+                    5 cm, 7 cm, dan 8 cm.
+                    Berapakah kelilingnya?
+
+                </p>
+
+
+                <div class="solution">
+
+                    <p>
+                        <strong>Diketahui:</strong>
+                    </p>
+
+                    <p>
+                        a = 5 cm
+                    </p>
+
+                    <p>
+                        b = 7 cm
+                    </p>
+
+                    <p>
+                        c = 8 cm
+                    </p>
+
+
+                    <p>
+                        <strong>Rumus:</strong>
+                    </p>
+
+                    <p>
+                        K = a + b + c
+                    </p>
+
+
+                    <p>
+                        <strong>Penyelesaian:</strong>
+                    </p>
+
+                    <p>
+                        K = 5 + 7 + 8
+                    </p>
+
+                    <p>
+                        K = 20 cm
+                    </p>
+
+
+                    <div class="answer">
+
+                        Jadi, keliling segitiga adalah
+                        <strong>20 cm</strong>.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CONTOH 2 -->
+
+            <div class="example-card">
+
+                <div class="example-number">
+                    Contoh 2
+                </div>
+
+
+                <h3>
+                    Menghitung Luas
+                </h3>
+
+
+                <p class="question">
+
+                    Sebuah segitiga memiliki
+                    alas 10 cm dan tinggi 6 cm.
+                    Berapakah luasnya?
+
+                </p>
+
+
+                <div class="solution">
+
+                    <p>
+                        <strong>Diketahui:</strong>
+                    </p>
+
+                    <p>
+                        Alas = 10 cm
+                    </p>
+
+                    <p>
+                        Tinggi = 6 cm
+                    </p>
+
+
+                    <p>
+                        <strong>Rumus:</strong>
+                    </p>
+
+                    <p>
+                        L = ½ × alas × tinggi
+                    </p>
+
+
+                    <p>
+                        <strong>Penyelesaian:</strong>
+                    </p>
+
+                    <p>
+                        L = ½ × 10 × 6
+                    </p>
+
+                    <p>
+                        L = 5 × 6
+                    </p>
+
+                    <p>
+                        L = 30 cm²
+                    </p>
+
+
+                    <div class="answer">
+
+                        Jadi, luas segitiga adalah
+                        <strong>30 cm²</strong>.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CONTOH 3 -->
+
+            <div class="example-card">
+
+                <div class="example-number">
+                    Contoh 3
+                </div>
+
+
+                <h3>
+                    Segitiga Sama Sisi
+                </h3>
+
+
+                <p class="question">
+
+                    Sebuah segitiga sama sisi memiliki
+                    panjang sisi 9 cm.
+                    Berapakah kelilingnya?
+
+                </p>
+
+
+                <div class="solution">
+
+                    <p>
+                        Karena semua sisinya sama panjang:
+                    </p>
+
+
+                    <p>
+                        K = sisi + sisi + sisi
+                    </p>
+
+
+                    <p>
+                        K = 9 + 9 + 9
+                    </p>
+
+
+                    <p>
+                        K = 27 cm
+                    </p>
+
+
+                    <div class="answer">
+
+                        Jadi, keliling segitiga adalah
+                        <strong>27 cm</strong>.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             KUIS
+        ========================== -->
+
+        <section
+            id="kuis"
+            class="page"
+        >
+
+
+            <div
+                id="quizStart"
+                class="quiz-start"
+            >
+
+                <div class="quiz-icon">
+                    🧠
+                </div>
+
+
+                <h2>
+                    Siap Menguji Kemampuan?
+                </h2>
+
+
+                <p>
+                    Jawab 5 pertanyaan
+                    tentang segitiga!
+                </p>
+
+
+                <button
+                    class="primary-btn"
+                    onclick="startQuiz()"
+                >
+
+                    Mulai Kuis 🎯
+
+                </button>
+
+            </div>
+
+
+
+            <div
+                id="quizContainer"
+                class="quiz-container hidden"
+            >
+
+
+                <div class="quiz-top">
+
+                    <div>
+
+                        <span id="questionNumber">
+                            Soal 1
+                        </span>
+
+
+                        <h2 id="questionText">
+                            Pertanyaan
+                        </h2>
+
+                    </div>
+
+
+                    <div class="score-display">
+
+                        ⭐
+                        <span id="score">
+                            0
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <div
+                    id="optionsContainer"
+                    class="options-container"
+                ></div>
+
+
+
+                <div
+                    id="feedback"
+                    class="feedback"
+                ></div>
+
+
+
+                <button
+                    id="nextButton"
+                    class="primary-btn next-btn hidden"
+                    onclick="nextQuestion()"
+                >
+
+                    Soal Berikutnya ➡️
+
+                </button>
+
+            </div>
+
+
+
+            <!-- HASIL -->
+
+            <div
+                id="resultContainer"
+                class="result-container hidden"
+            >
+
+                <div class="result-icon">
+                    🏆
+                </div>
+
+
+                <h2>
+                    Kuis Selesai!
+                </h2>
+
+
+                <p>
+                    Nilai kamu adalah
+                </p>
+
+
+                <div class="final-score">
+
+                    <span id="finalScore">
+                        0
+                    </span>
+
+                    <small>
+                        / 100
+                    </small>
+
+                </div>
+
+
+                <p id="resultMessage"></p>
+
+
+                <button
+                    class="primary-btn"
+                    onclick="restartQuiz()"
+                >
+
+                    🔄 Ulangi Kuis
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            <p>
+                🎓 Multimedia Pembelajaran Interaktif
+            </p>
+
+            <p>
+                Matematika SD • Segitiga
+            </p>
+
+        </footer>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+                      </html>
