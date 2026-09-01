@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MPI Keliling dan Luas Lingkaran</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- BACKGROUND -->
+    <div class="background-decoration circle1"></div>
+    <div class="background-decoration circle2"></div>
+    <div class="background-decoration circle3"></div>
+
+
+    <!-- HEADER -->
+    <header>
+
+        <div class="logo">
+            🔵 MATH CIRCLE
+        </div>
+
+        <div class="score-board">
+
+            <div class="team-score team-red">
+                <span>🔴 TIM MERAH</span>
+                <strong id="scoreRed">0</strong>
+            </div>
+
+            <div class="team-score team-blue">
+                <span>🔵 TIM BIRU</span>
+                <strong id="scoreBlue">0</strong>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= HOME ================= -->
+
+    <section class="page active" id="home">
+
+        <div class="hero">
+
+            <div class="hero-text">
+
+                <div class="badge">
+                    📚 MATEMATIKA SEKOLAH DASAR
+                </div>
+
+                <h1>
+                    Keliling dan<br>
+                    <span>Luas Lingkaran</span>
+                </h1>
+
+                <p>
+                    Mari belajar mengenal lingkaran, menghitung keliling,
+                    menghitung luas, dan bertanding bersama teman!
+                </p>
+
+                <div class="hero-buttons">
+
+                    <button class="btn primary"
+                        onclick="showPage('materi')">
+                        🚀 Mulai Belajar
+                    </button>
+
+                    <button class="btn secondary"
+                        onclick="showPage('quizIntro')">
+                        🏆 Kuis 2 Tim
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="circle-illustration">
+
+                <div class="big-circle">
+
+                    <div class="radius-line"></div>
+
+                    <div class="center-dot"></div>
+
+                    <span class="center-label">
+                        Titik Pusat
+                    </span>
+
+                    <span class="radius-label">
+                        r
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= MATERI MENU ================= -->
+
+    <section class="page" id="materi">
+
+        <div class="section-title">
+
+            <div>
+                <span class="small-title">
+                    📖 MARI BELAJAR
+                </span>
+
+                <h2>Materi Lingkaran</h2>
+
+                <p>
+                    Pilih materi yang ingin dipelajari.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="material-grid">
+
+            <button class="material-card blue-card"
+                onclick="showPage('pengertian')">
+
+                <div class="material-icon">⭕</div>
+
+                <h3>Apa Itu Lingkaran?</h3>
+
+                <p>
+                    Mengenal bentuk dan pengertian lingkaran.
+                </p>
+
+            </button>
+
+
+            <button class="material-card orange-card"
+                onclick="showPage('unsur')">
+
+                <div class="material-icon">📐</div>
+
+                <h3>Unsur Lingkaran</h3>
+
+                <p>
+                    Titik pusat, jari-jari, dan diameter.
+                </p>
+
+            </button>
+
+
+            <button class="material-card purple-card"
+                onclick="showPage('keliling')">
+
+                <div class="material-icon">🔄</div>
+
+                <h3>Keliling Lingkaran</h3>
+
+                <p>
+                    Cara menghitung panjang keliling.
+                </p>
+
+            </button>
+
+
+            <button class="material-card green-card"
+                onclick="showPage('luas')">
+
+                <div class="material-icon">🟢</div>
+
+                <h3>Luas Lingkaran</h3>
+
+                <p>
+                    Cara menghitung luas daerah lingkaran.
+                </p>
+
+            </button>
+
+        </div>
+
+
+        <button class="btn back-btn"
+            onclick="showPage('home')">
+
+            ← Kembali ke Beranda
+
+        </button>
+
+    </section>
+
+
+
+    <!-- ================= PENGERTIAN ================= -->
+
+    <section class="page" id="pengertian">
+
+        <div class="lesson-layout">
+
+            <div class="lesson-content">
+
+                <span class="small-title">
+                    1. PENGERTIAN
+                </span>
+
+                <h2>Apa Itu Lingkaran? ⭕</h2>
+
+                <p class="large-text">
+
+                    Lingkaran adalah bangun datar yang memiliki
+                    satu titik pusat dan semua titik pada tepinya
+                    memiliki jarak yang sama terhadap titik pusat.
+
+                </p>
+
+
+                <div class="info-box">
+
+                    💡 Contoh benda berbentuk lingkaran:
+
+                    <div class="example-items">
+
+                        <span>🪙 Koin</span>
+                        <span>🍽️ Piring</span>
+                        <span>🛞 Roda</span>
+                        <span>🕒 Jam</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="navigation-buttons">
+
+                    <button class="btn primary"
+                        onclick="showPage('unsur')">
+
+                        Selanjutnya →
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="visual-circle">
+
+                <div class="learning-circle">
+
+                    <div class="center-point"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= UNSUR ================= -->
+
+    <section class="page" id="unsur">
+
+        <div class="lesson-layout">
+
+            <div class="lesson-content">
+
+                <span class="small-title">
+                    2. UNSUR LINGKARAN
+                </span>
+
+                <h2>Mengenal Bagian Lingkaran</h2>
+
+                <div class="formula-list">
+
+                    <div class="formula-item">
+
+                        <strong>🔵 Titik Pusat</strong>
+
+                        <p>
+                            Titik yang berada tepat di tengah lingkaran.
+                        </p>
+
+                    </div>
+
+
+                    <div class="formula-item">
+
+                        <strong>📏 Jari-jari (r)</strong>
+
+                        <p>
+                            Jarak dari titik pusat menuju tepi lingkaran.
+                        </p>
+
+                    </div>
+
+
+                    <div class="formula-item">
+
+                        <strong>↔️ Diameter (d)</strong>
+
+                        <p>
+                            Garis yang melewati titik pusat dan
+                            menghubungkan dua titik pada tepi lingkaran.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="important-box">
+
+                    ⭐ Hubungan penting:
+
+                    <div class="big-formula">
+
+                        d = 2 × r
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="circle-diagram">
+
+                <div class="diagram-circle">
+
+                    <div class="diagram-center"></div>
+
+                    <div class="diagram-radius"></div>
+
+                    <div class="diagram-diameter"></div>
+
+                    <span class="label-center">
+                        Pusat
+                    </span>
+
+                    <span class="label-radius">
+                        r
+                    </span>
+
+                    <span class="label-diameter">
+                        d
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="bottom-navigation">
+
+            <button class="btn secondary"
+                onclick="showPage('pengertian')">
+
+                ← Sebelumnya
+
+            </button>
+
+            <button class="btn primary"
+                onclick="showPage('keliling')">
+
+                Keliling →
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= KELILING ================= -->
+
+    <section class="page" id="keliling">
+
+        <div class="lesson-layout">
+
+            <div class="lesson-content">
+
+                <span class="small-title">
+                    3. KELILING LINGKARAN
+                </span>
+
+                <h2>Menghitung Keliling Lingkaran 🔄</h2>
+
+                <p class="large-text">
+
+                    Keliling lingkaran adalah panjang seluruh
+                    bagian tepi lingkaran.
+
+                </p>
+
+
+                <div class="formula-box">
+
+                    <h3>Rumus Keliling</h3>
+
+                    <div class="big-formula">
+
+                        K = 2 × π × r
+
+                    </div>
+
+                    <p>
+                        atau
+                    </p>
+
+                    <div class="big-formula">
+
+                        K = π × d
+
+                    </div>
+
+                </div>
+
+
+                <div class="note-box">
+
+                    📌 Gunakan π = 22/7 jika jari-jari atau diameter
+                    dapat dibagi 7.
+
+                    <br><br>
+
+                    📌 Gunakan π = 3,14 jika tidak dapat dibagi 7.
+
+                </div>
+
+            </div>
+
+
+            <div class="example-box">
+
+                <h3>✏️ Contoh Soal</h3>
+
+                <p>
+
+                    Sebuah lingkaran memiliki jari-jari
+                    <strong>7 cm</strong>.
+
+                    Berapakah kelilingnya?
+
+                </p>
+
+
+                <div class="calculation">
+
+                    K = 2 × π × r
+
+                    <br>
+
+                    K = 2 × 22/7 × 7
+
+                    <br>
+
+                    <strong>K = 44 cm</strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="bottom-navigation">
+
+            <button class="btn secondary"
+                onclick="showPage('unsur')">
+
+                ← Sebelumnya
+
+            </button>
+
+            <button class="btn primary"
+                onclick="showPage('luas')">
+
+                Luas →
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= LUAS ================= -->
+
+    <section class="page" id="luas">
+
+        <div class="lesson-layout">
+
+            <div class="lesson-content">
+
+                <span class="small-title">
+                    4. LUAS LINGKARAN
+                </span>
+
+                <h2>Menghitung Luas Lingkaran 🟢</h2>
+
+                <p class="large-text">
+
+                    Luas lingkaran adalah besar daerah
+                    yang berada di dalam lingkaran.
+
+                </p>
+
+
+                <div class="formula-box green-formula">
+
+                    <h3>Rumus Luas</h3>
+
+                    <div class="big-formula">
+
+                        L = π × r × r
+
+                    </div>
+
+                    <p>
+                        atau
+                    </p>
+
+                    <div class="big-formula">
+
+                        L = π × r²
+
+                    </div>
+
+                </div>
+
+
+                <div class="note-box">
+
+                    📌 r adalah jari-jari lingkaran.
+
+                    <br><br>
+
+                    📌 Satuan luas menggunakan cm², m²,
+                    atau satuan persegi lainnya.
+
+                </div>
+
+            </div>
+
+
+            <div class="example-box">
+
+                <h3>✏️ Contoh Soal</h3>
+
+                <p>
+
+                    Sebuah lingkaran memiliki jari-jari
+                    <strong>7 cm</strong>.
+
+                    Berapakah luasnya?
+
+                </p>
+
+
+                <div class="calculation">
+
+                    L = π × r × r
+
+                    <br>
+
+                    L = 22/7 × 7 × 7
+
+                    <br>
+
+                    <strong>L = 154 cm²</strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="bottom-navigation">
+
+            <button class="btn secondary"
+                onclick="showPage('keliling')">
+
+                ← Sebelumnya
+
+            </button>
+
+            <button class="btn primary"
+                onclick="showPage('quizIntro')">
+
+                🏆 Mulai Kuis
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= QUIZ INTRO ================= -->
+
+    <section class="page" id="quizIntro">
+
+        <div class="quiz-intro">
+
+            <div class="trophy">
+                🏆
+            </div>
+
+            <h1>Kuis Tanding 2 Tim!</h1>
+
+            <p>
+
+                Sekarang saatnya menguji kemampuan kalian.
+
+                Dua tim akan menjawab pertanyaan secara bergantian!
+
+            </p>
+
+
+            <div class="teams">
+
+                <div class="team-card red-team">
+
+                    <h2>🔴 TIM MERAH</h2>
+
+                    <p>
+                        Jawab dengan benar untuk mendapatkan poin!
+                    </p>
+
+                </div>
+
+
+                <div class="vs">
+
+                    VS
+
+                </div>
+
+
+                <div class="team-card blue-team">
+
+                    <h2>🔵 TIM BIRU</h2>
+
+                    <p>
+                        Kumpulkan poin sebanyak mungkin!
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <button class="btn quiz-start"
+                onclick="startQuiz()">
+
+                🚀 MULAI PERTANDINGAN
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= QUIZ ================= -->
+
+    <section class="page" id="quiz">
+
+        <div class="quiz-container">
+
+            <div class="quiz-top">
+
+                <div class="question-number">
+
+                    SOAL
+
+                    <span id="questionNumber">
+                        1
+                    </span>
+
+                    / 10
+
+                </div>
+
+
+                <div id="turnIndicator"
+                    class="turn-indicator">
+
+                    🔴 GILIRAN TIM MERAH
+
+                </div>
+
+            </div>
+
+
+            <div class="question-card">
+
+                <div class="question-icon">
+
+                    ❓
+
+                </div>
+
+                <h2 id="questionText">
+
+                    Pertanyaan akan muncul di sini.
+
+                </h2>
+
+            </div>
+
+
+            <div id="answers"
+                class="answers-grid">
+
+            </div>
+
+
+            <div id="feedback"
+                class="feedback">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= RESULT ================= -->
+
+    <section class="page" id="result">
+
+        <div class="result-container">
+
+            <div class="trophy big-trophy">
+                🏆
+            </div>
+
+            <h1>Pertandingan Selesai!</h1>
+
+            <p>
+                Berikut hasil pertandingan kalian.
+            </p>
+
+
+            <div class="final-score">
+
+                <div class="final-team red-team">
+
+                    <h2>🔴 TIM MERAH</h2>
+
+                    <strong id="finalRed">
+                        0
+                    </strong>
+
+                    <span>POIN</span>
+
+                </div>
+
+
+                <div class="final-team blue-team">
+
+                    <h2>🔵 TIM BIRU</h2>
+
+                    <strong id="finalBlue">
+                        0
+                    </strong>
+
+                    <span>POIN</span>
+
+                </div>
+
+            </div>
+
+
+            <div id="winnerText"
+                class="winner-text">
+
+            </div>
+
+
+            <div class="result-buttons">
+
+                <button class="btn primary"
+                    onclick="startQuiz()">
+
+                    🔄 Main Lagi
+
+                </button>
+
+
+                <button class="btn secondary"
+                    onclick="resetAll()">
+
+                    🏠 Kembali ke Beranda
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+</body>
+              </html>
