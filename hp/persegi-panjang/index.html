@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Belajar Persegi Panjang</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+<body>
+
+    <main class="app">
+
+        <!-- HEADER -->
+        <header class="header">
+
+            <div>
+
+                <p class="kelas">
+                    MATEMATIKA SEKOLAH DASAR
+                </p>
+
+                <h1>▭ Persegi Panjang</h1>
+
+                <p class="subtitle">
+                    Belajar Sifat, Keliling, dan Luas Persegi Panjang
+                </p>
+
+            </div>
+
+            <div class="progress-box">
+
+                <span id="progressText">
+                    1 / 4
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- NAVIGASI -->
+        <nav class="navigation">
+
+            <button
+                class="nav-btn active"
+                onclick="showPage('beranda', this)"
+            >
+                🏠
+                <span>Beranda</span>
+            </button>
+
+
+            <button
+                class="nav-btn"
+                onclick="showPage('materi', this)"
+            >
+                📚
+                <span>Materi</span>
+            </button>
+
+
+            <button
+                class="nav-btn"
+                onclick="showPage('contoh', this)"
+            >
+                ✏️
+                <span>Contoh</span>
+            </button>
+
+
+            <button
+                class="nav-btn"
+                onclick="showPage('kuis', this)"
+            >
+                🧠
+                <span>Kuis</span>
+            </button>
+
+        </nav>
+
+
+
+        <!-- ================= BERANDA ================= -->
+
+        <section
+            id="beranda"
+            class="page active-page"
+        >
+
+            <div class="hero-card">
+
+                <div class="rectangle-animation">
+
+                    <div class="rectangle-shape">
+
+                        <span class="label-panjang">
+                            p
+                        </span>
+
+                        <span class="label-lebar">
+                            l
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <h2>
+                    Halo, Sobat Matematika! 👋
+                </h2>
+
+
+                <p>
+                    Yuk belajar tentang
+                    <strong>Persegi Panjang</strong>.
+                    Kita akan mengenal sifat, keliling,
+                    dan luas persegi panjang.
+                </p>
+
+
+                <button
+                    class="primary-btn"
+                    onclick="goMateri()"
+                >
+                    Mulai Belajar 🚀
+                </button>
+
+            </div>
+
+
+
+            <div class="info-grid">
+
+                <div class="info-card">
+
+                    <div class="icon">
+                        ▭
+                    </div>
+
+                    <h3>Bangun Datar</h3>
+
+                    <p>
+                        Memiliki 4 sisi.
+                    </p>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="icon">
+                        📏
+                    </div>
+
+                    <h3>Keliling</h3>
+
+                    <p>
+                        Jumlah seluruh sisi.
+                    </p>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="icon">
+                        🟦
+                    </div>
+
+                    <h3>Luas</h3>
+
+                    <p>
+                        Daerah di dalam bangun.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= MATERI ================= -->
+
+        <section
+            id="materi"
+            class="page"
+        >
+
+            <div class="section-title">
+
+                <span>📚</span>
+
+                <div>
+
+                    <h2>
+                        Materi Persegi Panjang
+                    </h2>
+
+                    <p>
+                        Yuk mengenal persegi panjang!
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PENGERTIAN -->
+
+            <div class="card">
+
+                <h3>
+                    1. Apa Itu Persegi Panjang?
+                </h3>
+
+
+                <p class="description">
+
+                    Persegi panjang adalah bangun datar
+                    yang memiliki
+                    <strong>4 sisi</strong>
+                    dan
+                    <strong>4 sudut siku-siku</strong>.
+
+                </p>
+
+
+                <div class="rectangle-diagram">
+
+                    <div class="diagram-rectangle">
+
+                        <span class="top-label">
+                            Panjang (p)
+                        </span>
+
+                        <span class="side-label">
+                            Lebar (l)
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="note">
+
+                    💡 Sisi yang berhadapan pada persegi panjang
+                    memiliki panjang yang sama.
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SIFAT -->
+
+            <div class="card">
+
+                <h3>
+                    2. Sifat-Sifat Persegi Panjang
+                </h3>
+
+
+                <div class="property-item">
+
+                    <span class="property-icon">
+                        1️⃣
+                    </span>
+
+                    <p>
+                        Memiliki 4 sisi.
+                    </p>
+
+                </div>
+
+
+                <div class="property-item">
+
+                    <span class="property-icon">
+                        2️⃣
+                    </span>
+
+                    <p>
+                        Sisi yang berhadapan sama panjang.
+                    </p>
+
+                </div>
+
+
+                <div class="property-item">
+
+                    <span class="property-icon">
+                        3️⃣
+                    </span>
+
+                    <p>
+                        Memiliki 4 sudut siku-siku (90°).
+                    </p>
+
+                </div>
+
+
+                <div class="property-item">
+
+                    <span class="property-icon">
+                        4️⃣
+                    </span>
+
+                    <p>
+                        Memiliki 2 diagonal yang sama panjang.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- KELILING -->
+
+            <div class="card topic-card">
+
+                <div class="topic-icon">
+                    📏
+                </div>
+
+
+                <h3>
+                    3. Keliling Persegi Panjang
+                </h3>
+
+
+                <p>
+                    Keliling adalah jumlah panjang seluruh sisi
+                    persegi panjang.
+                </p>
+
+
+                <div class="formula-box">
+
+                    <span class="formula-title">
+                        Rumus Keliling
+                    </span>
+
+
+                    <div class="formula">
+                        K = 2 × (p + l)
+                    </div>
+
+                </div>
+
+
+                <div class="rumus-info">
+
+                    <div>
+
+                        <strong>p</strong>
+
+                        <span>
+                            Panjang
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>l</strong>
+
+                        <span>
+                            Lebar
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>K</strong>
+
+                        <span>
+                            Keliling
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- LUAS -->
+
+            <div class="card topic-card">
+
+                <div class="topic-icon">
+                    🟦
+                </div>
+
+
+                <h3>
+                    4. Luas Persegi Panjang
+                </h3>
+
+
+                <p>
+                    Luas adalah ukuran daerah yang berada
+                    di dalam persegi panjang.
+                </p>
+
+
+                <div class="formula-box">
+
+                    <span class="formula-title">
+                        Rumus Luas
+                    </span>
+
+
+                    <div class="formula">
+                        L = p × l
+                    </div>
+
+                </div>
+
+
+                <div class="note">
+
+                    💡 Jangan tertukar antara panjang (p)
+                    dan lebar (l).
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TIPS -->
+
+            <div class="tips-card">
+
+                <h3>
+                    ⭐ Tips Menghitung
+                </h3>
+
+
+                <div class="tips-item">
+
+                    <strong>
+                        Untuk Keliling
+                    </strong>
+
+                    <p>
+                        Tambahkan panjang dan lebar,
+                        kemudian kalikan dengan 2.
+                    </p>
+
+                </div>
+
+
+                <div class="tips-item">
+
+                    <strong>
+                        Untuk Luas
+                    </strong>
+
+                    <p>
+                        Kalikan panjang dengan lebar.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= CONTOH ================= -->
+
+        <section
+            id="contoh"
+            class="page"
+        >
+
+            <div class="section-title">
+
+                <span>✏️</span>
+
+                <div>
+
+                    <h2>
+                        Contoh Soal
+                    </h2>
+
+                    <p>
+                        Pelajari cara menghitungnya!
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CONTOH 1 -->
+
+            <div class="example-card">
+
+                <div class="example-number">
+                    Contoh 1
+                </div>
+
+
+                <h3>
+                    Menghitung Keliling
+                </h3>
+
+
+                <p class="question">
+
+                    Sebuah persegi panjang memiliki panjang
+                    10 cm dan lebar 5 cm.
+                    Berapakah kelilingnya?
+
+                </p>
+
+
+                <div class="solution">
+
+                    <p>
+                        <strong>Diketahui:</strong>
+                    </p>
+
+                    <p>
+                        p = 10 cm
+                    </p>
+
+                    <p>
+                        l = 5 cm
+                    </p>
+
+
+                    <p>
+                        <strong>Rumus:</strong>
+                    </p>
+
+                    <p>
+                        K = 2 × (p + l)
+                    </p>
+
+
+                    <p>
+                        <strong>Penyelesaian:</strong>
+                    </p>
+
+                    <p>
+                        K = 2 × (10 + 5)
+                    </p>
+
+                    <p>
+                        K = 2 × 15
+                    </p>
+
+                    <p>
+                        K = 30 cm
+                    </p>
+
+
+                    <div class="answer">
+
+                        Jadi, keliling persegi panjang adalah
+                        <strong>30 cm</strong>.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CONTOH 2 -->
+
+            <div class="example-card">
+
+                <div class="example-number">
+                    Contoh 2
+                </div>
+
+
+                <h3>
+                    Menghitung Luas
+                </h3>
+
+
+                <p class="question">
+
+                    Sebuah persegi panjang memiliki panjang
+                    12 cm dan lebar 4 cm.
+                    Berapakah luasnya?
+
+                </p>
+
+
+                <div class="solution">
+
+                    <p>
+                        <strong>Diketahui:</strong>
+                    </p>
+
+                    <p>
+                        p = 12 cm
+                    </p>
+
+                    <p>
+                        l = 4 cm
+                    </p>
+
+
+                    <p>
+                        <strong>Rumus:</strong>
+                    </p>
+
+                    <p>
+                        L = p × l
+                    </p>
+
+
+                    <p>
+                        <strong>Penyelesaian:</strong>
+                    </p>
+
+                    <p>
+                        L = 12 × 4
+                    </p>
+
+                    <p>
+                        L = 48 cm²
+                    </p>
+
+
+                    <div class="answer">
+
+                        Jadi, luas persegi panjang adalah
+                        <strong>48 cm²</strong>.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CONTOH 3 -->
+
+            <div class="example-card">
+
+                <div class="example-number">
+                    Contoh 3
+                </div>
+
+
+                <h3>
+                    Menghitung Lebar
+                </h3>
+
+
+                <p class="question">
+
+                    Sebuah persegi panjang memiliki luas
+                    60 cm² dan panjang 12 cm.
+                    Berapakah lebarnya?
+
+                </p>
+
+
+                <div class="solution">
+
+                    <p>
+                        <strong>Diketahui:</strong>
+                    </p>
+
+                    <p>
+                        L = 60 cm²
+                    </p>
+
+                    <p>
+                        p = 12 cm
+                    </p>
+
+
+                    <p>
+                        <strong>Rumus:</strong>
+                    </p>
+
+                    <p>
+                        l = L ÷ p
+                    </p>
+
+
+                    <p>
+                        <strong>Penyelesaian:</strong>
+                    </p>
+
+                    <p>
+                        l = 60 ÷ 12
+                    </p>
+
+                    <p>
+                        l = 5 cm
+                    </p>
+
+
+                    <div class="answer">
+
+                        Jadi, lebar persegi panjang adalah
+                        <strong>5 cm</strong>.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= KUIS ================= -->
+
+        <section
+            id="kuis"
+            class="page"
+        >
+
+            <div
+                id="quizStart"
+                class="quiz-start"
+            >
+
+                <div class="quiz-icon">
+                    🧠
+                </div>
+
+
+                <h2>
+                    Siap Menguji Kemampuan?
+                </h2>
+
+
+                <p>
+                    Jawab 5 pertanyaan
+                    tentang persegi panjang!
+                </p>
+
+
+                <button
+                    class="primary-btn"
+                    onclick="startQuiz()"
+                >
+                    Mulai Kuis 🎯
+                </button>
+
+            </div>
+
+
+
+            <div
+                id="quizContainer"
+                class="quiz-container hidden"
+            >
+
+                <div class="quiz-top">
+
+                    <div>
+
+                        <span id="questionNumber">
+                            Soal 1
+                        </span>
+
+
+                        <h2 id="questionText">
+                            Pertanyaan
+                        </h2>
+
+                    </div>
+
+
+                    <div class="score-display">
+
+                        ⭐
+                        <span id="score">
+                            0
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="optionsContainer"
+                    class="options-container"
+                ></div>
+
+
+                <div
+                    id="feedback"
+                    class="feedback"
+                ></div>
+
+
+                <button
+                    id="nextButton"
+                    class="primary-btn next-btn hidden"
+                    onclick="nextQuestion()"
+                >
+                    Soal Berikutnya ➡️
+                </button>
+
+            </div>
+
+
+
+            <!-- HASIL -->
+
+            <div
+                id="resultContainer"
+                class="result-container hidden"
+            >
+
+                <div class="result-icon">
+                    🏆
+                </div>
+
+
+                <h2>
+                    Kuis Selesai!
+                </h2>
+
+
+                <p>
+                    Nilai kamu adalah
+                </p>
+
+
+                <div class="final-score">
+
+                    <span id="finalScore">
+                        0
+                    </span>
+
+                    <small>
+                        / 100
+                    </small>
+
+                </div>
+
+
+                <p id="resultMessage"></p>
+
+
+                <button
+                    class="primary-btn"
+                    onclick="restartQuiz()"
+                >
+                    🔄 Ulangi Kuis
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            <p>
+                🎓 Multimedia Pembelajaran Interaktif
+            </p>
+
+            <p>
+                Matematika SD • Persegi Panjang
+            </p>
+
+        </footer>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+  </html>
