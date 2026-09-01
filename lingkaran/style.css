@@ -1,11 +1,11 @@
 /* =========================================================
-   MPI MATEMATIKA SD
-   KELILING & LUAS LINGKARAN
-   CSS untuk PID / IFP / Layar Interaktif
+   MPI KELILING & LUAS LINGKARAN SD
+   RESPONSIVE UNTUK IFP / PID / TABLET / HP
    ========================================================= */
 
 * {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html,
@@ -26,16 +26,18 @@ body {
 button {
     font-family: inherit;
     cursor: pointer;
+    touch-action: manipulation;
 }
 
 
 /* =========================================================
-   APLIKASI
+   APP
    ========================================================= */
 
 .app {
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
+
     display: flex;
     flex-direction: column;
 }
@@ -46,16 +48,17 @@ button {
    ========================================================= */
 
 .header {
-    height: 78px;
+    height: clamp(65px, 8vh, 90px);
+
     flex-shrink: 0;
 
-    padding: 10px 24px;
+    padding:
+        clamp(8px, 1.5vw, 18px)
+        clamp(12px, 2.5vw, 35px);
 
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    color: white;
 
     background:
         linear-gradient(
@@ -64,66 +67,90 @@ button {
             #1677c8
         );
 
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.18);
+    color: white;
+
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.18);
+
+    z-index: 10;
 }
 
+
+/* =========================================================
+   BRAND
+   ========================================================= */
 
 .brand {
     display: flex;
     align-items: center;
-    gap: 12px;
+
+    gap: clamp(8px, 1vw, 15px);
+
+    min-width: 0;
 }
 
 
 .logo {
-    width: 50px;
-    height: 50px;
+    width: clamp(40px, 5vw, 58px);
+    height: clamp(40px, 5vw, 58px);
 
-    border-radius: 15px;
+    flex-shrink: 0;
 
     display: grid;
     place-items: center;
 
+    border-radius: 15px;
+
     background: white;
+
     color: #1677c8;
 
-    font-size: 30px;
+    font-size: clamp(23px, 3vw, 34px);
+
     font-weight: bold;
 }
 
 
 .brand h1 {
     margin: 0;
-    font-size: 24px;
+
+    font-size: clamp(17px, 2.2vw, 28px);
+
     line-height: 1.1;
 }
 
 
 .brand p {
     margin: 4px 0 0;
-    font-size: 13px;
+
+    font-size: clamp(10px, 1.2vw, 15px);
+
     opacity: 0.85;
 }
 
 
 /* =========================================================
-   PROGRESS BAR
+   PROGRESS
    ========================================================= */
 
 .progress-container {
-    width: 220px;
+    width: clamp(90px, 18vw, 260px);
+
+    flex-shrink: 0;
 }
 
 
 .progress {
     width: 100%;
-    height: 10px;
+
+    height: clamp(7px, 1vw, 12px);
 
     overflow: hidden;
 
     border-radius: 20px;
 
-    background: rgba(255, 255, 255, 0.25);
+    background:
+        rgba(255, 255, 255, 0.25);
 }
 
 
@@ -135,7 +162,8 @@ button {
 
     background: white;
 
-    transition: width 0.35s ease;
+    transition:
+        width 0.35s ease;
 }
 
 
@@ -145,7 +173,9 @@ button {
 
 main {
     flex: 1;
+
     min-height: 0;
+
     overflow: hidden;
 }
 
@@ -160,12 +190,14 @@ main {
     width: 100%;
     height: 100%;
 
-    padding: 25px 35px;
+    padding:
+        clamp(15px, 2.5vw, 35px);
 
     overflow-y: auto;
     overflow-x: hidden;
 
-    animation: slideIn 0.35s ease;
+    animation:
+        slideIn 0.3s ease;
 }
 
 
@@ -178,7 +210,7 @@ main {
 
     from {
         opacity: 0;
-        transform: translateX(25px);
+        transform: translateX(20px);
     }
 
     to {
@@ -199,9 +231,11 @@ main {
 
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
 
-    gap: 30px;
+    gap: clamp(15px, 3vw, 40px);
 
     align-items: center;
 }
@@ -210,13 +244,17 @@ main {
 .hero h2 {
     margin: 15px 0;
 
-    font-size: 44px;
+    font-size:
+        clamp(28px, 4vw, 52px);
+
     line-height: 1.15;
 }
 
 
 .hero p {
-    font-size: 19px;
+    font-size:
+        clamp(15px, 1.7vw, 22px);
+
     line-height: 1.6;
 }
 
@@ -224,7 +262,8 @@ main {
 .hero ul {
     padding-left: 25px;
 
-    font-size: 18px;
+    font-size:
+        clamp(15px, 1.6vw, 21px);
 
     line-height: 1.8;
 }
@@ -237,17 +276,31 @@ main {
 .card {
     background: white;
 
-    border-radius: 22px;
+    border-radius:
+        clamp(15px, 2vw, 25px);
 
-    padding: 27px;
+    padding:
+        clamp(18px, 2.5vw, 32px);
 
     box-shadow:
-        0 10px 30px rgba(18, 48, 74, 0.12);
+        0 10px 30px
+        rgba(18, 48, 74, 0.12);
 }
 
 
-.circle-card {
-    text-align: center;
+.card h3 {
+    margin-top: 0;
+
+    font-size:
+        clamp(19px, 2vw, 27px);
+}
+
+
+.card p {
+    font-size:
+        clamp(15px, 1.6vw, 20px);
+
+    line-height: 1.55;
 }
 
 
@@ -258,7 +311,9 @@ main {
 .badge {
     display: inline-block;
 
-    padding: 8px 14px;
+    padding:
+        clamp(6px, 1vw, 10px)
+        clamp(10px, 1.4vw, 16px);
 
     border-radius: 30px;
 
@@ -266,26 +321,41 @@ main {
 
     color: #1265a4;
 
-    font-size: 14px;
+    font-size:
+        clamp(11px, 1.2vw, 15px);
+
     font-weight: bold;
 }
 
 
 /* =========================================================
-   LINGKARAN
+   CIRCLE
    ========================================================= */
+
+.circle-card {
+    text-align: center;
+}
+
 
 .big-circle {
     position: relative;
 
-    width: min(32vw, 330px);
+    width:
+        min(
+            32vw,
+            38vh,
+            360px
+        );
+
     aspect-ratio: 1;
 
     margin: 0 auto 20px;
 
     border-radius: 50%;
 
-    border: 18px solid #1677c8;
+    border:
+        clamp(10px, 1.5vw, 18px)
+        solid #1677c8;
 
     background:
         radial-gradient(
@@ -301,13 +371,14 @@ main {
 
     position: absolute;
 
-    width: 15px;
-    height: 15px;
+    width: clamp(12px, 1.5vw, 18px);
+    height: clamp(12px, 1.5vw, 18px);
 
     left: 50%;
     top: 50%;
 
-    transform: translate(-50%, -50%);
+    transform:
+        translate(-50%, -50%);
 
     border-radius: 50%;
 
@@ -320,13 +391,13 @@ main {
 
     width: 43%;
 
-    height: 5px;
+    height:
+        clamp(3px, .5vw, 6px);
 
     left: 50%;
     top: 50%;
 
     transform-origin: left center;
-    transform: rotate(0deg);
 
     background: #f39a32;
 
@@ -338,25 +409,30 @@ main {
     position: absolute;
 
     left: 68%;
-    top: 43%;
+    top: 42%;
 
     color: #bd6c0b;
 
-    font-size: 25px;
+    font-size:
+        clamp(20px, 3vw, 30px);
+
     font-weight: bold;
 }
 
 
 /* =========================================================
-   JUDUL
+   TITLE
    ========================================================= */
 
 .section-title {
-    margin: 5px 0 25px;
+    margin:
+        5px 0
+        clamp(15px, 2vw, 28px);
 
     text-align: center;
 
-    font-size: 34px;
+    font-size:
+        clamp(24px, 3vw, 38px);
 }
 
 
@@ -368,18 +444,20 @@ main {
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(3, minmax(0, 1fr));
 
-    gap: 20px;
+    gap:
+        clamp(12px, 1.8vw, 25px);
 
-    max-width: 1200px;
+    max-width: 1250px;
 
     margin: auto;
 }
 
 
 .grid-3 .card {
-    min-height: 220px;
+    min-height:
+        clamp(170px, 25vh, 270px);
 }
 
 
@@ -388,23 +466,10 @@ main {
    ========================================================= */
 
 .icon {
-    font-size: 45px;
+    font-size:
+        clamp(32px, 4vw, 50px);
 
     margin-bottom: 10px;
-}
-
-
-.card h3 {
-    margin-top: 0;
-
-    font-size: 23px;
-}
-
-
-.card p {
-    font-size: 18px;
-
-    line-height: 1.55;
 }
 
 
@@ -415,15 +480,19 @@ main {
 .formula {
     margin-top: 15px;
 
-    padding: 15px;
+    padding:
+        clamp(12px, 1.5vw, 18px);
 
-    border-left: 7px solid #1677c8;
+    border-left:
+        clamp(5px, .6vw, 8px)
+        solid #1677c8;
 
     border-radius: 10px;
 
     background: #eaf6ff;
 
-    font-size: 23px;
+    font-size:
+        clamp(18px, 2.2vw, 28px);
 
     font-weight: bold;
 
@@ -434,11 +503,13 @@ main {
 .formula.large {
     margin: 20px auto;
 
-    max-width: 700px;
+    max-width: 800px;
 
-    padding: 20px;
+    padding:
+        clamp(15px, 2vw, 23px);
 
-    font-size: 30px;
+    font-size:
+        clamp(23px, 3vw, 35px);
 }
 
 
@@ -447,19 +518,25 @@ main {
    ========================================================= */
 
 .info-box {
-    max-width: 1000px;
+    max-width: 1050px;
 
-    margin: 25px auto 0;
+    margin:
+        clamp(15px, 2vw, 25px)
+        auto 0;
 
-    padding: 18px 22px;
+    padding:
+        clamp(13px, 1.5vw, 20px);
 
-    border-left: 7px solid #f39a32;
+    border-left:
+        clamp(5px, .6vw, 8px)
+        solid #f39a32;
 
     border-radius: 12px;
 
     background: #fff5df;
 
-    font-size: 18px;
+    font-size:
+        clamp(15px, 1.5vw, 20px);
 
     line-height: 1.6;
 }
@@ -468,13 +545,15 @@ main {
 .note-box {
     margin: 25px 0;
 
-    padding: 18px;
+    padding:
+        clamp(13px, 1.5vw, 20px);
 
     border-radius: 12px;
 
     background: #f2f7fa;
 
-    font-size: 17px;
+    font-size:
+        clamp(14px, 1.4vw, 19px);
 
     line-height: 1.6;
 }
@@ -483,7 +562,8 @@ main {
 .answer-box {
     margin-top: 15px;
 
-    padding: 20px;
+    padding:
+        clamp(15px, 2vw, 22px);
 
     border-radius: 14px;
 
@@ -491,7 +571,8 @@ main {
 
     color: #08764c;
 
-    font-size: 24px;
+    font-size:
+        clamp(20px, 2.5vw, 30px);
 
     font-weight: bold;
 
@@ -504,26 +585,24 @@ main {
    ========================================================= */
 
 .content-card {
-    max-width: 1000px;
+    width: 100%;
+
+    max-width: 1050px;
 
     margin: auto;
 }
 
 
-.content-card h3 {
-    margin-top: 25px;
-}
-
-
 .content-card ul {
-    font-size: 18px;
+    font-size:
+        clamp(15px, 1.6vw, 21px);
 
     line-height: 1.7;
 }
 
 
 /* =========================================================
-   TABEL
+   TABLE
    ========================================================= */
 
 table {
@@ -533,7 +612,8 @@ table {
 
     border-collapse: collapse;
 
-    font-size: 18px;
+    font-size:
+        clamp(14px, 1.5vw, 20px);
 
     text-align: center;
 }
@@ -541,9 +621,11 @@ table {
 
 th,
 td {
-    padding: 13px;
+    padding:
+        clamp(9px, 1vw, 14px);
 
-    border-bottom: 1px solid #dce5ea;
+    border-bottom:
+        1px solid #dce5ea;
 }
 
 
@@ -564,19 +646,30 @@ tr:nth-child(even) {
    ========================================================= */
 
 .btn {
-    display: inline-block;
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height:
+        clamp(48px, 7vh, 68px);
+
+    padding:
+        12px
+        clamp(17px, 2vw, 28px);
 
     border: 0;
 
-    padding: 14px 23px;
-
-    border-radius: 14px;
+    border-radius:
+        clamp(11px, 1.5vw, 17px);
 
     color: white;
 
     background: #1677c8;
 
-    font-size: 17px;
+    font-size:
+        clamp(15px, 1.5vw, 21px);
+
     font-weight: bold;
 
     box-shadow:
@@ -626,11 +719,12 @@ tr:nth-child(even) {
 
 
 /* =========================================================
-   NAVIGASI BAWAH
+   NAVIGASI
    ========================================================= */
 
 .navigation {
-    height: 78px;
+    height:
+        clamp(65px, 9vh, 90px);
 
     flex-shrink: 0;
 
@@ -640,17 +734,25 @@ tr:nth-child(even) {
 
     justify-content: space-between;
 
-    padding: 10px 25px;
+    gap: 15px;
+
+    padding:
+        8px
+        clamp(12px, 2.5vw, 30px);
 
     background: white;
 
     box-shadow:
-        0 -3px 12px rgba(0, 0, 0, 0.08);
+        0 -3px 12px
+        rgba(0, 0, 0, 0.08);
+
+    z-index: 10;
 }
 
 
 .page-number {
-    font-size: 18px;
+    font-size:
+        clamp(14px, 1.5vw, 20px);
 
     font-weight: bold;
 
@@ -663,13 +765,15 @@ tr:nth-child(even) {
    ========================================================= */
 
 .quiz-instruction {
-    max-width: 800px;
+    max-width: 850px;
 
-    margin: 0 auto 20px;
+    margin:
+        0 auto 20px;
 
     text-align: center;
 
-    font-size: 18px;
+    font-size:
+        clamp(15px, 1.6vw, 21px);
 }
 
 
@@ -678,18 +782,21 @@ tr:nth-child(even) {
 
     justify-content: center;
 
-    gap: 20px;
+    gap:
+        clamp(10px, 2vw, 22px);
 
-    margin: 15px auto;
+    margin:
+        15px auto;
 
-    max-width: 850px;
+    max-width: 900px;
 }
 
 
 .team {
     flex: 1;
 
-    padding: 15px;
+    padding:
+        clamp(10px, 1.5vw, 18px);
 
     border-radius: 18px;
 
@@ -698,31 +805,38 @@ tr:nth-child(even) {
     text-align: center;
 
     box-shadow:
-        0 8px 25px rgba(18, 48, 74, 0.12);
+        0 8px 25px
+        rgba(18, 48, 74, 0.12);
 }
 
 
 .team h3 {
     margin: 0;
 
-    font-size: 23px;
+    font-size:
+        clamp(17px, 2vw, 25px);
 }
 
 
 .team-a {
-    border-top: 8px solid #1677c8;
+    border-top:
+        clamp(5px, .8vw, 8px)
+        solid #1677c8;
 }
 
 
 .team-b {
-    border-top: 8px solid #16a36b;
+    border-top:
+        clamp(5px, .8vw, 8px)
+        solid #16a36b;
 }
 
 
 .score {
     margin-top: 5px;
 
-    font-size: 42px;
+    font-size:
+        clamp(30px, 4vw, 48px);
 
     font-weight: bold;
 }
@@ -731,7 +845,8 @@ tr:nth-child(even) {
 .team span {
     color: #647687;
 
-    font-size: 14px;
+    font-size:
+        clamp(11px, 1.1vw, 14px);
 }
 
 
@@ -740,7 +855,9 @@ tr:nth-child(even) {
    ========================================================= */
 
 .quiz-card {
-    max-width: 900px;
+    width: 100%;
+
+    max-width: 950px;
 
     margin: 20px auto;
 
@@ -751,13 +868,17 @@ tr:nth-child(even) {
 .turn {
     display: inline-block;
 
-    padding: 10px 18px;
+    padding:
+        10px 18px;
 
     border-radius: 25px;
 
     background: #eaf6ff;
 
     color: #1265a4;
+
+    font-size:
+        clamp(14px, 1.5vw, 19px);
 
     font-weight: bold;
 }
@@ -766,9 +887,11 @@ tr:nth-child(even) {
 .question {
     min-height: 70px;
 
-    margin: 25px 0;
+    margin:
+        22px 0;
 
-    font-size: 27px;
+    font-size:
+        clamp(21px, 2.7vw, 32px);
 
     line-height: 1.4;
 
@@ -780,24 +903,32 @@ tr:nth-child(even) {
     display: grid;
 
     grid-template-columns:
-        repeat(2, 1fr);
+        repeat(2, minmax(0, 1fr));
 
-    gap: 14px;
+    gap:
+        clamp(10px, 1.5vw, 16px);
 }
 
 
 .choice {
-    padding: 18px;
+    min-height:
+        clamp(55px, 8vh, 75px);
 
-    border: 3px solid #dce7ee;
+    padding:
+        clamp(12px, 1.5vw, 20px);
 
-    border-radius: 15px;
+    border:
+        3px solid #dce7ee;
+
+    border-radius:
+        clamp(12px, 1.5vw, 17px);
 
     background: #f8fbfd;
 
     color: #12304a;
 
-    font-size: 19px;
+    font-size:
+        clamp(16px, 1.7vw, 22px);
 
     font-weight: bold;
 
@@ -842,9 +973,11 @@ tr:nth-child(even) {
 .feedback {
     min-height: 35px;
 
-    margin: 18px 0;
+    margin:
+        15px 0;
 
-    font-size: 19px;
+    font-size:
+        clamp(16px, 1.6vw, 21px);
 
     font-weight: bold;
 }
@@ -860,88 +993,117 @@ tr:nth-child(even) {
 
 
 /* =========================================================
-   SLIDE TERAKHIR
+   SLIDE AKHIR
    ========================================================= */
 
 .end-card {
+    width: 100%;
+
     max-width: 850px;
 
-    margin: 60px auto;
+    margin:
+        clamp(20px, 7vh, 70px)
+        auto;
 
     text-align: center;
 }
 
 
 .end-card h2 {
-    font-size: 40px;
+    font-size:
+        clamp(30px, 4vw, 48px);
 }
 
 
 .end-card p {
-    font-size: 20px;
+    font-size:
+        clamp(16px, 1.8vw, 22px);
 }
 
 
 .trophy {
-    font-size: 70px;
+    font-size:
+        clamp(50px, 7vw, 80px);
 
     margin-bottom: 10px;
 }
 
 
 /* =========================================================
-   RESPONSIVE
-   HP / TABLET
+   TABLET / IPAD / LAYAR SEDANG
    ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
+
+    .hero {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+
+    .hero .card {
+        max-width: 900px;
+        width: 100%;
+        margin: auto;
+    }
+
+
+    .big-circle {
+        width: min(45vw, 280px);
+    }
+
+
+    .grid-3 {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =========================================================
+   HP
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+    body {
+        overflow: hidden;
+    }
+
 
     .header {
-        height: 68px;
-
-        padding: 8px 12px;
-    }
-
-
-    .logo {
-        width: 43px;
-        height: 43px;
-
-        font-size: 25px;
-    }
-
-
-    .brand h1 {
-        font-size: 18px;
+        height: 62px;
     }
 
 
     .brand p {
-        font-size: 11px;
+        display: none;
     }
 
 
     .progress-container {
-        width: 100px;
+        width: 80px;
     }
 
 
     .slide {
-        padding: 18px;
+        padding: 12px;
     }
 
 
     .hero {
-        grid-template-columns: 1fr;
-
-        height: auto;
-
-        gap: 18px;
+        gap: 12px;
     }
 
 
     .hero h2 {
-        font-size: 32px;
+        font-size: 28px;
+    }
+
+
+    .hero ul {
+        line-height: 1.55;
     }
 
 
@@ -950,13 +1112,18 @@ tr:nth-child(even) {
     }
 
 
+    .grid-3 .card {
+        min-height: auto;
+    }
+
+
     .big-circle {
-        width: 210px;
+        width: min(55vw, 210px);
     }
 
 
     .section-title {
-        font-size: 28px;
+        font-size: 25px;
     }
 
 
@@ -966,20 +1133,183 @@ tr:nth-child(even) {
 
 
     .question {
-        font-size: 22px;
+        font-size: 20px;
+    }
+
+
+    .choice {
+        min-height: 52px;
+    }
+
+
+    .teams {
+        gap: 8px;
+    }
+
+
+    .team h3 {
+        font-size: 16px;
+    }
+
+
+    .score {
+        font-size: 30px;
     }
 
 
     .navigation {
-        height: 68px;
+        height: 62px;
+    }
 
-        padding: 8px 12px;
+
+    .navigation .btn {
+        min-height: 44px;
+        padding: 8px 13px;
+    }
+
+
+    .page-number {
+        font-size: 13px;
+    }
+
+}
+
+
+/* =========================================================
+   HP SANGAT KECIL
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .brand h1 {
+        font-size: 15px;
+    }
+
+
+    .progress-container {
+        width: 60px;
+    }
+
+
+    .card {
+        padding: 15px;
+    }
+
+
+    .hero h2 {
+        font-size: 24px;
+    }
+
+
+    .hero p,
+    .card p {
+        font-size: 14px;
+    }
+
+
+    .formula {
+        font-size: 18px;
+    }
+
+
+    .formula.large {
+        font-size: 20px;
+    }
+
+
+    .section-title {
+        font-size: 22px;
     }
 
 
     .btn {
-        padding: 12px 16px;
+        font-size: 14px;
+    }
 
+}
+
+
+/* =========================================================
+   MODE LANDSCAPE HP
+   ========================================================= */
+
+@media (max-height: 550px) and (orientation: landscape) {
+
+    .header {
+        height: 55px;
+    }
+
+
+    .navigation {
+        height: 55px;
+    }
+
+
+    .slide {
+        padding: 10px 18px;
+    }
+
+
+    .hero {
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 15px;
+    }
+
+
+    .hero h2 {
+        font-size: 25px;
+    }
+
+
+    .hero p {
+        font-size: 14px;
+    }
+
+
+    .hero ul {
+        font-size: 13px;
+        line-height: 1.35;
+    }
+
+
+    .big-circle {
+        width: 180px;
+    }
+
+
+    .card {
+        padding: 15px;
+    }
+
+
+    .grid-3 {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+
+    .section-title {
+        font-size: 23px;
+        margin-bottom: 10px;
+    }
+
+
+    .quiz-card {
+        margin: 10px auto;
+    }
+
+
+    .question {
+        margin: 10px 0;
+        font-size: 18px;
+    }
+
+
+    .choice {
+        min-height: 45px;
+        padding: 9px;
         font-size: 15px;
     }
 
@@ -987,68 +1317,110 @@ tr:nth-child(even) {
 
 
 /* =========================================================
-   LAYAR SANGAT KECIL
+   IFP / PID BESAR
+   1280px KE ATAS
    ========================================================= */
 
-@media (max-width: 520px) {
+@media (min-width: 1280px) {
 
-    .hero h2 {
-        font-size: 28px;
-    }
-
-
-    .hero p,
-    .card p {
-        font-size: 16px;
+    .slide {
+        padding:
+            30px 45px;
     }
 
 
     .card {
-        padding: 20px;
-
-        border-radius: 18px;
+        border-radius: 25px;
     }
 
 
-    .teams {
-        gap: 10px;
+    .hero {
+        max-width: 1450px;
+        margin: auto;
     }
 
 
-    .team {
-        padding: 10px;
+    .grid-3 {
+        max-width: 1350px;
     }
 
 
-    .team h3 {
-        font-size: 17px;
-    }
-
-
-    .score {
-        font-size: 32px;
-    }
-
-
-    .question {
-        font-size: 19px;
+    .quiz-card {
+        max-width: 1100px;
     }
 
 
     .choice {
-        padding: 14px;
+        min-height: 80px;
+    }
 
-        font-size: 16px;
+}
+
+
+/* =========================================================
+   IFP / PID FULL HD
+   ========================================================= */
+
+@media (
+    min-width: 1600px
+) and (
+    min-height: 850px
+) {
+
+    .brand h1 {
+        font-size: 30px;
     }
 
 
-    .formula.large {
-        font-size: 23px;
+    .brand p {
+        font-size: 15px;
     }
 
 
-    .end-card {
-        margin: 25px auto;
+    .section-title {
+        font-size: 40px;
     }
 
+
+    .hero h2 {
+        font-size: 54px;
+    }
+
+
+    .hero p {
+        font-size: 22px;
+    }
+
+
+    .card p {
+        font-size: 21px;
+    }
+
+
+    .choice {
+        min-height: 90px;
+
+        font-size: 24px;
+    }
+
+
+    .question {
+        font-size: 34px;
+    }
+
+}
+
+
+/* =========================================================
+   MENCEGAH SELEKSI TEKS SAAT PRESENTASI
+   ========================================================= */
+
+.logo,
+.btn,
+.choice,
+.team,
+.badge,
+.turn {
+    user-select: none;
+    -webkit-user-select: none;
 }
