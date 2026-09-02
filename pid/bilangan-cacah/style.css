@@ -1,0 +1,374 @@
+:root {
+    --primary: #1e293b;
+    --accent-tambah: #10b981;
+    --accent-kurang: #ef4444;
+    --accent-kali: #f59e0b;
+    --accent-bagi: #06b6d4;
+    --team-a: #ef4444;
+    --team-b: #3b82f6;
+    --warning: #f97316;
+    --bg: #f8fafc;
+}
+
+* {
+    box-sizing: border-box;
+    user-select: none;
+    font-family: 'Segoe UI', System-UI, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Header IFP */
+.ifp-header {
+    background-color: var(--primary);
+    color: white;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.ifp-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+nav {
+    display: flex;
+    gap: 12px;
+}
+
+.nav-btn {
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background: #334155;
+    color: white;
+    cursor: pointer;
+}
+
+.nav-btn.active {
+    background: var(--accent-bagi);
+    transform: scale(1.03);
+}
+
+.nav-btn.highlight {
+    background: #f97316;
+}
+
+/* Main Container */
+.ifp-container {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.tab-content {
+    display: none;
+    height: 100%;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #475569;
+}
+
+/* Layout Materi */
+.materi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 15px;
+}
+
+.box-materi {
+    padding: 16px;
+    border-radius: 16px;
+    background: #f1f5f9;
+    border-top: 6px solid;
+    text-align: center;
+}
+
+.box-tambah { border-color: var(--accent-tambah); }
+.box-kurang { border-color: var(--accent-kurang); }
+.box-kali { border-color: var(--accent-kali); }
+.box-bagi { border-color: var(--accent-bagi); }
+
+.formula-text {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.text-tambah { color: var(--accent-tambah); }
+.text-kurang { color: var(--accent-kurang); }
+.text-kali { color: var(--accent-kali); }
+.text-bagi { color: var(--accent-bagi); }
+
+.rule-card {
+    margin-top: 20px;
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 16px;
+    border-left: 6px solid var(--primary);
+}
+
+.rule-list {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin: 10px 0 0 20px;
+    padding: 0;
+}
+
+/* Layout Simulasi */
+.simulasi-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    height: 100%;
+}
+
+.controls-card {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.control-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+}
+
+.op-selector {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.btn-op {
+    padding: 10px 18px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    border: 2px solid #cbd5e1;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+}
+
+.btn-op.active {
+    background: var(--accent-bagi);
+    color: white;
+    border-color: var(--accent-bagi);
+}
+
+.btn-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-touch {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-touch.danger { background: var(--team-a); color: white; }
+.btn-touch.success { background: var(--accent-tambah); color: white; }
+.btn-touch.warning { background: var(--warning); color: white; width: 100%; }
+
+.val-badge {
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: #f1f5f9;
+    padding: 6px 14px;
+    border-radius: 8px;
+    min-width: 60px;
+    text-align: center;
+}
+
+.step-card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    margin-top: auto;
+}
+
+.step-text {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.display-card {
+    background: white;
+    border: 3px dashed var(--accent-bagi);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.equation-box {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary);
+    background: #f1f5f9;
+    padding: 15px 40px;
+    border-radius: 16px;
+}
+
+.result-box {
+    background: #ecfdf5;
+    border: 2px solid var(--accent-tambah);
+    border-radius: 16px;
+    padding: 20px 50px;
+    text-align: center;
+}
+
+.result-title {
+    font-size: 1.1rem;
+    color: #047857;
+}
+
+.result-value {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #065f46;
+}
+
+/* Arena Kuis */
+.arena-tanding {
+    display: grid;
+    grid-template-columns: 1fr 2.2fr 1fr;
+    gap: 16px;
+    height: 100%;
+}
+
+.team-panel {
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.team-panel h2 { margin: 0; }
+.team-a { background-color: var(--team-a); }
+.team-b { background-color: var(--team-b); }
+
+.score-board {
+    font-size: 4.5rem;
+    font-weight: bold;
+    background: rgba(0,0,0,0.25);
+    width: 100%;
+    text-align: center;
+    border-radius: 15px;
+    padding: 10px 0;
+}
+
+.btn-quiz {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background: white;
+    color: #1e293b;
+    cursor: pointer;
+}
+
+.btn-quiz.danger { background: #fca5a5; color: #991b1b; }
+
+.quiz-center {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.quiz-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.quiz-badge {
+    background: var(--primary);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    align-self: flex-start;
+    font-weight: bold;
+}
+
+.question-box {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: auto;
+}
+
+.option-btn {
+    padding: 16px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    background: #f1f5f9;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    cursor: pointer;
+      }
