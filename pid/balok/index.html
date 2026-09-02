@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Volume Balok - Kelas Digital IFP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="ifp-header">
+        <h1>BAB: VOLUME BALOK</h1>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('materi')">📘 Materi</button>
+            <button class="nav-btn" onclick="switchTab('simulasi')">📦 Simulasi p, l, t</button>
+            <button class="nav-btn highlight" onclick="switchTab('kuis')">⚔️ Kuis Tanding (2 Tim)</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="ifp-container">
+
+        <!-- TAB 1: MATERI BALOK -->
+        <section id="materi" class="tab-content active">
+            <div class="card">
+                <h2>Apa itu Balok & Volumenya?</h2>
+                <p>Balok adalah bangun ruang 3 dimensi yang dibentuk oleh 3 pasang persegi panjang yang kongruen. Balok memiliki **6 sisi**, **12 rusuk**, dan **8 titik sudut**.</p>
+                
+                <div class="materi-layout">
+                    <div class="formula-box">
+                        <h3>Rumus Volume Balok</h3>
+                        <div class="formula">V = p × l × t</div>
+                        <div class="formula-details">
+                            <p><strong>p</strong> = panjang</p>
+                            <p><strong>l</strong> = lebar</p>
+                            <p><strong>t</strong> = tinggi</p>
+                        </div>
+                    </div>
+                    <div class="example-box">
+                        <h3>Contoh Soal:</h3>
+                        <p>Sebuah balok memiliki panjang <strong>8 cm</strong>, lebar <strong>5 cm</strong>, dan tinggi <strong>4 cm</strong>. Berapakah volumenya?</p>
+                        <div class="step-solution">
+                            <p>V = p × l × t</p>
+                            <p>V = 8 × 5 × 4</p>
+                            <p><strong>V = 160 cm³</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULASI P, L, T -->
+        <section id="simulasi" class="tab-content">
+            <div class="card">
+                <h2>Simulasi Hitung Dimensi Balok</h2>
+                <p>Ubah nilai Panjang (p), Lebar (l), dan Tinggi (t) menggunakan tombol di bawah ini:</p>
+                
+                <div class="dim-controls-grid">
+                    <!-- Control Panjang -->
+                    <div class="control-group">
+                        <label>Panjang (p)</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustDim('p', -1)">➖</button>
+                            <span id="p-val" class="val-display">5 cm</span>
+                            <button class="btn-touch success" onclick="adjustDim('p', 1)">➕</button>
+                        </div>
+                    </div>
+
+                    <!-- Control Lebar -->
+                    <div class="control-group">
+                        <label>Lebar (l)</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustDim('l', -1)">➖</button>
+                            <span id="l-val" class="val-display">3 cm</span>
+                            <button class="btn-touch success" onclick="adjustDim('l', 1)">➕</button>
+                        </div>
+                    </div>
+
+                    <!-- Control Tinggi -->
+                    <div class="control-group">
+                        <label>Tinggi (t)</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustDim('t', -1)">➖</button>
+                            <span id="t-val" class="val-display">4 cm</span>
+                            <button class="btn-touch success" onclick="adjustDim('t', 1)">➕</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interactive-display">
+                    <div class="result-card">
+                        <p>Perhitungan Volume Balok:</p>
+                        <div id="calc-breakdown" class="big-math">5 × 3 × 4</div>
+                        <div id="calc-result" class="big-result">60 cm³</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: KUIS TANDING BALOK -->
+        <section id="kuis" class="tab-content">
+            <div class="arena-tanding">
+                <!-- Tim A Side -->
+                <div class="team-panel team-a">
+                    <h2>TIM MERAH 🔴</h2>
+                    <div class="score-board" id="score-a">0</div>
+                    <button class="btn-quiz" onclick="addScore('a', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('a', -5)">-5 Poin</button>
+                </div>
+
+                <!-- Arena Soal (Tengah) -->
+                <div class="quiz-center">
+                    <div class="quiz-card">
+                        <div id="quiz-status" class="quiz-badge">Soal 1 / 5</div>
+                        <div id="question-text" class="question-box">Loading soal...</div>
+                        <div id="options-container" class="options-grid"></div>
+                    </div>
+                    <button class="btn-touch warning" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+                </div>
+
+                <!-- Tim B Side -->
+                <div class="team-panel team-b">
+                    <h2>TIM BIRU 🔵</h2>
+                    <div class="score-board" id="score-b">0</div>
+                    <button class="btn-quiz" onclick="addScore('b', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('b', -5)">-5 Poin</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
