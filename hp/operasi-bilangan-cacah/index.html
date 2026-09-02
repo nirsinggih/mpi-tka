@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPI Operasi Bilangan Cacah SD</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f0f3f9;
+      color: #2d3748;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background-color: #ffffff;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Warna Biru-Ungu Enerjik */
+    .header {
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: white;
+      text-align: center;
+      padding: 20px 15px;
+    }
+
+    .header h1 {
+      font-size: 1.35rem;
+      margin-bottom: 4px;
+    }
+
+    .header p {
+      font-size: 0.88rem;
+      opacity: 0.92;
+    }
+
+    /* Navigasi Tab Mobile */
+    .nav-menu {
+      display: flex;
+      background-color: #f1f5f9;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 10px 2px;
+      border: none;
+      background: none;
+      font-size: 0.78rem;
+      font-weight: bold;
+      color: #64748b;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .nav-btn.active {
+      background-color: #ffffff;
+      color: #4f46e5;
+      border-bottom: 3px solid #4f46e5;
+    }
+
+    .content {
+      padding: 15px;
+      flex: 1;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      color: #4f46e5;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .sub-card {
+      background-color: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 10px 0;
+    }
+
+    .sub-card h3 {
+      font-size: 0.95rem;
+      color: #0284c7;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      background-color: #4f46e5;
+      color: white;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+
+    .formula-box, .example-box, .result-box {
+      background-color: #f0f9ff;
+      border-left: 4px solid #0284c7;
+      padding: 12px;
+      border-radius: 6px;
+      margin: 10px 0;
+    }
+
+    .result-box {
+      text-align: center;
+      background-color: #f5f3ff;
+      border-left-color: #7c3aed;
+    }
+
+    /* Calculator Controls */
+    .calc-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      margin: 12px 0;
+    }
+
+    .calc-input {
+      width: 80px;
+      padding: 8px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .calc-select {
+      padding: 8px;
+      border: 1px solid #4f46e5;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #4f46e5;
+      background-color: #fff;
+    }
+
+    /* Multiplication Table Grid */
+    .table-responsive {
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
+    .grid-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 0.78rem;
+    }
+
+    .grid-table th, .grid-table td {
+      border: 1px solid #cbd5e1;
+      padding: 5px 2px;
+    }
+
+    .grid-table th {
+      background-color: #e0e7ff;
+      color: #3730a3;
+      font-weight: bold;
+    }
+
+    .grid-table td.highlight-cell {
+      background-color: #fef08a;
+      font-weight: bold;
+    }
+
+    /* Quiz Style */
+    .quiz-header {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+
+    .question {
+      font-weight: bold;
+      font-size: 0.98rem;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      padding: 12px;
+      border: 1px solid #4f46e5;
+      background-color: #fff;
+      color: #4f46e5;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .option-btn.correct {
+      background-color: #10b981;
+      color: white;
+      border-color: #10b981;
+    }
+
+    .option-btn.wrong {
+      background-color: #ef4444;
+      color: white;
+      border-color: #ef4444;
+    }
+
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.98rem;
+      cursor: pointer;
+    }
+
+    .score-box {
+      text-align: center;
+      font-size: 3rem;
+      font-weight: bold;
+      color: #10b981;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <h1>Operasi Bilangan Cacah</h1>
+      <p>Penjumlahan, Pengurangan, Perkalian & Pembagian</p>
+    </header>
+
+    <nav class="nav-menu">
+      <button class="nav-btn active" onclick="switchTab('materi')">📖 Materi</button>
+      <button class="nav-btn" onclick="switchTab('simulasi')">🧮 Hitung</button>
+      <button class="nav-btn" onclick="switchTab('tabel')">📊 Sifat & Tabel</button>
+      <button class="nav-btn" onclick="switchTab('kuis')">✏️ Kuis</button>
+    </nav>
+
+    <main class="content">
+      <!-- Section 1: Materi -->
+      <section id="materi" class="tab-content active">
+        <div class="card">
+          <h2>Apa itu Bilangan Cacah?</h2>
+          <p><strong>Bilangan cacah</strong> adalah himpunan bilangan bulat positif yang dimulai dari angka <strong>0 (nol)</strong> ke atas secara berurutan.</p>
+          <div class="formula-box">
+            <p><strong>Contoh: 0, 1, 2, 3, 4, 5, 6, 7, 8, ...</strong></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>1. Penjumlahan & Pengurangan</h2>
+          <p>• <strong>Penjumlahan (+):</strong> Penggabungan dua kelompok atau lebih bilangan.</p>
+          <p>• <strong>Pengurangan (-):</strong> Pengambilan atau penguraian sebagian bilangan dari kelompoknya.</p>
+          <div class="example-box">
+            <p><strong>Penjumlahan Bersusun:</strong></p>
+            <p>145 + 23 = <strong>168</strong></p>
+            <p style="margin-top: 6px;"><strong>Pengurangan Bersusun:</strong></p>
+            <p>250 - 85 = <strong>165</strong></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>2. Perkalian & Pembagian</h2>
+          <p>• <strong>Perkalian (×):</strong> Penjumlahan berulang dari bilangan yang sama.</p>
+          <p>• <strong>Pembagian (÷):</strong> Pengurangan berulang sampai habis (hasilnya nol) atau kebalikan dari perkalian.</p>
+          <div class="example-box">
+            <p>• 4 × 3 = 3 + 3 + 3 + 3 = <strong>12</strong></p>
+            <p>• 12 ÷ 3 = 12 - 3 - 3 - 3 - 3 (4 kali) = <strong>4</strong></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>3. Urutan Operasi Campuran (KUKABATAKU)</h2>
+          <p>Jika dalam satu soal terdapat beberapa operasi sekaligus, ikuti urutan tangga kedudukan berikut:</p>
+          <ol style="margin: 10px 0 10px 20px; line-height: 1.8;">
+            <li>Operasi di dalam tanda <strong>Kurung ( )</strong></li>
+            <li><strong>Kali (×)</strong> & <strong>Bagi (÷)</strong> (Setingkat, kerjakan dari kiri)</li>
+            <li><strong>Tambah (+)</strong> & <strong>Kurang (-)</strong> (Setingkat, kerjakan dari kiri)</li>
+          </ol>
+          <div class="example-box">
+            <p><strong>Contoh:</strong> 10 + 2 × 5</p>
+            <p>Kerjakan perkalian dulu: 2 × 5 = 10</p>
+            <p>Lalu jumlahkan: 10 + 10 = <strong>20</strong></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Hitung / Simulasi -->
+      <section id="simulasi" class="tab-content">
+        <div class="card">
+          <h2>Kalkulator Langkah Interaktif</h2>
+          <p>Masukkan dua bilangan cacah di bawah ini lalu pilih jenis operasinya:</p>
+
+          <div class="calc-row">
+            <input type="number" id="num1" class="calc-input" value="24" min="0" oninput="calculateStep()">
+            
+            <select id="operator" class="calc-select" onchange="calculateStep()">
+              <option value="+">+</option>
+              <option value="-">-</option>
+              <option value="*">×</option>
+              <option value="/">÷</option>
+            </select>
+
+            <input type="number" id="num2" class="calc-input" value="6" min="0" oninput="calculateStep()">
+          </div>
+
+          <div class="result-box">
+            <p>Hasil Perhitungan:</p>
+            <h3 id="calcResult" style="color: #4f46e5; font-size: 1.8rem; margin: 6px 0;">30</h3>
+            <div id="calcExplanation" style="font-size: 0.88rem; color: #475569; border-top: 1px dashed #cbd5e1; padding-top: 8px;">
+              24 + 6 = 30
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Uji Operasi Campuran</h2>
+          <p>Coba hitung ekspresi matematika 3 angka berikut:</p>
+          
+          <div class="sub-card" style="text-align: center;">
+            <p style="font-size: 1.1rem; font-weight: bold; color: #0284c7;">
+              <span id="expA">15</span> + <span id="expB">4</span> × <span id="expC">3</span>
+            </p>
+          </div>
+
+          <button class="action-btn" onclick="generateRandomExpression()">🎲 Acak Soal Campuran Baru</button>
+
+          <div class="example-box" id="mixExplanation" style="margin-top: 12px;">
+            <p><strong>Langkah Penyelesaian:</strong></p>
+            <p>1. Kerjakan perkalian dulu: 4 × 3 = <strong>12</strong></p>
+            <p>2. Tambahkan: 15 + 12 = <strong>27</strong></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Sifat & Tabel -->
+      <section id="tabel" class="tab-content">
+        <div class="card">
+          <h2>Sifat-Sifat Operasi Hitung</h2>
+          <ul style="margin: 10px 0 10px 20px; line-height: 1.7;">
+            <li><strong>Komutatif (Pertukaran):</strong><br>a + b = b + a | a × b = b × a</li>
+            <li><strong>Asosiatif (Pengelompokan):</strong><br>(a + b) + c = a + (b + c)</li>
+            <li><strong>Distributif (Penyebaran):</strong><br>a × (b + c) = (a × b) + (a × c)</li>
+            <li><strong>Identitas:</strong><br>a + 0 = a | a × 1 = a</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Tabel Perkalian 1 sampai 10</h2>
+          <p>Gunakan tabel ini untuk menghafal perkalian dasar:</p>
+          
+          <div class="table-responsive">
+            <table class="grid-table" id="multiplicationTable">
+              <!-- Grid tabel diisi oleh JavaScript -->
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Kuis -->
+      <section id="kuis" class="tab-content">
+        <div class="card" id="quizContainer">
+          <div class="quiz-header">
+            <span id="questionNum">Soal 1 dari 5</span>
+          </div>
+          <p id="questionText" class="question">Loading...</p>
+          <div id="optionsContainer" class="options-group"></div>
+          <div id="quizFeedback" class="feedback"></div>
+          <button id="nextBtn" class="action-btn" onclick="nextQuestion()" style="display: none;">Soal Berikutnya ➡️</button>
+        </div>
+
+        <div class="card" id="scoreContainer" style="display: none;">
+          <h2>Hasil Kuis Kamu 🎉</h2>
+          <div class="score-box">
+            <span id="finalScore">0</span>
+          </div>
+          <p id="scoreMessage" style="text-align: center;"></p>
+          <button class="action-btn" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Navigasi Tab
+    function switchTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.nav-btn');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+
+      if (tabId === 'simulasi') {
+        calculateStep();
+      } else if (tabId === 'tabel') {
+        renderMultiplicationTable();
+      }
+    }
+
+    // --- LOGIKA KALKULATOR INTERAKTIF ---
+    function calculateStep() {
+      let val1 = parseInt(document.getElementById('num1').value);
+      let val2 = parseInt(document.getElementById('num2').value);
+      const op = document.getElementById('operator').value;
+
+      if (isNaN(val1)) val1 = 0;
+      if (isNaN(val2)) val2 = 0;
+
+      let res = 0;
+      let expText = "";
+
+      switch(op) {
+        case '+':
+          res = val1 + val2;
+          expText = `Penjumlahan: ${val1} + ${val2} = <strong>${res}</strong>`;
+          break;
+        case '-':
+          res = val1 - val2;
+          expText = `Pengurangan: ${val1} - ${val2} = <strong>${res}</strong>`;
+          break;
+        case '*':
+          res = val1 * val2;
+          expText = `Perkalian (penjumlahan berulang): ${val1} × ${val2} = <strong>${res}</strong>`;
+          break;
+        case '/':
+          if (val2 === 0) {
+            document.getElementById('calcResult').innerText = "Tak Terdefinisi";
+            document.getElementById('calcExplanation').innerHTML = "Pembagi tidak boleh 0 (nol).";
+            return;
+          }
+          const sisa = val1 % val2;
+          res = Math.floor(val1 / val2);
+          if (sisa === 0) {
+            expText = `Pembagian tepat: ${val1} ÷ ${val2} = <strong>${res}</strong>`;
+          } else {
+            expText = `Pembagian: ${val1} ÷ ${val2} = <strong>${res}</strong> (sisa ${sisa})`;
+          }
+          break;
+      }
+
+      document.getElementById('calcResult').innerText = res;
+      document.getElementById('calcExplanation').innerHTML = expText;
+    }
+
+    // --- LOGIKA OPERASI CAMPURAN ACAK ---
+    let mixA = 15, mixB = 4, mixC = 3;
+
+    function generateRandomExpression() {
+      mixA = Math.floor(Math.random() * 20) + 5;
+      mixB = Math.floor(Math.random() * 9) + 2;
+      mixC = Math.floor(Math.random() * 9) + 2;
+
+      document.getElementById('expA').innerText = mixA;
+      document.getElementById('expB').innerText = mixB;
+      document.getElementById('expC').innerText = mixC;
+
+      const step1 = mixB * mixC;
+      const total = mixA + step1;
+
+      document.getElementById('mixExplanation').innerHTML = `
+        <p><strong>Langkah Penyelesaian:</strong></p>
+        <p>1. Dahulukan perkalian: ${mixB} × ${mixC} = <strong>${step1}</strong></p>
+        <p>2. Lanjutkan penjumlahan: ${mixA} + ${step1} = <strong>${total}</strong></p>
+      `;
+    }
+
+    // --- RENDER TABEL PERKALIAN ---
+    function renderMultiplicationTable() {
+      const table = document.getElementById('multiplicationTable');
+      if (table.children.length > 0) return; // cegah render ulang
+
+      let html = '<tr><th>×</th>';
+      for (let j = 1; j <= 10; j++) {
+        html += `<th>${j}</th>`;
+      }
+      html += '</tr>';
+
+      for (let i = 1; i <= 10; i++) {
+        html += `<tr><th>${i}</th>`;
+        for (let j = 1; j <= 10; j++) {
+          const val = i * j;
+          const isDiag = (i === j) ? 'class="highlight-cell"' : '';
+          html += `<td ${isDiag}>${val}</td>`;
+        }
+        html += '</tr>';
+      }
+      table.innerHTML = html;
+    }
+
+    // --- DATA KUIS ---
+    const questions = [
+      {
+        question: "Hasil dari 345 + 128 adalah...",
+        options: ["463", "473", "483", "573"],
+        answer: 1
+      },
+      {
+        question: "Berapakah hasil dari 500 - 185 ?",
+        options: ["305", "315", "325", "415"],
+        answer: 1
+      },
+      {
+        question: "Perkalian 8 × 7 bernilai sama dengan...",
+        options: ["48", "54", "56", "64"],
+        answer: 2
+      },
+      {
+        question: "Hasil dari 12 + 8 × 5 adalah...",
+        options: ["100", "52", "60", "40"],
+        answer: 1
+        // Pembahasan: 8 x 5 = 40; 12 + 40 = 52
+      },
+      {
+        question: "Ibu membeli 4 kantong jeruk. Setiap kantong berisi 12 jeruk. Banyak seluruh jeruk ibu adalah...",
+        options: ["16 buah", "36 buah", "48 buah", "52 buah"],
+        answer: 2
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let isAnswered = false;
+
+    function loadQuestion() {
+      isAnswered = false;
+      const q = questions[currentQuestion];
+      
+      document.getElementById('questionNum').innerText = `Soal ${currentQuestion + 1} dari ${questions.length}`;
+      document.getElementById('questionText').innerText = q.question;
+      document.getElementById('quizFeedback').innerText = '';
+      document.getElementById('nextBtn').style.display = 'none';
+
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.innerHTML = '';
+
+      q.options.forEach((opt, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(index, btn);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selectedIndex, selectedBtn) {
+      if (isAnswered) return;
+      isAnswered = true;
+
+      const correctIndex = questions[currentQuestion].answer;
+      const options = document.querySelectorAll('.option-btn');
+
+      if (selectedIndex === correctIndex) {
+        selectedBtn.classList.add('correct');
+        document.getElementById('quizFeedback').innerText = "Hebat! Jawaban kamu tepat sekali. 🎉";
+        document.getElementById('quizFeedback').style.color = "#10b981";
+        score += 100 / questions.length;
+      } else {
+        selectedBtn.classList.add('wrong');
+        options[correctIndex].classList.add('correct');
+        document.getElementById('quizFeedback').innerText = "Ups! Jawaban belum tepat, teliti lagi perhitungannya ya. 😅";
+        document.getElementById('quizFeedback').style.color = "#ef4444";
+      }
+
+      document.getElementById('nextBtn').style.display = 'block';
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('quizContainer').style.display = 'none';
+      document.getElementById('scoreContainer').style.display = 'block';
+      
+      const finalScore = Math.round(score);
+      document.getElementById('finalScore').innerText = finalScore;
+
+      let message = "";
+      if (finalScore === 100) {
+        message = "Luar biasa! Kamu master operasi hitung bilangan cacah!";
+      } else if (finalScore >= 60) {
+        message = "Bagus sekali! Tingkatkan terus latihan perhitungannya ya.";
+      } else {
+        message = "Jangan menyerah, pelajari lagi aturan KUKABATAKU dan ulangi kuisnya!";
+      }
+      document.getElementById('scoreMessage').innerText = message;
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById('quizContainer').style.display = 'block';
+      document.getElementById('scoreContainer').style.display = 'none';
+      loadQuestion();
+    }
+
+    // Inisialisasi awal
+    loadQuestion();
+  </script>
+</body>
+</html>
