@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Volume Kubus - Kelas Digital IFP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="ifp-header">
+        <h1>BAB: VOLUME KUBUS</h1>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('materi')">📘 Materi</button>
+            <button class="nav-btn" onclick="switchTab('simulasi')">🎲 Simulasi 3D</button>
+            <button class="nav-btn highlight" onclick="switchTab('kuis')">⚔️ Kuis Tanding (2 Tim)</button>
+        </nav>
+    </header>
+
+    <main class="ifp-container">
+
+        <section id="materi" class="tab-content active">
+            <div class="card">
+                <h2>Apa itu Kubus & Volumenya?</h2>
+                <p>Kubus adalah bangun ruang 3 dimensi yang memiliki **6 sisi berbentuk persegi yang sama besar** dan **12 rusuk yang sama panjang**.</p>
+                
+                <div class="materi-layout">
+                    <div class="formula-box">
+                        <h3>Rumus Volume Kubus</h3>
+                        <div class="formula">V = s × s × s</div>
+                        <p>atau</p>
+                        <div class="formula">V = s³</div>
+                        <p><small>*s = panjang rusuk (sisi)</small></p>
+                    </div>
+                    <div class="example-box">
+                        <h3>Contoh Soal:</h3>
+                        <p>Sebuah kubus memiliki panjang rusuk <strong>5 cm</strong>. Berapakah volumenya?</p>
+                        <div class="step-solution">
+                            <p>V = s × s × s</p>
+                            <p>V = 5 × 5 × 5</p>
+                            <p><strong>V = 125 cm³</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="simulasi" class="tab-content">
+            <div class="card">
+                <h2>Simulasi Hitung Kubus Satuan</h2>
+                <p>Ubah panjang rusuk menggunakan tombol di bawah ini:</p>
+                
+                <div class="controls-ifp">
+                    <button class="btn-touch danger" onclick="adjustSize(-1)">➖ Kurangi</button>
+                    <span id="s-value" class="size-display">Rusuk (s) = 3 cm</span>
+                    <button class="btn-touch success" onclick="adjustSize(1)">➕ Tambah</button>
+                </div>
+
+                <div class="interactive-display">
+                    <div class="result-card">
+                        <p>Perhitungan Volume:</p>
+                        <div id="calc-breakdown" class="big-math">3 × 3 × 3</div>
+                        <div id="calc-result" class="big-result">27 cm³</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="kuis" class="tab-content">
+            <div class="arena-tanding">
+                <div class="team-panel team-a">
+                    <h2>TIM MERAH 🔴</h2>
+                    <div class="score-board" id="score-a">0</div>
+                    <button class="btn-quiz" onclick="addScore('a', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('a', -5)">-5 Poin</button>
+                </div>
+
+                <div class="quiz-center">
+                    <div class="quiz-card">
+                        <div id="quiz-status" class="quiz-badge">Soal 1 / 5</div>
+                        <div id="question-text" class="question-box">Loading soal...</div>
+                        <div id="options-container" class="options-grid"></div>
+                    </div>
+                    <button class="btn-touch warning" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+                </div>
+
+                <div class="team-panel team-b">
+                    <h2>TIM BIRU 🔵</h2>
+                    <div class="score-board" id="score-b">0</div>
+                    <button class="btn-quiz" onclick="addScore('b', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('b', -5)">-5 Poin</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
