@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Penyajian Data - IFP Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="ifp-header">
+        <h1>📊 PENYAJIAN DATA MATEMATIKA SD</h1>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('materi', this)">📘 Jenis Penyajian</button>
+            <button class="nav-btn" onclick="switchTab('simulasi', this)">🎛️ Visualizer Data</button>
+            <button class="nav-btn highlight" onclick="switchTab('kuis', this)">⚔️ Kuis Tanding (2 Tim)</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="ifp-container">
+
+        <!-- TAB 1: MATERI -->
+        <section id="materi" class="tab-content active">
+            <div class="card">
+                <h2>Macam-Macam Bentuk Penyajian Data</h2>
+                <p class="subtitle">
+                    Data dapat disajikan dalam bentuk angka (tabel) atau bentuk visual (gambar dan diagram).
+                </p>
+                
+                <div class="materi-grid">
+                    <!-- Tabel Frekuensi -->
+                    <div class="box-materi box-tabel">
+                        <h3>1. Tabel Frekuensi</h3>
+                        <p>Menampilkan kategori data beserta frekuensi (banyaknya data) angka murni atau turus (||||).</p>
+                    </div>
+
+                    <!-- Piktogram -->
+                    <div class="box-materi box-piktogram">
+                        <h3>2. Piktogram (Gambar)</h3>
+                        <p>Menggunakan ikon/gambar visual. Keterangan skala gambar sangat penting (contoh: 1 🍎 = 10 buah).</p>
+                    </div>
+
+                    <!-- Diagram Batang -->
+                    <div class="box-materi box-batang">
+                        <h3>3. Diagram Batang</h3>
+                        <p>Menggunakan batang persegi panjang. Sumbu mendatar = Kategori, Sumbu tegak = Jumlah/Frekuensi.</p>
+                    </div>
+                </div>
+
+                <div class="tip-card">
+                    💡 <strong>Tips Pembacaan Data:</strong> Perhatikan selalu **Modus** (data yang paling sering muncul/paling tinggi) dan **Total Data** (jumlah keseluruhan data)!
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULASI VISUALIZER DATA INTERAKTIF -->
+        <section id="simulasi" class="tab-content">
+            <div class="simulasi-container">
+                <!-- Control Panel -->
+                <div class="controls-card">
+                    <h2>Ubah Data Buah Favorit</h2>
+                    
+                    <!-- Apel -->
+                    <div class="control-row">
+                        <label>🍎 Apel:</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustFruit('apel', -1)">-1</button>
+                            <span id="val-apel" class="val-badge">4</span>
+                            <button class="btn-touch success" onclick="adjustFruit('apel', 1)">+1</button>
+                        </div>
+                    </div>
+
+                    <!-- Jeruk -->
+                    <div class="control-row">
+                        <label>🍊 Jeruk:</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustFruit('jeruk', -1)">-1</button>
+                            <span id="val-jeruk" class="val-badge">6</span>
+                            <button class="btn-touch success" onclick="adjustFruit('jeruk', 1)">+1</button>
+                        </div>
+                    </div>
+
+                    <!-- Pisang -->
+                    <div class="control-row">
+                        <label>🍌 Pisang:</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustFruit('pisang', -1)">-1</button>
+                            <span id="val-pisang" class="val-badge">3</span>
+                            <button class="btn-touch success" onclick="adjustFruit('pisang', 1)">+1</button>
+                        </div>
+                    </div>
+
+                    <!-- Mode Tampilan Data -->
+                    <div class="mode-selector">
+                        <label>Pilih Tampilan Visual:</label>
+                        <div class="mode-btn-grid">
+                            <button class="btn-mode active" onclick="setMode('tabel', this)">📋 Tabel</button>
+                            <button class="btn-mode" onclick="setMode('piktogram', this)">🖼️ Piktogram</button>
+                            <button class="btn-mode" onclick="setMode('batang', this)">📊 Diagram Batang</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display Result Panel -->
+                <div class="display-card">
+                    <h3 id="display-title">Penyajian Data: Tabel Frekuensi</h3>
+                    
+                    <div id="visual-render-area" class="render-area">
+                        <!-- Content rendered dynamically by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: KUIS TANDING 2 TIM -->
+        <section id="kuis" class="tab-content">
+            <div class="arena-tanding">
+                <!-- Tim Merah -->
+                <div class="team-panel team-a">
+                    <h2>TIM MERAH 🔴</h2>
+                    <div class="score-board" id="score-a">0</div>
+                    <button class="btn-quiz" onclick="addScore('a', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('a', -5)">-5 Poin</button>
+                </div>
+
+                <!-- Arena Soal -->
+                <div class="quiz-center">
+                    <div class="quiz-card">
+                        <div id="quiz-status" class="quiz-badge">Soal 1 / 5</div>
+                        <div id="question-text" class="question-box">Memuat pertanyaan...</div>
+                        <div id="options-container" class="options-grid"></div>
+                    </div>
+                    <button class="btn-touch warning" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+                </div>
+
+                <!-- Tim Biru -->
+                <div class="team-panel team-b">
+                    <h2>TIM BIRU 🔵</h2>
+                    <div class="score-board" id="score-b">0</div>
+                    <button class="btn-quiz" onclick="addScore('b', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('b', -5)">-5 Poin</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+                      </html>
