@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MPI Persegi | Matematika SD</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
+
+    <!-- HEADER -->
+    <header>
+
+        <div class="logo">⬜ MATH SQUARE</div>
+
+        <div class="score-board">
+
+            <div class="team-score red-score">
+                <span>🔴 TIM MERAH</span>
+                <strong id="scoreRed">0</strong>
+            </div>
+
+            <div class="team-score blue-score">
+                <span>🔵 TIM BIRU</span>
+                <strong id="scoreBlue">0</strong>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= HOME ================= -->
+    <section class="page active" id="home">
+
+        <div class="hero">
+
+            <div class="hero-text">
+
+                <div class="badge">
+                    📚 MATEMATIKA SEKOLAH DASAR
+                </div>
+
+                <h1>
+                    Belajar
+                    <span>Persegi</span>
+                </h1>
+
+                <p>
+                    Mari mengenal bangun persegi, memahami unsur-unsurnya,
+                    mempelajari keliling dan luas, lalu menguji kemampuan
+                    melalui kuis tanding dua tim!
+                </p>
+
+                <div class="hero-buttons">
+
+                    <button class="btn primary"
+                        onclick="showPage('materi')">
+                        🚀 Mulai Belajar
+                    </button>
+
+                    <button class="btn secondary"
+                        onclick="showPage('quizIntro')">
+                        🏆 Kuis 2 Tim
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-visual">
+
+                <div class="square-large">
+
+                    <span class="label-side">s</span>
+                    <span class="label-bottom">s</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= MENU MATERI ================= -->
+    <section class="page" id="materi">
+
+        <div class="section-heading">
+
+            <span>📖 MARI BELAJAR</span>
+
+            <h2>Materi Persegi</h2>
+
+            <p>Pilih materi yang ingin dipelajari.</p>
+
+        </div>
+
+
+        <div class="material-grid">
+
+            <button class="material-card card-blue"
+                onclick="showPage('pengertian')">
+
+                <div class="icon">⬜</div>
+
+                <h3>Pengertian</h3>
+
+                <p>
+                    Mengenal bentuk dan ciri persegi.
+                </p>
+
+            </button>
+
+
+            <button class="material-card card-orange"
+                onclick="showPage('unsur')">
+
+                <div class="icon">📐</div>
+
+                <h3>Unsur Persegi</h3>
+
+                <p>
+                    Mengenal sisi dan sudut persegi.
+                </p>
+
+            </button>
+
+
+            <button class="material-card card-purple"
+                onclick="showPage('keliling')">
+
+                <div class="icon">🔄</div>
+
+                <h3>Keliling</h3>
+
+                <p>
+                    Menghitung panjang seluruh sisi.
+                </p>
+
+            </button>
+
+
+            <button class="material-card card-green"
+                onclick="showPage('luas')">
+
+                <div class="icon">📏</div>
+
+                <h3>Luas</h3>
+
+                <p>
+                    Menghitung luas daerah persegi.
+                </p>
+
+            </button>
+
+        </div>
+
+
+        <button class="btn back"
+            onclick="showPage('home')">
+            ← Kembali ke Beranda
+        </button>
+
+    </section>
+
+
+
+    <!-- ================= PENGERTIAN ================= -->
+    <section class="page" id="pengertian">
+
+        <div class="lesson-layout">
+
+            <div class="lesson-text">
+
+                <span>1. PENGERTIAN</span>
+
+                <h2>Apa Itu Persegi? ⬜</h2>
+
+                <p class="large-text">
+
+                    Persegi adalah bangun datar yang memiliki
+                    empat sisi sama panjang dan empat sudut siku-siku.
+
+                </p>
+
+
+                <div class="info-box">
+
+                    <h3>✨ Ciri-ciri Persegi</h3>
+
+                    <div class="chips">
+
+                        <span>📏 4 Sisi Sama Panjang</span>
+
+                        <span>📐 4 Sudut Siku-Siku</span>
+
+                        <span>⬜ Memiliki 4 Titik Sudut</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="square-display">
+
+                <div class="square-shape">
+
+                    <span class="point-a">A</span>
+                    <span class="point-b">B</span>
+                    <span class="point-c">C</span>
+                    <span class="point-d">D</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="navigation">
+
+            <button class="btn primary"
+                onclick="showPage('unsur')">
+                Selanjutnya →
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= UNSUR ================= -->
+    <section class="page" id="unsur">
+
+        <div class="lesson-layout">
+
+            <div class="lesson-text">
+
+                <span>2. UNSUR PERSEGI</span>
+
+                <h2>Mengenal Unsur Persegi</h2>
+
+                <div class="element-list">
+
+                    <div class="element-item">
+
+                        <strong>📏 Sisi</strong>
+
+                        <p>
+                            Persegi memiliki 4 sisi dengan panjang yang sama.
+                        </p>
+
+                    </div>
+
+
+                    <div class="element-item">
+
+                        <strong>📍 Titik Sudut</strong>
+
+                        <p>
+                            Persegi memiliki 4 titik sudut.
+                        </p>
+
+                    </div>
+
+
+                    <div class="element-item">
+
+                        <strong>📐 Sudut Siku-Siku</strong>
+
+                        <p>
+                            Keempat sudut persegi besarnya 90°.
+                        </p>
+
+                    </div>
+
+
+                    <div class="element-item">
+
+                        <strong>↔️ Sisi Sama Panjang</strong>
+
+                        <p>
+                            Semua sisi pada persegi memiliki ukuran yang sama.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="diagram-box">
+
+                <div class="diagram-square">
+
+                    <span class="top-label">s</span>
+                    <span class="right-label">s</span>
+                    <span class="bottom-label">s</span>
+                    <span class="left-label">s</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="navigation two-buttons">
+
+            <button class="btn secondary"
+                onclick="showPage('pengertian')">
+                ← Sebelumnya
+            </button>
+
+            <button class="btn primary"
+                onclick="showPage('keliling')">
+                Keliling →
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= KELILING ================= -->
+    <section class="page" id="keliling">
+
+        <div class="lesson-layout">
+
+            <div class="lesson-text">
+
+                <span>3. KELILING</span>
+
+                <h2>Menghitung Keliling 🔄</h2>
+
+                <p class="large-text">
+
+                    Keliling adalah jumlah panjang seluruh sisi
+                    yang mengelilingi sebuah persegi.
+
+                </p>
+
+
+                <div class="formula-box">
+
+                    <h3>Rumus Keliling Persegi</h3>
+
+                    <div class="formula">
+                        K = 4 × s
+                    </div>
+
+                </div>
+
+
+                <div class="note-box">
+
+                    📌 K = Keliling
+
+                    <br><br>
+
+                    📌 s = Panjang Sisi
+
+                </div>
+
+            </div>
+
+
+            <div class="example-box">
+
+                <h3>✏️ Contoh Soal</h3>
+
+                <p>
+                    Sebuah persegi memiliki panjang sisi 8 cm.
+                </p>
+
+
+                <div class="calculation">
+
+                    K = 4 × s
+
+                    <br>
+
+                    K = 4 × 8
+
+                    <br>
+
+                    <strong>K = 32 cm</strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="navigation two-buttons">
+
+            <button class="btn secondary"
+                onclick="showPage('unsur')">
+                ← Sebelumnya
+            </button>
+
+            <button class="btn primary"
+                onclick="showPage('luas')">
+                Luas →
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= LUAS ================= -->
+    <section class="page" id="luas">
+
+        <div class="lesson-layout">
+
+            <div class="lesson-text">
+
+                <span>4. LUAS</span>
+
+                <h2>Menghitung Luas 📏</h2>
+
+                <p class="large-text">
+
+                    Luas adalah ukuran besar daerah yang berada
+                    di dalam sebuah persegi.
+
+                </p>
+
+
+                <div class="formula-box green">
+
+                    <h3>Rumus Luas Persegi</h3>
+
+                    <div class="formula">
+                        L = s × s
+                    </div>
+
+                </div>
+
+
+                <div class="note-box">
+
+                    📌 L = Luas
+
+                    <br><br>
+
+                    📌 s = Panjang Sisi
+
+                    <br><br>
+
+                    📌 Hasil luas menggunakan satuan persegi,
+                    misalnya cm² atau m².
+
+                </div>
+
+            </div>
+
+
+            <div class="example-box">
+
+                <h3>✏️ Contoh Soal</h3>
+
+                <p>
+                    Sebuah persegi memiliki panjang sisi 7 cm.
+                </p>
+
+
+                <div class="calculation">
+
+                    L = s × s
+
+                    <br>
+
+                    L = 7 × 7
+
+                    <br>
+
+                    <strong>L = 49 cm²</strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="navigation two-buttons">
+
+            <button class="btn secondary"
+                onclick="showPage('keliling')">
+                ← Sebelumnya
+            </button>
+
+            <button class="btn primary"
+                onclick="showPage('quizIntro')">
+                🏆 Mulai Kuis
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= QUIZ INTRO ================= -->
+    <section class="page" id="quizIntro">
+
+        <div class="quiz-intro">
+
+            <div class="trophy">🏆</div>
+
+            <h1>Kuis Tanding Persegi!</h1>
+
+            <p>
+                Tim Merah dan Tim Biru akan menjawab soal secara
+                bergantian. Setiap jawaban benar mendapatkan 10 poin!
+            </p>
+
+
+            <div class="teams">
+
+                <div class="team-card red-team">
+
+                    <h2>🔴 TIM MERAH</h2>
+
+                    <p>
+                        Jawab dengan benar dan kumpulkan poin!
+                    </p>
+
+                </div>
+
+
+                <div class="vs">VS</div>
+
+
+                <div class="team-card blue-team">
+
+                    <h2>🔵 TIM BIRU</h2>
+
+                    <p>
+                        Raih skor tertinggi dan jadilah pemenang!
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <button class="btn quiz-start"
+                onclick="startQuiz()">
+                🚀 MULAI PERTANDINGAN
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= QUIZ ================= -->
+    <section class="page" id="quiz">
+
+        <div class="quiz-container">
+
+            <div class="quiz-top">
+
+                <div class="question-number">
+
+                    SOAL
+
+                    <span id="questionNumber">1</span>
+
+                    / 10
+
+                </div>
+
+
+                <div id="turnIndicator"
+                    class="turn-indicator">
+
+                    🔴 GILIRAN TIM MERAH
+
+                </div>
+
+            </div>
+
+
+            <div class="question-card">
+
+                <div class="question-icon">
+                    ❓
+                </div>
+
+                <h2 id="questionText">
+                    Pertanyaan akan muncul di sini.
+                </h2>
+
+            </div>
+
+
+            <div id="answers"
+                class="answers-grid">
+            </div>
+
+
+            <div id="feedback"
+                class="feedback">
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= HASIL ================= -->
+    <section class="page" id="result">
+
+        <div class="result-container">
+
+            <div class="trophy">🏆</div>
+
+            <h1>Pertandingan Selesai!</h1>
+
+            <p>
+                Mari lihat siapa yang memperoleh skor tertinggi!
+            </p>
+
+
+            <div class="final-score">
+
+                <div class="final-team red-team">
+
+                    <h2>🔴 TIM MERAH</h2>
+
+                    <strong id="finalRed">0</strong>
+
+                    <span>POIN</span>
+
+                </div>
+
+
+                <div class="final-team blue-team">
+
+                    <h2>🔵 TIM BIRU</h2>
+
+                    <strong id="finalBlue">0</strong>
+
+                    <span>POIN</span>
+
+                </div>
+
+            </div>
+
+
+            <div id="winnerText"
+                class="winner-text">
+            </div>
+
+
+            <div class="result-buttons">
+
+                <button class="btn primary"
+                    onclick="startQuiz()">
+                    🔄 Main Lagi
+                </button>
+
+                <button class="btn secondary"
+                    onclick="resetAll()">
+                    🏠 Beranda
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+</body>
+  </html>
