@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI FPB & KPK Bilangan Asli - IFP Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="ifp-header">
+        <h1>🔢 FAKTOR, KELIPATAN, FPB & KPK</h1>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('materi', this)">📘 Ringkasan Materi</button>
+            <button class="nav-btn" onclick="switchTab('simulasi', this)">⚙️ Hitung FPB & KPK</button>
+            <button class="nav-btn highlight" onclick="switchTab('kuis', this)">⚔️ Kuis Tanding (2 Tim)</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="ifp-container">
+
+        <!-- TAB 1: MATERI -->
+        <section id="materi" class="tab-content active">
+            <div class="card">
+                <h2>Konsep dasar Faktor & Kelipatan</h2>
+                <p class="subtitle">
+                    Memahami fondasi mencari Faktor Persekutuan Terbesar (FPB) dan Kelipatan Persekutuan Terkecil (KPK).
+                </p>
+                
+                <div class="materi-grid">
+                    <!-- Kelipatan -->
+                    <div class="box-materi box-kelipatan">
+                        <h3>1. Kelipatan Bilangan</h3>
+                        <div class="formula-text text-kelipatan">a, 2a, 3a, 4a, ...</div>
+                        <p>Hasil perkalian suatu bilangan dengan bilangan asli secara berurutan.</p>
+                        <div class="example-tag">Contoh kelipatan 4: 4, 8, 12, 16, 20...</div>
+                    </div>
+
+                    <!-- Faktor -->
+                    <div class="box-materi box-faktor">
+                        <h3>2. Faktor Bilangan</h3>
+                        <div class="formula-text text-faktor">a ÷ b = Bulat</div>
+                        <p>Semua bilangan yang dapat membagi habis bilangan tersebut tanpa sisa.</p>
+                        <div class="example-tag">Contoh faktor 12: 1, 2, 3, 4, 6, 12</div>
+                    </div>
+
+                    <!-- FPB -->
+                    <div class="box-materi box-fpb">
+                        <h3>3. FPB</h3>
+                        <div class="formula-text text-fpb">Faktor Terbesar</div>
+                        <p>Faktor persekutuan (sama) yang nilainya paling besar di antara dua bilangan.</p>
+                    </div>
+
+                    <!-- KPK -->
+                    <div class="box-materi box-kpk">
+                        <h3>4. KPK</h3>
+                        <div class="formula-text text-kpk">Kelipatan Terkecil</div>
+                        <p>Kelipatan persekutuan (sama) yang nilainya paling kecil di antara dua bilangan.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULASI KALKULATOR FPB KPK -->
+        <section id="simulasi" class="tab-content">
+            <div class="simulasi-container">
+                <!-- Control Panel -->
+                <div class="controls-card">
+                    <h2>Pilih Dua Bilangan Asli</h2>
+                    
+                    <div class="control-row">
+                        <label>Bilangan Pertama (A):</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustVal('numA', -1)">➖</button>
+                            <span id="numA-val" class="val-badge">12</span>
+                            <button class="btn-touch success" onclick="adjustVal('numA', 1)">➕</button>
+                        </div>
+                    </div>
+
+                    <div class="control-row">
+                        <label>Bilangan Kedua (B):</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustVal('numB', -1)">➖</button>
+                            <span id="numB-val" class="val-badge">18</span>
+                            <button class="btn-touch success" onclick="adjustVal('numB', 1)">➕</button>
+                        </div>
+                    </div>
+
+                    <div class="analysis-box">
+                        <div class="analysis-item">
+                            <strong>Faktor A (12):</strong>
+                            <div id="factors-a" class="list-text">1, 2, 3, 4, 6, 12</div>
+                        </div>
+                        <div class="analysis-item">
+                            <strong>Faktor B (18):</strong>
+                            <div id="factors-b" class="list-text">1, 2, 3, 6, 9, 18</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display Result Panel -->
+                <div class="display-card">
+                    <h3>Hasil Perhitungan FPB & KPK</h3>
+                    
+                    <div class="result-grid">
+                        <div class="result-box box-fpb-res">
+                            <div class="res-title">FPB dari <span id="label-num-fpb">12 & 18</span></div>
+                            <div id="fpb-val" class="res-value">6</div>
+                        </div>
+
+                        <div class="result-box box-kpk-res">
+                            <div class="res-title">KPK dari <span id="label-num-kpk">12 & 18</span></div>
+                            <div id="kpk-val" class="res-value">36</div>
+                        </div>
+                    </div>
+
+                    <div class="step-explanation">
+                        <div class="step-header">Langkah Penyederhanaan / Pohon Faktor:</div>
+                        <div id="step-detail" class="step-detail-text">
+                            FPB diambil dari faktor persekutuan terbesar. KPK diperoleh dari kelipatan pertama yang sama.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: KUIS TANDING 2 TIM -->
+        <section id="kuis" class="tab-content">
+            <div class="arena-tanding">
+                <!-- Tim Merah -->
+                <div class="team-panel team-a">
+                    <h2>TIM MERAH 🔴</h2>
+                    <div class="score-board" id="score-a">0</div>
+                    <button class="btn-quiz" onclick="addScore('a', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('a', -5)">-5 Poin</button>
+                </div>
+
+                <!-- Arena Soal -->
+                <div class="quiz-center">
+                    <div class="quiz-card">
+                        <div id="quiz-status" class="quiz-badge">Soal 1 / 5</div>
+                        <div id="question-text" class="question-box">Memuat pertanyaan...</div>
+                        <div id="options-container" class="options-grid"></div>
+                    </div>
+                    <button class="btn-touch warning" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+                </div>
+
+                <!-- Tim Biru -->
+                <div class="team-panel team-b">
+                    <h2>TIM BIRU 🔵</h2>
+                    <div class="score-board" id="score-b">0</div>
+                    <button class="btn-quiz" onclick="addScore('b', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('b', -5)">-5 Poin</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
