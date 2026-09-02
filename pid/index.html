@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Papan Interaktif Digital - Dashboard Materi</title>
+    <style>
+        :root {
+            --bg-gradient-1: #e0f2fe;
+            --bg-gradient-2: #f0fdf4;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --primary-color: #0284c7;
+            --primary-hover: #0369a1;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --accent-green: #16a34a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #e0f2fe, #f0fdf4, #fef3c7, #f3e8ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-main);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            text-align: center;
+            max-width: 1000px;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #0f172a;
+            margin-bottom: 1rem;
+        }
+
+        .info-panel {
+            background: var(--card-bg);
+            padding: 1.2rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .info-item {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-item strong {
+            color: var(--text-main);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1600px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 2px solid transparent;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.03);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            user-select: none;
+        }
+
+        .card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(2, 132, 199, 0.15);
+            border-color: rgba(2, 132, 199, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--text-main);
+        }
+
+        /* Styling Checkbox Khusus Layar Sentuh IFP */
+        .checkbox-container {
+            position: relative;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+        }
+
+        .checkbox-container input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 36px;
+            width: 36px;
+            background-color: #e2e8f0;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-container:hover input ~ .checkmark {
+            background-color: #cbd5e1;
+        }
+
+        .checkbox-container input:checked ~ .checkmark {
+            background-color: var(--accent-green);
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 13px;
+            top: 7px;
+            width: 8px;
+            height: 15px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+
+        .checkbox-container input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .card-btn {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 12px;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            font-size: 1rem;
+        }
+
+        .card-btn:active {
+            transform: scale(0.98);
+            background-color: var(--primary-hover);
+        }
+
+        /* Penyesuaian khusus resolusi IFP besar */
+        @media (min-width: 1920px) {
+            .grid-container {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Modul Pembelajaran Interaktif</h1>
+        
+        <div class="info-panel">
+            <div class="info-item">🖥️ <strong>Akses:</strong> Wajib Layar IFP/IPD</div>
+            <div class="info-item">📋 <strong>Kurikulum:</strong> Kisi-kisi Resmi TKA</div>
+            <div class="info-item">💡 <strong>Catatan:</strong> Gambaran Umum (Pendalaman oleh Guru)</div>
+            <div class="info-item">📅 <strong>Pembaruan:</strong> 2 September 2025</div>
+        </div>
+    </header>
+
+    <main class="grid-container">
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">1. Pecahan senilai menggunakan gambar dan simbol matematika</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/pecahan-senilai" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">2. Perbandingan dan pengurutan bilangan pecahan</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/pengurutan-pecahan" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">3. Relasi berbagai bentuk pecahan (sederhana, desimal, persen)</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/relasi-bentuk-pecahan" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">4. Operasi (+, -, ×, ÷) bilangan cacah</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/bilangan-cacah" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">5. Operasi pecahan & perkalian/pembagian pecahan dengan bilangan asli</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/perkalian-pecahan" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">6. Kelipatan, faktor, KPK, dan FPB bilangan asli</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/kpk-fpb" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">7. Bentuk bangun datar</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/bangun-datar" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">8. Konstruksi bangun ruang dan visualisasi spasial (depan, atas, samping)</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/bangun-ruang" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">9. Hubungan antar-satuan baku panjang (mm – km)</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/satuan-panjang" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">10. Hubungan antar-satuan baku volume (ml – kl)</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/satuan-volume" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">11. Hubungan antar-satuan baku berat (mg – kg)</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/satuan-berat" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">12. Hubungan antar-satuan waktu (detik – tahun)</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/satuan-waktu" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">13. Laju perubahan (kecepatan)</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/kecepatan" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">14. Keliling dan luas segitiga</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/segitiga" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">15. Keliling dan luas persegi</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/persegi" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">16. Keliling dan luas persegi panjang</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/persegi-panjang" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">17. Keliling dan luas lingkaran</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/lingkaran" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">18. Volume kubus</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/kubus" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">19. Volume balok</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/balok" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">20. Volume campuran kubus dan balok</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/campuran-kubus-balok" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">21. Besar sudut</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/sudut" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">22. Penaksiran ukuran</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/taksir" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">23. Penyajian data (piktogram, diagram batang, tabel)</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/penyajian-data" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">24. Pengambilan informasi dan penggunaan data</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/informasi-data" class="card-btn">Buka Materi</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">25. Pembagian & Perkalian</span>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+            <a href="/pembagian-perkalian" class="card-btn">Buka Materi</a>
+        </div>
+
+    </main>
+
+</body>
+</html>
