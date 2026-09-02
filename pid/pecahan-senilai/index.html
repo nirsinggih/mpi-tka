@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Pecahan Senilai - IFP Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="ifp-header">
+        <h1>🍕 PECAHAN SENILAI (VISUAL & SIMBOL)</h1>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('materi', this)">📘 Konsep & Simbol</button>
+            <button class="nav-btn" onclick="switchTab('simulasi', this)">🎨 Simulasi Visual</button>
+            <button class="nav-btn highlight" onclick="switchTab('kuis', this)">⚔️ Kuis Tanding (2 Tim)</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="ifp-container">
+
+        <!-- TAB 1: MATERI KONSEP & SIMBOL -->
+        <section id="materi" class="tab-content active">
+            <div class="card">
+                <h2>Bagaimana Mencari Pecahan Senilai secara Matematika?</h2>
+                <p class="subtitle">
+                    Pecahan senilai diperoleh dengan **perkalian** atau **pembagian** pembilang dan penyebut menggunakan **angka yang sama**.
+                </p>
+                
+                <div class="materi-grid">
+                    <!-- Metode Perkalian -->
+                    <div class="box-materi box-kali">
+                        <h3>1. Perkalian (Mengalikan Pembilang & Penyebut)</h3>
+                        <div class="symbol-box">
+                            <span class="frac"><sup>a</sup>/<sub>b</sub></span> = 
+                            <span class="frac"><sup>a × m</sup>/<sub>b × m</sub></span>
+                        </div>
+                        <p><strong>Contoh:</strong></p>
+                        <div class="math-step">
+                            <span class="frac"><sup>1</sup>/<sub>2</sub></span> × <span class="frac"><sup>2</sup>/<sub>2</sub></span> = 
+                            <span class="frac"><sup>2</sup>/<sub>4</sub></span> &nbsp;&nbsp;|&nbsp;&nbsp; 
+                            <span class="frac"><sup>1</sup>/<sub>2</sub></span> × <span class="frac"><sup>3</sup>/<sub>3</sub></span> = 
+                            <span class="frac"><sup>3</sup>/<sub>6</sub></span>
+                        </div>
+                    </div>
+
+                    <!-- Metode Pembagian -->
+                    <div class="box-materi box-bagi">
+                        <h3>2. Pembagian (Menyederhanakan Pecahan)</h3>
+                        <div class="symbol-box">
+                            <span class="frac"><sup>a</sup>/<sub>b</sub></span> = 
+                            <span class="frac"><sup>a ÷ n</sup>/<sub>b ÷ n</sub></span>
+                        </div>
+                        <p><strong>Contoh:</strong></p>
+                        <div class="math-step">
+                            <span class="frac"><sup>4</sup>/<sub>8</sub></span> ÷ <span class="frac"><sup>4</sup>/<sub>4</sub></span> = 
+                            <span class="frac"><sup>1</sup>/<sub>2</sub></span> &nbsp;&nbsp;|&nbsp;&nbsp;
+                            <span class="frac"><sup>6</sup>/<sub>9</sub></span> ÷ <span class="frac"><sup>3</sup>/<sub>3</sub></span> = 
+                            <span class="frac"><sup>2</sup>/<sub>3</sub></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULASI VISUAL & SIMBOL -->
+        <section id="simulasi" class="tab-content">
+            <div class="simulasi-container">
+                <!-- Panel Kontrol Pengali -->
+                <div class="controls-card">
+                    <h2>Pecahan Acuan: <span class="frac-accent">1/2</span></h2>
+                    <p>Kalikan pembilang dan penyebut dengan faktor (n):</p>
+                    
+                    <div class="factor-selector">
+                        <button class="btn-factor active" onclick="setMultiplier(1, this)">n = 1</button>
+                        <button class="btn-factor" onclick="setMultiplier(2, this)">n = 2</button>
+                        <button class="btn-factor" onclick="setMultiplier(3, this)">n = 3</button>
+                        <button class="btn-factor" onclick="setMultiplier(4, this)">n = 4</button>
+                    </div>
+
+                    <div class="symbolic-process">
+                        <h3>Simbol Matematika:</h3>
+                        <div id="math-process-text" class="math-large">
+                            (1 × 1) / (2 × 1) = 1/2
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel Tampilan Gambar Visual -->
+                <div class="display-card">
+                    <h3>Visualisasi Luas Daerah (Pizza / Lingkaran)</h3>
+                    <div class="visual-canvas">
+                        <svg id="pie-chart" viewBox="0 0 100 100" width="220" height="220"></svg>
+                    </div>
+                    <div id="visual-caption" class="visual-caption-text">
+                        1 dari 2 Bagian Diarsir (1/2)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: KUIS TANDING 2 TIM -->
+        <section id="kuis" class="tab-content">
+            <div class="arena-tanding">
+                <!-- Tim Merah -->
+                <div class="team-panel team-a">
+                    <h2>TIM MERAH 🔴</h2>
+                    <div class="score-board" id="score-a">0</div>
+                    <button class="btn-quiz" onclick="addScore('a', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('a', -5)">-5 Poin</button>
+                </div>
+
+                <!-- Arena Soal -->
+                <div class="quiz-center">
+                    <div class="quiz-card">
+                        <div id="quiz-status" class="quiz-badge">Soal 1 / 5</div>
+                        <div id="question-text" class="question-box">Memuat pertanyaan...</div>
+                        <div id="options-container" class="options-grid"></div>
+                    </div>
+                    <button class="btn-touch warning" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+                </div>
+
+                <!-- Tim Biru -->
+                <div class="team-panel team-b">
+                    <h2>TIM BIRU 🔵</h2>
+                    <div class="score-board" id="score-b">0</div>
+                    <button class="btn-quiz" onclick="addScore('b', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('b', -5)">-5 Poin</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+                  </html>
