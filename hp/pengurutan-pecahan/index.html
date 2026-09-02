@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPI Perbandingan & Pengurutan Pecahan SD</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <h1>Perbandingan & Pengurutan Pecahan</h1>
+      <p>Matematika Sekolah Dasar</p>
+    </header>
+
+    <nav class="nav-menu">
+      <button class="nav-btn active" onclick="switchTab('materi')">📖 Materi</button>
+      <button class="nav-btn" onclick="switchTab('bandingkan')">⚖️ Bandingkan</button>
+      <button class="nav-btn" onclick="switchTab('urutkan')">🔢 Urutkan</button>
+      <button class="nav-btn" onclick="switchTab('kuis')">✏️ Kuis</button>
+    </nav>
+
+    <main class="content">
+      <!-- Section 1: Materi -->
+      <section id="materi" class="tab-content active">
+        <div class="card">
+          <h2>Simbol Perbandingan</h2>
+          <p>Untuk membandingkan dua pecahan, kita menggunakan simbol:</p>
+          <ul style="margin: 10px 0 10px 20px; line-height: 1.8;">
+            <li><span class="symbol-badge">&gt;</span> artinya <strong>Lebih Dari / Lebih Besar</strong></li>
+            <li><span class="symbol-badge">&lt;</span> artinya <strong>Kurang Dari / Lebih Kecil</strong></li>
+            <li><span class="symbol-badge">=</span> artinya <strong>Sama Dengan</strong></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>1. Penyebut Sama</h2>
+          <p>Jika penyebutnya sudah sama, cukup bandingkan angka <strong>pembilangnya</strong> (angka atas).</p>
+          <div class="example-box">
+            <p>Contoh: Bandingkan <sup>3</sup>/<sub>5</sub> dan <sup>1</sup>/<sub>5</sub></p>
+            <p>Karena 3 &gt; 1, maka: <strong><sup>3</sup>/<sub>5</sub> &gt; <sup>1</sup>/<sub>5</sub></strong></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>2. Penyebut Berbeda (Perkalian Silang)</h2>
+          <p>Jika penyebut berbeda, gunakan metode <strong>perkalian silang</strong> untuk membandingkan secara cepat.</p>
+          <div class="formula-box">
+            <p>Bandingkan <sup>a</sup>/<sub>b</sub> dan <sup>c</sup>/<sub>d</sub>:</p>
+            <p>Hitung <strong>(a × d)</strong> dan <strong>(b × c)</strong></p>
+          </div>
+          <div class="example-box">
+            <p>Contoh: Bandingkan <sup>2</sup>/<sub>3</sub> dan <sup>3</sup>/<sub>4</sub></p>
+            <p>• Kiri: 2 × 4 = <strong>8</strong></p>
+            <p>• Kanan: 3 × 3 = <strong>9</strong></p>
+            <p>Karena 8 &lt; 9, maka: <strong><sup>2</sup>/<sub>3</sub> &lt; <sup>3</sup>/<sub>4</sub></strong></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>3. Mengurutkan Pecahan</h2>
+          <p>Langkah mengurutkan beberapa pecahan:</p>
+          <ol style="margin: 10px 0 10px 20px; line-height: 1.6;">
+            <li>Samakan penyebutnya (atau konversi ke bentuk desimal/perkalian silang).</li>
+            <li>Urutkan berdasarkan nilai pembilang sesuai permintaan (dari terkecil ke terbesar / sebaliknya).</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- Section 2: Simulasi Bandingkan -->
+      <section id="bandingkan" class="tab-content">
+        <div class="card">
+          <h2>Kalkulator Pembanding Pecahan</h2>
+          <p>Masukkan angka pembilang dan penyebut pada kedua pecahan di bawah ini:</p>
+
+          <div class="input-row">
+            <!-- Pecahan 1 -->
+            <div class="frac-input">
+              <input type="number" id="num1" value="2" min="1" max="20" onchange="compareFractions()">
+              <div class="frac-line"></div>
+              <input type="number" id="den1" value="3" min="1" max="20" onchange="compareFractions()">
+            </div>
+
+            <!-- Simbol -->
+            <div class="compare-sym-display" id="symResult">&lt;</div>
+
+            <!-- Pecahan 2 -->
+            <div class="frac-input">
+              <input type="number" id="num2" value="3" min="1" max="20" onchange="compareFractions()">
+              <div class="frac-line"></div>
+              <input type="number" id="den2" value="4" min="1" max="20" onchange="compareFractions()">
+            </div>
+          </div>
+
+          <!-- Visual Bar -->
+          <div class="sub-card">
+            <h3>Visualisasi Pecahan Pertama</h3>
+            <div class="bar-container" id="bar1"></div>
+          </div>
+
+          <div class="sub-card">
+            <h3>Visualisasi Pecahan Kedua</h3>
+            <div class="bar-container" id="bar2"></div>
+          </div>
+
+          <!-- Langkah hitung -->
+          <div class="result-box" id="stepResult">
+            <h3>Hasil Analisis:</h3>
+            <p id="stepText">2 × 4 (8) &lt; 3 × 3 (9)</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Simulasi Urutkan -->
+      <section id="urutkan" class="tab-content">
+        <div class="card">
+          <h2>Simulasi Pengurutan Pecahan</h2>
+          <p>Klik tombol untuk mengurutkan 3 pecahan berikut:</p>
+
+          <div class="sub-card" style="text-align: center;">
+            <p style="font-size: 1.1rem; font-weight: bold; letter-spacing: 2px;" id="rawListDisplay">
+              <sup>1</sup>/<sub>2</sub> , <sup>3</sup>/<sub>4</sub> , <sup>2</sup>/<sub>5</sub>
+            </p>
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button class="action-btn" style="margin-top: 5px; flex: 1;" onclick="sortFractions('asc')">⬆️ Terkecil ke Terbesar</button>
+            <button class="action-btn" style="margin-top: 5px; flex: 1; background-color: #e17055;" onclick="sortFractions('desc')">⬇️ Terbesar ke Terkecil</button>
+          </div>
+
+          <button class="action-btn" style="background-color: #00b894; margin-top: 10px;" onclick="generateRandomSort()">🎲 Acak Pecahan Baru</button>
+
+          <div id="sortedContainer" style="margin-top: 15px;"></div>
+        </div>
+      </section>
+
+      <!-- Section 4: Kuis -->
+      <section id="kuis" class="tab-content">
+        <div class="card" id="quizContainer">
+          <div class="quiz-header">
+            <span id="questionNum">Soal 1 dari 4</span>
+          </div>
+          <p id="questionText" class="question">Loading...</p>
+          <div id="optionsContainer" class="options-group"></div>
+          <div id="quizFeedback" class="feedback"></div>
+          <button id="nextBtn" class="action-btn" onclick="nextQuestion()" style="display: none;">Soal Berikutnya ➡️</button>
+        </div>
+
+        <div class="card" id="scoreContainer" style="display: none;">
+          <h2>Hasil Kuis Kamu 🎉</h2>
+          <div class="score-box">
+            <span id="finalScore">0</span>
+          </div>
+          <p id="scoreMessage" style="text-align: center;"></p>
+          <button class="action-btn" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+              </html>
