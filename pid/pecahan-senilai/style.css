@@ -1,0 +1,333 @@
+:root {
+    --primary: #1e293b;
+    --accent-math: #0284c7;
+    --accent-visual: #e11d48;
+    --success: #10b981;
+    --team-a: #ef4444;
+    --team-b: #3b82f6;
+    --warning: #f59e0b;
+    --bg: #f8fafc;
+}
+
+* {
+    box-sizing: border-box;
+    user-select: none;
+    font-family: 'Segoe UI', System-UI, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Header IFP */
+.ifp-header {
+    background-color: var(--primary);
+    color: white;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.ifp-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+nav {
+    display: flex;
+    gap: 12px;
+}
+
+.nav-btn {
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background: #334155;
+    color: white;
+    cursor: pointer;
+}
+
+.nav-btn.active {
+    background: var(--accent-math);
+    transform: scale(1.03);
+}
+
+.nav-btn.highlight {
+    background: #f97316;
+}
+
+/* Main Container */
+.ifp-container {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.tab-content {
+    display: none;
+    height: 100%;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #475569;
+}
+
+/* Layout Materi */
+.materi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 15px;
+    flex: 1;
+}
+
+.box-materi {
+    padding: 20px;
+    border-radius: 16px;
+    background: #f1f5f9;
+}
+
+.box-kali { border-left: 8px solid var(--accent-math); }
+.box-bagi { border-left: 8px solid var(--accent-visual); }
+
+.symbol-box {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary);
+    margin: 15px 0;
+    text-align: center;
+}
+
+.math-step {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.frac {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.frac sup {
+    display: block;
+    border-bottom: 2px solid #333;
+    padding: 0 4px;
+}
+
+.frac sub {
+    display: block;
+    padding: 0 4px;
+}
+
+/* Layout Simulasi */
+.simulasi-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    height: 100%;
+}
+
+.controls-card {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.factor-selector {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.btn-factor {
+    padding: 15px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+}
+
+.btn-factor.active {
+    background: var(--accent-math);
+    color: white;
+    border-color: var(--accent-math);
+}
+
+.symbolic-process {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-top: auto;
+}
+
+.math-large {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--accent-math);
+    text-align: center;
+}
+
+.display-card {
+    background: white;
+    border: 3px dashed var(--accent-visual);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.visual-canvas {
+    margin: 20px 0;
+}
+
+.visual-caption-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+/* Arena Kuis */
+.arena-tanding {
+    display: grid;
+    grid-template-columns: 1fr 2.2fr 1fr;
+    gap: 16px;
+    height: 100%;
+}
+
+.team-panel {
+    border-radius: 20px;
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.team-panel h2 { margin: 0; }
+.team-a { background-color: var(--team-a); }
+.team-b { background-color: var(--team-b); }
+
+.score-board {
+    font-size: 4.5rem;
+    font-weight: bold;
+    background: rgba(0,0,0,0.25);
+    width: 100%;
+    text-align: center;
+    border-radius: 15px;
+    padding: 10px 0;
+}
+
+.btn-quiz {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background: white;
+    color: #1e293b;
+    cursor: pointer;
+}
+
+.btn-quiz.danger { background: #fca5a5; color: #991b1b; }
+
+.quiz-center {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.quiz-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.quiz-badge {
+    background: var(--primary);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    align-self: flex-start;
+    font-weight: bold;
+}
+
+.question-box {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: auto;
+}
+
+.option-btn {
+    padding: 16px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    background: #f1f5f9;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.btn-touch {
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-touch.warning { background: var(--warning); color: white; width: 100%; }
