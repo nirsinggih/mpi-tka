@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Perbandingan & Pengurutan Pecahan - IFP Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="ifp-header">
+        <h1>📊 PERBANDINGAN & PENGURUTAN PECAHAN</h1>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('materi', this)">📘 Ringkasan Materi</button>
+            <button class="nav-btn" onclick="switchTab('simulasi', this)">⚖️ Simulasi Perbandingan</button>
+            <button class="nav-btn highlight" onclick="switchTab('kuis', this)">⚔️ Kuis Tanding (2 Tim)</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="ifp-container">
+
+        <!-- TAB 1: MATERI -->
+        <section id="materi" class="tab-content active">
+            <div class="card">
+                <h2>Metode Membandingkan & Mengurutkan Pecahan</h2>
+                <p class="subtitle">
+                    Gunakan simbol perbandingan: <strong>&gt;</strong> (lebih besar), <strong>&lt;</strong> (lebih kecil), atau <strong>=</strong> (sama dengan).
+                </p>
+                
+                <div class="materi-grid">
+                    <!-- Metode 1: Penyebut Sama -->
+                    <div class="box-materi box-sama">
+                        <h3>1. Penyebut Sama</h3>
+                        <p>Jika penyebutnya sudah sama, cukup bandingkan angka <strong>pembilangnya</strong>.</p>
+                        <div class="math-step">
+                            <span class="frac"><sup>3</sup>/<sub>7</sub></span> &lt; <span class="frac"><sup>5</sup>/<sub>7</sub></span>
+                        </div>
+                        <p class="small-note">Karena 3 lebih kecil dari 5.</p>
+                    </div>
+
+                    <!-- Metode 2: Perkalian Silang -->
+                    <div class="box-materi box-silang">
+                        <h3>2. Perkalian Silang (Penyebut Beda)</h3>
+                        <p>Kalikan pembilang pecahan pertama dengan penyebut pecahan kedua, lalu bandingkan hasilnya.</p>
+                        <div class="math-step">
+                            <span class="frac"><sup>2</sup>/<sub>3</sub></span> ... <span class="frac"><sup>3</sup>/<sub>5</sub></span>
+                        </div>
+                        <div class="cross-calc">
+                            (2 × 5 = <strong>10</strong>) VS (3 × 3 = <strong>9</strong>)<br>
+                            Maka: <span class="frac"><sup>2</sup>/<sub>3</sub></span> <strong>&gt;</strong> <span class="frac"><sup>3</sup>/<sub>5</sub></span>
+                        </div>
+                    </div>
+
+                    <!-- Metode 3: Pengurutan -->
+                    <div class="box-materi box-urut">
+                        <h3>3. Mengurutkan Beberapa Pecahan</h3>
+                        <p>1. Samakan semua penyebut menggunakan KPK.<br>
+                           2. Urutkan posisi pembilang dari yang terkecil atau terbesar sesuai perintah soal.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULASI INTERAKTIF -->
+        <section id="simulasi" class="tab-content">
+            <div class="simulasi-container">
+                <!-- Control Panel -->
+                <div class="controls-card">
+                    <!-- Pecahan A -->
+                    <div class="frac-control-group group-a">
+                        <div class="section-title">Pecahan A</div>
+                        <div class="control-row">
+                            <label>Pembilang (a):</label>
+                            <div class="btn-group">
+                                <button class="btn-touch danger" onclick="adjustFrac('numA', -1)">➖</button>
+                                <span id="numA-val" class="val-badge">2</span>
+                                <button class="btn-touch success" onclick="adjustFrac('numA', 1)">➕</button>
+                            </div>
+                        </div>
+                        <div class="control-row">
+                            <label>Penyebut (b):</label>
+                            <div class="btn-group">
+                                <button class="btn-touch danger" onclick="adjustFrac('denA', -1)">➖</button>
+                                <span id="denA-val" class="val-badge">4</span>
+                                <button class="btn-touch success" onclick="adjustFrac('denA', 1)">➕</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pecahan B -->
+                    <div class="frac-control-group group-b">
+                        <div class="section-title">Pecahan B</div>
+                        <div class="control-row">
+                            <label>Pembilang (c):</label>
+                            <div class="btn-group">
+                                <button class="btn-touch danger" onclick="adjustFrac('numB', -1)">➖</button>
+                                <span id="numB-val" class="val-badge">3</span>
+                                <button class="btn-touch success" onclick="adjustFrac('numB', 1)">➕</button>
+                            </div>
+                        </div>
+                        <div class="control-row">
+                            <label>Penyebut (d):</label>
+                            <div class="btn-group">
+                                <button class="btn-touch danger" onclick="adjustFrac('denB', -1)">➖</button>
+                                <span id="denB-val" class="val-badge">5</span>
+                                <button class="btn-touch success" onclick="adjustFrac('denB', 1)">➕</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display Visual & Result Panel -->
+                <div class="display-card">
+                    <!-- Visual Bars Comparison -->
+                    <div class="bars-container">
+                        <div class="bar-wrapper">
+                            <span class="bar-label">Pecahan A</span>
+                            <div class="bar-outer">
+                                <div id="bar-a" class="bar-inner bar-a-fill"></div>
+                            </div>
+                            <span id="label-frac-a" class="bar-val-text">2/4</span>
+                        </div>
+
+                        <div class="bar-wrapper">
+                            <span class="bar-label">Pecahan B</span>
+                            <div class="bar-outer">
+                                <div id="bar-b" class="bar-inner bar-b-fill"></div>
+                            </div>
+                            <span id="label-frac-b" class="bar-val-text">3/5</span>
+                        </div>
+                    </div>
+
+                    <!-- Comparison Box -->
+                    <div class="result-comparison-box">
+                        <div class="frac-display"><span id="display-a">2/4</span></div>
+                        <div id="symbol-result" class="symbol-badge">&lt;</div>
+                        <div class="frac-display"><span id="display-b">3/5</span></div>
+                    </div>
+
+                    <!-- Step Calculation -->
+                    <div id="cross-calc-detail" class="cross-detail-box">
+                        Perkalian Silang: (2 × 5 = 10) VS (3 × 4 = 12)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: KUIS TANDING 2 TIM -->
+        <section id="kuis" class="tab-content">
+            <div class="arena-tanding">
+                <!-- Tim Merah -->
+                <div class="team-panel team-a">
+                    <h2>TIM MERAH 🔴</h2>
+                    <div class="score-board" id="score-a">0</div>
+                    <button class="btn-quiz" onclick="addScore('a', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('a', -5)">-5 Poin</button>
+                </div>
+
+                <!-- Arena Soal -->
+                <div class="quiz-center">
+                    <div class="quiz-card">
+                        <div id="quiz-status" class="quiz-badge">Soal 1 / 5</div>
+                        <div id="question-text" class="question-box">Memuat pertanyaan...</div>
+                        <div id="options-container" class="options-grid"></div>
+                    </div>
+                    <button class="btn-touch warning" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+                </div>
+
+                <!-- Tim Biru -->
+                <div class="team-panel team-b">
+                    <h2>TIM BIRU 🔵</h2>
+                    <div class="score-board" id="score-b">0</div>
+                    <button class="btn-quiz" onclick="addScore('b', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('b', -5)">-5 Poin</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+                          </html>
