@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Operasi Lanjut Pecahan - IFP Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="ifp-header">
+        <h1>➕➖✖️➕ OPERASI HIKUNG PECAHAN</h1>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('materi', this)">📘 Ringkasan Materi</button>
+            <button class="nav-btn" onclick="switchTab('simulasi', this)">🧮 Lab Kalkulator</button>
+            <button class="nav-btn highlight" onclick="switchTab('kuis', this)">⚔️ Kuis Tanding (2 Tim)</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="ifp-container">
+
+        <!-- TAB 1: MATERI OPERASI PECAHAN -->
+        <section id="materi" class="tab-content active">
+            <div class="card">
+                <h2>Rumus Operasi Pecahan & Bilangan Asli</h2>
+                <p class="subtitle">
+                    Pahami perbedaan mendasar antara operasi penjumlahan/pengurangan dengan perkalian/pembagian.
+                </p>
+                
+                <div class="materi-grid">
+                    <!-- Penjumlahan & Pengurangan -->
+                    <div class="box-materi box-tambah">
+                        <h3>1. Penjumlahan & Pengurangan</h3>
+                        <div class="formula-text text-tambah">
+                            <sup>a</sup>/<sub>c</sub> ± <sup>b</sup>/<sub>c</sub> = <sup>(a ± b)</sup>/<sub>c</sub>
+                        </div>
+                        <p><strong>Syarat:</strong> Penyebut harus disamakan terlebih dahulu (gunakan KPK jika penyebut beda).</p>
+                    </div>
+
+                    <!-- Perkalian Bilangan Asli -->
+                    <div class="box-materi box-kali">
+                        <h3>2. Perkalian dengan Bilangan Asli (n)</h3>
+                        <div class="formula-text text-kali">
+                            n × <sup>a</sup>/<sub>b</sub> = <sup>(n × a)</sup>/<sub>b</sub>
+                        </div>
+                        <p>Kalikan bilangan asli <strong>n</strong> langsung dengan pembilang <strong>a</strong>.</p>
+                    </div>
+
+                    <!-- Pembagian Bilangan Asli -->
+                    <div class="box-materi box-bagi">
+                        <h3>3. Pembagian dengan Bilangan Asli (n)</h3>
+                        <div class="formula-text text-bagi">
+                            <sup>a</sup>/<sub>b</sub> ÷ n = <sup>a</sup>/<sub>(b × n)</sub>
+                        </div>
+                        <p>Ubah ke perkalian pecahan kebalikan: <sup>a</sup>/<sub>b</sub> × <sup>1</sup>/<sub>n</sub>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULASI KALKULATOR INTERAKTIF -->
+        <section id="simulasi" class="tab-content">
+            <div class="simulasi-container">
+                <!-- Control Panel -->
+                <div class="controls-card">
+                    <h2>Kalkulator Langkah Operasi</h2>
+                    
+                    <div class="control-row">
+                        <label>Jenis Operasi:</label>
+                        <select id="op-type" class="select-op" onchange="toggleOpType()">
+                            <option value="add">Penjumlahan (+)</option>
+                            <option value="sub">Pengurangan (-)</option>
+                            <option value="mul">Perkalian Bilangan Asli (× n)</option>
+                            <option value="div">Pembagian Bilangan Asli (÷ n)</option>
+                        </select>
+                    </div>
+
+                    <!-- Input Pecahan Pertama -->
+                    <div class="frac-inputs-group">
+                        <div class="section-title">Pecahan Pertama (a/b):</div>
+                        <div class="control-row">
+                            <label>Pembilang (a):</label>
+                            <div class="btn-group">
+                                <button class="btn-touch danger" onclick="adjustVal('num1', -1)">-</button>
+                                <span id="num1-val" class="val-badge">1</span>
+                                <button class="btn-touch success" onclick="adjustVal('num1', 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="control-row">
+                            <label>Penyebut (b):</label>
+                            <div class="btn-group">
+                                <button class="btn-touch danger" onclick="adjustVal('den1', -1)">-</button>
+                                <span id="den1-val" class="val-badge">4</span>
+                                <button class="btn-touch success" onclick="adjustVal('den1', 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Operan Kedua (Pecahan / Bilangan Asli) -->
+                    <div class="frac-inputs-group">
+                        <div id="op2-title" class="section-title">Pecahan Kedua (c/d):</div>
+                        <div class="control-row" id="num2-row">
+                            <label id="num2-label">Pembilang (c):</label>
+                            <div class="btn-group">
+                                <button class="btn-touch danger" onclick="adjustVal('num2', -1)">-</button>
+                                <span id="num2-val" class="val-badge">1</span>
+                                <button class="btn-touch success" onclick="adjustVal('num2', 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="control-row" id="den2-row">
+                            <label>Penyebut (d):</label>
+                            <div class="btn-group">
+                                <button class="btn-touch danger" onclick="adjustVal('den2', -1)">-</button>
+                                <span id="den2-val" class="val-badge">2</span>
+                                <button class="btn-touch success" onclick="adjustVal('den2', 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display Visual & Step Panel -->
+                <div class="display-card">
+                    <h3>Hasil & Langkah Pengerjaan</h3>
+                    <div class="equation-box">
+                        <span id="display-eq">1/4 + 1/2</span>
+                    </div>
+
+                    <div class="steps-detail-box">
+                        <div class="step-title">Langkah Penyelesaian:</div>
+                        <div id="step-breakdown" class="step-content">Langkah kalkulasi...</div>
+                    </div>
+
+                    <div class="result-box">
+                        <div class="result-title">Hasil Akhir:</div>
+                        <div id="display-result" class="result-value">3/4</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: KUIS TANDING 2 TIM -->
+        <section id="kuis" class="tab-content">
+            <div class="arena-tanding">
+                <!-- Tim Merah -->
+                <div class="team-panel team-a">
+                    <h2>TIM MERAH 🔴</h2>
+                    <div class="score-board" id="score-a">0</div>
+                    <button class="btn-quiz" onclick="addScore('a', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('a', -5)">-5 Poin</button>
+                </div>
+
+                <!-- Arena Soal -->
+                <div class="quiz-center">
+                    <div class="quiz-card">
+                        <div id="quiz-status" class="quiz-badge">Soal 1 / 5</div>
+                        <div id="question-text" class="question-box">Memuat pertanyaan...</div>
+                        <div id="options-container" class="options-grid"></div>
+                    </div>
+                    <button class="btn-touch warning" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+                </div>
+
+                <!-- Tim Biru -->
+                <div class="team-panel team-b">
+                    <h2>TIM BIRU 🔵</h2>
+                    <div class="score-board" id="score-b">0</div>
+                    <button class="btn-quiz" onclick="addScore('b', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('b', -5)">-5 Poin</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+                          </html>
