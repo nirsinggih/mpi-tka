@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPI Volume Balok SD</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <h1>Volume Balok</h1>
+      <p>Matematika Sekolah Dasar</p>
+    </header>
+
+    <nav class="nav-menu">
+      <button class="nav-btn active" onclick="switchTab('materi')">📖 Materi</button>
+      <button class="nav-btn" onclick="switchTab('simulasi')">🎲 Simulasi</button>
+      <button class="nav-btn" onclick="switchTab('kuis')">✏️ Kuis</button>
+    </nav>
+
+    <main class="content">
+      <!-- Section 1: Materi -->
+      <section id="materi" class="tab-content active">
+        <div class="card">
+          <h2>Apa itu Balok?</h2>
+          <p>Balok adalah bangun ruang tiga dimensi yang dibentuk oleh tiga pasang persegi atau persegi panjang, dengan paling tidak satu pasang di antaranya berukuran berbeda.</p>
+        </div>
+
+        <div class="card">
+          <h2>Rumus Volume Balok</h2>
+          <div class="formula-box">
+            <p><strong>V = p × l × t</strong></p>
+          </div>
+          <p class="note">
+            <strong>Keterangan:</strong><br>
+            V = Volume<br>
+            p = Panjang<br>
+            l = Lebar<br>
+            t = Tinggi
+          </p>
+        </div>
+
+        <div class="card">
+          <h2>Contoh Soal</h2>
+          <p>Sebuah balok memiliki panjang <strong>8 cm</strong>, lebar <strong>5 cm</strong>, dan tinggi <strong>4 cm</strong>. Berapakah volumenya?</p>
+          <div class="example-box">
+            <p><strong>Jawaban:</strong></p>
+            <p>V = p × l × t</p>
+            <p>V = 8 cm × 5 cm × 4 cm</p>
+            <p>V = <strong>160 cm³</strong></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Simulasi -->
+      <section id="simulasi" class="tab-content">
+        <div class="card">
+          <h2>Kalkulator Balok</h2>
+          <p>Masukkan ukuran balok di bawah ini untuk menghitung volumenya:</p>
+          
+          <div class="input-group">
+            <label for="panjangInput">Panjang (p):</label>
+            <input type="number" id="panjangInput" min="1" value="8" oninput="hitungVolumeBalok()">
+          </div>
+
+          <div class="input-group">
+            <label for="lebarInput">Lebar (l):</label>
+            <input type="number" id="lebarInput" min="1" value="5" oninput="hitungVolumeBalok()">
+          </div>
+
+          <div class="input-group">
+            <label for="tinggiInput">Tinggi (t):</label>
+            <input type="number" id="tinggiInput" min="1" value="4" oninput="hitungVolumeBalok()">
+          </div>
+
+          <div class="result-box">
+            <p>Proses: <span id="prosesCalc">8 × 5 × 4</span></p>
+            <h3>Volume: <span id="hasilCalc">160</span> cm³</h3>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Kuis -->
+      <section id="kuis" class="tab-content">
+        <div class="card" id="quizContainer">
+          <div class="quiz-header">
+            <span id="questionNum">Soal 1 dari 3</span>
+          </div>
+          <p id="questionText" class="question">Loading...</p>
+          <div id="optionsContainer" class="options-group"></div>
+          <div id="quizFeedback" class="feedback"></div>
+          <button id="nextBtn" class="action-btn" onclick="nextQuestion()" style="display: none;">Soal Berikutnya ➡️</button>
+        </div>
+
+        <div class="card" id="scoreContainer" style="display: none;">
+          <h2>Hasil Kuis Kamu 🎉</h2>
+          <div class="score-box">
+            <span id="finalScore">0</span>
+          </div>
+          <p id="scoreMessage"></p>
+          <button class="action-btn" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
