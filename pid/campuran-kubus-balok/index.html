@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Volume Gabungan Kubus & Balok - IFP Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="ifp-header">
+        <h1>📐 GABUNGAN VOLUME KUBUS & BALOK</h1>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('materi', this)">📘 Ringkasan Materi</button>
+            <button class="nav-btn" onclick="switchTab('simulasi', this)">🎲 Simulasi Gabungan</button>
+            <button class="nav-btn highlight" onclick="switchTab('kuis', this)">⚔️ Kuis Tanding (2 Tim)</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="ifp-container">
+
+        <!-- TAB 1: MATERI GABUNGAN -->
+        <section id="materi" class="tab-content active">
+            <div class="card">
+                <h2>Konsep Dasar Volume Gabungan</h2>
+                <p class="subtitle">
+                    Volume gabungan adalah jumlah volume dari dua atau lebih bangun ruang yang disusun menjadi satu kesatuan.
+                </p>
+                
+                <div class="materi-grid">
+                    <!-- Box Kubus -->
+                    <div class="box-materi box-kubus">
+                        <h3 class="title-kubus">1. Volume Kubus (V₁)</h3>
+                        <div class="formula-text text-kubus">V₁ = s × s × s</div>
+                        <p><strong>s</strong> = Panjang rusuk kubus</p>
+                    </div>
+
+                    <!-- Box Balok -->
+                    <div class="box-materi box-balok">
+                        <h3 class="title-balok">2. Volume Balok (V₂)</h3>
+                        <div class="formula-text text-balok">V₂ = p × l × t</div>
+                        <p><strong>p</strong> = panjang, <strong>l</strong> = lebar, <strong>t</strong> = tinggi</p>
+                    </div>
+
+                    <!-- Box Total -->
+                    <div class="box-materi box-gabungan">
+                        <h3 class="title-gabungan">3. Volume Total Gabungan</h3>
+                        <div class="formula-text text-gabungan">V<sub>total</sub> = V₁ + V₂</div>
+                        <p class="desc-gabungan">
+                            <strong>Langkah Pengerjaan:</strong> Hitung volume masing-masing bangun secara terpisah, lalu jumlahkan hasilnya!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULASI GABUNGAN -->
+        <section id="simulasi" class="tab-content">
+            <div class="simulasi-container">
+                <!-- Panel Pengatur Ukuran -->
+                <div class="controls-card">
+                    <div class="section-title text-kubus">🧊 Dimensi Kubus (Bangun 1)</div>
+                    <div class="control-row">
+                        <label>Rusuk (s):</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustValue('s', -1)">➖</button>
+                            <span id="s-val" class="val-badge">4 cm</span>
+                            <button class="btn-touch success" onclick="adjustValue('s', 1)">➕</button>
+                        </div>
+                    </div>
+
+                    <div class="section-title text-balok margin-top-10">📦 Dimensi Balok (Bangun 2)</div>
+                    <div class="control-row">
+                        <label>Panjang (p):</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustValue('p', -1)">➖</button>
+                            <span id="p-val" class="val-badge">6 cm</span>
+                            <button class="btn-touch success" onclick="adjustValue('p', 1)">➕</button>
+                        </div>
+                    </div>
+                    <div class="control-row">
+                        <label>Lebar (l):</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustValue('l', -1)">➖</button>
+                            <span id="l-val" class="val-badge">4 cm</span>
+                            <button class="btn-touch success" onclick="adjustValue('l', 1)">➕</button>
+                        </div>
+                    </div>
+                    <div class="control-row">
+                        <label>Tinggi (t):</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustValue('t', -1)">➖</button>
+                            <span id="t-val" class="val-badge">5 cm</span>
+                            <button class="btn-touch success" onclick="adjustValue('t', 1)">➕</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Panel Kalkulasi Realtime -->
+                <div class="display-card">
+                    <div class="calc-box">
+                        <h4 class="text-kubus">Volume Kubus (V₁):</h4>
+                        <div id="kubus-calc" class="calc-step">4 × 4 × 4 = 64 cm³</div>
+                    </div>
+
+                    <div class="calc-box">
+                        <h4 class="text-balok">Volume Balok (V₂):</h4>
+                        <div id="balok-calc" class="calc-step">6 × 4 × 5 = 120 cm³</div>
+                    </div>
+
+                    <div class="total-box">
+                        <h3 class="title-total">Volume Total Gabungan:</h3>
+                        <div id="total-calc-str" class="total-str">64 cm³ + 120 cm³</div>
+                        <div id="total-val" class="total-val">184 cm³</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: KUIS TANDING 2 TIM -->
+        <section id="kuis" class="tab-content">
+            <div class="arena-tanding">
+                <!-- Tim A -->
+                <div class="team-panel team-a">
+                    <h2>TIM MERAH 🔴</h2>
+                    <div class="score-board" id="score-a">0</div>
+                    <button class="btn-quiz" onclick="addScore('a', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('a', -5)">-5 Poin</button>
+                </div>
+
+                <!-- Arena Soal (Tengah) -->
+                <div class="quiz-center">
+                    <div class="quiz-card">
+                        <div id="quiz-status" class="quiz-badge">Soal 1 / 5</div>
+                        <div id="question-text" class="question-box">Memuat pertanyaan...</div>
+                        <div id="options-container" class="options-grid"></div>
+                    </div>
+                    <button class="btn-touch warning" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+                </div>
+
+                <!-- Tim B -->
+                <div class="team-panel team-b">
+                    <h2>TIM BIRU 🔵</h2>
+                    <div class="score-board" id="score-b">0</div>
+                    <button class="btn-quiz" onclick="addScore('b', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('b', -5)">-5 Poin</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
