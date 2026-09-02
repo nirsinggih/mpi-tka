@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPI Pecahan Senilai SD</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <h1>Pecahan Senilai</h1>
+      <p>Gambar & Simbol Matematika — SD</p>
+    </header>
+
+    <nav class="nav-menu">
+      <button class="nav-btn active" onclick="switchTab('materi')">📖 Materi</button>
+      <button class="nav-btn" onclick="switchTab('simulasi')">🎨 Visual</button>
+      <button class="nav-btn" onclick="switchTab('kuis')">✏️ Kuis</button>
+    </nav>
+
+    <main class="content">
+      <!-- Section 1: Materi -->
+      <section id="materi" class="tab-content active">
+        <div class="card">
+          <h2>Apa itu Pecahan Senilai?</h2>
+          <p><strong>Pecahan senilai</strong> adalah pecahan-pecahan yang memiliki <strong>nilai sama</strong> atau membayangkan bagian yang sama besar, meskipun angka pembilang dan penyebutnya berbeda.</p>
+        </div>
+
+        <div class="card">
+          <h2>1. Melalui Gambar (Visual)</h2>
+          <p>Bayangkan dua pizza dengan ukuran sama:</p>
+          
+          <div class="visual-example">
+            <div class="fraction-item">
+              <div class="fraction-bar-preview">
+                <div class="bar-fill" style="width: 50%;"></div>
+              </div>
+              <p>1 dari 2 bagian = <span class="frac"><sup>1</sup>/<sub>2</sub></span></p>
+            </div>
+
+            <div class="fraction-item">
+              <div class="fraction-bar-preview splits-4">
+                <div class="bar-fill" style="width: 50%;"></div>
+              </div>
+              <p>2 dari 4 bagian = <span class="frac"><sup>2</sup>/<sub>4</sub></span></p>
+            </div>
+          </div>
+          
+          <p class="note">Meskipun dipotong menjadi jumlah bagian berbeda, daerah yang diarsir/dimakan <strong>sama besar</strong>!</p>
+        </div>
+
+        <div class="card">
+          <h2>2. Simbol & Aturan Matematika</h2>
+          <p>Pecahan senilai dapat diperoleh dengan <strong>mengalikan</strong> atau <strong>Membagi</strong> pembilang dan penyebut dengan <strong>angka yang sama</strong> (bukan nol).</p>
+          
+          <div class="formula-box">
+            <p><strong><sup>a</sup>/<sub>b</sub> = <sup>(a × k)</sup>/<sub>(b × k)</sub></strong></p>
+          </div>
+
+          <div class="example-box">
+            <p><strong>Contoh Perkalian:</strong></p>
+            <p><sup>1</sup>/<sub>2</sub> = <sup>(1 × 2)</sup>/<sub>(2 × 2)</sub> = <strong><sup>2</sup>/<sub>4</sub></strong></p>
+            <p><sup>1</sup>/<sub>2</sub> = <sup>(1 × 3)</sup>/<sub>(2 × 3)</sub> = <strong><sup>3</sup>/<sub>6</sub></strong></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Simulasi/Visual -->
+      <section id="simulasi" class="tab-content">
+        <div class="card">
+          <h2>Bandingkan Visual Pecahan</h2>
+          <p>Ubah nilai pembilang dan penyebut di bawah ini untuk melihat apakah gambarnya senilai!</p>
+
+          <!-- Pecahan 1 -->
+          <div class="sub-card">
+            <h3>🔹 Pecahan Pertama (A)</h3>
+            <div class="input-inline">
+              <label>Pembilang:</label>
+              <input type="number" id="numA" min="1" max="10" value="1" onchange="renderFractions()">
+              <label>Penyebut:</label>
+              <input type="number" id="denA" min="1" max="12" value="2" onchange="renderFractions()">
+            </div>
+            <div class="fraction-display" id="displayFracA">1/2</div>
+            <div class="bar-container" id="barA"></div>
+          </div>
+
+          <!-- Pecahan 2 -->
+          <div class="sub-card">
+            <h3>🔸 Pecahan Kedua (B)</h3>
+            <div class="input-inline">
+              <label>Pembilang:</label>
+              <input type="number" id="numB" min="1" max="10" value="2" onchange="renderFractions()">
+              <label>Penyebut:</label>
+              <input type="number" id="denB" min="1" max="12" value="4" onchange="renderFractions()">
+            </div>
+            <div class="fraction-display" id="displayFracB">2/4</div>
+            <div class="bar-container" id="barB"></div>
+          </div>
+
+          <!-- Status Hasil -->
+          <div class="result-box" id="comparisonResult">
+            <h3>Status: SENILAI 🎉</h3>
+            <p>Luas daerah arsiran kedua gambar sama besar.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Kuis -->
+      <section id="kuis" class="tab-content">
+        <div class="card" id="quizContainer">
+          <div class="quiz-header">
+            <span id="questionNum">Soal 1 dari 3</span>
+          </div>
+          <p id="questionText" class="question">Loading...</p>
+          
+          <!-- Visual bantu soal jika ada -->
+          <div id="quizVisual" class="quiz-visual-box" style="display: none;"></div>
+
+          <div id="optionsContainer" class="options-group"></div>
+          <div id="quizFeedback" class="feedback"></div>
+          <button id="nextBtn" class="action-btn" onclick="nextQuestion()" style="display: none;">Soal Berikutnya ➡️</button>
+        </div>
+
+        <div class="card" id="scoreContainer" style="display: none;">
+          <h2>Hasil Kuis Kamu 🎉</h2>
+          <div class="score-box">
+            <span id="finalScore">0</span>
+          </div>
+          <p id="scoreMessage"></p>
+          <button class="action-btn" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
