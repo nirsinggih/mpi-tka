@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MPI Segitiga | Matematika SD</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- BACKGROUND -->
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
+
+
+    <!-- HEADER -->
+    <header>
+
+        <div class="logo">
+            🔺 MATH TRIANGLE
+        </div>
+
+        <div class="score-board">
+
+            <div class="team-score red-score">
+                <span>🔴 TIM MERAH</span>
+                <strong id="scoreRed">0</strong>
+            </div>
+
+            <div class="team-score blue-score">
+                <span>🔵 TIM BIRU</span>
+                <strong id="scoreBlue">0</strong>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- HOME -->
+    <section class="page active" id="home">
+
+        <div class="hero">
+
+            <div class="hero-text">
+
+                <div class="badge">
+                    📚 MATEMATIKA SEKOLAH DASAR
+                </div>
+
+                <h1>
+                    Belajar
+                    <span>Segitiga</span>
+                </h1>
+
+                <p>
+                    Mari mengenal bentuk segitiga, jenis-jenis segitiga,
+                    menghitung keliling dan luas, kemudian bertanding
+                    bersama teman!
+                </p>
+
+                <div class="hero-buttons">
+
+                    <button class="btn primary"
+                        onclick="showPage('materi')">
+                        🚀 Mulai Belajar
+                    </button>
+
+                    <button class="btn secondary"
+                        onclick="showPage('quizIntro')">
+                        🏆 Kuis 2 Tim
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-visual">
+
+                <div class="triangle-large">
+
+                    <div class="triangle-label top">
+                        A
+                    </div>
+
+                    <div class="triangle-label left">
+                        B
+                    </div>
+
+                    <div class="triangle-label right">
+                        C
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- MENU MATERI -->
+    <section class="page" id="materi">
+
+        <div class="section-heading">
+
+            <span>📖 MARI BELAJAR</span>
+
+            <h2>Materi Segitiga</h2>
+
+            <p>
+                Pilih materi yang ingin dipelajari.
+            </p>
+
+        </div>
+
+
+        <div class="material-grid">
+
+            <button class="material-card card-blue"
+                onclick="showPage('pengertian')">
+
+                <div class="icon">🔺</div>
+
+                <h3>Pengertian Segitiga</h3>
+
+                <p>
+                    Mengenal bentuk dasar segitiga.
+                </p>
+
+            </button>
+
+
+            <button class="material-card card-orange"
+                onclick="showPage('jenis')">
+
+                <div class="icon">📐</div>
+
+                <h3>Jenis Segitiga</h3>
+
+                <p>
+                    Mengenal berbagai jenis segitiga.
+                </p>
+
+            </button>
+
+
+            <button class="material-card card-purple"
+                onclick="showPage('keliling')">
+
+                <div class="icon">🔄</div>
+
+                <h3>Keliling</h3>
+
+                <p>
+                    Menghitung jumlah seluruh sisi.
+                </p>
+
+            </button>
+
+
+            <button class="material-card card-green"
+                onclick="showPage('luas')">
+
+                <div class="icon">📏</div>
+
+                <h3>Luas</h3>
+
+                <p>
+                    Menghitung luas daerah segitiga.
+                </p>
+
+            </button>
+
+        </div>
+
+
+        <button class="btn back"
+            onclick="showPage('home')">
+            ← Kembali ke Beranda
+        </button>
+
+    </section>
+
+
+
+    <!-- PENGERTIAN -->
+    <section class="page" id="pengertian">
+
+        <div class="lesson-layout">
+
+            <div class="lesson-text">
+
+                <span>1. PENGERTIAN SEGITIGA</span>
+
+                <h2>Apa Itu Segitiga? 🔺</h2>
+
+                <p class="large-text">
+
+                    Segitiga adalah bangun datar yang memiliki
+                    tiga sisi, tiga sudut, dan tiga titik sudut.
+
+                </p>
+
+
+                <div class="info-box">
+
+                    <h3>✨ Ciri-ciri Segitiga</h3>
+
+                    <div class="chips">
+
+                        <span>🔺 3 Sisi</span>
+                        <span>📐 3 Sudut</span>
+                        <span>📍 3 Titik Sudut</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="triangle-display">
+
+                <div class="triangle-shape">
+
+                    <span class="point-a">A</span>
+                    <span class="point-b">B</span>
+                    <span class="point-c">C</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="navigation">
+
+            <button class="btn primary"
+                onclick="showPage('jenis')">
+                Selanjutnya →
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- JENIS SEGITIGA -->
+    <section class="page" id="jenis">
+
+        <div class="section-heading">
+
+            <span>2. JENIS-JENIS SEGITIGA</span>
+
+            <h2>Mengenal Jenis Segitiga</h2>
+
+            <p>
+                Segitiga dapat dibedakan berdasarkan panjang sisi
+                dan besar sudutnya.
+            </p>
+
+        </div>
+
+
+        <div class="triangle-grid">
+
+            <div class="type-card">
+
+                <div class="triangle-icon equilateral"></div>
+
+                <h3>Segitiga Sama Sisi</h3>
+
+                <p>
+                    Ketiga sisinya memiliki panjang yang sama.
+                </p>
+
+            </div>
+
+
+            <div class="type-card">
+
+                <div class="triangle-icon isosceles"></div>
+
+                <h3>Segitiga Sama Kaki</h3>
+
+                <p>
+                    Memiliki dua sisi dengan panjang yang sama.
+                </p>
+
+            </div>
+
+
+            <div class="type-card">
+
+                <div class="triangle-icon scalene"></div>
+
+                <h3>Segitiga Sembarang</h3>
+
+                <p>
+                    Ketiga sisinya memiliki panjang yang berbeda.
+                </p>
+
+            </div>
+
+
+            <div class="type-card">
+
+                <div class="right-triangle"></div>
+
+                <h3>Segitiga Siku-Siku</h3>
+
+                <p>
+                    Memiliki satu sudut sebesar 90°.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="navigation two-buttons">
+
+            <button class="btn secondary"
+                onclick="showPage('pengertian')">
+                ← Sebelumnya
+            </button>
+
+            <button class="btn primary"
+                onclick="showPage('keliling')">
+                Keliling →
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- KELILING -->
+    <section class="page" id="keliling">
+
+        <div class="lesson-layout">
+
+            <div class="lesson-text">
+
+                <span>3. KELILING SEGITIGA</span>
+
+                <h2>Menghitung Keliling 🔄</h2>
+
+                <p class="large-text">
+
+                    Keliling segitiga adalah jumlah panjang
+                    seluruh sisi segitiga.
+
+                </p>
+
+
+                <div class="formula-box">
+
+                    <h3>Rumus Keliling</h3>
+
+                    <div class="formula">
+
+                        K = a + b + c
+
+                    </div>
+
+                </div>
+
+
+                <div class="note-box">
+
+                    📌 a, b, dan c adalah panjang ketiga sisi
+                    segitiga.
+
+                </div>
+
+            </div>
+
+
+            <div class="example-box">
+
+                <h3>✏️ Contoh Soal</h3>
+
+                <p>
+
+                    Sebuah segitiga memiliki sisi:
+
+                </p>
+
+                <p>
+                    a = 6 cm<br>
+                    b = 8 cm<br>
+                    c = 10 cm
+                </p>
+
+                <div class="calculation">
+
+                    K = a + b + c
+
+                    <br>
+
+                    K = 6 + 8 + 10
+
+                    <br>
+
+                    <strong>K = 24 cm</strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="navigation two-buttons">
+
+            <button class="btn secondary"
+                onclick="showPage('jenis')">
+                ← Sebelumnya
+            </button>
+
+            <button class="btn primary"
+                onclick="showPage('luas')">
+                Luas →
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- LUAS -->
+    <section class="page" id="luas">
+
+        <div class="lesson-layout">
+
+            <div class="lesson-text">
+
+                <span>4. LUAS SEGITIGA</span>
+
+                <h2>Menghitung Luas 📏</h2>
+
+                <p class="large-text">
+
+                    Luas segitiga adalah besar daerah
+                    yang berada di dalam segitiga.
+
+                </p>
+
+
+                <div class="formula-box green">
+
+                    <h3>Rumus Luas</h3>
+
+                    <div class="formula">
+
+                        L = ½ × a × t
+
+                    </div>
+
+                </div>
+
+
+                <div class="note-box">
+
+                    📌 a = alas segitiga
+
+                    <br><br>
+
+                    📌 t = tinggi segitiga
+
+                </div>
+
+            </div>
+
+
+            <div class="example-box">
+
+                <h3>✏️ Contoh Soal</h3>
+
+                <p>
+
+                    Sebuah segitiga memiliki:
+
+                </p>
+
+                <p>
+                    Alas = 10 cm<br>
+                    Tinggi = 8 cm
+                </p>
+
+                <div class="calculation">
+
+                    L = ½ × a × t
+
+                    <br>
+
+                    L = ½ × 10 × 8
+
+                    <br>
+
+                    <strong>L = 40 cm²</strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="navigation two-buttons">
+
+            <button class="btn secondary"
+                onclick="showPage('keliling')">
+                ← Sebelumnya
+            </button>
+
+            <button class="btn primary"
+                onclick="showPage('quizIntro')">
+                🏆 Mulai Kuis
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- QUIZ INTRO -->
+    <section class="page" id="quizIntro">
+
+        <div class="quiz-intro">
+
+            <div class="trophy">
+                🏆
+            </div>
+
+            <h1>Kuis Tanding Segitiga!</h1>
+
+            <p>
+                Dua tim akan menjawab soal secara bergantian.
+                Jawaban benar mendapatkan 10 poin!
+            </p>
+
+
+            <div class="teams">
+
+                <div class="team-card red-team">
+
+                    <h2>🔴 TIM MERAH</h2>
+
+                    <p>
+                        Jawab dengan tepat dan kumpulkan poin!
+                    </p>
+
+                </div>
+
+
+                <div class="vs">
+                    VS
+                </div>
+
+
+                <div class="team-card blue-team">
+
+                    <h2>🔵 TIM BIRU</h2>
+
+                    <p>
+                        Kalahkan lawanmu dan raih kemenangan!
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <button class="btn quiz-start"
+                onclick="startQuiz()">
+                🚀 MULAI PERTANDINGAN
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- QUIZ -->
+    <section class="page" id="quiz">
+
+        <div class="quiz-container">
+
+            <div class="quiz-top">
+
+                <div class="question-number">
+
+                    SOAL
+
+                    <span id="questionNumber">
+                        1
+                    </span>
+
+                    / 10
+
+                </div>
+
+
+                <div id="turnIndicator"
+                    class="turn-indicator">
+
+                    🔴 GILIRAN TIM MERAH
+
+                </div>
+
+            </div>
+
+
+            <div class="question-card">
+
+                <div class="question-icon">
+                    ❓
+                </div>
+
+                <h2 id="questionText">
+                    Pertanyaan
+                </h2>
+
+            </div>
+
+
+            <div id="answers"
+                class="answers-grid">
+            </div>
+
+
+            <div id="feedback"
+                class="feedback">
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- RESULT -->
+    <section class="page" id="result">
+
+        <div class="result-container">
+
+            <div class="trophy">
+                🏆
+            </div>
+
+            <h1>Pertandingan Selesai!</h1>
+
+            <p>
+                Lihat siapa pemenang kuis hari ini!
+            </p>
+
+
+            <div class="final-score">
+
+                <div class="final-team red-team">
+
+                    <h2>🔴 TIM MERAH</h2>
+
+                    <strong id="finalRed">
+                        0
+                    </strong>
+
+                    <span>POIN</span>
+
+                </div>
+
+
+                <div class="final-team blue-team">
+
+                    <h2>🔵 TIM BIRU</h2>
+
+                    <strong id="finalBlue">
+                        0
+                    </strong>
+
+                    <span>POIN</span>
+
+                </div>
+
+            </div>
+
+
+            <div id="winnerText"
+                class="winner-text">
+            </div>
+
+
+            <div class="result-buttons">
+
+                <button class="btn primary"
+                    onclick="startQuiz()">
+                    🔄 Main Lagi
+                </button>
+
+                <button class="btn secondary"
+                    onclick="resetAll()">
+                    🏠 Beranda
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+</body>
+  </html>
