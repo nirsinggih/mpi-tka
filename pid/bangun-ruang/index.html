@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Visualisasi Spasial Bangun Ruang - IFP Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="ifp-header">
+        <h1>🧊 VISUALISASI SPASIAL BANGUN RUANG</h1>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('materi', this)">📘 Prinsip Pandangan</button>
+            <button class="nav-btn" onclick="switchTab('simulasi', this)">🧩 Lab Konstruksi 3D</button>
+            <button class="nav-btn highlight" onclick="switchTab('kuis', this)">⚔️ Kuis Tanding (2 Tim)</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="ifp-container">
+
+        <!-- TAB 1: MATERI -->
+        <section id="materi" class="tab-content active">
+            <div class="card">
+                <h2>Arah Pandang Objek 3 Dimensi</h2>
+                <p class="subtitle">
+                    Melihat bentuk 3D dari bidang datar 2D berdasarkan 3 sudut pandang utama.
+                </p>
+                
+                <div class="materi-grid">
+                    <!-- Depan -->
+                    <div class="box-materi box-depan">
+                        <h3>1. Tampak Depan</h3>
+                        <div class="formula-text text-depan">Front View</div>
+                        <p>Proyeksi tampak dari posisi lurus mendatar di depan objek.</p>
+                    </div>
+
+                    <!-- Atas -->
+                    <div class="box-materi box-atas">
+                        <h3>2. Tampak Atas</h3>
+                        <p class="formula-text text-atas">Top View</p>
+                        <p>Proyeksi tegak lurus melihat objek langsung dari arah atas (burung).</p>
+                    </div>
+
+                    <!-- Samping -->
+                    <div class="box-materi box-samping">
+                        <h3>3. Tampak Samping</h3>
+                        <p class="formula-text text-samping">Side View</p>
+                        <p>Proyeksi melihat objek dari sisi kanan atau sisi kiri mendatar.</p>
+                    </div>
+                </div>
+
+                <div class="materi-tip">
+                    <strong>💡 Tips Pengajaran IFP:</strong> Mintalah siswa membayangkan susunan kubus mainan dan menggambar bentuk kotak-kotak datar yang terlihat dari depan, atas, dan samping!
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULASI KONSTRUKSI 3D & PROYEKSI -->
+        <section id="simulasi" class="tab-content">
+            <div class="simulasi-container">
+                <!-- Control Panel Selector Objek -->
+                <div class="controls-card">
+                    <h2>Pilih Konstruksi Objek 3D</h2>
+                    
+                    <div class="model-selector-grid">
+                        <button class="btn-model active" onclick="selectModel('tangga', this)">🪜 Bentuk Tangga</button>
+                        <button class="btn-model" onclick="selectModel('piramida', this)">🔺 Piramida Bertingkat</button>
+                        <button class="btn-model" onclick="selectModel('hurufL', this)">🔤 Blok Huruf L</button>
+                        <button class="btn-model" onclick="selectModel('terowongan', this)">🏛️ Blok Berlubang</button>
+                    </div>
+
+                    <div class="model-desc-box">
+                        <h3 id="model-name">Bentuk Tangga</h3>
+                        <p id="model-info">Susunan kubus membentuk 3 anak tangga bertingkat.</p>
+                    </div>
+                </div>
+
+                <!-- Display Visual 3D & Proyeksi 2D -->
+                <div class="display-card">
+                    <h3>Hasil Proyeksi Pandangan (2D)</h3>
+                    
+                    <div class="views-grid">
+                        <!-- Depan -->
+                        <div class="view-box box-view-depan">
+                            <div class="view-title">Tampak Depan 🔴</div>
+                            <div id="grid-depan" class="grid-projection"></div>
+                        </div>
+
+                        <!-- Atas -->
+                        <div class="view-box box-view-atas">
+                            <div class="view-title">Tampak Atas 🔵</div>
+                            <div id="grid-atas" class="grid-projection"></div>
+                        </div>
+
+                        <!-- Samping -->
+                        <div class="view-box box-view-samping">
+                            <div class="view-title">Tampak Samping 🟢</div>
+                            <div id="grid-samping" class="grid-projection"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: KUIS TANDING 2 TIM -->
+        <section id="kuis" class="tab-content">
+            <div class="arena-tanding">
+                <!-- Tim Merah -->
+                <div class="team-panel team-a">
+                    <h2>TIM MERAH 🔴</h2>
+                    <div class="score-board" id="score-a">0</div>
+                    <button class="btn-quiz" onclick="addScore('a', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('a', -5)">-5 Poin</button>
+                </div>
+
+                <!-- Arena Soal -->
+                <div class="quiz-center">
+                    <div class="quiz-card">
+                        <div id="quiz-status" class="quiz-badge">Soal 1 / 5</div>
+                        <div id="question-text" class="question-box">Memuat pertanyaan...</div>
+                        <div id="options-container" class="options-grid"></div>
+                    </div>
+                    <button class="btn-touch warning" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+                </div>
+
+                <!-- Tim Biru -->
+                <div class="team-panel team-b">
+                    <h2>TIM BIRU 🔵</h2>
+                    <div class="score-board" id="score-b">0</div>
+                    <button class="btn-quiz" onclick="addScore('b', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('b', -5)">-5 Poin</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+  </html>
