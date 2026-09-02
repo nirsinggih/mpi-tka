@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Satuan Volume Baku (Liter) - IFP Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="ifp-header">
+        <h1>🥛 HUBUNGAN ANTA-SATUAN VOLUME (LITER)</h1>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('materi', this)">📘 Tangga Satuan</button>
+            <button class="nav-btn" onclick="switchTab('simulasi', this)">🎛️ Konverter Interaktif</button>
+            <button class="nav-btn highlight" onclick="switchTab('kuis', this)">⚔️ Kuis Tanding (2 Tim)</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="ifp-container">
+
+        <!-- TAB 1: MATERI TANGGA SATUAN VOLUME -->
+        <section id="materi" class="tab-content active">
+            <div class="card">
+                <h2>Tangga Konversi Satuan Volume (Liter)</h2>
+                <p class="subtitle">
+                    Pahami hubungan antar-satuan volume liter dan hubungannya dengan satuan kubik.
+                </p>
+                
+                <div class="materi-layout">
+                    <!-- Visual Tangga Satuan -->
+                    <div class="tangga-visual">
+                        <div class="step-level level-kl">1 kl (Kiloliter)</div>
+                        <div class="step-level level-hl">2 hl (Hektoliter)</div>
+                        <div class="step-level level-dal">3 dal (Dekaliter)</div>
+                        <div class="step-level level-l">4 l (Liter) ── [= 1 dm³]</div>
+                        <div class="step-level level-dl">5 dl (Desiliter)</div>
+                        <div class="step-level level-cl">6 cl (Sentiliter)</div>
+                        <div class="step-level level-ml">7 ml (Mililiter) ── [= 1 cm³ / cc]</div>
+                    </div>
+
+                    <!-- Aturan & Catatan -->
+                    <div class="rules-box">
+                        <div class="rule-card rule-down">
+                            <h3>⬇️ Turun 1 Tangga</h3>
+                            <div class="rule-math">Dikali 10 (× 10)</div>
+                            <p>Contoh: 1 l = 1.000 ml (turun 3 tangga → × 1.000)</p>
+                        </div>
+                        <div class="rule-card rule-up">
+                            <h3>⬆️ Naik 1 Tangga</h3>
+                            <div class="rule-math">Dibagi 10 (÷ 10)</div>
+                            <p>Contoh: 2.000 ml = 2 l (naik 3 tangga → ÷ 1.000)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULASI KONVERTER INTERAKTIF -->
+        <section id="simulasi" class="tab-content">
+            <div class="simulasi-container">
+                <!-- Control Panel -->
+                <div class="controls-card">
+                    <h2>Kalkulator Konversi Volume</h2>
+                    
+                    <div class="control-row">
+                        <label>Nilai Asal:</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustValue(-1)">-1</button>
+                            <span id="input-val" class="val-badge">2</span>
+                            <button class="btn-touch success" onclick="adjustValue(1)">+1</button>
+                        </div>
+                    </div>
+
+                    <div class="control-row">
+                        <label>Dari Satuan:</label>
+                        <select id="from-unit" class="select-unit" onchange="updateConversionUI()">
+                            <option value="6">kl (Kiloliter)</option>
+                            <option value="5">hl (Hektoliter)</option>
+                            <option value="4">dal (Dekaliter)</option>
+                            <option value="3" selected>l (Liter)</option>
+                            <option value="2">dl (Desiliter)</option>
+                            <option value="1">cl (Sentiliter)</option>
+                            <option value="0">ml (Mililiter)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-row">
+                        <label>Ke Satuan:</label>
+                        <select id="to-unit" class="select-unit" onchange="updateConversionUI()">
+                            <option value="6">kl (Kiloliter)</option>
+                            <option value="5">hl (Hektoliter)</option>
+                            <option value="4">dal (Dekaliter)</option>
+                            <option value="3">l (Liter)</option>
+                            <option value="2">dl (Desiliter)</option>
+                            <option value="1">cl (Sentiliter)</option>
+                            <option value="0" selected>ml (Mililiter)</option>
+                        </select>
+                    </div>
+
+                    <div class="step-explanation">
+                        <div class="step-header">Langkah Perhitungan:</div>
+                        <div id="step-detail-text" class="step-detail-text">
+                            Turun 3 tangga → Dikali 1.000
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display Result Panel -->
+                <div class="display-card">
+                    <h3>Hasil Konversi Volume</h3>
+                    
+                    <div class="equation-box">
+                        <span id="eq-from">2 l</span> = <span id="eq-to">2.000 ml</span>
+                    </div>
+
+                    <div class="result-box">
+                        <div class="res-title">Nilai Akhir:</div>
+                        <div id="final-result" class="res-value">2.000 ml</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: KUIS TANDING 2 TIM -->
+        <section id="kuis" class="tab-content">
+            <div class="arena-tanding">
+                <!-- Tim Merah -->
+                <div class="team-panel team-a">
+                    <h2>TIM MERAH 🔴</h2>
+                    <div class="score-board" id="score-a">0</div>
+                    <button class="btn-quiz" onclick="addScore('a', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('a', -5)">-5 Poin</button>
+                </div>
+
+                <!-- Arena Soal -->
+                <div class="quiz-center">
+                    <div class="quiz-card">
+                        <div id="quiz-status" class="quiz-badge">Soal 1 / 5</div>
+                        <div id="question-text" class="question-box">Memuat pertanyaan...</div>
+                        <div id="options-container" class="options-grid"></div>
+                    </div>
+                    <button class="btn-touch warning" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+                </div>
+
+                <!-- Tim Biru -->
+                <div class="team-panel team-b">
+                    <h2>TIM BIRU 🔵</h2>
+                    <div class="score-board" id="score-b">0</div>
+                    <button class="btn-quiz" onclick="addScore('b', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('b', -5)">-5 Poin</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+                              </html>
