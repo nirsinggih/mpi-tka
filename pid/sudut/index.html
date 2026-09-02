@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Sudut & Pengukurannya - IFP Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="ifp-header">
+        <h1>📐 JENIS & PENGUKURAN SUDUT</h1>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('materi', this)">📘 Jenis-Jenis Sudut</button>
+            <button class="nav-btn" onclick="switchTab('simulasi', this)">🧭 Busur Interactive</button>
+            <button class="nav-btn highlight" onclick="switchTab('kuis', this)">⚔️ Kuis Tanding (2 Tim)</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="ifp-container">
+
+        <!-- TAB 1: MATERI -->
+        <section id="materi" class="tab-content active">
+            <div class="card">
+                <h2>Pengelompokan Jenis Sudut</h2>
+                <p class="subtitle">
+                    Sudut dibedakan berdasarkan rentang ukurannya dalam satuan derajat (°).
+                </p>
+                
+                <div class="materi-grid">
+                    <!-- Lancip -->
+                    <div class="box-materi box-lancip">
+                        <h3>1. Sudut Lancip</h3>
+                        <div class="formula-text text-lancip">&lt; 90°</div>
+                        <p>Besar sudut antara <strong>0° sampai kurang dari 90°</strong> (contoh: 30°, 45°, 60°).</p>
+                    </div>
+
+                    <!-- Siku-Siku -->
+                    <div class="box-materi box-siku">
+                        <h3>2. Sudut Siku-Siku</h3>
+                        <div class="formula-text text-siku">= 90°</div>
+                        <p>Besar sudut <strong>tepat 90°</strong>, membentuk pojok tegak lurus sempurna.</p>
+                    </div>
+
+                    <!-- Tumpul -->
+                    <div class="box-materi box-tumpul">
+                        <h3>3. Sudut Tumpul</h3>
+                        <div class="formula-text text-tumpul">&gt; 90°</div>
+                        <p>Besar sudut <strong>antara 90° hingga kurang dari 180°</strong> (contoh: 120°, 135°).</p>
+                    </div>
+
+                    <!-- Lurus -->
+                    <div class="box-materi box-lurus">
+                        <h3>4. Sudut Lurus</h3>
+                        <div class="formula-text text-lurus">= 180°</div>
+                        <p>Besar sudut <strong>tepat 180°</strong>, membentuk garis lurus lurus datar.</p>
+                    </div>
+                </div>
+
+                <div class="tip-card">
+                    💡 <strong>Tips Mengukur Busur IFP:</strong> Himpitkan titik pusat busur derajat tepat pada titik sudut, dan pastikan garis alas busur berimpit lurus dengan salah satu kaki sudut!
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULASI VISUALIZER SUDUT INTERAKTIF -->
+        <section id="simulasi" class="tab-content">
+            <div class="simulasi-container">
+                <!-- Control Panel -->
+                <div class="controls-card">
+                    <h2>Atur Besar Sudut (Derajat)</h2>
+                    
+                    <div class="control-row">
+                        <label>Sudut (°):</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustAngle(-15)">-15°</button>
+                            <span id="angle-val" class="val-badge">45°</span>
+                            <button class="btn-touch success" onclick="adjustAngle(15)">+15°</button>
+                        </div>
+                    </div>
+
+                    <div class="quick-angle-grid">
+                        <button class="btn-angle" onclick="setAngle(30)">30°</button>
+                        <button class="btn-angle" onclick="setAngle(45)">45°</button>
+                        <button class="btn-angle" onclick="setAngle(90)">90°</button>
+                        <button class="btn-angle" onclick="setAngle(120)">120°</button>
+                        <button class="btn-angle" onclick="setAngle(180)">180°</button>
+                    </div>
+
+                    <div class="angle-info-box">
+                        <div class="info-item">
+                            Kategori: <strong id="angle-category" class="cat-text">Sudut Lancip</strong>
+                        </div>
+                        <div id="angle-desc" class="desc-text">
+                            Ukuran sudut lebih kecil dari 90 derajat.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display Visual Canvas -->
+                <div class="display-card">
+                    <h3 id="display-title">Visualisasi Sudut: 45°</h3>
+                    <div class="canvas-box">
+                        <svg id="angle-svg" viewBox="0 0 200 200" width="220" height="220"></svg>
+                    </div>
+                    <div class="degree-badge" id="degree-text">45°</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: KUIS TANDING 2 TIM -->
+        <section id="kuis" class="tab-content">
+            <div class="arena-tanding">
+                <!-- Tim Merah -->
+                <div class="team-panel team-a">
+                    <h2>TIM MERAH 🔴</h2>
+                    <div class="score-board" id="score-a">0</div>
+                    <button class="btn-quiz" onclick="addScore('a', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('a', -5)">-5 Poin</button>
+                </div>
+
+                <!-- Arena Soal -->
+                <div class="quiz-center">
+                    <div class="quiz-card">
+                        <div id="quiz-status" class="quiz-badge">Soal 1 / 5</div>
+                        <div id="question-text" class="question-box">Memuat pertanyaan...</div>
+                        <div id="options-container" class="options-grid"></div>
+                    </div>
+                    <button class="btn-touch warning" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+                </div>
+
+                <!-- Tim Biru -->
+                <div class="team-panel team-b">
+                    <h2>TIM BIRU 🔵</h2>
+                    <div class="score-board" id="score-b">0</div>
+                    <button class="btn-quiz" onclick="addScore('b', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('b', -5)">-5 Poin</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+  </html>
