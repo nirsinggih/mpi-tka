@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Penaksiran Ukuran - IFP Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="ifp-header">
+        <h1>🎯 PENAKSIRAN & PEMBULATAN UKURAN BAKU</h1>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('materi', this)">📘 Aturan Pembulatan</button>
+            <button class="nav-btn" onclick="switchTab('simulasi', this)">🧮 Kalkulator Taksiran</button>
+            <button class="nav-btn highlight" onclick="switchTab('kuis', this)">⚔️ Kuis Tanding (2 Tim)</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="ifp-container">
+
+        <!-- TAB 1: MATERI ATURAN PEMBULATAN -->
+        <section id="materi" class="tab-content active">
+            <div class="card">
+                <h2>Aturan Pembulatan Hasil Pengukuran</h2>
+                <p class="subtitle">
+                    Penaksiran mempermudah perkiraan ukuran baku tanpa memerlukan alat ukur yang terlalu rumit.
+                </p>
+                
+                <div class="materi-grid">
+                    <!-- Pembulatan Ke Bawah -->
+                    <div class="box-materi box-bawah">
+                        <h3>1. Pembulatan Ke Bawah (&lt; 5)</h3>
+                        <div class="formula-text text-bawah">0, 1, 2, 3, 4 ➡️ 0</div>
+                        <p>Jika angka desimal di belakang koma kurang dari 5, hilangkan angka pecahan tersebut (dibulatkan ke bawah).</p>
+                        <p class="example-text">Contoh: 12,3 cm ➡️ <strong>12 cm</strong></p>
+                    </div>
+
+                    <!-- Pembulatan Ke Atas -->
+                    <div class="box-materi box-atas">
+                        <h3>2. Pembulatan Ke Atas (≥ 5)</h3>
+                        <div class="formula-text text-atas">5, 6, 7, 8, 9 ➡️ +1</div>
+                        <p>Jika angka desimal di belakang koma sama dengan atau lebih dari 5, tambahkan 1 ke satuan utama.</p>
+                        <p class="example-text">Contoh: 7,8 kg ➡️ <strong>8 kg</strong></p>
+                    </div>
+
+                    <!-- Penaksiran Hasil Operasi -->
+                    <div class="box-materi box-operasi">
+                        <h3>3. Taksiran Operasi Hitung</h3>
+                        <div class="formula-text text-operasi">Bulatkan Dahulu</div>
+                        <p>Setiap ukuran dibulatkan ke satuan terdekat sebelum dijumlahkan, dikurangi, atau dikalikan.</p>
+                        <p class="example-text">Contoh: 4,2 m + 5,7 m ➡️ 4 m + 6 m = <strong>10 m</strong></p>
+                    </div>
+                </div>
+
+                <div class="tip-card">
+                    💡 <strong>Tips Pengajaran IFP:</strong> Mintalah siswa mengukur benda nyata di kelas (seperti pensil atau buku) dan menaksir ukurannya ke centimeter terdekat!
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULASI KALKULATOR TAKSIRAN INTERAKTIF -->
+        <section id="simulasi" class="tab-content">
+            <div class="simulasi-container">
+                <!-- Control Panel -->
+                <div class="controls-card">
+                    <h2>Kalkulator Penaksiran Ukuran</h2>
+                    
+                    <div class="control-row">
+                        <label>Ukuran Pertama (A):</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustVal('a', -0.3)">-0.3</button>
+                            <span id="val-a" class="val-badge">5.4</span>
+                            <button class="btn-touch success" onclick="adjustVal('a', 0.3)">+0.3</button>
+                        </div>
+                    </div>
+
+                    <div class="control-row">
+                        <label>Ukuran Kedua (B):</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustVal('b', -0.3)">-0.3</button>
+                            <span id="val-b" class="val-badge">3.7</span>
+                            <button class="btn-touch success" onclick="adjustVal('b', 0.3)">+0.3</button>
+                        </div>
+                    </div>
+
+                    <div class="control-row">
+                        <label>Operasi Hitung:</label>
+                        <select id="op-select" class="select-op" onchange="calculateTaksiran()">
+                            <option value="+">Penjumlahan (+)</option>
+                            <option value="-">Pengurangan (-)</option>
+                            <option value="*">Perkalian (×)</option>
+                        </select>
+                    </div>
+
+                    <div class="step-explanation">
+                        <div class="step-header">Proses Pembulatan:</div>
+                        <div id="step-detail-text" class="step-detail-text">
+                            A = 5,4 ➡️ 5 | B = 3,7 ➡️ 4
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display Result Panel -->
+                <div class="display-card">
+                    <h3>Hasil Penaksiran vs Hasil Eksak</h3>
+                    
+                    <div class="equation-box">
+                        <span id="eq-taksiran">5 + 4</span> = <span id="res-taksiran">9</span>
+                    </div>
+
+                    <div class="comparison-grid">
+                        <div class="comp-box comp-taksiran">
+                            <div class="comp-title">Hasil Taksiran</div>
+                            <div id="final-taksiran" class="comp-val">9</div>
+                        </div>
+
+                        <div class="comp-box comp-eksak">
+                            <div class="comp-title">Hasil Hitung Eksak</div>
+                            <div id="final-eksak" class="comp-val">9,1</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: KUIS TANDING 2 TIM -->
+        <section id="kuis" class="tab-content">
+            <div class="arena-tanding">
+                <!-- Tim Merah -->
+                <div class="team-panel team-a">
+                    <h2>TIM MERAH 🔴</h2>
+                    <div class="score-board" id="score-a">0</div>
+                    <button class="btn-quiz" onclick="addScore('a', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('a', -5)">-5 Poin</button>
+                </div>
+
+                <!-- Arena Soal -->
+                <div class="quiz-center">
+                    <div class="quiz-card">
+                        <div id="quiz-status" class="quiz-badge">Soal 1 / 5</div>
+                        <div id="question-text" class="question-box">Memuat pertanyaan...</div>
+                        <div id="options-container" class="options-grid"></div>
+                    </div>
+                    <button class="btn-touch warning" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+                </div>
+
+                <!-- Tim Biru -->
+                <div class="team-panel team-b">
+                    <h2>TIM BIRU 🔵</h2>
+                    <div class="score-board" id="score-b">0</div>
+                    <button class="btn-quiz" onclick="addScore('b', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('b', -5)">-5 Poin</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+  </html>
