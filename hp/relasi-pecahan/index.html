@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPI Relasi Bentuk Pecahan SD</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f5f6fa;
+      color: #2d3436;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background-color: #ffffff;
+      box-shadow: 0 0 15px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Warna Warm Amber & Orange */
+    .header {
+      background: linear-gradient(135deg, #ff9f43, #ee5253);
+      color: white;
+      text-align: center;
+      padding: 20px 15px;
+    }
+
+    .header h1 {
+      font-size: 1.35rem;
+      margin-bottom: 4px;
+    }
+
+    .header p {
+      font-size: 0.88rem;
+      opacity: 0.95;
+    }
+
+    .nav-menu {
+      display: flex;
+      background-color: #f1f2f6;
+      border-bottom: 2px solid #dcdde1;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 10px 2px;
+      border: none;
+      background: none;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #576574;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .nav-btn.active {
+      background-color: #ffffff;
+      color: #ee5253;
+      border-bottom: 3px solid #ee5253;
+    }
+
+    .content {
+      padding: 15px;
+      flex: 1;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      border: 1px solid #e1e8f0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      color: #ee5253;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    .sub-card {
+      background-color: #fff9f8;
+      border: 1px solid #ffbe76;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 10px 0;
+    }
+
+    .sub-card h3 {
+      font-size: 0.95rem;
+      color: #ff9f43;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      background-color: #ee5253;
+      color: white;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+
+    .formula-box, .example-box, .result-box {
+      background-color: #fff4f2;
+      border-left: 4px solid #ee5253;
+      padding: 12px;
+      border-radius: 6px;
+      margin: 10px 0;
+    }
+
+    .result-box {
+      text-align: center;
+    }
+
+    .relation-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    .relation-cell {
+      background-color: #f1f2f6;
+      border-radius: 6px;
+      padding: 8px 4px;
+      font-size: 0.85rem;
+    }
+
+    .relation-cell.header-cell {
+      background-color: #ff9f43;
+      color: white;
+      font-weight: bold;
+    }
+
+    .relation-cell.val-cell {
+      border: 1px solid #c8d6e5;
+      font-weight: bold;
+      color: #222f3e;
+    }
+
+    /* Converter Inputs */
+    .converter-row {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    .frac-input-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .frac-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 70px;
+    }
+
+    .frac-box input {
+      width: 100%;
+      padding: 6px;
+      border: 1px solid #b2bec3;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .frac-line {
+      width: 100%;
+      height: 2px;
+      background-color: #2d3436;
+      margin: 3px 0;
+    }
+
+    /* Visual Bar */
+    .visual-bar-outer {
+      width: 100%;
+      height: 24px;
+      background-color: #c8d6e5;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 8px;
+      border: 2px solid #576574;
+    }
+
+    .visual-bar-inner {
+      height: 100%;
+      background: linear-gradient(90deg, #10ac84, #1dd1a1);
+      width: 50%;
+      transition: width 0.4s ease;
+    }
+
+    /* Kuis Style */
+    .quiz-header {
+      font-size: 0.85rem;
+      color: #777;
+      margin-bottom: 8px;
+    }
+
+    .question {
+      font-weight: bold;
+      font-size: 0.98rem;
+      margin-bottom: 12px;
+    }
+
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      padding: 12px;
+      border: 1px solid #ee5253;
+      background-color: #fff;
+      color: #ee5253;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .option-btn.correct {
+      background-color: #10ac84;
+      color: white;
+      border-color: #10ac84;
+    }
+
+    .option-btn.wrong {
+      background-color: #ee5253;
+      color: white;
+      border-color: #ee5253;
+    }
+
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background-color: #ee5253;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.98rem;
+      cursor: pointer;
+    }
+
+    .score-box {
+      text-align: center;
+      font-size: 3rem;
+      font-weight: bold;
+      color: #10ac84;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <h1>Relasi Bentuk Pecahan</h1>
+      <p>Pecahan Sederhana ⇄ Desimal ⇄ Persen</p>
+    </header>
+
+    <nav class="nav-menu">
+      <button class="nav-btn active" onclick="switchTab('materi')">📖 Materi</button>
+      <button class="nav-btn" onclick="switchTab('konversi')">🔄 Konversi</button>
+      <button class="nav-btn" onclick="switchTab('tabel')">📊 Tabel Relasi</button>
+      <button class="nav-btn" onclick="switchTab('kuis')">✏️ Kuis</button>
+    </nav>
+
+    <main class="content">
+      <!-- Section 1: Materi -->
+      <section id="materi" class="tab-content active">
+        <div class="card">
+          <h2>3 Bentuk Pecahan</h2>
+          <p>Nilai yang sama dapat dinyatakan dalam tiga bentuk berbeda:</p>
+          <ul style="margin: 10px 0 10px 20px; line-height: 1.8;">
+            <li><strong>Pecahan Sederhana</strong> (contoh: <sup>1</sup>/<sub>2</sub>)</li>
+            <li><strong>Desimal</strong> (contoh: 0,5)</li>
+            <li><strong>Persen / Per-seratus</strong> (contoh: 50%)</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>1. Pecahan Biasa ke Desimal</h2>
+          <p>Bagi angka pembilang dengan penyebutnya (atau jadikan penyebutnya 10, 100, atau 1000).</p>
+          <div class="example-box">
+            <p>Contoh: <sup>3</sup>/<sub>5</sub></p>
+            <p>• Cara 1: Ubah penyebut ke 10 → <sup>(3×2)</sup>/<sub>(5×2)</sub> = <sup>6</sup>/<sub>10</sub> = <strong>0,6</strong></p>
+            <p>• Cara 2: Pembagian bersusun → 3 ÷ 5 = <strong>0,6</strong></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>2. Pecahan Biasa ke Persen</h2>
+          <p>Kalikan pecahan dengan <strong>100%</strong>.</p>
+          <div class="formula-box">
+            <p><strong>Bentuk Persen = Pecahan × 100%</strong></p>
+          </div>
+          <div class="example-box">
+            <p>Contoh: <sup>3</sup>/<sub>4</sub></p>
+            <p><sup>3</sup>/<sub>4</sub> × 100% = <sup>300</sup>/<sub>4</sub> % = <strong>75%</strong></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>3. Desimal / Persen ke Pecahan</h2>
+          <p>Ubah desimal/persen ke pecahan dengan penyebut 10, 100, atau per-seratus, lalu sederhanakan.</p>
+          <div class="example-box">
+            <p>• <strong>0,25</strong> = <sup>25</sup>/<sub>100</sub> (dibagi 25) = <strong><sup>1</sup>/<sub>4</sub></strong></p>
+            <p>• <strong>20%</strong> = <sup>20</sup>/<sub>100</sub> (dibagi 20) = <strong><sup>1</sup>/<sub>5</sub></strong></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Konversi Otomatis -->
+      <section id="konversi" class="tab-content">
+        <div class="card">
+          <h2>Kalkulator Relasi Pecahan</h2>
+          <p>Masukkan angka pembilang dan penyebut di bawah ini untuk melihat bentuk Desimal dan Persennya secara otomatis:</p>
+
+          <div class="converter-row">
+            <div class="frac-input-group">
+              <span style="font-weight: bold; font-size: 0.95rem;">Pecahan:</span>
+              <div class="frac-box">
+                <input type="number" id="numInput" value="1" min="1" max="100" onchange="convertRelasi()">
+                <div class="frac-line"></div>
+                <input type="number" id="denInput" value="2" min="1" max="100" onchange="convertRelasi()">
+              </div>
+            </div>
+          </div>
+
+          <!-- Visual Progress Bar -->
+          <div class="sub-card">
+            <h3>Visual Representasi Nilai</h3>
+            <div class="visual-bar-outer">
+              <div class="visual-bar-inner" id="visualBar"></div>
+            </div>
+            <p style="text-align: center; margin-top: 6px; font-size: 0.85rem; color: #576574;" id="barLabel">Memenuhi 50% dari keseluruhan</p>
+          </div>
+
+          <!-- Output Konversi -->
+          <div class="result-box" id="conversionResults">
+            <h3>Hasil Kesetaraan:</h3>
+            <p style="margin-top: 8px;"><strong>Desimal:</strong> <span id="resDecimal" style="color: #ee5253; font-weight: bold; font-size: 1.1rem;">0,5</span></p>
+            <p style="margin-top: 4px;"><strong>Persen:</strong> <span id="resPercent" style="color: #10ac84; font-weight: bold; font-size: 1.1rem;">50%</span></p>
+            <div style="margin-top: 10px; font-size: 0.85rem; color: #576574; border-top: 1px dashed #ee5253; padding-top: 8px;" id="resStep">
+              1 ÷ 2 = 0,5 | 0,5 × 100% = 50%
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Tabel Relasi -->
+      <section id="tabel" class="tab-content">
+        <div class="card">
+          <h2>Tabel Pasangan Istimewa</h2>
+          <p>Beberapa pasangan nilai pecahan yang sering digunakan dalam matematika:</p>
+
+          <div class="relation-grid">
+            <div class="relation-cell header-cell">Pecahan</div>
+            <div class="relation-cell header-cell">Desimal</div>
+            <div class="relation-cell header-cell">Persen</div>
+
+            <div class="relation-cell val-cell">1/2</div>
+            <div class="relation-cell val-cell">0,5</div>
+            <div class="relation-cell val-cell">50%</div>
+
+            <div class="relation-cell val-cell">1/4</div>
+            <div class="relation-cell val-cell">0,25</div>
+            <div class="relation-cell val-cell">25%</div>
+
+            <div class="relation-cell val-cell">3/4</div>
+            <div class="relation-cell val-cell">0,75</div>
+            <div class="relation-cell val-cell">75%</div>
+
+            <div class="relation-cell val-cell">1/5</div>
+            <div class="relation-cell val-cell">0,2</div>
+            <div class="relation-cell val-cell">20%</div>
+
+            <div class="relation-cell val-cell">2/5</div>
+            <div class="relation-cell val-cell">0,4</div>
+            <div class="relation-cell val-cell">40%</div>
+
+            <div class="relation-cell val-cell">1/10</div>
+            <div class="relation-cell val-cell">0,1</div>
+            <div class="relation-cell val-cell">10%</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Kuis -->
+      <section id="kuis" class="tab-content">
+        <div class="card" id="quizContainer">
+          <div class="quiz-header">
+            <span id="questionNum">Soal 1 dari 4</span>
+          </div>
+          <p id="questionText" class="question">Loading...</p>
+          <div id="optionsContainer" class="options-group"></div>
+          <div id="quizFeedback" class="feedback"></div>
+          <button id="nextBtn" class="action-btn" onclick="nextQuestion()" style="display: none;">Soal Berikutnya ➡️</button>
+        </div>
+
+        <div class="card" id="scoreContainer" style="display: none;">
+          <h2>Hasil Kuis Kamu 🎉</h2>
+          <div class="score-box">
+            <span id="finalScore">0</span>
+          </div>
+          <p id="scoreMessage" style="text-align: center;"></p>
+          <button class="action-btn" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Navigasi Tab
+    function switchTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.nav-btn');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+
+      if (tabId === 'konversi') {
+        convertRelasi();
+      }
+    }
+
+    // --- LOGIKA KALKULATOR RELASI ---
+    function convertRelasi() {
+      let num = parseInt(document.getElementById('numInput').value) || 1;
+      let den = parseInt(document.getElementById('denInput').value) || 1;
+
+      // Koreksi batas masukan
+      if (num > den) {
+        num = den;
+        document.getElementById('numInput').value = num;
+      }
+
+      const decVal = (num / den);
+      const percVal = Math.round(decVal * 10000) / 100; // Pembulatan presisi
+
+      // Format desimal dengan koma sesuai EYD matematika SD
+      const decFormatted = decVal.toString().replace('.', ',');
+
+      document.getElementById('resDecimal').innerText = decFormatted;
+      document.getElementById('resPercent').innerText = `${percVal}%`;
+
+      // Update Visual Bar
+      const visualBar = document.getElementById('visualBar');
+      visualBar.style.width = `${Math.min(100, Math.max(0, percVal))}%`;
+      document.getElementById('barLabel').innerText = `Memenuhi ${percVal}% dari keseluruhan (100%)`;
+
+      // Update Langkah
+      document.getElementById('resStep').innerHTML = `
+        • <sup>${num}</sup>/<sub>${den}</sub> ➔ Pembagian: ${num} ÷ ${den} = <strong>${decFormatted}</strong><br>
+        • ${decFormatted} × 100% = <strong>${percVal}%</strong>
+      `;
+    }
+
+    // --- DATA KUIS RELASI PECAHAN ---
+    const questions = [
+      {
+        question: "Bentuk desimal dari pecahan 1/4 adalah...",
+        options: ["0,2", "0,25", "0,4", "0,5"],
+        answer: 1
+      },
+      {
+        question: "Bentuk persen dari pecahan 3/5 adalah...",
+        options: ["35%", "50%", "60%", "75%"],
+        answer: 2
+        // Pembahasan: 3/5 * 100% = 60%
+      },
+      {
+        question: "Bentuk pecahan sederhana dari 0,4 adalah...",
+        options: ["1/4", "2/5", "4/5", "1/2"],
+        answer: 1
+        // Pembahasan: 0,4 = 4/10 = 2/5
+      },
+      {
+        question: "Pernyataan berikut yang menunjukkan nilai yang SENILAI adalah...",
+        options: [
+          "1/2 = 0,2 = 20%",
+          "3/4 = 0,75 = 75%",
+          "1/5 = 0,5 = 50%",
+          "2/5 = 0,25 = 25%"
+        ],
+        answer: 1
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let isAnswered = false;
+
+    function loadQuestion() {
+      isAnswered = false;
+      const q = questions[currentQuestion];
+      
+      document.getElementById('questionNum').innerText = `Soal ${currentQuestion + 1} dari ${questions.length}`;
+      document.getElementById('questionText').innerText = q.question;
+      document.getElementById('quizFeedback').innerText = '';
+      document.getElementById('nextBtn').style.display = 'none';
+
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.innerHTML = '';
+
+      q.options.forEach((opt, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(index, btn);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selectedIndex, selectedBtn) {
+      if (isAnswered) return;
+      isAnswered = true;
+
+      const correctIndex = questions[currentQuestion].answer;
+      const options = document.querySelectorAll('.option-btn');
+
+      if (selectedIndex === correctIndex) {
+        selectedBtn.classList.add('correct');
+        document.getElementById('quizFeedback').innerText = "Hebat! Jawaban kamu tepat sekali. 🎉";
+        document.getElementById('quizFeedback').style.color = "#10ac84";
+        score += 100 / questions.length;
+      } else {
+        selectedBtn.classList.add('wrong');
+        options[correctIndex].classList.add('correct');
+        document.getElementById('quizFeedback').innerText = "Ups! Jawaban belum tepat, pelajari lagi tabel relasinya ya. 😅";
+        document.getElementById('quizFeedback').style.color = "#ee5253";
+      }
+
+      document.getElementById('nextBtn').style.display = 'block';
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('quizContainer').style.display = 'none';
+      document.getElementById('scoreContainer').style.display = 'block';
+      
+      const finalScore = Math.round(score);
+      document.getElementById('finalScore').innerText = finalScore;
+
+      let message = "";
+      if (finalScore === 100) {
+        message = "Luar biasa! Kamu sudah paham sepenuhnya relasi antara pecahan, desimal, dan persen!";
+      } else if (finalScore >= 60) {
+        message = "Bagus sekali! Tingkatkan terus latihan konversinya ya.";
+      } else {
+        message = "Jangan menyerah, baca kembali materi konversi dan ulangi kuisnya!";
+      }
+      document.getElementById('scoreMessage').innerText = message;
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById('quizContainer').style.display = 'block';
+      document.getElementById('scoreContainer').style.display = 'none';
+      loadQuestion();
+    }
+
+    // Inisialisasi awal
+    loadQuestion();
+  </script>
+</body>
+</html>
