@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Satuan Berat Baku - IFP Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="ifp-header">
+        <h1>⚖️ HUBUNGAN ANTAR-SATUAN BERAT BAKU</h1>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('materi', this)">📘 Tangga Satuan</button>
+            <button class="nav-btn" onclick="switchTab('simulasi', this)">🎛️ Konverter Interaktif</button>
+            <button class="nav-btn highlight" onclick="switchTab('kuis', this)">⚔️ Kuis Tanding (2 Tim)</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="ifp-container">
+
+        <!-- TAB 1: MATERI TANGGA SATUAN BERAT -->
+        <section id="materi" class="tab-content active">
+            <div class="card">
+                <h2>Tangga Konversi Satuan Berat (Gram)</h2>
+                <p class="subtitle">
+                    Pahami hubungan antar-satuan berat baku serta kesetaraan dengan satuan umum (ons, kuintal, ton).
+                </p>
+                
+                <div class="materi-layout">
+                    <!-- Visual Tangga Satuan -->
+                    <div class="tangga-visual">
+                        <div class="step-level level-kg">1 kg (Kilogram)</div>
+                        <div class="step-level level-hg">2 hg (Hektogram / Ons)</div>
+                        <div class="step-level level-dag">3 dag (Dekagram)</div>
+                        <div class="step-level level-g">4 g (Gram)</div>
+                        <div class="step-level level-dg">5 dg (Desigram)</div>
+                        <div class="step-level level-cg">6 cg (Sentigram)</div>
+                        <div class="step-level level-mg">7 mg (Miligram)</div>
+                    </div>
+
+                    <!-- Aturan & Catatan Satuan Lain -->
+                    <div class="rules-box">
+                        <div class="rule-card rule-down">
+                            <h3>⬇️ Turun 1 Tangga</h3>
+                            <div class="rule-math">Dikali 10 (× 10)</div>
+                            <p>Contoh: 1 kg = 1.000 g (turun 3 tangga → × 1.000)</p>
+                        </div>
+                        <div class="rule-card rule-up">
+                            <h3>⬆️ Naik 1 Tangga</h3>
+                            <div class="rule-math">Dibagi 10 (÷ 10)</div>
+                            <p>Contoh: 5.000 g = 5 kg (naik 3 tangga → ÷ 1.000)</p>
+                        </div>
+                        <div class="extra-notes">
+                            <strong>📌 Kesetaraan Penting:</strong>
+                            <ul>
+                                <li>1 hg = 1 ons</li>
+                                <li>1 kg = 10 ons</li>
+                                <li>1 kuintal = 100 kg</li>
+                                <li>1 ton = 1.000 kg</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULASI KONVERTER INTERAKTIF -->
+        <section id="simulasi" class="tab-content">
+            <div class="simulasi-container">
+                <!-- Control Panel -->
+                <div class="controls-card">
+                    <h2>Kalkulator Konversi Berat</h2>
+                    
+                    <div class="control-row">
+                        <label>Nilai Asal:</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustValue(-1)">-1</button>
+                            <span id="input-val" class="val-badge">3</span>
+                            <button class="btn-touch success" onclick="adjustValue(1)">+1</button>
+                        </div>
+                    </div>
+
+                    <div class="control-row">
+                        <label>Dari Satuan:</label>
+                        <select id="from-unit" class="select-unit" onchange="updateConversionUI()">
+                            <option value="6" selected>kg (Kilogram)</option>
+                            <option value="5">hg / ons (Hektogram)</option>
+                            <option value="4">dag (Dekagram)</option>
+                            <option value="3">g (Gram)</option>
+                            <option value="2">dg (Desigram)</option>
+                            <option value="1">cg (Sentigram)</option>
+                            <option value="0">mg (Miligram)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-row">
+                        <label>Ke Satuan:</label>
+                        <select id="to-unit" class="select-unit" onchange="updateConversionUI()">
+                            <option value="6">kg (Kilogram)</option>
+                            <option value="5">hg / ons (Hektogram)</option>
+                            <option value="4">dag (Dekagram)</option>
+                            <option value="3" selected>g (Gram)</option>
+                            <option value="2">dg (Desigram)</option>
+                            <option value="1">cg (Sentigram)</option>
+                            <option value="0">mg (Miligram)</option>
+                        </select>
+                    </div>
+
+                    <div class="step-explanation">
+                        <div class="step-header">Langkah Perhitungan:</div>
+                        <div id="step-detail-text" class="step-detail-text">
+                            Turun 3 tangga → Dikali 1.000
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display Result Panel -->
+                <div class="display-card">
+                    <h3>Hasil Konversi Berat</h3>
+                    
+                    <div class="equation-box">
+                        <span id="eq-from">3 kg</span> = <span id="eq-to">3.000 g</span>
+                    </div>
+
+                    <div class="result-box">
+                        <div class="res-title">Nilai Akhir:</div>
+                        <div id="final-result" class="res-value">3.000 g</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: KUIS TANDING 2 TIM -->
+        <section id="kuis" class="tab-content">
+            <div class="arena-tanding">
+                <!-- Tim Merah -->
+                <div class="team-panel team-a">
+                    <h2>TIM MERAH 🔴</h2>
+                    <div class="score-board" id="score-a">0</div>
+                    <button class="btn-quiz" onclick="addScore('a', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('a', -5)">-5 Poin</button>
+                </div>
+
+                <!-- Arena Soal -->
+                <div class="quiz-center">
+                    <div class="quiz-card">
+                        <div id="quiz-status" class="quiz-badge">Soal 1 / 5</div>
+                        <div id="question-text" class="question-box">Memuat pertanyaan...</div>
+                        <div id="options-container" class="options-grid"></div>
+                    </div>
+                    <button class="btn-touch warning" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+                </div>
+
+                <!-- Tim Biru -->
+                <div class="team-panel team-b">
+                    <h2>TIM BIRU 🔵</h2>
+                    <div class="score-board" id="score-b">0</div>
+                    <button class="btn-quiz" onclick="addScore('b', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('b', -5)">-5 Poin</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+  </html>
