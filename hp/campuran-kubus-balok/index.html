@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPI Volume Gabungan Kubus & Balok</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <h1>Volume Gabungan</h1>
+      <p>Kubus & Balok — Matematika SD</p>
+    </header>
+
+    <nav class="nav-menu">
+      <button class="nav-btn active" onclick="switchTab('materi')">📖 Materi</button>
+      <button class="nav-btn" onclick="switchTab('simulasi')">🎲 Simulasi</button>
+      <button class="nav-btn" onclick="switchTab('kuis')">✏️ Kuis</button>
+    </nav>
+
+    <main class="content">
+      <!-- Section 1: Materi -->
+      <section id="materi" class="tab-content active">
+        <div class="card">
+          <h2>Mengenal Bangun Gabungan</h2>
+          <p>Bangun ruang gabungan adalah dua atau lebih bangun ruang yang disusun menjadi satu kesatuan (misalnya kubus menempel pada balok).</p>
+        </div>
+
+        <div class="card">
+          <h2>Langkah Menghitung Volume</h2>
+          <ol class="step-list">
+            <li><strong>Bagi</strong> bangun gabungan menjadi beberapa bagian utama (Bagian I dan Bagian II).</li>
+            <li><strong>Hitung Volume 1</strong> (misal: Volume Kubus = s × s × s).</li>
+            <li><strong>Hitung Volume 2</strong> (misal: Volume Balok = p × l × t).</li>
+            <li><strong>Jumlahkan</strong> kedua volume: <br><span class="highlight">Volume Total = V1 + V2</span></li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <h2>Contoh Soal</h2>
+          <p>Sebuah mainan terdiri dari <strong>Kubus (rusuk = 4 cm)</strong> yang diletakkan di atas <strong>Balok (p = 10 cm, l = 4 cm, t = 5 cm)</strong>. Berapakah volume totalnya?</p>
+          <div class="example-box">
+            <p><strong>1. Volume Kubus (V1):</strong></p>
+            <p>4 × 4 × 4 = <strong>64 cm³</strong></p>
+            <br>
+            <p><strong>2. Volume Balok (V2):</strong></p>
+            <p>10 × 4 × 5 = <strong>200 cm³</strong></p>
+            <br>
+            <p><strong>3. Volume Total:</strong></p>
+            <p>V1 + V2 = 64 + 200 = <strong>264 cm³</strong></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Simulasi -->
+      <section id="simulasi" class="tab-content">
+        <div class="card">
+          <h2>Hitung Gabungan Otomatis</h2>
+          <p>Atur ukuran Kubus dan Balok di bawah ini:</p>
+
+          <div class="sub-card">
+            <h3>🔹 Ukuran Kubus</h3>
+            <div class="input-group">
+              <label for="rusukInput">Rusuk (s) [cm]:</label>
+              <input type="number" id="rusukInput" min="1" value="4" oninput="hitungVolumeGabungan()">
+            </div>
+          </div>
+
+          <div class="sub-card">
+            <h3>🔸 Ukuran Balok</h3>
+            <div class="input-group">
+              <label for="panjangInput">Panjang (p) [cm]:</label>
+              <input type="number" id="panjangInput" min="1" value="10" oninput="hitungVolumeGabungan()">
+            </div>
+            <div class="input-group">
+              <label for="lebarInput">Lebar (l) [cm]:</label>
+              <input type="number" id="lebarInput" min="1" value="4" oninput="hitungVolumeGabungan()">
+            </div>
+            <div class="input-group">
+              <label for="tinggiInput">Tinggi (t) [cm]:</label>
+              <input type="number" id="tinggiInput" min="1" value="5" oninput="hitungVolumeGabungan()">
+            </div>
+          </div>
+
+          <div class="result-box">
+            <p>Vol. Kubus (V1): <strong id="v1Calc">64</strong> cm³</p>
+            <p>Vol. Balok (V2): <strong id="v2Calc">200</strong> cm³</p>
+            <hr class="divider">
+            <h3>Volume Total: <span id="hasilTotalCalc">264</span> cm³</h3>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Kuis -->
+      <section id="kuis" class="tab-content">
+        <div class="card" id="quizContainer">
+          <div class="quiz-header">
+            <span id="questionNum">Soal 1 dari 3</span>
+          </div>
+          <p id="questionText" class="question">Loading...</p>
+          <div id="optionsContainer" class="options-group"></div>
+          <div id="quizFeedback" class="feedback"></div>
+          <button id="nextBtn" class="action-btn" onclick="nextQuestion()" style="display: none;">Soal Berikutnya ➡️</button>
+        </div>
+
+        <div class="card" id="scoreContainer" style="display: none;">
+          <h2>Hasil Kuis Kamu 🎉</h2>
+          <div class="score-box">
+            <span id="finalScore">0</span>
+          </div>
+          <p id="scoreMessage"></p>
+          <button class="action-btn" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
