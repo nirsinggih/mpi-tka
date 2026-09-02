@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Pengambilan Informasi Data - IFP Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="ifp-header">
+        <h1>🔍 PENGAMBILAN INFORMASI & PENGGUNAAN DATA</h1>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('materi', this)">📘 Istilah Penting</button>
+            <button class="nav-btn" onclick="switchTab('simulasi', this)">📊 Analisis Interaktif</button>
+            <button class="nav-btn highlight" onclick="switchTab('kuis', this)">⚔️ Kuis Tanding (2 Tim)</button>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="ifp-container">
+
+        <!-- TAB 1: MATERI -->
+        <section id="materi" class="tab-content active">
+            <div class="card">
+                <h2>Membaca & Memanfaatkan Informasi Data</h2>
+                <p class="subtitle">
+                    Dari data yang disajikan, kita dapat menjawab berbagai pertanyaan analisis secara tepat.
+                </p>
+                
+                <div class="materi-grid">
+                    <!-- Nilai Tertentu -->
+                    <div class="box-materi box-baca">
+                        <h3>1. Membaca Nilai Data</h3>
+                        <p>Melihat secara langsung jumlah frekuensi dari suatu kategori yang ditanyakan.</p>
+                    </div>
+
+                    <!-- Modus & Min -->
+                    <div class="box-materi box-modus">
+                        <h3>2. Data Tertinggi & Terendah</h3>
+                        <p><strong>Modus:</strong> Data dengan jumlah paling banyak.<br><strong>Minimal:</strong> Data dengan jumlah paling sedikit.</p>
+                    </div>
+
+                    <!-- Selisih -->
+                    <div class="box-materi box-selisih">
+                        <h3>3. Selisih Data</h3>
+                        <p>Mengurangkan nilai data terbesar dengan nilai data terkecil (Selisih = Maks - Min).</p>
+                    </div>
+
+                    <!-- Total Data -->
+                    <div class="box-materi box-total">
+                        <h3>4. Jumlah Total Data</h3>
+                        <p>Menjumlahkan seluruh frekuensi dari setiap kelompok/kategori data yang ada.</p>
+                    </div>
+                </div>
+
+                <div class="tip-card">
+                    💡 <strong>Tips Pembacaan IFP:</strong> Selalu perhatikan sumbu mendatar (kategori) dan sumbu tegak (jumlah) pada diagram batang agar tidak salah membaca skala!
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULASI ANALISIS DATA INTERAKTIF -->
+        <section id="simulasi" class="tab-content">
+            <div class="simulasi-container">
+                <!-- Control Panel -->
+                <div class="controls-card">
+                    <h2>Input Data Nilai Ulangan Siswa</h2>
+                    
+                    <div class="control-row">
+                        <label>Nilai 70 (Siswa):</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustScore('n70', -1)">-1</button>
+                            <span id="val-n70" class="val-badge">5</span>
+                            <button class="btn-touch success" onclick="adjustScore('n70', 1)">+1</button>
+                        </div>
+                    </div>
+
+                    <div class="control-row">
+                        <label>Nilai 80 (Siswa):</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustScore('n80', -1)">-1</button>
+                            <span id="val-n80" class="val-badge">8</span>
+                            <button class="btn-touch success" onclick="adjustScore('n80', 1)">+1</button>
+                        </div>
+                    </div>
+
+                    <div class="control-row">
+                        <label>Nilai 90 (Siswa):</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustScore('n90', -1)">-1</button>
+                            <span id="val-n90" class="val-badge">4</span>
+                            <button class="btn-touch success" onclick="adjustScore('n90', 1)">+1</button>
+                        </div>
+                    </div>
+
+                    <div class="control-row">
+                        <label>Nilai 100 (Siswa):</label>
+                        <div class="btn-group">
+                            <button class="btn-touch danger" onclick="adjustScore('n100', -1)">-1</button>
+                            <span id="val-n100" class="val-badge">3</span>
+                            <button class="btn-touch success" onclick="adjustScore('n100', 1)">+1</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display Visual & Information Panel -->
+                <div class="display-card">
+                    <h3>Rangkuman Informasi Data</h3>
+                    
+                    <div class="info-results-grid">
+                        <div class="info-box box-total-res">
+                            <div class="info-title">Total Seluruh Siswa</div>
+                            <div id="res-total" class="info-value">20 Siswa</div>
+                        </div>
+
+                        <div class="info-box box-modus-res">
+                            <div class="info-title">Nilai Terbanyak (Modus)</div>
+                            <div id="res-modus" class="info-value">Nilai 80 (8 Anak)</div>
+                        </div>
+
+                        <div class="info-box box-min-res">
+                            <div class="info-title">Nilai Tersekit</div>
+                            <div id="res-min" class="info-value">Nilai 100 (3 Anak)</div>
+                        </div>
+
+                        <div class="info-box box-selisih-res">
+                            <div class="info-title">Selisih Terbanyak & Tersekit</div>
+                            <div id="res-selisih" class="info-value">5 Siswa</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: KUIS TANDING 2 TIM -->
+        <section id="kuis" class="tab-content">
+            <div class="arena-tanding">
+                <!-- Tim Merah -->
+                <div class="team-panel team-a">
+                    <h2>TIM MERAH 🔴</h2>
+                    <div class="score-board" id="score-a">0</div>
+                    <button class="btn-quiz" onclick="addScore('a', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('a', -5)">-5 Poin</button>
+                </div>
+
+                <!-- Arena Soal -->
+                <div class="quiz-center">
+                    <div class="quiz-card">
+                        <div id="quiz-status" class="quiz-badge">Soal 1 / 5</div>
+                        <div id="question-text" class="question-box">Memuat pertanyaan...</div>
+                        <div id="options-container" class="options-grid"></div>
+                    </div>
+                    <button class="btn-touch warning" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+                </div>
+
+                <!-- Tim Biru -->
+                <div class="team-panel team-b">
+                    <h2>TIM BIRU 🔵</h2>
+                    <div class="score-board" id="score-b">0</div>
+                    <button class="btn-quiz" onclick="addScore('b', 10)">+10 Poin</button>
+                    <button class="btn-quiz danger" onclick="addScore('b', -5)">-5 Poin</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+  </html>
