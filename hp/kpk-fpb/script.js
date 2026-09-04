@@ -1,252 +1,264 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+// Helper fungsi FPB & KPK
+function getFPB(a, b) {
+  return b === 0 ? a : getFPB(b, a % b);
 }
 
-body {
-  background-color: #f0f7ff;
-  color: #2d3436;
-  display: flex;
-  justify-content: center;
+function getKPK(a, b) {
+  return (a * b) / getFPB(a, b);
 }
 
-.app-container {
-  width: 100%;
-  max-width: 480px;
-  min-height: 100vh;
-  background-color: #ffffff;
-  box-shadow: 0 0 15px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
+// Navigasi Tab
+function switchTab(tabId) {
+  const tabs = document.querySelectorAll('.tab-content');
+  const buttons = document.querySelectorAll('.nav-btn');
+
+  tabs.forEach(tab => tab.classList.remove('active'));
+  buttons.forEach(btn => btn.classList.remove('active'));
+
+  document.getElementById(tabId).classList.add('active');
+  event.currentTarget.classList.add('active');
+
+  if (tabId === 'simulasi') {
+    renderCalculatorForm();
+  }
 }
 
-/* Header Tema Biru Ceria */
-.header {
-  background: linear-gradient(135deg, #0984e3, #74b9ff);
-  color: white;
-  text-align: center;
-  padding: 20px 15px;
+// Render Form Kalkulator Sesuai Jenis Operasi
+function renderCalculatorForm() {
+  const type = document.getElementById('opType').value;
+  const container = document.getElementById('calcInputsContainer');
+  document.getElementById('calcResultBox').style.display = 'none';
+
+  if (type === 'add' || type === 'sub') {
+    const sign = type === 'add' ? '+' : '-';
+    container.innerHTML = `
+      <div class="frac-row">
+        <div class="frac-input">
+          <input type="number" id="numA" value="1" min="1">
+          <div class="frac-line"></div>
+          <input type="number" id="denA" value="4" min="1">
+        </div>
+        <div class="operator-sign">${sign}</div>
+        <div class="frac-input">
+          <input type="number" id="numB" value="1" min="1">
+          <div class="frac-line"></div>
+          <input type="number" id="denB" value="2" min="1">
+        </div>
+      </div>
+    `;
+  } else if (type === 'mul') {
+    container.innerHTML = `
+      <div class="frac-row">
+        <div class="single-input">
+          <input type="number" id="intVal" value="3" min="1">
+        </div>
+        <div class="operator-sign">×</div>
+        <div class="frac-input">
+          <input type="number" id="numA" value="2" min="1">
+          <div class="frac-line"></div>
+          <input type="number" id="denA" value="7" min="1">
+        </div>
+      </div>
+    `;
+  } else if (type === 'div') {
+    container.innerHTML = `
+      <div class="frac-row">
+        <div class="frac-input">
+          <input type="number" id="numA" value="3" min="1">
+          <div class="frac-line"></div>
+          <input type="number" id="denA" value="4" min="1">
+        </div>
+        <div class="operator-sign">÷</div>
+        <div class="single-input">
+          <input type="number" id="intVal" value="2" min="1">
+        </div>
+      </div>
+    `;
+  }
 }
 
-.header h1 {
-  font-size: 1.4rem;
-  margin-bottom: 5px;
+// Hitung Langkah Demi Langkah
+function hitLangkahOperasi() {
+  const type = document.getElementById('opType').value;
+  const resultBox = document.getElementById('calcResultBox');
+  const details = document.getElementById('stepDetails');
+  resultBox.style.display = 'block';
+
+  if (type === 'add' || type === 'sub') {
+    const numA = parseInt(document.getElementById('numA').value) || 1;
+    const denA = parseInt(document.getElementById('denA').value) || 1;
+    const numB = parseInt(document.getElementById('numB').value) || 1;
+    const denB = parseInt(document.getElementById('denB').value) || 1;
+    const sign = type === 'add' ? '+' : '-';
+
+    const kpk = getKPK(denA, denB);
+    const newNumA = numA * (kpk / denA);
+    const newNumB = numB * (kpk / denB);
+    const resNum = type === 'add' ? (newNumA + newNumB) : (newNumA - newNumB);
+
+    if (resNum < 0) {
+      details.innerHTML = `<p style="color:#e74c3c;">Hasil bernilai negatif. Mohon masukkan angka pecahan pertama yang lebih besar.</p>`;
+      return;
+    }
+
+    const fpb = getFPB(Math.abs(resNum), kpk);
+    const simNum = resNum / fpb;
+    const simDen = kpk / fpb;
+
+    details.innerHTML = `
+      <p>1. Cari KPK dari penyebut (${denA} dan ${denB}) = <strong>${kpk}</strong></p>
+      <p>2. Ubah pecahan menjadi penyebut sama:<br>
+         <sup>${newNumA}</sup>/<sub>${kpk}</sub> ${sign} <sup>${newNumB}</sup>/<sub>${kpk}</sub>
+      </p>
+      <p>3. Hitung pembilang:<br>
+         <sup>(${newNumA} ${sign} ${newNumB})</sup>/<sub>${kpk}</sub> = <strong><sup>${resNum}</sup>/<sub>${kpk}</sub></strong>
+      </p>
+      ${fpb > 1 ? `<p>4. Sederhanakan (dibagi ${fpb}): <strong><sup>${simNum}</sup>/<sub>${simDen}</sub></strong></p>` : ''}
+    `;
+  } else if (type === 'mul') {
+    const intVal = parseInt(document.getElementById('intVal').value) || 1;
+    const numA = parseInt(document.getElementById('numA').value) || 1;
+    const denA = parseInt(document.getElementById('denA').value) || 1;
+
+    const resNum = intVal * numA;
+    const fpb = getFPB(resNum, denA);
+    const simNum = resNum / fpb;
+    const simDen = denA / fpb;
+
+    details.innerHTML = `
+      <p>1. Kalikan bilangan asli dengan pembilang:<br>
+         <sup>(${intVal} × ${numA})</sup>/<sub>${denA}</sub>
+      </p>
+      <p>2. Hasil perkalian: <strong><sup>${resNum}</sup>/<sub>${denA}</sub></strong></p>
+      ${fpb > 1 ? `<p>3. Sederhanakan (dibagi ${fpb}): <strong><sup>${simNum}</sup>/<sub>${simDen}</sub></strong></p>` : ''}
+    `;
+  } else if (type === 'div') {
+    const numA = parseInt(document.getElementById('numA').value) || 1;
+    const denA = parseInt(document.getElementById('denA').value) || 1;
+    const intVal = parseInt(document.getElementById('intVal').value) || 1;
+
+    const resDen = denA * intVal;
+    const fpb = getFPB(numA, resDen);
+    const simNum = numA / fpb;
+    const simDen = resDen / fpb;
+
+    details.innerHTML = `
+      <p>1. Kalikan penyebut dengan bilangan asli pembagi:<br>
+         <sup>${numA}</sup>/<sub>(${denA} × ${intVal})</sub>
+      </p>
+      <p>2. Hasil pembagian: <strong><sup>${numA}</sup>/<sub>${resDen}</sub></strong></p>
+      ${fpb > 1 ? `<p>3. Sederhanakan (dibagi ${fpb}): <strong><sup>${simNum}</sup>/<sub>${simDen}</sub></strong></p>` : ''}
+    `;
+  }
 }
 
-.header p {
-  font-size: 0.88rem;
-  opacity: 0.95;
+// --- DATA KUIS ---
+const questions = [
+  {
+    question: "Hasil dari 1/5 + 2/5 adalah...",
+    options: ["3/10", "3/5", "2/25", "1/5"],
+    answer: 1
+  },
+  {
+    question: "Hasil dari 3/4 - 1/2 adalah...",
+    options: ["2/2", "1/4", "2/4", "1/2"],
+    answer: 1
+    // 3/4 - 2/4 = 1/4
+  },
+  {
+    question: "Hasil perkalian 4 × 2/9 adalah...",
+    options: ["8/36", "8/9", "6/9", "2/9"],
+    answer: 1
+  },
+  {
+    question: "Ibu membagi 1/2 bagian kue secara merata kepada 2 orang anaknya. Bagian yang diterima setiap anak adalah...",
+    options: ["1/4 bagian", "2/2 bagian", "1/2 bagian", "3/4 bagian"],
+    answer: 0
+    // 1/2 ÷ 2 = 1/4
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let isAnswered = false;
+
+function loadQuestion() {
+  isAnswered = false;
+  const q = questions[currentQuestion];
+  
+  document.getElementById('questionNum').innerText = `Soal ${currentQuestion + 1} dari ${questions.length}`;
+  document.getElementById('questionText').innerText = q.question;
+  document.getElementById('quizFeedback').innerText = '';
+  document.getElementById('nextBtn').style.display = 'none';
+
+  const optionsContainer = document.getElementById('optionsContainer');
+  optionsContainer.innerHTML = '';
+
+  q.options.forEach((opt, index) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerText = opt;
+    btn.onclick = () => checkAnswer(index, btn);
+    optionsContainer.appendChild(btn);
+  });
 }
 
-.nav-menu {
-  display: flex;
-  background-color: #e3f2fd;
-  border-bottom: 2px solid #bbe1fa;
+function checkAnswer(selectedIndex, selectedBtn) {
+  if (isAnswered) return;
+  isAnswered = true;
+
+  const correctIndex = questions[currentQuestion].answer;
+  const options = document.querySelectorAll('.option-btn');
+
+  if (selectedIndex === correctIndex) {
+    selectedBtn.classList.add('correct');
+    document.getElementById('quizFeedback').innerText = "Hebat! Jawaban kamu benar. 🎉";
+    document.getElementById('quizFeedback').style.color = "#00b894";
+    score += 100 / questions.length;
+  } else {
+    selectedBtn.classList.add('wrong');
+    options[correctIndex].classList.add('correct');
+    document.getElementById('quizFeedback').innerText = "Ups! Jawaban belum tepat. 😅";
+    document.getElementById('quizFeedback').style.color = "#ff7675";
+  }
+
+  document.getElementById('nextBtn').style.display = 'block';
 }
 
-.nav-btn {
-  flex: 1;
-  padding: 12px 2px;
-  border: none;
-  background: none;
-  font-size: 0.88rem;
-  font-weight: bold;
-  color: #576574;
-  cursor: pointer;
-  transition: 0.3s;
+function nextQuestion() {
+  currentQuestion++;
+  if (currentQuestion < questions.length) {
+    loadQuestion();
+  } else {
+    showResult();
+  }
 }
 
-.nav-btn.active {
-  background-color: #ffffff;
-  color: #0984e3;
-  border-bottom: 3px solid #0984e3;
+function showResult() {
+  document.getElementById('quizContainer').style.display = 'none';
+  document.getElementById('scoreContainer').style.display = 'block';
+  
+  const finalScore = Math.round(score);
+  document.getElementById('finalScore').innerText = finalScore;
+
+  let message = "";
+  if (finalScore === 100) {
+    message = "Luar biasa! Kamu sudah paham betul operasi pecahan!";
+  } else if (finalScore >= 60) {
+    message = "Bagus sekali! Terus latih pemahamanmu ya.";
+  } else {
+    message = "Jangan berkecil hati, pelajari langkah-langkah di menu Kalkulator dan coba lagi!";
+  }
+  document.getElementById('scoreMessage').innerText = message;
 }
 
-.content {
-  padding: 15px;
-  flex: 1;
+function resetQuiz() {
+  currentQuestion = 0;
+  score = 0;
+  document.getElementById('quizContainer').style.display = 'block';
+  document.getElementById('scoreContainer').style.display = 'none';
+  loadQuestion();
 }
 
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-.card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 15px;
-  margin-bottom: 15px;
-  border: 1px solid #e1e8f0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.04);
-}
-
-.sub-card {
-  background-color: #f4f9ff;
-  border: 1px solid #74b9ff;
-  border-radius: 8px;
-  padding: 12px;
-  margin: 10px 0;
-}
-
-.card h2 {
-  font-size: 1.05rem;
-  color: #0984e3;
-  margin-bottom: 10px;
-}
-
-.card p {
-  font-size: 0.92rem;
-  line-height: 1.4;
-}
-
-.formula-box, .example-box, .result-box {
-  background-color: #ebf5ff;
-  border-left: 4px solid #0984e3;
-  padding: 12px;
-  border-radius: 6px;
-  margin: 10px 0;
-}
-
-.result-box {
-  text-align: left;
-}
-
-.input-group {
-  margin: 10px 0;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 0.85rem;
-  font-weight: bold;
-}
-
-.input-group select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #b2bec3;
-  border-radius: 6px;
-  font-size: 0.92rem;
-  background-color: white;
-}
-
-.frac-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin: 10px 0;
-}
-
-.frac-input {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  width: 60px;
-}
-
-.frac-input input, .single-input input {
-  width: 100%;
-  padding: 6px;
-  border: 1px solid #b2bec3;
-  border-radius: 6px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-.single-input {
-  width: 60px;
-  display: flex;
-  align-items: center;
-}
-
-.frac-line {
-  width: 100%;
-  height: 2px;
-  background-color: #2d3436;
-}
-
-.operator-sign {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #0984e3;
-}
-
-/* Kuis Style */
-.quiz-header {
-  font-size: 0.85rem;
-  color: #777;
-  margin-bottom: 8px;
-}
-
-.question {
-  font-weight: bold;
-  font-size: 0.98rem;
-  margin-bottom: 12px;
-}
-
-.options-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.option-btn {
-  padding: 12px;
-  border: 1px solid #0984e3;
-  background-color: #fff;
-  color: #0984e3;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  text-align: left;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.option-btn.correct {
-  background-color: #00b894;
-  color: white;
-  border-color: #00b894;
-}
-
-.option-btn.wrong {
-  background-color: #ff7675;
-  color: white;
-  border-color: #ff7675;
-}
-
-.feedback {
-  margin-top: 10px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.action-btn {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  background-color: #0984e3;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 0.98rem;
-  cursor: pointer;
-}
-
-.score-box {
-  text-align: center;
-  font-size: 3rem;
-  font-weight: bold;
-  color: #00b894;
-  margin: 15px 0;
-}
+// Inisialisasi awal saat dimuat
+loadQuestion();
