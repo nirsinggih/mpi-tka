@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPI Operasi Pecahan SD</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <h1>Operasi Hitung Pecahan</h1>
+      <p>Matematika Sekolah Dasar</p>
+    </header>
+
+    <nav class="nav-menu">
+      <button class="nav-btn active" onclick="switchTab('materi')">📖 Materi</button>
+      <button class="nav-btn" onclick="switchTab('simulasi')">🧮 Kalkulator</button>
+      <button class="nav-btn" onclick="switchTab('kuis')">✏️ Kuis</button>
+    </nav>
+
+    <main class="content">
+      <!-- Section 1: Materi -->
+      <section id="materi" class="tab-content active">
+        <div class="card">
+          <h2>1. Penjumlahan & Pengurangan Pecahan</h2>
+          <p>Untuk menjumlahkan atau mengurangkan pecahan, <strong>penyebut harus disamakan terlebih dahulu</strong> menggunakan KPK.</p>
+          <div class="formula-box">
+            <p><strong><sup>a</sup>/<sub>c</sub> + <sup>b</sup>/<sub>c</sub> = <sup>(a + b)</sup>/<sub>c</sub></strong></p>
+          </div>
+          <div class="example-box">
+            <p><strong>Contoh:</strong> <sup>1</sup>/<sub>4</sub> + <sup>1</sup>/<sub>2</sub></p>
+            <p>1. Samakan penyebut (KPK 4 dan 2 adalah 4):<br>
+               <sup>1</sup>/<sub>4</sub> + <sup>2</sup>/<sub>4</sub></p>
+            <p>2. Jumlahkan pembilang: <strong><sup>3</sup>/<sub>4</sub></strong></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>2. Perkalian Pecahan dengan Bilangan Asli</h2>
+          <p>Kalikan bilangan asli langsung dengan <strong>pembilang</strong>, sedangkan penyebutnya tetap.</p>
+          <div class="formula-box">
+            <p><strong>a × <sup>b</sup>/<sub>c</sub> = <sup>(a × b)</sup>/<sub>c</sub></strong></p>
+          </div>
+          <div class="example-box">
+            <p><strong>Contoh:</strong> 3 × <sup>2</sup>/<sub>7</sub></p>
+            <p>• Hitung: <sup>(3 × 2)</sup>/<sub>7</sub> = <strong><sup>6</sup>/<sub>7</sub></strong></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>3. Pembagian Pecahan dengan Bilangan Asli</h2>
+          <p>Membagi pecahan dengan bilangan asli sama dengan <strong>mengalikan penyebutnya</strong> dengan bilangan asli tersebut.</p>
+          <div class="formula-box">
+            <p><strong><sup>a</sup>/<sub>b</sub> ÷ c = <sup>a</sup>/<sub>(b × c)</sub></strong></p>
+          </div>
+          <div class="example-box">
+            <p><strong>Contoh:</strong> <sup>3</sup>/<sub>4</sub> ÷ 2</p>
+            <p>• Hitung: <sup>3</sup>/<sub>(4 × 2)</sub> = <strong><sup>3</sup>/<sub>8</sub></strong></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Simulasi/Kalkulator -->
+      <section id="simulasi" class="tab-content">
+        <div class="card">
+          <h2>Kalkulator Operasi Pecahan</h2>
+          <p>Pilih jenis operasi hitung di bawah ini:</p>
+          
+          <div class="input-group">
+            <label for="opType">Jenis Operasi:</label>
+            <select id="opType" onchange="renderCalculatorForm()">
+              <option value="add">Penjumlahan (+)</option>
+              <option value="sub">Pengurangan (-)</option>
+              <option value="mul">Perkalian dengan Bilangan Asli (×)</option>
+              <option value="div">Pembagian dengan Bilangan Asli (÷)</option>
+            </select>
+          </div>
+
+          <!-- Dynamic Input Form -->
+          <div class="sub-card" id="calcInputsContainer">
+            <!-- Form diisi secara dinamis via JS -->
+          </div>
+
+          <button class="action-btn" onclick="hitLangkahOperasi()">Hitung Langkah Demi Langkah 🚀</button>
+
+          <div class="result-box" id="calcResultBox" style="display: none;">
+            <h3>Langkah Pengerjaan:</h3>
+            <div id="stepDetails"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Kuis -->
+      <section id="kuis" class="tab-content">
+        <div class="card" id="quizContainer">
+          <div class="quiz-header">
+            <span id="questionNum">Soal 1 dari 4</span>
+          </div>
+          <p id="questionText" class="question">Loading...</p>
+          <div id="optionsContainer" class="options-group"></div>
+          <div id="quizFeedback" class="feedback"></div>
+          <button id="nextBtn" class="action-btn" onclick="nextQuestion()" style="display: none;">Soal Berikutnya ➡️</button>
+        </div>
+
+        <div class="card" id="scoreContainer" style="display: none;">
+          <h2>Hasil Kuis Kamu 🎉</h2>
+          <div class="score-box">
+            <span id="finalScore">0</span>
+          </div>
+          <p id="scoreMessage" style="text-align: center;"></p>
+          <button class="action-btn" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+  </html>
