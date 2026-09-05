@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPI Keliling & Luas Bangun Datar SD</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f0fdf4;
+      color: #1e293b;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background-color: #ffffff;
+      box-shadow: 0 0 15px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Tema Hijau Zamrud Ceria */
+    .header {
+      background: linear-gradient(135deg, #059669, #10b981);
+      color: white;
+      text-align: center;
+      padding: 20px 15px;
+    }
+
+    .header h1 {
+      font-size: 1.35rem;
+      margin-bottom: 5px;
+    }
+
+    .header p {
+      font-size: 0.88rem;
+      opacity: 0.95;
+    }
+
+    .nav-menu {
+      display: flex;
+      background-color: #d1fae5;
+      border-bottom: 2px solid #a7f3d0;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 10px 2px;
+      border: none;
+      background: none;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #047857;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .nav-btn.active {
+      background-color: #ffffff;
+      color: #059669;
+      border-bottom: 3px solid #059669;
+    }
+
+    .content {
+      padding: 15px;
+      flex: 1;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+    }
+
+    .card h2 {
+      font-size: 1.05rem;
+      color: #059669;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    /* Sub Category Pills */
+    .pill-selector {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+      margin-bottom: 12px;
+    }
+
+    .pill-btn {
+      padding: 6px 12px;
+      border: 1px solid #059669;
+      background-color: #fff;
+      color: #059669;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .pill-btn.active {
+      background-color: #059669;
+      color: white;
+    }
+
+    .formula-box, .example-box {
+      background-color: #ecfdf5;
+      border-left: 4px solid #059669;
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin: 10px 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .sub-card {
+      background-color: #f0fdf4;
+      border: 1px solid #a7f3d0;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 10px 0;
+    }
+
+    .input-group {
+      margin: 10px 0;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    .result-box {
+      background-color: #ecfdf5;
+      border-left: 4px solid #059669;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 15px;
+    }
+
+    .result-box h3 {
+      font-size: 1.05rem;
+      color: #047857;
+      margin-bottom: 5px;
+    }
+
+    /* Diagram Canvas / Visual */
+    .shape-preview-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 110px;
+      background-color: #f0fdf4;
+      border: 1px dashed #059669;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+
+    .svg-shape {
+      max-height: 90px;
+      stroke: #059669;
+      stroke-width: 3;
+      fill: #a7f3d0;
+    }
+
+    /* Kuis Style */
+    .quiz-header {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+
+    .question {
+      font-weight: bold;
+      font-size: 0.98rem;
+      margin-bottom: 12px;
+    }
+
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      padding: 12px;
+      border: 1px solid #059669;
+      background-color: #fff;
+      color: #059669;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .option-btn.correct {
+      background-color: #10b981;
+      color: white;
+      border-color: #10b981;
+    }
+
+    .option-btn.wrong {
+      background-color: #ef4444;
+      color: white;
+      border-color: #ef4444;
+    }
+
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background-color: #059669;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.98rem;
+      cursor: pointer;
+    }
+
+    .score-box {
+      text-align: center;
+      font-size: 3rem;
+      font-weight: bold;
+      color: #059669;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <h1>Keliling & Luas Bangun Datar</h1>
+      <p>Segitiga, Segiempat & Segi Banyak — SD</p>
+    </header>
+
+    <nav class="nav-menu">
+      <button class="nav-btn active" onclick="switchTab('materi')">📖 Materi</button>
+      <button class="nav-btn" onclick="switchTab('kalkulator')">🧮 Hitung</button>
+      <button class="nav-btn" onclick="switchTab('gabungan')">🧩 Segi Banyak</button>
+      <button class="nav-btn" onclick="switchTab('kuis')">✏️ Kuis</button>
+    </nav>
+
+    <main class="content">
+      <!-- Section 1: Materi & Rumus -->
+      <section id="materi" class="tab-content active">
+        <div class="card">
+          <h2>Pilih Kelompok Bangun Datar</h2>
+          <div class="pill-selector">
+            <button class="pill-btn active" onclick="showMateri('segitiga')">Segitiga</button>
+            <button class="pill-btn" onclick="showMateri('persegi')">Persegi</button>
+            <button class="pill-btn" onclick="showMateri('persegiPanjang')">Persegi Panjang</button>
+            <button class="pill-btn" onclick="showMateri('jajarGenjang')">Jajar Genjang</button>
+            <button class="pill-btn" onclick="showMateri('trapesium')">Trapesium</button>
+            <button class="pill-btn" onclick="showMateri('belahKetupat')">Belah Ketupat & Layang</button>
+            <button class="pill-btn" onclick="showMateri('segiBanyak')">Segi Banyak (Poligon)</button>
+          </div>
+        </div>
+
+        <div class="card" id="materiDetailCard">
+          <!-- Detail materi dinamis via JS -->
+        </div>
+      </section>
+
+      <!-- Section 2: Kalkulator Hitung -->
+      <section id="kalkulator" class="tab-content">
+        <div class="card">
+          <h2>Kalkulator Bangun Datar</h2>
+          <div class="input-group">
+            <label for="calcShapeSelect">Pilih Bangun Datar:</label>
+            <select id="calcShapeSelect" onchange="renderCalcForm()">
+              <option value="segitiga">Segitiga</option>
+              <option value="persegi">Persegi</option>
+              <option value="persegiPanjang">Persegi Panjang</option>
+              <option value="jajarGenjang">Jajar Genjang</option>
+              <option value="trapesium">Trapesium Sama Kaki</option>
+              <option value="belahKetupat">Belah Ketupat / Layang-Layang</option>
+              <option value="segiBanyakBeraturan">Segi Banyak Beraturan (n-gon)</option>
+            </select>
+          </div>
+
+          <div class="sub-card" id="calcInputsContainer">
+            <!-- Dynamic Form Inputs -->
+          </div>
+
+          <button class="action-btn" onclick="hitungKelilingLuas()">Hitung Keliling & Luas 🚀</button>
+
+          <div class="result-box" id="calcResultContainer" style="display: none;">
+            <h3 id="resKeliling">Keliling (K): -</h3>
+            <h3 id="resLuas">Luas (L): -</h3>
+            <div id="resLangkah" style="margin-top: 10px; font-size: 0.88rem; color: #047857;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Segi Banyak & Bangun Gabungan -->
+      <section id="gabungan" class="tab-content">
+        <div class="card">
+          <h2>Aturan Segi Banyak & Gabungan</h2>
+          <div class="formula-box">
+            <p>1. <strong>Keliling Segi Banyak Gabungan</strong> = Jumlahkan seluruh <em>panjang sisi terluar</em> bangun.</p>
+            <p>2. <strong>Luas Bangun Gabungan</strong> = Potong/bagi bangun menjadi beberapa bangun sederhana, lalu jumlahkan luasnya (L<sub>Total</sub> = L<sub>1</sub> + L<sub>2</sub>).</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Simulasi Bangun Gabungan "Rumah"</h2>
+          <p>Terdiri dari <strong>Atap Segitiga</strong> di atas <strong>Dinding Persegi Panjang</strong>.</p>
+          
+          <div class="shape-preview-box">
+            <svg class="svg-shape" viewBox="0 0 100 100">
+              <polygon points="10,40 50,10 90,40" fill="#a7f3d0" stroke="#059669" stroke-width="2"/>
+              <rect x="20" y="40" width="60" height="50" fill="#6ee7b7" stroke="#059669" stroke-width="2"/>
+            </svg>
+          </div>
+
+          <div class="sub-card">
+            <div class="input-group">
+              <label for="gabAlasAtap">Alas Atap / Lebar Rumah (cm):</label>
+              <input type="number" id="gabAlasAtap" value="10" min="1" oninput="hitungGabunganRumah()">
+            </div>
+            <div class="input-group">
+              <label for="gabTinggiAtap">Tinggi Atap Segitiga (cm):</label>
+              <input type="number" id="gabTinggiAtap" value="6" min="1" oninput="hitungGabunganRumah()">
+            </div>
+            <div class="input-group">
+              <label for="gabTinggiDinding">Tinggi Dinding Persegi Panjang (cm):</label>
+              <input type="number" id="gabTinggiDinding" value="8" min="1" oninput="hitungGabunganRumah()">
+            </div>
+          </div>
+
+          <div class="result-box" id="gabResultBox">
+            <p><strong>• Luas Atap (Segitiga):</strong> <span id="gabLuasAtap">30</span> cm²</p>
+            <p><strong>• Luas Dinding (Persegi Panjang):</strong> <span id="gabLuasDinding">80</span> cm²</p>
+            <hr style="margin: 8px 0; border: 0; border-top: 1px dashed #059669;">
+            <h3>Luas Total Rumah: <span id="gabLuasTotal">110</span> cm²</h3>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Kuis Interaktif -->
+      <section id="kuis" class="tab-content">
+        <div class="card" id="quizContainer">
+          <div class="quiz-header">
+            <span id="questionNum">Soal 1 dari 5</span>
+          </div>
+          <p id="questionText" class="question">Loading...</p>
+          <div id="optionsContainer" class="options-group"></div>
+          <div id="quizFeedback" class="feedback"></div>
+          <button id="nextBtn" class="action-btn" onclick="nextQuestion()" style="display: none;">Soal Berikutnya ➡️</button>
+        </div>
+
+        <div class="card" id="scoreContainer" style="display: none;">
+          <h2>Hasil Kuis Kamu 🎉</h2>
+          <div class="score-box">
+            <span id="finalScore">0</span>
+          </div>
+          <p id="scoreMessage" style="text-align: center;"></p>
+          <button class="action-btn" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Navigasi Tab
+    function switchTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.nav-btn');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+
+      if (tabId === 'kalkulator') {
+        renderCalcForm();
+      } else if (tabId === 'gabungan') {
+        hitungGabunganRumah();
+      }
+    }
+
+    // Data Materi Rangkuman
+    const materiData = {
+      segitiga: {
+        title: "Segitiga",
+        svg: `<svg class="svg-shape" viewBox="0 0 100 100"><polygon points="50,15 15,85 85,85"/></svg>`,
+        rumus: "<p>• <strong>Keliling (K)</strong> = s<sub>1</sub> + s<sub>2</sub> + s<sub>3</sub></p><p>• <strong>Luas (L)</strong> = ½ × alas × tinggi = <sup>(a × t)</sup>/<sub>2</sub></p>",
+        penjelasan: "Segitiga memiliki 3 sisi dan 3 titik sudut. Tinggi segitiga adalah garis tegak lurus dari alas ke titik sudut di depannya."
+      },
+      persegi: {
+        title: "Persegi (Bujur Sangkar)",
+        svg: `<svg class="svg-shape" viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60"/></svg>`,
+        rumus: "<p>• <strong>Keliling (K)</strong> = 4 × s</p><p>• <strong>Luas (L)</strong> = s × s = s²</p>",
+        penjelasan: "Persegi adalah segiempat yang keempat sisinya sama panjang dan semua sudutnya siku-siku (90°)."
+      },
+      persegiPanjang: {
+        title: "Persegi Panjang",
+        svg: `<svg class="svg-shape" viewBox="0 0 100 100"><rect x="10" y="25" width="80" height="50"/></svg>`,
+        rumus: "<p>• <strong>Keliling (K)</strong> = 2 × (p + l)</p><p>• <strong>Luas (L)</strong> = p × l</p>",
+        penjelasan: "Memiliki 2 pasang sisi sejajar yang sama panjang (Panjang dan Lebar) serta 4 sudut siku-siku."
+      },
+      jajarGenjang: {
+        title: "Jajar Genjang",
+        svg: `<svg class="svg-shape" viewBox="0 0 100 100"><polygon points="30,25 90,25 70,75 10,75"/></svg>`,
+        rumus: "<p>• <strong>Keliling (K)</strong> = 2 × (a + b)</p><p>• <strong>Luas (L)</strong> = alas × tinggi (a × t)</p>",
+        penjelasan: "Segiempat dengan sisi-sisi berhadapan sejajar dan sama panjang. Tinggi tegak lurus dengan alas."
+      },
+      trapesium: {
+        title: "Trapesium",
+        svg: `<svg class="svg-shape" viewBox="0 0 100 100"><polygon points="30,25 70,25 90,75 10,75"/></svg>`,
+        rumus: "<p>• <strong>Keliling (K)</strong> = Jumlah seluruh 4 sisi terluar</p><p>• <strong>Luas (L)</strong> = ½ × (sisi<sub>a</sub> + sisi<sub>b</sub>) × t</p>",
+        penjelasan: "Segiempat yang memiliki sepasang sisi sejajar yang berbeda panjangnya (sisi sejajar a dan b)."
+      },
+      belahKetupat: {
+        title: "Belah Ketupat & Layang-Layang",
+        svg: `<svg class="svg-shape" viewBox="0 0 100 100"><polygon points="50,10 85,50 50,90 15,50"/></svg>`,
+        rumus: "<p>• <strong>Keliling (K)</strong> = 4 × s (Belah Ketupat)</p><p>• <strong>Luas (L)</strong> = ½ × d<sub>1</sub> × d<sub>2</sub></p>",
+        penjelasan: "Luas dihitung dari setengah hasil kali dua diagonal tegak lurusnya (d1 dan d2)."
+      },
+      segiBanyak: {
+        title: "Segi Banyak (Poligon)",
+        svg: `<svg class="svg-shape" viewBox="0 0 100 100"><polygon points="50,10 90,38 75,85 25,85 10,38"/></svg>`,
+        rumus: "<p>• <strong>Keliling Beraturan</strong> = n × s (n = jumlah sisi)</p><p>• <strong>Keliling Tidak Beraturan</strong> = Jumlahkan seluruh sisi terluar</p>",
+        penjelasan: "Segi banyak adalah bangun datar tertutup yang dibatasi oleh garis lurus (segi-5, segi-6, dll)."
+      }
+    };
+
+    function showMateri(key) {
+      const btns = document.querySelectorAll('.pill-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      const data = materiData[key];
+      const container = document.getElementById('materiDetailCard');
+
+      container.innerHTML = `
+        <h2>${data.title}</h2>
+        <div class="shape-preview-box">${data.svg}</div>
+        <div class="formula-box">${data.rumus}</div>
+        <p style="font-size:0.88rem; color:#475569; margin-top:8px;">${data.penjelasan}</p>
+      `;
+    }
+
+    // Render Dynamic Form Kalkulator
+    function renderCalcForm() {
+      const shape = document.getElementById('calcShapeSelect').value;
+      const container = document.getElementById('calcInputsContainer');
+      document.getElementById('calcResultContainer').style.display = 'none';
+
+      if (shape === 'segitiga') {
+        container.innerHTML = `
+          <div class="input-group">
+            <label>Alas (a) [cm]:</label>
+            <input type="number" id="inA" value="6" min="1">
+          </div>
+          <div class="input-group">
+            <label>Tinggi (t) [cm]:</label>
+            <input type="number" id="inT" value="8" min="1">
+          </div>
+          <div class="input-group">
+            <label>Sisi Miring 1 (s1) [cm]:</label>
+            <input type="number" id="inS1" value="6" min="1">
+          </div>
+          <div class="input-group">
+            <label>Sisi Miring 2 (s2) [cm]:</label>
+            <input type="number" id="inS2" value="10" min="1">
+          </div>
+        `;
+      } else if (shape === 'persegi') {
+        container.innerHTML = `
+          <div class="input-group">
+            <label>Panjang Sisi (s) [cm]:</label>
+            <input type="number" id="inS" value="5" min="1">
+          </div>
+        `;
+      } else if (shape === 'persegiPanjang') {
+        container.innerHTML = `
+          <div class="input-group">
+            <label>Panjang (p) [cm]:</label>
+            <input type="number" id="inP" value="8" min="1">
+          </div>
+          <div class="input-group">
+            <label>Lebar (l) [cm]:</label>
+            <input type="number" id="inL" value="5" min="1">
+          </div>
+        `;
+      } else if (shape === 'jajarGenjang') {
+        container.innerHTML = `
+          <div class="input-group">
+            <label>Alas (a) [cm]:</label>
+            <input type="number" id="inA" value="10" min="1">
+          </div>
+          <div class="input-group">
+            <label>Tinggi (t) [cm]:</label>
+            <input type="number" id="inT" value="6" min="1">
+          </div>
+          <div class="input-group">
+            <label>Sisi Miring (b) [cm]:</label>
+            <input type="number" id="inB" value="7" min="1">
+          </div>
+        `;
+      } else if (shape === 'trapesium') {
+        container.innerHTML = `
+          <div class="input-group">
+            <label>Sisi Sejajar Atas (a) [cm]:</label>
+            <input type="number" id="inA" value="6" min="1">
+          </div>
+          <div class="input-group">
+            <label>Sisi Sejajar Bawah (b) [cm]:</label>
+            <input type="number" id="inB" value="10" min="1">
+          </div>
+          <div class="input-group">
+            <label>Tinggi (t) [cm]:</label>
+            <input type="number" id="inT" value="4" min="1">
+          </div>
+          <div class="input-group">
+            <label>Sisi Miring Kaki (s) [cm]:</label>
+            <input type="number" id="inS" value="5" min="1">
+          </div>
+        `;
+      } else if (shape === 'belahKetupat') {
+        container.innerHTML = `
+          <div class="input-group">
+            <label>Diagonal 1 (d1) [cm]:</label>
+            <input type="number" id="inD1" value="6" min="1">
+          </div>
+          <div class="input-group">
+            <label>Diagonal 2 (d2) [cm]:</label>
+            <input type="number" id="inD2" value="8" min="1">
+          </div>
+          <div class="input-group">
+            <label>Panjang Sisi (s) [cm]:</label>
+            <input type="number" id="inS" value="5" min="1">
+          </div>
+        `;
+      } else if (shape === 'segiBanyakBeraturan') {
+        container.innerHTML = `
+          <div class="input-group">
+            <label>Jumlah Sisi (n) [misal 5 untuk Pentagon]:</label>
+            <input type="number" id="inN" value="5" min="3" max="12">
+          </div>
+          <div class="input-group">
+            <label>Panjang Sisi (s) [cm]:</label>
+            <input type="number" id="inS" value="6" min="1">
+          </div>
+        `;
+      }
+    }
+
+    // Hitung Keliling dan Luas
+    function hitungKelilingLuas() {
+      const shape = document.getElementById('calcShapeSelect').value;
+      const resBox = document.getElementById('calcResultContainer');
+      const resK = document.getElementById('resKeliling');
+      const resL = document.getElementById('resLuas');
+      const resSteps = document.getElementById('resLangkah');
+
+      resBox.style.display = 'block';
+
+      let keliling = 0;
+      let luas = 0;
+      let langkahHtml = "";
+
+      if (shape === 'segitiga') {
+        const a = parseFloat(document.getElementById('inA').value) || 0;
+        const t = parseFloat(document.getElementById('inT').value) || 0;
+        const s1 = parseFloat(document.getElementById('inS1').value) || 0;
+        const s2 = parseFloat(document.getElementById('inS2').value) || 0;
+        keliling = a + s1 + s2;
+        luas = 0.5 * a * t;
+        langkahHtml = `• Keliling = ${a} + ${s1} + ${s2} = ${keliling} cm<br>• Luas = ½ × ${a} × ${t} = ${luas} cm²`;
+      } else if (shape === 'persegi') {
+        const s = parseFloat(document.getElementById('inS').value) || 0;
+        keliling = 4 * s;
+        luas = s * s;
+        langkahHtml = `• Keliling = 4 × ${s} = ${keliling} cm<br>• Luas = ${s} × ${s} = ${luas} cm²`;
+      } else if (shape === 'persegiPanjang') {
+        const p = parseFloat(document.getElementById('inP').value) || 0;
+        const l = parseFloat(document.getElementById('inL').value) || 0;
+        keliling = 2 * (p + l);
+        luas = p * l;
+        langkahHtml = `• Keliling = 2 × (${p} + ${l}) = ${keliling} cm<br>• Luas = ${p} × ${l} = ${luas} cm²`;
+      } else if (shape === 'jajarGenjang') {
+        const a = parseFloat(document.getElementById('inA').value) || 0;
+        const t = parseFloat(document.getElementById('inT').value) || 0;
+        const b = parseFloat(document.getElementById('inB').value) || 0;
+        keliling = 2 * (a + b);
+        luas = a * t;
+        langkahHtml = `• Keliling = 2 × (${a} + ${b}) = ${keliling} cm<br>• Luas = ${a} × ${t} = ${luas} cm²`;
+      } else if (shape === 'trapesium') {
+        const a = parseFloat(document.getElementById('inA').value) || 0;
+        const b = parseFloat(document.getElementById('inB').value) || 0;
+        const t = parseFloat(document.getElementById('inT').value) || 0;
+        const s = parseFloat(document.getElementById('inS').value) || 0;
+        keliling = a + b + (2 * s);
+        luas = 0.5 * (a + b) * t;
+        langkahHtml = `• Keliling = ${a} + ${b} + 2(${s}) = ${keliling} cm<br>• Luas = ½ × (${a} + ${b}) × ${t} = ${luas} cm²`;
+      } else if (shape === 'belahKetupat') {
+        const d1 = parseFloat(document.getElementById('inD1').value) || 0;
+        const d2 = parseFloat(document.getElementById('inD2').value) || 0;
+        const s = parseFloat(document.getElementById('inS').value) || 0;
+        keliling = 4 * s;
+        luas = 0.5 * d1 * d2;
+        langkahHtml = `• Keliling = 4 × ${s} = ${keliling} cm<br>• Luas = ½ × ${d1} × ${d2} = ${luas} cm²`;
+      } else if (shape === 'segiBanyakBeraturan') {
+        const n = parseInt(document.getElementById('inN').value) || 3;
+        const s = parseFloat(document.getElementById('inS').value) || 0;
+        keliling = n * s;
+        langkahHtml = `• Keliling Segi-${n} = ${n} × ${s} = ${keliling} cm<br><em>(Catatan: Luas segi banyak beraturan menggunakan pendekatan pembagian segitiga)</em>`;
+        luas = "-";
+      }
+
+      resK.innerText = `Keliling (K): ${keliling} cm`;
+      resL.innerText = `Luas (L): ${luas} cm²`;
+      resSteps.innerHTML = langkahHtml;
+    }
+
+    // Hitung Simulasi Gabungan Rumah
+    function hitungGabunganRumah() {
+      const a = parseFloat(document.getElementById('gabAlasAtap').value) || 0;
+      const tAtap = parseFloat(document.getElementById('gabTinggiAtap').value) || 0;
+      const tDinding = parseFloat(document.getElementById('gabTinggiDinding').value) || 0;
+
+      const luasAtap = 0.5 * a * tAtap;
+      const luasDinding = a * tDinding;
+      const luasTotal = luasAtap + luasDinding;
+
+      document.getElementById('gabLuasAtap').innerText = luasAtap;
+      document.getElementById('gabLuasDinding').innerText = luasDinding;
+      document.getElementById('gabLuasTotal').innerText = luasTotal;
+    }
+
+    // --- DATA KUIS ---
+    const questions = [
+      {
+        question: "Sebuah persegi memiliki panjang sisi 8 cm. Berapakah luasnya?",
+        options: ["32 cm²", "64 cm²", "16 cm²", "24 cm²"],
+        answer: 1
+        // L = 8 * 8 = 64
+      },
+      {
+        question: "Rumus untuk menghitung luas segitiga dengan alas (a) dan tinggi (t) adalah...",
+        options: ["a × t", "2 × (a + t)", "½ × a × t", "a + t + s"],
+        answer: 2
+      },
+      {
+        question: "Sebuah persegi panjang memiliki panjang 10 cm dan lebar 6 cm. Kelilingnya adalah...",
+        options: ["60 cm", "32 cm", "16 cm", "40 cm"],
+        answer: 1
+        // K = 2 * (10 + 6) = 32 cm
+      },
+      {
+        question: "Suatu segi lima beraturan memiliki panjang sisi 7 cm. Keliling segi lima tersebut adalah...",
+        options: ["35 cm", "42 cm", "25 cm", "49 cm"],
+        answer: 0
+        // K = 5 * 7 = 35 cm
+      },
+      {
+        question: "Bangun gabungan terdiri dari dua persegi yang identik (sisi = 5 cm). Luas total gabungan tersebut adalah...",
+        options: ["25 cm²", "50 cm²", "100 cm²", "20 cm²"],
+        answer: 1
+        // 25 + 25 = 50 cm²
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let isAnswered = false;
+
+    function loadQuestion() {
+      isAnswered = false;
+      const q = questions[currentQuestion];
+      
+      document.getElementById('questionNum').innerText = `Soal ${currentQuestion + 1} dari ${questions.length}`;
+      document.getElementById('questionText').innerText = q.question;
+      document.getElementById('quizFeedback').innerText = '';
+      document.getElementById('nextBtn').style.display = 'none';
+
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.innerHTML = '';
+
+      q.options.forEach((opt, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(index, btn);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selectedIndex, selectedBtn) {
+      if (isAnswered) return;
+      isAnswered = true;
+
+      const correctIndex = questions[currentQuestion].answer;
+      const options = document.querySelectorAll('.option-btn');
+
+      if (selectedIndex === correctIndex) {
+        selectedBtn.classList.add('correct');
+        document.getElementById('quizFeedback').innerText = "Hebat! Jawaban kamu benar. 🎉";
+        document.getElementById('quizFeedback').style.color = "#10b981";
+        score += 100 / questions.length;
+      } else {
+        selectedBtn.classList.add('wrong');
+        options[correctIndex].classList.add('correct');
+        document.getElementById('quizFeedback').innerText = "Ups! Jawaban belum tepat. 😅";
+        document.getElementById('quizFeedback').style.color = "#ef4444";
+      }
+
+      document.getElementById('nextBtn').style.display = 'block';
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('quizContainer').style.display = 'none';
+      document.getElementById('scoreContainer').style.display = 'block';
+      
+      const finalScore = Math.round(score);
+      document.getElementById('finalScore').innerText = finalScore;
+
+      let message = "";
+      if (finalScore === 100) {
+        message = "Luar biasa! Kamu sudah sangat mahir menghitung keliling dan luas bangun datar!";
+      } else if (finalScore >= 60) {
+        message = "Bagus sekali! Terus latih pemahamanmu ya.";
+      } else {
+        message = "Jangan berkecil hati, pelajari lagi rangkuman rumus dan coba lagi!";
+      }
+      document.getElementById('scoreMessage').innerText = message;
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById('quizContainer').style.display = 'block';
+      document.getElementById('scoreContainer').style.display = 'none';
+      loadQuestion();
+    }
+
+    // Inisialisasi awal
+    showMateri('segitiga');
+    loadQuestion();
+  </script>
+</body>
+</html>
