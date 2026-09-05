@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPI Satuan Baku Berat SD</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #fdf6ec;
+      color: #2c3e50;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background-color: #ffffff;
+      box-shadow: 0 0 15px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Tema Oranye/Emas Hangat */
+    .header {
+      background: linear-gradient(135deg, #d35400, #f39c12);
+      color: white;
+      text-align: center;
+      padding: 20px 15px;
+    }
+
+    .header h1 {
+      font-size: 1.4rem;
+      margin-bottom: 5px;
+    }
+
+    .header p {
+      font-size: 0.88rem;
+      opacity: 0.95;
+    }
+
+    .nav-menu {
+      display: flex;
+      background-color: #fef5e7;
+      border-bottom: 2px solid #f8c471;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 12px 2px;
+      border: none;
+      background: none;
+      font-size: 0.88rem;
+      font-weight: bold;
+      color: #7e5109;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .nav-btn.active {
+      background-color: #ffffff;
+      color: #d35400;
+      border-bottom: 3px solid #d35400;
+    }
+
+    .content {
+      padding: 15px;
+      flex: 1;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      border: 1px solid #f5eef8;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+    }
+
+    .card h2 {
+      font-size: 1.05rem;
+      color: #d35400;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .rule-box {
+      background-color: #ffeaa7;
+      border-left: 4px solid #d35400;
+      padding: 10px 12px;
+      border-radius: 6px;
+      line-height: 1.6;
+      font-size: 0.9rem;
+    }
+
+    /* Visual Tangga Satuan Berat */
+    .stair-container {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin: 10px 0;
+    }
+
+    .stair-step {
+      padding: 8px 12px;
+      background-color: #fdf2e9;
+      border-left: 5px solid #e67e22;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .stair-step:nth-child(1) { margin-left: 0px; background-color: #fdebd0; border-left-color: #d35400; }
+    .stair-step:nth-child(2) { margin-left: 15px; }
+    .stair-step:nth-child(3) { margin-left: 30px; }
+    .stair-step:nth-child(4) { margin-left: 45px; }
+    .stair-step:nth-child(5) { margin-left: 60px; }
+    .stair-step:nth-child(6) { margin-left: 75px; }
+    .stair-step:nth-child(7) { margin-left: 90px; }
+
+    .stair-step.active-step {
+      background-color: #f9e79f;
+      border-left-color: #f39c12;
+      font-weight: bold;
+    }
+
+    .example-box {
+      background-color: #fef5e7;
+      border: 1px dashed #e67e22;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* Form Kalkulator */
+    .input-group {
+      margin: 10px 0;
+      flex: 1;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #bdc3c7;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    .select-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .arrow-icon {
+      font-size: 1.2rem;
+      margin-top: 15px;
+    }
+
+    .result-box {
+      background-color: #fef5e7;
+      border-left: 4px solid #d35400;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    #resultText {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #d35400;
+      margin-bottom: 5px;
+    }
+
+    .step-text {
+      font-size: 0.88rem;
+      color: #5d4037;
+    }
+
+    /* Kuis Style */
+    .quiz-header {
+      font-size: 0.85rem;
+      color: #777;
+      margin-bottom: 8px;
+    }
+
+    .question {
+      font-weight: bold;
+      font-size: 0.98rem;
+      margin-bottom: 12px;
+    }
+
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      padding: 12px;
+      border: 1px solid #e67e22;
+      background-color: #fff;
+      color: #d35400;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .option-btn.correct {
+      background-color: #27ae60;
+      color: white;
+      border-color: #27ae60;
+    }
+
+    .option-btn.wrong {
+      background-color: #e74c3c;
+      color: white;
+      border-color: #e74c3c;
+    }
+
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background-color: #d35400;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.98rem;
+      cursor: pointer;
+    }
+
+    .score-box {
+      text-align: center;
+      font-size: 3rem;
+      font-weight: bold;
+      color: #27ae60;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <h1>Satuan Baku Berat</h1>
+      <p>kg, hg (ons), dag, g, dg, cg, mg — SD</p>
+    </header>
+
+    <nav class="nav-menu">
+      <button class="nav-btn active" onclick="switchTab('materi')">📖 Tangga</button>
+      <button class="nav-btn" onclick="switchTab('konversi')">🔄 Konversi</button>
+      <button class="nav-btn" onclick="switchTab('kuis')">✏️ Kuis</button>
+    </nav>
+
+    <main class="content">
+      <!-- Section 1: Tangga & Materi -->
+      <section id="materi" class="tab-content active">
+        <div class="card">
+          <h2>Aturan Tangga Satuan Berat</h2>
+          <div class="rule-box">
+            <p>🔽 <strong>Turun 1 Tangga</strong> = Dikali <strong>10</strong> (× 10)</p>
+            <p>🔼 <strong>Naik 1 Tangga</strong> = Dibagi <strong>10</strong> (÷ 10)</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Tangga Satuan Berat</h2>
+          <div class="stair-container" id="stairVisual">
+            <div class="stair-step" data-unit="kg"><strong>kg</strong> (Kilogram)</div>
+            <div class="stair-step" data-unit="hg"><strong>hg</strong> / <strong>ons</strong> (Hektogram)</div>
+            <div class="stair-step" data-unit="dag"><strong>dag</strong> (Dekagram)</div>
+            <div class="stair-step" data-unit="g"><strong>g</strong> (Gram - Satuan Dasar)</div>
+            <div class="stair-step" data-unit="dg"><strong>dg</strong> (Desigram)</div>
+            <div class="stair-step" data-unit="cg"><strong>cg</strong> (Sentigram)</div>
+            <div class="stair-step" data-unit="mg"><strong>mg</strong> (Miligram)</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Satuan Berat Lainnya 💡</h2>
+          <div class="example-box">
+            <p>• <strong>1 hg = 1 ons</strong></p>
+            <p>• <strong>1 kg = 10 hg = 10 ons</strong></p>
+            <p>• <strong>1 kg = 1.000 g</strong></p>
+            <p>• <strong>1 kuintal = 100 kg</strong></p>
+            <p>• <strong>1 ton = 1.000 kg = 10 kuintal</strong></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Konversi & Kalkulator -->
+      <section id="konversi" class="tab-content">
+        <div class="card">
+          <h2>Kalkulator Konversi Berat</h2>
+          <p>Masukkan nilai dan pilih satuan asal serta tujuannya:</p>
+
+          <div class="input-group">
+            <label for="valInput">Nilai Berat:</label>
+            <input type="number" id="valInput" value="1" min="0" step="any" oninput="hitungKonversi()">
+          </div>
+
+          <div class="select-row">
+            <div class="input-group">
+              <label for="fromUnit">Dari:</label>
+              <select id="fromUnit" onchange="hitungKonversi()">
+                <option value="kg" selected>kg (Kilogram)</option>
+                <option value="hg">hg / ons</option>
+                <option value="dag">dag</option>
+                <option value="g">g (Gram)</option>
+                <option value="dg">dg</option>
+                <option value="cg">cg</option>
+                <option value="mg">mg</option>
+              </select>
+            </div>
+
+            <div class="arrow-icon">➡️</div>
+
+            <div class="input-group">
+              <label for="toUnit">Ke:</label>
+              <select id="toUnit" onchange="hitungKonversi()">
+                <option value="kg">kg (Kilogram)</option>
+                <option value="hg">hg / ons</option>
+                <option value="dag">dag</option>
+                <option value="g" selected>g (Gram)</option>
+                <option value="dg">dg</option>
+                <option value="cg">cg</option>
+                <option value="mg">mg</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="result-box" id="resultContainer">
+            <p id="resultText">1 kg = 1.000 g</p>
+            <p class="step-text" id="stepText">Turun 3 tangga, maka dikali 1.000 (1 × 10 × 10 × 10)</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Kuis -->
+      <section id="kuis" class="tab-content">
+        <div class="card" id="quizContainer">
+          <div class="quiz-header">
+            <span id="questionNum">Soal 1 dari 4</span>
+          </div>
+          <p id="questionText" class="question">Loading...</p>
+          <div id="optionsContainer" class="options-group"></div>
+          <div id="quizFeedback" class="feedback"></div>
+          <button id="nextBtn" class="action-btn" onclick="nextQuestion()" style="display: none;">Soal Berikutnya ➡️</button>
+        </div>
+
+        <div class="card" id="scoreContainer" style="display: none;">
+          <h2>Hasil Kuis Kamu 🎉</h2>
+          <div class="score-box">
+            <span id="finalScore">0</span>
+          </div>
+          <p id="scoreMessage" style="text-align: center;"></p>
+          <button class="action-btn" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Navigasi Tab
+    function switchTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.nav-btn');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+
+      if (tabId === 'konversi') {
+        hitungKonversi();
+      }
+    }
+
+    // Urutan Satuan Berat
+    const units = ['kg', 'hg', 'dag', 'g', 'dg', 'cg', 'mg'];
+
+    // Hitung Konversi Berat
+    function hitungKonversi() {
+      const val = parseFloat(document.getElementById('valInput').value);
+      const from = document.getElementById('fromUnit').value;
+      const to = document.getElementById('toUnit').value;
+
+      const resultText = document.getElementById('resultText');
+      const stepText = document.getElementById('stepText');
+
+      if (isNaN(val)) {
+        resultText.innerText = '-';
+        stepText.innerText = 'Masukkan angka yang valid';
+        return;
+      }
+
+      const fromIndex = units.indexOf(from);
+      const toIndex = units.indexOf(to);
+      const stepDiff = toIndex - fromIndex; // Positif = Turun, Negatif = Naik
+
+      let finalVal = 0;
+      let explanation = "";
+
+      if (stepDiff > 0) {
+        // Turun tangga (dikali)
+        const factor = Math.pow(10, stepDiff);
+        finalVal = val * factor;
+        explanation = `Turun ${stepDiff} tangga, maka dikali ${factor.toLocaleString('id-ID')} (${val} × ${factor.toLocaleString('id-ID')})`;
+      } else if (stepDiff < 0) {
+        // Naik tangga (dibagi)
+        const steps = Math.abs(stepDiff);
+        const factor = Math.pow(10, steps);
+        finalVal = val / factor;
+        explanation = `Naik ${steps} tangga, maka dibagi ${factor.toLocaleString('id-ID')} (${val} ÷ ${factor.toLocaleString('id-ID')})`;
+      } else {
+        // Satuan sama
+        finalVal = val;
+        explanation = `Satuan sama, nilainya tetap.`;
+      }
+
+      // Format angka desimal jika ada koma
+      const formattedResult = Number.isInteger(finalVal) ? finalVal.toLocaleString('id-ID') : finalVal.toString().replace('.', ',');
+      
+      const fromLabel = from === 'hg' ? 'hg (ons)' : from;
+      const toLabel = to === 'hg' ? 'hg (ons)' : to;
+
+      resultText.innerText = `${val} ${fromLabel} = ${formattedResult} ${toLabel}`;
+      stepText.innerText = explanation;
+    }
+
+    // --- DATA KUIS ---
+    const questions = [
+      {
+        question: "1 kilogram (kg) sama dengan berapa gram (g)?",
+        options: ["10 g", "100 g", "1.000 g", "10.000 g"],
+        answer: 2
+      },
+      {
+        question: "Satuan berat 1 hektogram (hg) sama nilainya dengan...",
+        options: ["1 ons", "10 ons", "100 ons", "1 kuintal"],
+        answer: 0
+      },
+      {
+        question: "Ibu membeli 3 kg beras di warung. Berapa gram (g) berat beras tersebut?",
+        options: ["30 g", "300 g", "3.000 g", "30.000 g"],
+        answer: 2
+        // 3 * 1000 = 3000 g
+      },
+      {
+        question: "Sebuah kantong plastik berisi 500 gram gula pasir. Nilai tersebut sama dengan...",
+        options: ["5 kg", "0,5 kg", "50 kg", "0,05 kg"],
+        answer: 1
+        // 500 / 1000 = 0.5 kg
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let isAnswered = false;
+
+    function loadQuestion() {
+      isAnswered = false;
+      const q = questions[currentQuestion];
+      
+      document.getElementById('questionNum').innerText = `Soal ${currentQuestion + 1} dari ${questions.length}`;
+      document.getElementById('questionText').innerText = q.question;
+      document.getElementById('quizFeedback').innerText = '';
+      document.getElementById('nextBtn').style.display = 'none';
+
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.innerHTML = '';
+
+      q.options.forEach((opt, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(index, btn);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selectedIndex, selectedBtn) {
+      if (isAnswered) return;
+      isAnswered = true;
+
+      const correctIndex = questions[currentQuestion].answer;
+      const options = document.querySelectorAll('.option-btn');
+
+      if (selectedIndex === correctIndex) {
+        selectedBtn.classList.add('correct');
+        document.getElementById('quizFeedback').innerText = "Hebat! Jawaban kamu benar. 🎉";
+        document.getElementById('quizFeedback').style.color = "#27ae60";
+        score += 100 / questions.length;
+      } else {
+        selectedBtn.classList.add('wrong');
+        options[correctIndex].classList.add('correct');
+        document.getElementById('quizFeedback').innerText = "Ups! Jawaban belum tepat. 😅";
+        document.getElementById('quizFeedback').style.color = "#e74c3c";
+      }
+
+      document.getElementById('nextBtn').style.display = 'block';
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('quizContainer').style.display = 'none';
+      document.getElementById('scoreContainer').style.display = 'block';
+      
+      const finalScore = Math.round(score);
+      document.getElementById('finalScore').innerText = finalScore;
+
+      let message = "";
+      if (finalScore === 100) {
+        message = "Luar biasa! Kamu sudah sangat menguasai konversi satuan baku berat!";
+      } else if (finalScore >= 60) {
+        message = "Bagus sekali! Terus berlatih agar semakin lancar.";
+      } else {
+        message = "Jangan patah semangat, pelajari lagi tangga satuan berat dan coba lagi!";
+      }
+      document.getElementById('scoreMessage').innerText = message;
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById('quizContainer').style.display = 'block';
+      document.getElementById('scoreContainer').style.display = 'none';
+      loadQuestion();
+    }
+
+    // Inisialisasi awal saat dimuat
+    loadQuestion();
+  </script>
+</body>
+</html>
