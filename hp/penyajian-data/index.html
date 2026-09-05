@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPI Penyajian Data SD</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <h1>Penyajian Data</h1>
+      <p>Tabel, Piktogram & Diagram Batang — SD</p>
+    </header>
+
+    <nav class="nav-menu">
+      <button class="nav-btn active" onclick="switchTab('materi')">📖 Bentuk</button>
+      <button class="nav-btn" onclick="switchTab('simulasi')">📊 Visual</button>
+      <button class="nav-btn" onclick="switchTab('kuis')">✏️ Kuis</button>
+    </nav>
+
+    <main class="content">
+      <!-- Section 1: Ringkasan Bentuk Penyajian Data -->
+      <section id="materi" class="tab-content active">
+        <div class="card">
+          <h2>1. Tabel Frekuensi</h2>
+          <p>Data disusun dalam bentuk baris dan kolom yang berisi nama kategori dan jumlahnya (frekuensi).</p>
+          <div class="example-box">
+            <table class="simple-table">
+              <thead>
+                <tr><th>Buah Favorit</th><th>Banyak Siswa</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>🍎 Apel</td><td>8</td></tr>
+                <tr><td>🍌 Pisang</td><td>5</td></tr>
+                <tr><td>🍊 Jeruk</td><td>6</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>2. Piktogram (Diagram Gambar)</h2>
+          <p>Penyajian data menggunakan gambar atau simbol. Setiap 1 gambar mewakili jumlah tertentu (misal: 1 🍎 = 2 siswa).</p>
+          <div class="example-box">
+            <p><strong>Keterangan:</strong> 1 🍎 = 2 siswa</p>
+            <p>• Apel (8 siswa) = 🍎🍎🍎🍎</p>
+            <p>• Jeruk (6 siswa) = 🍊🍊🍊</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>3. Diagram Batang</h2>
+          <p>Data disajikan dalam bentuk persegi panjang (batang) tegak atau mendatar dengan tinggi sesuai jumlah frekuensinya.</p>
+        </div>
+      </section>
+
+      <!-- Section 2: Simulasi & Generator Visual Data -->
+      <section id="simulasi" class="tab-content">
+        <div class="card">
+          <h2>Input Data Nilai Sederhana</h2>
+          <p>Ubah nilai jumlah siswa untuk 3 hobi berikut:</p>
+
+          <div class="input-grid">
+            <div class="input-group">
+              <label for="valMembaca">📖 Membaca:</label>
+              <input type="number" id="valMembaca" value="6" min="1" max="12" onchange="renderDataVisuals()">
+            </div>
+            <div class="input-group">
+              <label for="valMelukis">🎨 Melukis:</label>
+              <input type="number" id="valMelukis" value="4" min="1" max="12" onchange="renderDataVisuals()">
+            </div>
+            <div class="input-group">
+              <label for="valOlahraga">⚽ Olahraga:</label>
+              <input type="number" id="valOlahraga" value="10" min="1" max="12" onchange="renderDataVisuals()">
+            </div>
+          </div>
+        </div>
+
+        <!-- Visual 1: Tabel Frekuensi -->
+        <div class="card">
+          <h2>📊 Tabel Frekuensi</h2>
+          <table class="simple-table" id="freqTableDisplay">
+            <!-- Dynamic table contents -->
+          </table>
+        </div>
+
+        <!-- Visual 2: Piktogram -->
+        <div class="card">
+          <h2>🖼️ Piktogram (1 Simbol = 2 Siswa)</h2>
+          <div id="pictogramDisplay" class="pictogram-box">
+            <!-- Dynamic pictogram -->
+          </div>
+        </div>
+
+        <!-- Visual 3: Diagram Batang -->
+        <div class="card">
+          <h2>📶 Diagram Batang</h2>
+          <div id="barChartDisplay" class="bar-chart-box">
+            <!-- Dynamic bar chart -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Kuis Interaktif -->
+      <section id="kuis" class="tab-content">
+        <div class="card" id="quizContainer">
+          <div class="quiz-header">
+            <span id="questionNum">Soal 1 dari 4</span>
+          </div>
+          <p id="questionText" class="question">Loading...</p>
+          
+          <div id="quizVisualBox" class="quiz-visual-card" style="display: none;"></div>
+
+          <div id="optionsContainer" class="options-group"></div>
+          <div id="quizFeedback" class="feedback"></div>
+          <button id="nextBtn" class="action-btn" onclick="nextQuestion()" style="display: none;">Soal Berikutnya ➡️</button>
+        </div>
+
+        <div class="card" id="scoreContainer" style="display: none;">
+          <h2>Hasil Kuis Kamu 🎉</h2>
+          <div class="score-box">
+            <span id="finalScore">0</span>
+          </div>
+          <p id="scoreMessage" style="text-align: center;"></p>
+          <button class="action-btn" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
