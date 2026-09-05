@@ -1,0 +1,331 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f0f3f8;
+  color: #2c3e50;
+  display: flex;
+  justify-content: center;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  background-color: #ffffff;
+  box-shadow: 0 0 15px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Tema Indigo Modern */
+.header {
+  background: linear-gradient(135deg, #341f97, #5f27cd);
+  color: white;
+  text-align: center;
+  padding: 20px 15px;
+}
+
+.header h1 {
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+}
+
+.header p {
+  font-size: 0.88rem;
+  opacity: 0.95;
+}
+
+.nav-menu {
+  display: flex;
+  background-color: #eee9f8;
+  border-bottom: 2px solid #dcd0ff;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 12px 2px;
+  border: none;
+  background: none;
+  font-size: 0.88rem;
+  font-weight: bold;
+  color: #574b90;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.nav-btn.active {
+  background-color: #ffffff;
+  color: #5f27cd;
+  border-bottom: 3px solid #5f27cd;
+}
+
+.content {
+  padding: 15px;
+  flex: 1;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #e1e8f0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+}
+
+.card h2 {
+  font-size: 1.05rem;
+  color: #5f27cd;
+  margin-bottom: 10px;
+}
+
+/* Grid Materi 3 View */
+.view-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.view-card {
+  background-color: #f8f7fc;
+  border-left: 4px solid #5f27cd;
+  padding: 10px 12px;
+  border-radius: 6px;
+}
+
+.view-card h3 {
+  font-size: 0.95rem;
+  color: #341f97;
+  margin-bottom: 3px;
+}
+
+.view-card p {
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.view-icon {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #5f27cd;
+  background-color: #eee9f8;
+  padding: 2px 6px;
+  border-radius: 4px;
+  float: right;
+}
+
+/* Object Selector */
+.object-selector {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.obj-btn {
+  flex: 1;
+  padding: 8px 5px;
+  border: 1px solid #5f27cd;
+  background-color: #fff;
+  color: #5f27cd;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.obj-btn.active {
+  background-color: #5f27cd;
+  color: white;
+}
+
+.sub-card {
+  background-color: #f8f7fc;
+  border: 1px solid #dcd0ff;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 10px 0;
+}
+
+/* Grid Control Lab */
+.grid-controls {
+  display: grid;
+  grid-template-columns: 1flex 1flex;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.grid-cell {
+  background-color: #f8f7fc;
+  border: 1px solid #dcd0ff;
+  padding: 8px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.grid-cell label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: bold;
+  color: #574b90;
+  margin-bottom: 4px;
+}
+
+.grid-cell input {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #b2bec3;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Projection Display Box */
+.result-box {
+  background-color: #eee9f8;
+  border-left: 4px solid #5f27cd;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 15px;
+}
+
+.result-box h3 {
+  font-size: 0.95rem;
+  color: #341f97;
+  margin-bottom: 10px;
+}
+
+.projection-results {
+  display: flex;
+  justify-content: space-around;
+  gap: 8px;
+}
+
+.proj-box {
+  text-align: center;
+}
+
+.proj-box h4 {
+  font-size: 0.8rem;
+  color: #574b90;
+  margin-bottom: 6px;
+}
+
+.grid-view {
+  display: grid;
+  grid-template-columns: repeat(2, 22px);
+  grid-template-rows: repeat(2, 22px);
+  gap: 2px;
+  background-color: #2c3e50;
+  padding: 3px;
+  border-radius: 4px;
+  justify-content: center;
+}
+
+.cell-block {
+  width: 22px;
+  height: 22px;
+  background-color: #ecf0f1;
+  border-radius: 2px;
+}
+
+.cell-block.active {
+  background-color: #5f27cd;
+}
+
+.cell-block.active-sec {
+  background-color: #10ac84;
+}
+
+/* Kuis Visual Box */
+.quiz-visual-box {
+  background-color: #f8f7fc;
+  border: 1px dashed #5f27cd;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.quiz-header {
+  font-size: 0.85rem;
+  color: #777;
+  margin-bottom: 8px;
+}
+
+.question {
+  font-weight: bold;
+  font-size: 0.98rem;
+  margin-bottom: 12px;
+}
+
+.options-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-btn {
+  padding: 12px;
+  border: 1px solid #5f27cd;
+  background-color: #fff;
+  color: #5f27cd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.option-btn.correct {
+  background-color: #10ac84;
+  color: white;
+  border-color: #10ac84;
+}
+
+.option-btn.wrong {
+  background-color: #ff6b6b;
+  color: white;
+  border-color: #ff6b6b;
+}
+
+.feedback {
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background-color: #5f27cd;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.98rem;
+  cursor: pointer;
+}
+
+.score-box {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #10ac84;
+  margin: 15px 0;
+}
