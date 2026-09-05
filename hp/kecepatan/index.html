@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPI Kecepatan & Laju Perubahan SD</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f0f3f8;
+      color: #2c3e50;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background-color: #ffffff;
+      box-shadow: 0 0 15px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Tema Merah/Oranye Balap */
+    .header {
+      background: linear-gradient(135deg, #d63031, #ff7675);
+      color: white;
+      text-align: center;
+      padding: 20px 15px;
+    }
+
+    .header h1 {
+      font-size: 1.4rem;
+      margin-bottom: 5px;
+    }
+
+    .header p {
+      font-size: 0.88rem;
+      opacity: 0.95;
+    }
+
+    .nav-menu {
+      display: flex;
+      background-color: #ffeaa7;
+      border-bottom: 2px solid #fdcb6e;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 12px 2px;
+      border: none;
+      background: none;
+      font-size: 0.88rem;
+      font-weight: bold;
+      color: #d63031;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .nav-btn.active {
+      background-color: #ffffff;
+      color: #d63031;
+      border-bottom: 3px solid #d63031;
+    }
+
+    .content {
+      padding: 15px;
+      flex: 1;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      border: 1px solid #e1e8f0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+    }
+
+    .card h2 {
+      font-size: 1.05rem;
+      color: #d63031;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    /* Visual Segitiga JKW */
+    .jkw-triangle-container {
+      display: flex;
+      justify-content: center;
+      margin: 15px 0;
+    }
+
+    .jkw-triangle {
+      width: 180px;
+      height: 150px;
+      background-color: #ff7675;
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 10px;
+    }
+
+    .triangle-content {
+      background-color: #fff;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 8px;
+      border: 3px solid #d63031;
+      padding: 10px;
+    }
+
+    .jkw-row {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .jkw-item {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #d63031;
+      background-color: #ffeaa7;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid #fdcb6e;
+    }
+
+    .jkw-item.top {
+      margin-bottom: 8px;
+    }
+
+    .formula-box, .example-box {
+      background-color: #fff5f5;
+      border-left: 4px solid #d63031;
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin: 10px 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .sub-card {
+      background-color: #fff5f5;
+      border: 1px solid #ff7675;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 10px 0;
+    }
+
+    .input-group {
+      margin: 10px 0;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #b2bec3;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    .result-box {
+      background-color: #fff5f5;
+      border-left: 4px solid #d63031;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 15px;
+    }
+
+    .result-box h3 {
+      font-size: 1.1rem;
+      color: #d63031;
+      margin-bottom: 5px;
+    }
+
+    /* Track Simulasi Kendaraan */
+    .track-container {
+      height: 40px;
+      background-color: #dfe6e9;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      margin: 15px 0 5px;
+      border: 2px solid #b2bec3;
+    }
+
+    .vehicle {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      font-size: 1.5rem;
+      transition: left 0.1s linear;
+    }
+
+    /* Kuis Style */
+    .quiz-header {
+      font-size: 0.85rem;
+      color: #777;
+      margin-bottom: 8px;
+    }
+
+    .question {
+      font-weight: bold;
+      font-size: 0.98rem;
+      margin-bottom: 12px;
+    }
+
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      padding: 12px;
+      border: 1px solid #d63031;
+      background-color: #fff;
+      color: #d63031;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .option-btn.correct {
+      background-color: #00b894;
+      color: white;
+      border-color: #00b894;
+    }
+
+    .option-btn.wrong {
+      background-color: #ff7675;
+      color: white;
+      border-color: #ff7675;
+    }
+
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background-color: #d63031;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.98rem;
+      cursor: pointer;
+    }
+
+    .score-box {
+      text-align: center;
+      font-size: 3rem;
+      font-weight: bold;
+      color: #00b894;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <h1>Kecepatan & Laju Perubahan</h1>
+      <p>Jarak, Kecepatan, dan Waktu — Matematika SD</p>
+    </header>
+
+    <nav class="nav-menu">
+      <button class="nav-btn active" onclick="switchTab('materi')">📖 Rumus JKW</button>
+      <button class="nav-btn" onclick="switchTab('simulasi')">🚗 Kalkulator</button>
+      <button class="nav-btn" onclick="switchTab('kuis')">✏️ Kuis</button>
+    </nav>
+
+    <main class="content">
+      <!-- Section 1: Ringkasan Materi Rumus JKW -->
+      <section id="materi" class="tab-content active">
+        <div class="card">
+          <h2>Pengertian Kecepatan</h2>
+          <p><strong>Kecepatan</strong> adalah besarnya jarak yang ditempuh oleh suatu benda dalam tiap satu satuan waktu (misalnya km/jam atau m/detik).</p>
+        </div>
+
+        <div class="card">
+          <h2>Segitiga Ajaib J-K-W</h2>
+          <p style="text-align: center;">Gunakan susunan segitiga ini untuk mengingat rumus dengan mudah:</p>
+
+          <div class="jkw-triangle-container">
+            <div class="triangle-content">
+              <div class="jkw-item top">J (Jarak)</div>
+              <div style="width: 80%; height: 2px; background-color: #d63031; margin: 4px 0;"></div>
+              <div class="jkw-row">
+                <div class="jkw-item">K (Kecepatan)</div>
+                <span style="font-weight: bold; font-size: 1.2rem;">×</span>
+                <div class="jkw-item">W (Waktu)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="formula-box">
+            <p>1. <strong>Kecepatan (K)</strong> = Jarak ÷ Waktu = <sup>J</sup>/<sub>W</sub></p>
+            <p>2. <strong>Jarak (J)</strong> = Kecepatan × Waktu = K × W</p>
+            <p>3. <strong>Waktu (W)</strong> = Jarak ÷ Kecepatan = <sup>J</sup>/<sub>K</sub></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Konversi Satuan Kecepatan 💡</h2>
+          <div class="example-box">
+            <p>• <strong>1 km/jam</strong> = 1.000 meter ÷ 3.600 detik = <strong><sup>5</sup>/<sub>18</sub> m/detik</strong></p>
+            <p>• <strong>1 m/detik</strong> = <strong>3,6 km/jam</strong></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Kalkulator & Simulasi -->
+      <section id="simulasi" class="tab-content">
+        <div class="card">
+          <h2>Kalkulator JKW Interaktif</h2>
+          <div class="input-group">
+            <label for="targetCalc">Apa yang ingin kamu hitung?</label>
+            <select id="targetCalc" onchange="renderCalcInputs()">
+              <option value="K">Kecepatan (K)</option>
+              <option value="J">Jarak (J)</option>
+              <option value="W">Waktu (W)</option>
+            </select>
+          </div>
+
+          <div class="sub-card" id="calcInputsContainer">
+            <!-- Form input dinamis via JS -->
+          </div>
+
+          <button class="action-btn" onclick="hitungJKW()">Hitung Sekarang 🚀</button>
+
+          <div class="result-box" id="resultContainer" style="display: none;">
+            <h3 id="resultHeader">Hasil: 60 km/jam</h3>
+            <p id="resultSteps">Jarak (120 km) ÷ Waktu (2 jam) = 60 km/jam</p>
+          </div>
+
+          <div class="track-container">
+            <div class="vehicle" id="carAnim">🚗</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Kuis Interaktif -->
+      <section id="kuis" class="tab-content">
+        <div class="card" id="quizContainer">
+          <div class="quiz-header">
+            <span id="questionNum">Soal 1 dari 4</span>
+          </div>
+          <p id="questionText" class="question">Loading...</p>
+          <div id="optionsContainer" class="options-group"></div>
+          <div id="quizFeedback" class="feedback"></div>
+          <button id="nextBtn" class="action-btn" onclick="nextQuestion()" style="display: none;">Soal Berikutnya ➡️</button>
+        </div>
+
+        <div class="card" id="scoreContainer" style="display: none;">
+          <h2>Hasil Kuis Kamu 🎉</h2>
+          <div class="score-box">
+            <span id="finalScore">0</span>
+          </div>
+          <p id="scoreMessage" style="text-align: center;"></p>
+          <button class="action-btn" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Navigasi Tab
+    function switchTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.nav-btn');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+
+      if (tabId === 'simulasi') {
+        renderCalcInputs();
+      }
+    }
+
+    // Render Input Kalkulator JKW
+    function renderCalcInputs() {
+      const target = document.getElementById('targetCalc').value;
+      const container = document.getElementById('calcInputsContainer');
+      document.getElementById('resultContainer').style.display = 'none';
+
+      if (target === 'K') {
+        container.innerHTML = `
+          <div class="input-group">
+            <label for="valJarak">Jarak (J) [km]:</label>
+            <input type="number" id="valJarak" value="120" min="1">
+          </div>
+          <div class="input-group">
+            <label for="valWaktu">Waktu (W) [jam]:</label>
+            <input type="number" id="valWaktu" value="2" min="0.1" step="any">
+          </div>
+        `;
+      } else if (target === 'J') {
+        container.innerHTML = `
+          <div class="input-group">
+            <label for="valKecepatan">Kecepatan (K) [km/jam]:</label>
+            <input type="number" id="valKecepatan" value="60" min="1">
+          </div>
+          <div class="input-group">
+            <label for="valWaktu">Waktu (W) [jam]:</label>
+            <input type="number" id="valWaktu" value="2" min="0.1" step="any">
+          </div>
+        `;
+      } else if (target === 'W') {
+        container.innerHTML = `
+          <div class="input-group">
+            <label for="valJarak">Jarak (J) [km]:</label>
+            <input type="number" id="valJarak" value="120" min="1">
+          </div>
+          <div class="input-group">
+            <label for="valKecepatan">Kecepatan (K) [km/jam]:</label>
+            <input type="number" id="valKecepatan" value="60" min="1">
+          </div>
+        `;
+      }
+    }
+
+    // Hitung JKW & Animasi
+    function hitungJKW() {
+      const target = document.getElementById('targetCalc').value;
+      const resContainer = document.getElementById('resultContainer');
+      const resHeader = document.getElementById('resultHeader');
+      const resSteps = document.getElementById('resultSteps');
+
+      resContainer.style.display = 'block';
+
+      let resultVal = 0;
+      let duration = 2; // detik animasi
+
+      if (target === 'K') {
+        const j = parseFloat(document.getElementById('valJarak').value) || 0;
+        const w = parseFloat(document.getElementById('valWaktu').value) || 1;
+        resultVal = j / w;
+        resHeader.innerText = `Kecepatan (K) = ${resultVal.toFixed(1)} km/jam`;
+        resSteps.innerText = `Rumus: Jarak ÷ Waktu = ${j} km ÷ ${w} jam = ${resultVal.toFixed(1)} km/jam`;
+        duration = Math.max(0.5, 4 - (resultVal / 30));
+      } else if (target === 'J') {
+        const k = parseFloat(document.getElementById('valKecepatan').value) || 0;
+        const w = parseFloat(document.getElementById('valWaktu').value) || 0;
+        resultVal = k * w;
+        resHeader.innerText = `Jarak (J) = ${resultVal.toFixed(1)} km`;
+        resSteps.innerText = `Rumus: Kecepatan × Waktu = ${k} km/jam × ${w} jam = ${resultVal.toFixed(1)} km`;
+        duration = Math.max(0.5, 4 - (k / 30));
+      } else if (target === 'W') {
+        const j = parseFloat(document.getElementById('valJarak').value) || 0;
+        const k = parseFloat(document.getElementById('valKecepatan').value) || 1;
+        resultVal = j / k;
+        resHeader.innerText = `Waktu (W) = ${resultVal.toFixed(1)} jam`;
+        resSteps.innerText = `Rumus: Jarak ÷ Kecepatan = ${j} km ÷ ${k} km/jam = ${resultVal.toFixed(1)} jam`;
+        duration = Math.max(0.5, 4 - (k / 30));
+      }
+
+      // Jalankan animasi mobil bergerak
+      const car = document.getElementById('carAnim');
+      car.style.transition = `left ${duration}s linear`;
+      car.style.left = '0%';
+      setTimeout(() => {
+        car.style.left = '85%';
+      }, 50);
+    }
+
+    // --- DATA KUIS ---
+    const questions = [
+      {
+        question: "Rumus untuk menghitung Kecepatan (K) adalah...",
+        options: ["Jarak × Waktu", "Jarak ÷ Waktu", "Waktu ÷ Jarak", "Jarak + Waktu"],
+        answer: 1
+      },
+      {
+        question: "Sebuah mobil menempuh jarak 150 km dalam waktu 3 jam. Berapakah kecepatannya?",
+        options: ["40 km/jam", "50 km/jam", "60 km/jam", "450 km/jam"],
+        answer: 1
+        // 150 / 3 = 50 km/jam
+      },
+      {
+        question: "Budi bersepeda dengan kecepatan 15 km/jam selama 2 jam. Jarak yang ditempuh Budi adalah...",
+        options: ["7,5 km", "17 km", "30 km", "45 km"],
+        answer: 2
+        // 15 * 2 = 30 km
+      },
+      {
+        question: "Kereta api melaju dengan kecepatan 80 km/jam untuk menempuh jarak 240 km. Waktu tempuhnya adalah...",
+        options: ["2 Jam", "3 Jam", "4 Jam", "5 Jam"],
+        answer: 1
+        // 240 / 80 = 3 jam
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let isAnswered = false;
+
+    function loadQuestion() {
+      isAnswered = false;
+      const q = questions[currentQuestion];
+      
+      document.getElementById('questionNum').innerText = `Soal ${currentQuestion + 1} dari ${questions.length}`;
+      document.getElementById('questionText').innerText = q.question;
+      document.getElementById('quizFeedback').innerText = '';
+      document.getElementById('nextBtn').style.display = 'none';
+
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.innerHTML = '';
+
+      q.options.forEach((opt, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(index, btn);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selectedIndex, selectedBtn) {
+      if (isAnswered) return;
+      isAnswered = true;
+
+      const correctIndex = questions[currentQuestion].answer;
+      const options = document.querySelectorAll('.option-btn');
+
+      if (selectedIndex === correctIndex) {
+        selectedBtn.classList.add('correct');
+        document.getElementById('quizFeedback').innerText = "Hebat! Jawaban kamu benar. 🎉";
+        document.getElementById('quizFeedback').style.color = "#00b894";
+        score += 100 / questions.length;
+      } else {
+        selectedBtn.classList.add('wrong');
+        options[correctIndex].classList.add('correct');
+        document.getElementById('quizFeedback').innerText = "Ups! Jawaban belum tepat. 😅";
+        document.getElementById('quizFeedback').style.color = "#ff7675";
+      }
+
+      document.getElementById('nextBtn').style.display = 'block';
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('quizContainer').style.display = 'none';
+      document.getElementById('scoreContainer').style.display = 'block';
+      
+      const finalScore = Math.round(score);
+      document.getElementById('finalScore').innerText = finalScore;
+
+      let message = "";
+      if (finalScore === 100) {
+        message = "Luar biasa! Kamu sudah sangat mahir menghitung Kecepatan, Jarak, dan Waktu!";
+      } else if (finalScore >= 60) {
+        message = "Bagus sekali! Terus latih pemahamanmu ya.";
+      } else {
+        message = "Jangan berkecil hati, pelajari lagi segitiga ajaib JKW dan coba lagi!";
+      }
+      document.getElementById('scoreMessage').innerText = message;
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById('quizContainer').style.display = 'block';
+      document.getElementById('scoreContainer').style.display = 'none';
+      loadQuestion();
+    }
+
+    // Inisialisasi awal
+    loadQuestion();
+  </script>
+</body>
+</html>
