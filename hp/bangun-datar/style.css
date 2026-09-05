@@ -1,0 +1,297 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f3f0f7;
+  color: #2c3e50;
+  display: flex;
+  justify-content: center;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  background-color: #ffffff;
+  box-shadow: 0 0 15px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Tema Pink/Merah Muda Ceria */
+.header {
+  background: linear-gradient(135deg, #e84393, #fd79a8);
+  color: white;
+  text-align: center;
+  padding: 20px 15px;
+}
+
+.header h1 {
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+}
+
+.header p {
+  font-size: 0.88rem;
+  opacity: 0.95;
+}
+
+.nav-menu {
+  display: flex;
+  background-color: #fce4ec;
+  border-bottom: 2px solid #f8bbd0;
+}
+
+.nav-btn {
+  flex: 1;
+  padding: 12px 2px;
+  border: none;
+  background: none;
+  font-size: 0.88rem;
+  font-weight: bold;
+  color: #880e4f;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.nav-btn.active {
+  background-color: #ffffff;
+  color: #e84393;
+  border-bottom: 3px solid #e84393;
+}
+
+.content {
+  padding: 15px;
+  flex: 1;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #e1e8f0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+}
+
+.card h2 {
+  font-size: 1.05rem;
+  color: #e84393;
+  margin-bottom: 10px;
+}
+
+/* Shape Selector Buttons */
+.shape-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.shape-btn {
+  padding: 8px 12px;
+  border: 1px solid #e84393;
+  background-color: #fff;
+  color: #e84393;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.shape-btn.active {
+  background-color: #e84393;
+  color: white;
+}
+
+/* Graphic Shape Preview Box */
+.shape-preview-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+  background-color: #fce4ec;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.visual-shape {
+  border: 3px solid #e84393;
+  background-color: #fd79a8;
+}
+
+.visual-shape.persegi {
+  width: 70px;
+  height: 70px;
+}
+
+.visual-shape.persegiPanjang {
+  width: 100px;
+  height: 60px;
+}
+
+.visual-shape.segitiga {
+  width: 0;
+  height: 0;
+  border-left: 45px solid transparent;
+  border-right: 45px solid transparent;
+  border-bottom: 75px solid #e84393;
+  background-color: transparent;
+  border-top: none;
+}
+
+.visual-shape.lingkaran {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+}
+
+.visual-shape.jajarGenjang {
+  width: 90px;
+  height: 55px;
+  transform: skew(-20deg);
+}
+
+.visual-shape.trapesium {
+  width: 90px;
+  height: 0;
+  border-bottom: 50px solid #e84393;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  background-color: transparent;
+  border-top: none;
+}
+
+.formula-box, .rule-box {
+  background-color: #fce4ec;
+  border-left: 4px solid #e84393;
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin: 10px 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.sub-card {
+  background-color: #fff5f8;
+  border: 1px solid #fd79a8;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 10px 0;
+}
+
+.input-group {
+  margin: 10px 0;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.input-group input, .input-group select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #b2bec3;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.result-box {
+  background-color: #fce4ec;
+  border-left: 4px solid #e84393;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 15px;
+}
+
+.result-box p {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #880e4f;
+  margin: 4px 0;
+}
+
+/* Kuis Style */
+.quiz-header {
+  font-size: 0.85rem;
+  color: #777;
+  margin-bottom: 8px;
+}
+
+.question {
+  font-weight: bold;
+  font-size: 0.98rem;
+  margin-bottom: 12px;
+}
+
+.options-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-btn {
+  padding: 12px;
+  border: 1px solid #e84393;
+  background-color: #fff;
+  color: #e84393;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.option-btn.correct {
+  background-color: #00b894;
+  color: white;
+  border-color: #00b894;
+}
+
+.option-btn.wrong {
+  background-color: #ff7675;
+  color: white;
+  border-color: #ff7675;
+}
+
+.feedback {
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background-color: #e84393;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.98rem;
+  cursor: pointer;
+}
+
+.score-box {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #00b894;
+  margin: 15px 0;
+}
