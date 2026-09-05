@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MPI Pengambilan Informasi & Penggunaan Data SD</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f0fdfa;
+      color: #134e4a;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background-color: #ffffff;
+      box-shadow: 0 0 15px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Tema Teal/Emerald */
+    .header {
+      background: linear-gradient(135deg, #0d9488, #14b8a6);
+      color: white;
+      text-align: center;
+      padding: 20px 15px;
+    }
+
+    .header h1 {
+      font-size: 1.35rem;
+      margin-bottom: 5px;
+    }
+
+    .header p {
+      font-size: 0.88rem;
+      opacity: 0.95;
+    }
+
+    .nav-menu {
+      display: flex;
+      background-color: #ccfbf1;
+      border-bottom: 2px solid #99f6e4;
+    }
+
+    .nav-btn {
+      flex: 1;
+      padding: 12px 2px;
+      border: none;
+      background: none;
+      font-size: 0.82rem;
+      font-weight: bold;
+      color: #0f766e;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .nav-btn.active {
+      background-color: #ffffff;
+      color: #0d9488;
+      border-bottom: 3px solid #0d9488;
+    }
+
+    .content {
+      padding: 15px;
+      flex: 1;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+    }
+
+    .card h2 {
+      font-size: 1.05rem;
+      color: #0d9488;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    .rule-box {
+      background-color: #f0fdfa;
+      border-left: 4px solid #0d9488;
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin: 10px 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .sub-card {
+      background-color: #f0fdfa;
+      border: 1px solid #99f6e4;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 10px 0;
+    }
+
+    /* Table Styling */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 0.88rem;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid #99f6e4;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .data-table th {
+      background-color: #0d9488;
+      color: white;
+    }
+
+    /* Bar Chart Component */
+    .chart-container {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      height: 160px;
+      background-color: #f0fdfa;
+      padding: 10px;
+      border-radius: 8px;
+      border-bottom: 3px solid #0d9488;
+      margin: 10px 0;
+    }
+
+    .chart-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+      flex: 1;
+    }
+
+    .bar-fill {
+      width: 28px;
+      background: linear-gradient(to top, #0d9488, #2dd4bf);
+      border-radius: 4px 4px 0 0;
+      transition: height 0.4s ease;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding-top: 2px;
+    }
+
+    .bar-label {
+      font-size: 0.75rem;
+      font-weight: bold;
+      margin-top: 6px;
+      color: #134e4a;
+      text-align: center;
+    }
+
+    /* Interactive Action Buttons */
+    .info-btn-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 10px 0;
+    }
+
+    .info-btn {
+      padding: 10px;
+      border: 1px solid #0d9488;
+      background-color: #ffffff;
+      color: #0d9488;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .info-btn:active {
+      background-color: #0d9488;
+      color: white;
+    }
+
+    .analysis-result-box {
+      background-color: #ccfbf1;
+      border-left: 4px solid #0d9488;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    /* Kuis Style */
+    .quiz-header {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+
+    .question {
+      font-weight: bold;
+      font-size: 0.98rem;
+      margin-bottom: 12px;
+    }
+
+    .quiz-visual-box {
+      background-color: #f0fdfa;
+      border: 1px dashed #0d9488;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      padding: 12px;
+      border: 1px solid #0d9488;
+      background-color: #fff;
+      color: #0d9488;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      text-align: left;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .option-btn.correct {
+      background-color: #10b981;
+      color: white;
+      border-color: #10b981;
+    }
+
+    .option-btn.wrong {
+      background-color: #ef4444;
+      color: white;
+      border-color: #ef4444;
+    }
+
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background-color: #0d9488;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.98rem;
+      cursor: pointer;
+    }
+
+    .score-box {
+      text-align: center;
+      font-size: 3rem;
+      font-weight: bold;
+      color: #0d9488;
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <h1>Pengambilan Informasi & Data</h1>
+      <p>Membaca, Menganalisis & Menggunakan Data — SD</p>
+    </header>
+
+    <nav class="nav-menu">
+      <button class="nav-btn active" onclick="switchTab('materi')">📖 Langkah</button>
+      <button class="nav-btn" onclick="switchTab('simulasi')">🔍 Analisis</button>
+      <button class="nav-btn" onclick="switchTab('kuis')">✏️ Kuis</button>
+    </nav>
+
+    <main class="content">
+      <!-- Section 1: Langkah Pengambilan Informasi -->
+      <section id="materi" class="tab-content active">
+        <div class="card">
+          <h2>Mengapa Perlu Menganalisis Data?</h2>
+          <p>Data yang disajikan dalam bentuk tabel atau diagram dibuat agar kita bisa <strong>mengambil keputusan yang tepat</strong> serta menjawab pertanyaan penting dengan cepat.</p>
+        </div>
+
+        <div class="card">
+          <h2>5 Informasi Utama dari Data 🎯</h2>
+          <div class="rule-box">
+            <p>1. <strong>Nilai Tertinggi (Terbanyak)</strong>: Kategori dengan jumlah atau frekuensi paling besar.</p>
+            <p>2. <strong>Nilai Terendah (Tersedikit)</strong>: Kategori dengan jumlah paling kecil.</p>
+            <p>3. <strong>Selisih Data</strong>: Mengurangi data terbanyak dengan data tersedikit (Terbanyak − Tersedikit).</p>
+            <p>4. <strong>Jumlah Total Data</strong>: Menjumlahkan seluruh angka frekuensi.</p>
+            <p>5. <strong>Kesimpulan & Keputusan</strong>: Tindakan terbaik yang harus diambil berdasarkan hasil pembacaan data.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Contoh Studi Kasus 💡</h2>
+          <p>Data Penjualan Buku Cerita dalam Seminggu:</p>
+          <table class="data-table">
+            <thead>
+              <tr><th>Hari</th><th>Terjual</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Senin</td><td>15 buah</td></tr>
+              <tr><td>Selasa</td><td>20 buah</td></tr>
+              <tr><td>Rabu</td><td>10 buah</td></tr>
+              <tr><td>Kamis</td><td>25 buah</td></tr>
+              <tr><td>Jumat</td><td>30 buah</td></tr>
+            </tbody>
+          </table>
+          <div class="rule-box" style="margin-top: 8px;">
+            <p>• <strong>Terbanyak:</strong> Hari Jumat (30 buah)</p>
+            <p>• <strong>Tersedikit:</strong> Hari Rabu (10 buah)</p>
+            <p>• <strong>Selisih:</strong> 30 − 10 = 20 buah</p>
+            <p>• <strong>Keputusan Toko:</strong> Menambah persediaan buku sebelum hari Jumat karena pembeli paling ramai.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Laboratorium Analisis Data Interaktif -->
+      <section id="simulasi" class="tab-content">
+        <div class="card">
+          <h2>Analisis Data Penjualan Es Krim</h2>
+          <p>Atur jumlah es krim yang terjual pada masing-masing rasa:</p>
+
+          <div class="sub-card">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label>🍓 Cokelat:</label>
+                <input type="number" id="valCokelat" value="25" min="5" max="50" style="width: 70px; padding: 5px; text-align: center; font-weight: bold;" onchange="updateDataVisualization()">
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label>🍓 Stroberi:</label>
+                <input type="number" id="valStroberi" value="15" min="5" max="50" style="width: 70px; padding: 5px; text-align: center; font-weight: bold;" onchange="updateDataVisualization()">
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label>🍦 Vanila:</label>
+                <input type="number" id="valVanila" value="35" min="5" max="50" style="width: 70px; padding: 5px; text-align: center; font-weight: bold;" onchange="updateDataVisualization()">
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label>🍵 Matcha:</label>
+                <input type="number" id="valMatcha" value="10" min="5" max="50" style="width: 70px; padding: 5px; text-align: center; font-weight: bold;" onchange="updateDataVisualization()">
+              </div>
+            </div>
+          </div>
+
+          <!-- Diagram Batang Dinamis -->
+          <div class="chart-container" id="interactiveChart">
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- Tombol Ekstraksi Informasi -->
+          <p style="font-weight: bold; margin-top: 10px;">Klik pertanyaan untuk mendapatkan informasi:</p>
+          <div class="info-btn-group">
+            <button class="info-btn" onclick="analyzeData('max')">🏆 Terfavorit</button>
+            <button class="info-btn" onclick="analyzeData('min')">📉 Paling Sedikit</button>
+            <button class="info-btn" onclick="analyzeData('diff')">↔️ Selisih (Max - Min)</button>
+            <button class="info-btn" onclick="analyzeData('total')">➕ Total Terjual</button>
+          </div>
+
+          <div class="analysis-result-box" id="analysisDisplayBox">
+            <p id="analysisText">Pilih salah satu tombol di atas untuk menganalisis data es krim!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Kuis Interaktif -->
+      <section id="kuis" class="tab-content">
+        <div class="card" id="quizContainer">
+          <div class="quiz-header">
+            <span id="questionNum">Soal 1 dari 4</span>
+          </div>
+          <p id="questionText" class="question">Loading...</p>
+          
+          <div id="quizVisualCard" class="quiz-visual-box" style="display: none;"></div>
+
+          <div id="optionsContainer" class="options-group"></div>
+          <div id="quizFeedback" class="feedback"></div>
+          <button id="nextBtn" class="action-btn" onclick="nextQuestion()" style="display: none;">Soal Berikutnya ➡️</button>
+        </div>
+
+        <div class="card" id="scoreContainer" style="display: none;">
+          <h2>Hasil Kuis Kamu 🎉</h2>
+          <div class="score-box">
+            <span id="finalScore">0</span>
+          </div>
+          <p id="scoreMessage" style="text-align: center;"></p>
+          <button class="action-btn" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Navigasi Tab
+    function switchTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      const buttons = document.querySelectorAll('.nav-btn');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+
+      if (tabId === 'simulasi') {
+        updateDataVisualization();
+      }
+    }
+
+    // --- SIMULASI LABORATORIUM ANALISIS DATA ---
+    function updateDataVisualization() {
+      const vCok = parseInt(document.getElementById('valCokelat').value) || 0;
+      const vStr = parseInt(document.getElementById('valStroberi').value) || 0;
+      const vVan = parseInt(document.getElementById('valVanila').value) || 0;
+      const vMat = parseInt(document.getElementById('valMatcha').value) || 0;
+
+      const maxScale = 50;
+      const hCok = (vCok / maxScale) * 100;
+      const hStr = (vStr / maxScale) * 100;
+      const hVan = (vVan / maxScale) * 100;
+      const hMat = (vMat / maxScale) * 100;
+
+      const chart = document.getElementById('interactiveChart');
+      chart.innerHTML = `
+        <div class="chart-column">
+          <div class="bar-fill" style="height: ${hCok}%;">${vCok}</div>
+          <span class="bar-label">Cokelat</span>
+        </div>
+        <div class="chart-column">
+          <div class="bar-fill" style="height: ${hStr}%;">${vStr}</div>
+          <span class="bar-label">Stroberi</span>
+        </div>
+        <div class="chart-column">
+          <div class="bar-fill" style="height: ${hVan}%;">${vVan}</div>
+          <span class="bar-label">Vanila</span>
+        </div>
+        <div class="chart-column">
+          <div class="bar-fill" style="height: ${hMat}%;">${vMat}</div>
+          <span class="bar-label">Matcha</span>
+        </div>
+      `;
+
+      document.getElementById('analysisText').innerText = "Data telah diperbarui! Klik tombol pertanyaan di atas.";
+    }
+
+    function analyzeData(type) {
+      const data = [
+        { name: "Cokelat", val: parseInt(document.getElementById('valCokelat').value) || 0 },
+        { name: "Stroberi", val: parseInt(document.getElementById('valStroberi').value) || 0 },
+        { name: "Vanila", val: parseInt(document.getElementById('valVanila').value) || 0 },
+        { name: "Matcha", val: parseInt(document.getElementById('valMatcha').value) || 0 }
+      ];
+
+      const box = document.getElementById('analysisText');
+
+      if (type === 'max') {
+        const sorted = [...data].sort((a, b) => b.val - a.val);
+        const max = sorted[0];
+        box.innerHTML = `🏆 <strong>Rasa Terfavorit / Terbanyak:</strong> Es krim rasa <strong>${max.name}</strong> dengan penjualan sebanyak <strong>${max.val} buah</strong>.<br>💡 <em>Keputusan: Toko harus menyiapkan stok rasa ${max.name} paling banyak!</em>`;
+      } else if (type === 'min') {
+        const sorted = [...data].sort((a, b) => a.val - b.val);
+        const min = sorted[0];
+        box.innerHTML = `📉 <strong>Rasa Paling Sedikit Laku:</strong> Es krim rasa <strong>${min.name}</strong> dengan penjualan hanya <strong>${min.val} buah</strong>.<br>💡 <em>Keputusan: Berikan promosi khusus untuk rasa ${min.name}.</em>`;
+      } else if (type === 'diff') {
+        const sorted = [...data].sort((a, b) => b.val - a.val);
+        const max = sorted[0];
+        const min = sorted[sorted.length - 1];
+        const diff = max.val - min.val;
+        box.innerHTML = `↔️ <strong>Selisih Penjualan:</strong><br>${max.name} (${max.val}) − ${min.name} (${min.val}) = <strong>${diff} buah</strong>.`;
+      } else if (type === 'total') {
+        const total = data.reduce((sum, item) => sum + item.val, 0);
+        box.innerHTML = `➕ <strong>Total Seluruh Es Krim Terjual:</strong><br>${data[0].val} + ${data[1].val} + ${data[2].val} + ${data[3].val} = <strong>${total} buah es krim</strong>.`;
+      }
+    }
+
+    // --- DATA KUIS ---
+    const questions = [
+      {
+        question: "Berdasarkan tabel Penjualan Buku (Senin=15, Selasa=20, Rabu=10, Kamis=25, Jumat=30), pada hari apakah penjualan BUKU TERBANYAK?",
+        options: ["Senin", "Selasa", "Kamis", "Jumat"],
+        answer: 3
+      },
+      {
+        question: "Berapakah SELISIH penjualan buku antara hari terbanyak (Jumat=30) dan hari tersedikit (Rabu=10)?",
+        options: ["10 buah", "20 buah", "30 buah", "40 buah"],
+        answer: 1
+        // 30 - 10 = 20
+      },
+      {
+        question: "Berapakah TOTAL seluruh buku yang terjual dari hari Senin hingga Jumat (15 + 20 + 10 + 25 + 30)?",
+        options: ["80 buah", "90 buah", "100 buah", "110 buah"],
+        answer: 2
+        // 100
+      },
+      {
+        question: "Pemilik toko melihat stok pensil selalu habis paling cepat pada hari Jumat. Keputusan terbaik yang harus dilakukan adalah...",
+        options: [
+          "Menutup toko di hari Jumat",
+          "Menambah persediaan stok pensil sebelum hari Jumat",
+          "Menaikkan harga pensil seratus kali lipat",
+          "Menghentikan penjualan pensil"
+        ],
+        answer: 1
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let isAnswered = false;
+
+    function loadQuestion() {
+      isAnswered = false;
+      const q = questions[currentQuestion];
+      
+      document.getElementById('questionNum').innerText = `Soal ${currentQuestion + 1} dari ${questions.length}`;
+      document.getElementById('questionText').innerText = q.question;
+      
+      const visual = document.getElementById('quizVisualCard');
+      if (q.visual) {
+        visual.innerText = q.visual;
+        visual.style.display = 'block';
+      } else {
+        visual.style.display = 'none';
+      }
+
+      document.getElementById('quizFeedback').innerText = '';
+      document.getElementById('nextBtn').style.display = 'none';
+
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.innerHTML = '';
+
+      q.options.forEach((opt, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(index, btn);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selectedIndex, selectedBtn) {
+      if (isAnswered) return;
+      isAnswered = true;
+
+      const correctIndex = questions[currentQuestion].answer;
+      const options = document.querySelectorAll('.option-btn');
+
+      if (selectedIndex === correctIndex) {
+        selectedBtn.classList.add('correct');
+        document.getElementById('quizFeedback').innerText = "Hebat! Jawaban kamu benar. 🎉";
+        document.getElementById('quizFeedback').style.color = "#10b981";
+        score += 100 / questions.length;
+      } else {
+        selectedBtn.classList.add('wrong');
+        options[correctIndex].classList.add('correct');
+        document.getElementById('quizFeedback').innerText = "Ups! Jawaban belum tepat. 😅";
+        document.getElementById('quizFeedback').style.color = "#ef4444";
+      }
+
+      document.getElementById('nextBtn').style.display = 'block';
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById('quizContainer').style.display = 'none';
+      document.getElementById('scoreContainer').style.display = 'block';
+      
+      const finalScore = Math.round(score);
+      document.getElementById('finalScore').innerText = finalScore;
+
+      let message = "";
+      if (finalScore === 100) {
+        message = "Luar biasa! Kamu sudah sangat jeli membaca, menganalisis, dan menggunakan data!";
+      } else if (finalScore >= 60) {
+        message = "Bagus sekali! Terus latih pemahaman analisis datamu ya.";
+      } else {
+        message = "Jangan berkecil hati, coba pelajari kembali materi analisis data dan ulangi kuis!";
+      }
+      document.getElementById('scoreMessage').innerText = message;
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById('quizContainer').style.display = 'block';
+      document.getElementById('scoreContainer').style.display = 'none';
+      loadQuestion();
+    }
+
+    // Inisialisasi awal saat dimuat
+    loadQuestion();
+  </script>
+</body>
+</html>
