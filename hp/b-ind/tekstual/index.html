@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Bahasa Indonesia SD - Pemahaman Tekstual</title>
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #FF9F43;
+            --success: #2ECC71;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #E9ECEF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Container simulasi layar HP */
+        .mobile-container {
+            width: 100%;
+            max-width: 414px;
+            height: 100vh;
+            max-height: 896px;
+            background-color: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .content {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+
+        .btn:active {
+            opacity: 0.8;
+        }
+
+        .btn-secondary { background-color: var(--secondary); }
+        .btn-success { background-color: var(--success); }
+
+        nav {
+            display: flex;
+            background-color: white;
+            border-top: 1px solid #DDD;
+        }
+
+        nav button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: none;
+            font-size: 0.8rem;
+            color: #777;
+            font-weight: bold;
+        }
+
+        nav button.active {
+            color: var(--primary);
+            border-top: 3px solid var(--primary);
+        }
+
+        .page { display: none; }
+        .page.active { display: block; }
+
+        .quiz-option {
+            background: white;
+            border: 1px solid #CCC;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+
+        .diagram-box {
+            background: #E3F2FD;
+            border: 2px dashed var(--primary);
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 5px 0;
+        }
+
+        .arrow { text-align: center; font-weight: bold; color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<div class="mobile-container">
+    <header id="header-title">Pemahaman Tekstual SD</header>
+
+    <div class="content">
+        <!-- BERANDA -->
+        <div id="page-home" class="page active">
+            <div class="card" style="text-align: center;">
+                <h3>Selamat Datang! 👋</h3>
+                <p style="margin-top: 8px; font-size: 0.9rem;">Mari belajar memahami isi teks dengan cara yang seru dan mudah.</p>
+            </div>
+            <div class="card">
+                <b>Target Pembelajaran:</b>
+                <ul style="margin-left: 20px; font-size: 0.85rem; margin-top: 5px;">
+                    <li>Kosakata Umum & Khusus</li>
+                    <li>Mengidentifikasi Objek Teks</li>
+                    <li>Membuat Bagan / Ikhtisar</li>
+                    <li>Menemukan Informasi Tersurat</li>
+                </ul>
+            </div>
+            <button class="btn" onclick="switchPage('materi')">Mulai Belajar 🚀</button>
+        </div>
+
+        <!-- MATERI -->
+        <div id="page-materi" class="page">
+            <div class="card">
+                <b>1. Kosakata Umum & Khusus</b>
+                <p style="font-size: 0.85rem; margin-top: 4px;"><b>Umum:</b> Kata dengan makna luas (contoh: <i>Melihat</i>).</p>
+                <p style="font-size: 0.85rem;"><b>Khusus:</b> Kata dengan makna spesifik (contoh: <i>Menatap, Melirik</i>).</p>
+            </div>
+
+            <div class="card">
+                <b>2. Mengidentifikasi Objek</b>
+                <p style="font-size: 0.85rem; margin-top: 4px;">Cari tahu siapa atau apa yang dibahas dalam teks melalui kata-kata penjelasnya.</p>
+            </div>
+
+            <div class="card">
+                <b>3. Bagan / Ikhtisar Teks</b>
+                <p style="font-size: 0.85rem; margin-top: 4px;">Menyusun kembali informasi penting secara ringkas:</p>
+                <div class="diagram-box">Judul / Topik Utama</div>
+                <div class="arrow">↓</div>
+                <div class="diagram-box">Informasi Penting 1</div>
+                <div class="arrow">↓</div>
+                <div class="diagram-box">Informasi Penting 2</div>
+            </div>
+
+            <div class="card">
+                <b>4. Informasi Tersurat</b>
+                <p style="font-size: 0.85rem; margin-top: 4px;">Informasi yang dituliskan secara <b>jelas dan langsung</b> di dalam teks.</p>
+            </div>
+            <button class="btn btn-secondary" onclick="switchPage('kuis')">Lanjut ke Kuis Latihan 📝</button>
+        </div>
+
+        <!-- KUIS -->
+        <div id="page-kuis" class="page">
+            <div class="card" style="background: #FFF3CD; border-left-color: var(--secondary);">
+                <b>Baca Teks Berikut:</b>
+                <p style="font-size: 0.85rem; margin-top: 6px;">
+                    "Dr. Budi adalah seorang <b>dokter hewan</b>. Setiap hari ia merawat kucing, anjing, dan kelinci di kliniknya."
+                </p>
+            </div>
+
+            <div id="quiz-container">
+                <div class="card">
+                    <b id="question-text">Pertanyaan...</b>
+                    <div id="options-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SKOR -->
+        <div id="page-skor" class="page" style="text-align: center;">
+            <div class="card">
+                <h2>Hasil Latihan</h2>
+                <h1 id="score-text" style="font-size: 3rem; color: var(--primary); margin: 15px 0;">0</h1>
+                <p id="score-message">Kerja bagus!</p>
+            </div>
+            <button class="btn" onclick="resetQuiz()">Ulangi Kuis 🔄</button>
+        </div>
+    </div>
+
+    <!-- NAVIGASI BAWAH -->
+    <nav>
+        <button id="nav-home" class="active" onclick="switchPage('home')">Beranda</button>
+        <button id="nav-materi" onclick="switchPage('materi')">Materi</button>
+        <button id="nav-kuis" onclick="switchPage('kuis')">Latihan</button>
+    </nav>
+</div>
+
+<script>
+    const questions = [
+        {
+            q: "Sub-Kompetensi 1: Mana yang merupakan kata khusus dari 'hewan' pada teks?",
+            options: ["Klinik", "Kucing", "Merawat"],
+            answer: 1
+        },
+        {
+            q: "Sub-Kompetensi 2: Siapa objek utama yang dibahas dalam teks tersebut?",
+            options: ["Dr. Budi", "Anjing", "Klinik hewan"],
+            answer: 0
+        },
+        {
+            q: "Sub-Kompetensi 3: Apa bentuk ikhtisar ringkas yang tepat untuk awal teks?",
+            options: ["Dr. Budi -> Dokter Hewan", "Kucing -> Dokter", "Klinik -> Anjing"],
+            answer: 0
+        },
+        {
+            q: "Sub-Kompetensi 4 (Tersurat): Di mana Dr. Budi merawat hewan-hewan tersebut?",
+            options: ["Di rumah", "Di klinik", "Di taman"],
+            answer: 1
+        }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function switchPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+
+        document.getElementById(`page-${pageId}`).classList.add('active');
+        document.getElementById(`nav-${pageId}`)?.classList.add('active');
+
+        if(pageId === 'kuis' && currentQuestion === 0) {
+            loadQuestion();
+        }
+    }
+
+    function loadQuestion() {
+        const q = questions[currentQuestion];
+        document.getElementById('question-text').innerText = q.q;
+        
+        const optionsDiv = document.getElementById('options-container');
+        optionsDiv.innerHTML = '';
+
+        q.options.forEach((opt, index) => {
+            const btn = document.createElement('div');
+            btn.className = 'quiz-option';
+            btn.innerText = opt;
+            btn.onclick = () => selectAnswer(index);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function selectAnswer(index) {
+        if(index === questions[currentQuestion].answer) {
+            score += 25;
+        }
+
+        currentQuestion++;
+        if(currentQuestion < questions.length) {
+            loadQuestion();
+        } else {
+            showScore();
+        }
+    }
+
+    function showScore() {
+        switchPage('skor');
+        document.getElementById('score-text').innerText = score;
+        if(score >= 75) {
+            document.getElementById('score-message').innerText = "Hebat! Kamu memahami teks dengan sangat baik! 🌟";
+        } else {
+            document.getElementById('score-message').innerText = "Bagus! Pelajari lagi materinya dan coba lagi ya! 💪";
+        }
+    }
+
+    function resetQuiz() {
+        currentQuestion = 0;
+        score = 0;
+        switchPage('kuis');
+    }
+</script>
+
+</body>
+</html>
