@@ -190,6 +190,7 @@
             transition: all 0.2s ease;
             position: relative;
             overflow: hidden;
+            text-decoration: none; /* Menghilangkan garis bawah link */
         }
 
         .btn-materi::before {
@@ -259,14 +260,14 @@
                     <div class="card-title">Sekolah Dasar</div>
                 </div>
                 <div class="materi-list">
-                    <button class="btn-materi" onclick="bukaMateri('SD', 'Matematika')">
+                    <a href="https://nirsinggih.github.io/mpi-tka/pid/" class="btn-materi">
                         <span>1. Matematika</span>
                         <span class="icon">➔</span>
-                    </button>
-                    <button class="btn-materi" onclick="bukaMateri('SD', 'Bahasa Indonesia')">
+                    </a>
+                    <a href="https://nirsinggih.github.io/mpi-tka/pid/" class="btn-materi">
                         <span>2. Bahasa Indonesia</span>
                         <span class="icon">➔</span>
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -277,36 +278,19 @@
                     <div class="card-title">Sekolah Menengah Pertama</div>
                 </div>
                 <div class="materi-list">
-                    <button class="btn-materi" onclick="bukaMateri('SMP', 'Matematika')">
+                    <a href="https://nirsinggih.github.io/mpi-tka/pid/" class="btn-materi">
                         <span>1. Matematika</span>
                         <span class="icon">➔</span>
-                    </button>
-                    <button class="btn-materi" onclick="bukaMateri('SMP', 'Bahasa Indonesia')">
+                    </a>
+                    <a href="https://nirsinggih.github.io/mpi-tka/pid/" class="btn-materi">
                         <span>2. Bahasa Indonesia</span>
                         <span class="icon">➔</span>
-                    </button>
+                    </a>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- JavaScript Interaktif -->
-<script>
-    function bukaMateri(jenjang, materi) {
-        if (jenjang === 'SD' && materi === 'Matematika') {
-            window.location.href = 'https://nirsinggih.github.io/mpi-tka/pid/';
-        } 
-        else if (jenjang === 'SD' && materi === 'Bahasa Indonesia') {
-            window.location.href = 'https://nirsinggih.github.io/mpi-tka/pid/';
-        }
-        else if (jenjang === 'SMP' && materi === 'Matematika') {
-            window.location.href = 'https://nirsinggih.github.io/mpi-tka/pid/';
-        }
-        else if (jenjang === 'SMP' && materi === 'Bahasa Indonesia') {
-            window.location.href = 'https://nirsinggih.github.io/mpi-tka/pid/';
-        }
-    }
-</script>
 </body>
 </html>
