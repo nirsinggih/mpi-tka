@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Bahasa Indonesia - TKA Kemendikdasmen</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --primary-dark: #0a58ca;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #2b2d42;
+            --text-sub: #6c757d;
+            --border-radius: 16px;
+            --shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Container khusus mensimulasikan layar HP */
+        .app-container {
+            width: 100%;
+            max-width: 480px; /* Lebar maksimal standar HP */
+            background-color: var(--bg-color);
+            padding: 20px 16px 40px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Header / Banner */
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #ffffff;
+            padding: 24px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .badge-tag {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        header h1 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 6px;
+        }
+
+        header p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        /* Section Kompetensi */
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-left: 4px;
+            color: #495057;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cards-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Card Style */
+        .competence-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            transition: var(--transition);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* Skema Warna per Card */
+        .card-1 .card-icon { background-color: #e3f2fd; color: #0d6efd; }
+        .card-2 .card-icon { background-color: #e8f5e9; color: #198754; }
+        .card-3 .card-icon { background-color: #fff3cd; color: #ffbf00; }
+
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.3;
+            margin-top: 2px;
+        }
+
+        /* List Sub-kompetensi */
+        .sub-list {
+            list-style: none;
+            margin-bottom: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sub-list li {
+            font-size: 0.825rem;
+            color: var(--text-sub);
+            line-height: 1.4;
+            position: relative;
+            padding-left: 18px;
+        }
+
+        .sub-list li::before {
+            content: "•";
+            position: absolute;
+            left: 4px;
+            top: -1px;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        /* Tombol Aksi */
+        .btn-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #ffffff;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-1 .btn-action { background-color: #0d6efd; }
+        .card-1 .btn-action:hover { background-color: #0b5ed7; }
+
+        .card-2 .btn-action { background-color: #198754; }
+        .card-2 .btn-action:hover { background-color: #157347; }
+
+        .card-3 .btn-action { background-color: #d97706; }
+        .card-3 .btn-action:hover { background-color: #b45309; }
+
+        .btn-action i {
+            font-size: 0.8rem;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-action:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            margin-top: 10px;
+            padding-top: 15px;
+            border-top: 1px dashed #dee2e6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header>
+            <span class="badge-tag">Kisi-Kisi Resmi TKA</span>
+            <h1>Multimedia Pembelajaran Interaktif</h1>
+            <p>Bahasa Indonesia Kemendikdasmen</p>
+        </header>
+
+        <!-- Judul Bagian -->
+        <div class="section-title">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>Pilih Kompetensi Pembelajaran</span>
+        </div>
+
+        <!-- Wrapper Cards -->
+        <div class="cards-wrapper">
+
+            <!-- Card 1: Tekstual -->
+            <div class="competence-card card-1">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <div class="card-title">Pemahaman Tekstual</div>
+                </div>
+                <ul class="sub-list">
+                    <li>Mengidentifikasi penggunaan kosakata umum dan khusus dalam berbagai bidang.</li>
+                    <li>Mengidentifikasi objek berdasarkan kosakata dalam teks fiksi/nonfiksi.</li>
+                    <li>Menyusun kembali informasi dari teks dalam bentuk ikhtisar/bagan.</li>
+                    <li>Mengidentifikasi informasi tersurat dalam teks.</li>
+                </ul>
+                <a href="https://nirsinggih.github.io/mpi-tka/hp/b-ind/tekstual/" class="btn-action" target="_blank" rel="noopener">
+                    <span>Buka Materi Tekstual</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Card 2: Inferensial -->
+            <div class="competence-card card-2">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div class="card-title">Pemahaman Inferensial</div>
+                </div>
+                <ul class="sub-list">
+                    <li>Menyimpulkan ide pokok, gagasan pendukung, amanat, tokoh, peristiwa, dan/atau nilai-nilai.</li>
+                    <li>Menyimpulkan perubahan sederhana pada objek, karakter, dan/atau latar teks.</li>
+                    <li>Menjelaskan makna ungkapan yang digunakan dalam teks.</li>
+                </ul>
+                <a href="https://nirsinggih.github.io/mpi-tka/hp/b-ind/inferensial" class="btn-action" target="_blank" rel="noopener">
+                    <span>Buka Materi Inferensial</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Card 3: Evaluasi dan Apresiasi -->
+            <div class="competence-card card-3">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="card-title">Evaluasi & Apresiasi</div>
+                </div>
+                <ul class="sub-list">
+                    <li>Menilai relevansi peristiwa dalam teks dengan kehidupan sehari-hari.</li>
+                    <li>Menilai kesesuaian antarunsur dan/atau antarinformasi dalam teks.</li>
+                    <li>Menyimpulkan respons emosional terhadap unsur teks fiksi.</li>
+                </ul>
+                <a href="https://nirsinggih.github.io/mpi-tka/hp/b-ind/evaluasi-apresiasi" class="btn-action" target="_blank" rel="noopener">
+                    <span>Buka Materi Evaluasi</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>© MPI TKA Bahasa Indonesia - Disesuaikan dengan Kisi-kisi Resmi Kemendikdasmen</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
