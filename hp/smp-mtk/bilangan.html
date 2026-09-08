@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MPI Matematika SMP - Perbandingan & Sifat Bilangan</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --correct: #2ec4b6;
+            --wrong: #e63946;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Container HP */
+        .app-container {
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+            background-color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Header Fix */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 16px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        header p {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation Bar Bottom (App Style) */
+        nav {
+            display: flex;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            position: sticky;
+            bottom: 30px; /* Space for sub-footer */
+            z-index: 100;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 12px 5px;
+            border: none;
+            background: none;
+            color: #666;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .nav-btn.active {
+            color: var(--primary);
+            border-top: 3px solid var(--primary);
+            background-color: #f0f4ff;
+        }
+
+        /* Main Content Area */
+        main {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Component */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #eaedf1;
+        }
+
+        .card h2 {
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card p, .card li {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        .card ul {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+
+        .card li {
+            margin-bottom: 6px;
+        }
+
+        .formula-box {
+            background: #eef2ff;
+            border-left: 4px solid var(--primary);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Interactive Element / Simulation */
+        .interactive-box {
+            background: #f8fafc;
+            border: 2px dashed var(--accent);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        input[type="number"] {
+            width: 70px;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        button.action-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        /* Quiz Styling */
+        .quiz-option {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:active {
+            transform: scale(0.98);
+        }
+
+        .quiz-option.selected-correct {
+            background: #d1fae5;
+            border-color: var(--correct);
+            color: #065f46;
+            font-weight: bold;
+        }
+
+        .quiz-option.selected-wrong {
+            background: #ffe4e6;
+            border-color: var(--wrong);
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+        .feedback {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            min-height: 20px;
+        }
+
+        /* Score Display */
+        .score-board {
+            text-align: center;
+            padding: 20px;
+            background: #e0f2fe;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .score-num {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* Footer Kustom */
+        footer {
+            background: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 8px 12px;
+            font-size: 0.7rem;
+            position: sticky;
+            bottom: 0;
+            z-index: 101;
+            border-top: 1px solid #334155;
+        }
+
+        /* Responsive adjustment for extra small screens */
+        @media (max-width: 360px) {
+            header h1 { font-size: 1rem; }
+            .card { padding: 12px; }
+            .nav-btn { font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Header -->
+    <header>
+        <h1>Matematika SMP: Bilangan & Perbandingan</h1>
+        <p>Media Pembelajaran Interaktif Mandiri</p>
+    </header>
+
+    <!-- Content Area -->
+    <main>
+        <!-- TAB 1: Sifat Bilangan -->
+        <div id="tab-sifat" class="tab-content active">
+            <div class="card">
+                <h2>📌 Sifat-Sifat Operasi Bilangan</h2>
+                <p>Memahami sifat dasar sangat penting untuk menyederhanakan perhitungan Matematika:</p>
+                <ul>
+                    <li><b>Komutatif (Pertukaran):</b> Hanya berlaku untuk Penjumlahan & Perkalian.
+                        <div class="formula-box">a + b = b + a <br> a × b = b × a</div>
+                    </li>
+                    <li><b>Asosiatif (Pengelompokan):</b>
+                        <div class="formula-box">(a + b) + c = a + (b + c)<br>(a × b) × c = a × (b × c)</div>
+                    </li>
+                    <li><b>Distributif (Penyebaran):</b>
+                        <div class="formula-box">a × (b + c) = (a × b) + (a × c)</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>🧮 Simu-Komutatif (Coba Sendiri)</h2>
+                <p>Uji sifat komutatif perkalian secara interaktif:</p>
+                <div class="interactive-box">
+                    <input type="number" id="numA" value="5"> × <input type="number" id="numB" value="4">
+                    <div style="margin: 8px 0;" id="calcResult">5 × 4 = 20</div>
+                    <button class="action-btn" onclick="simulasiKomutatif()">Tukar Posisi (Komutatif)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: Perbandingan -->
+        <div id="tab-perbandingan" class="tab-content">
+            <div class="card">
+                <h2>📊 Perbandingan Senilai</h2>
+                <p>Dua besaran dikatakan <b>senilai</b> jika nilainya bertambah, maka besaran lain juga bertambah naik secara proporsional.</p>
+                <div class="formula-box">a1 / b1 = a2 / b2</div>
+                <p><i>Contoh:</i> Jumlah pensil dan harganya, jarak dan konsumsi bensin.</p>
+            </div>
+
+            <div class="card">
+                <h2>🔄 Perbandingan Berbalik Nilai</h2>
+                <p>Dua besaran dikatakan <b>berbalik nilai</b> jika nilainya bertambah, namun besaran lain justru berkurang/menurun.</p>
+                <div class="formula-box">a1 × b1 = a2 × b2</div>
+                <p><i>Contoh:</i> Jumlah pekerja dan waktu penyelesaian proyek, kecepatan dan waktu tempuh.</p>
+            </div>
+
+            <div class="card">
+                <h2>💡 Kalkulator Perbandingan Senilai</h2>
+                <div class="interactive-box">
+                    <p style="font-size:0.8rem; margin-bottom:8px;">Jika 2 Bensin = 10 Liter, maka <input type="number" id="valX" value="4"> Bensin = ... Liter?</p>
+                    <button class="action-btn" onclick="hitungSenilai()">Hitung Hasil</button>
+                    <div id="resSenilai" style="margin-top: 8px; font-weight: bold; color: var(--primary);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Kuis Interaktif -->
+        <div id="tab-kuis" class="tab-content">
+            <div class="score-board">
+                <p style="font-size: 0.8rem; color: #555;">Skor Latihan Anda</p>
+                <div class="score-num" id="scoreDisplay">0</div>
+            </div>
+
+            <!-- Soal 1 -->
+            <div class="card">
+                <h2>Soal 1</h2>
+                <p style="margin-bottom: 12px;">Bentuk <b>3 × (4 + 5) = (3 × 4) + (3 × 5)</b> menggunakan sifat ...</p>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1')">A. Komutatif</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1')">B. Asosiatif</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fb1')">C. Distributif</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1')">D. Identitas</div>
+                <div id="fb1" class="feedback"></div>
+            </div>
+
+            <!-- Soal 2 -->
+            <div class="card">
+                <h2>Soal 2</h2>
+                <p style="margin-bottom: 12px;">Sebuah pekerjaan selesai dalam 6 hari oleh 4 orang. Jika dikerjakan oleh 8 orang, berapa hari pekerjaan tersebut akan selesai?</p>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fb2')">A. 3 Hari</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2')">B. 12 Hari</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2')">C. 4 Hari</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2')">D. 2 Hari</div>
+                <div id="fb2" class="feedback"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <button class="nav-btn active" onclick="switchTab('tab-sifat', this)">
+            <span>🔢</span> Sifat Bilangan
+        </button>
+        <button class="nav-btn" onclick="switchTab('tab-perbandingan', this)">
+            <span>⚖️</span> Perbandingan
+        </button>
+        <button class="nav-btn" onclick="switchTab('tab-kuis', this)">
+            <span>📝</span> Kuis TKA
+        </button>
+    </nav>
+
+    <!-- Request Footer -->
+    <footer>
+        Rangkuman Materi Tes Kemampuan Akademik (TKA)
+    </footer>
+</div>
+
+<script>
+    // Tab Navigation Logic
+    function switchTab(tabId, btnElement) {
+        // Hide all tabs
+        const tabs = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => tab.classList.remove('active'));
+
+        // Remove active class from buttons
+        const buttons = document.querySelectorAll('.nav-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        // Show selected tab & set active button
+        document.getElementById(tabId).classList.add('active');
+        btnElement.classList.add('active');
+        
+        // Scroll to top when switching tab
+        document.querySelector('main').scrollTop = 0;
+    }
+
+    // Interaktif: Komutatif
+    function simulasiKomutatif() {
+        let inputA = document.getElementById('numA');
+        let inputB = document.getElementById('numB');
+        
+        // Tukar Nilai
+        let temp = inputA.value;
+        inputA.value = inputB.value;
+        inputB.value = temp;
+
+        let res = parseInt(inputA.value) * parseInt(inputB.value);
+        document.getElementById('calcResult').innerText = `${inputA.value} × ${inputB.value} = ${res}`;
+    }
+
+    // Interaktif: Kalkulator Senilai
+    function hitungSenilai() {
+        let valX = parseFloat(document.getElementById('valX').value);
+        if(isNaN(valX)) return;
+        // Kasus dasar: 2 Bensin = 10 Liter -> 1 Bensin = 5 Liter
+        let hasil = valX * 5;
+        document.getElementById('resSenilai').innerText = `Hasil: ${hasil} Liter`;
+    }
+
+    // Kuis Logic & Score Tracker
+    let totalScore = 0;
+    let answeredQuestions = new Set();
+
+    function checkAnswer(element, isCorrect, feedbackId) {
+        const parentCard = element.parentElement;
+        const feedbackEl = document.getElementById(feedbackId);
+        
+        // Cek apakah soal ini sudah pernah dijawab dengan benar sebelumnya
+        if (parentCard.dataset.answered === "true") return;
+
+        const options = parentCard.querySelectorAll('.quiz-option');
+        options.forEach(opt => {
+            opt.classList.remove('selected-correct', 'selected-wrong');
+        });
+
+        if (isCorrect) {
+            element.classList.add('selected-correct');
+            feedbackEl.innerText = "✓ Benar! Jawaban Anda Tepat.";
+            feedbackEl.style.color = "var(--correct)";
+            
+            if(!answeredQuestions.has(feedbackId)) {
+                totalScore += 50; // Tiap soal bernilai 50
+                answeredQuestions.add(feedbackId);
+                document.getElementById('scoreDisplay').innerText = totalScore;
+            }
+            parentCard.dataset.answered = "true"; // Kunci soal
+        } else {
+            element.classList.add('selected-wrong');
+            feedbackEl.innerText = "✗ Kurang tepat, coba pelajari kembali materinya.";
+            feedbackEl.style.color = "var(--wrong)";
+        }
+    }
+</script>
+
+</body>
+</html>
