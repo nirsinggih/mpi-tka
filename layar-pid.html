@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Interaktif - IFP</title>
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- RESET & BASIC STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight biru saat disentuh di IFP */
+            user-select: none; /* Mencegah teks terblok saat disentuh di layar besar */
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- BACKGROUND ANIMATED BLOBS --- */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            z-index: 1;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: #3b82f6;
+            top: -50px;
+            left: -50px;
+        }
+
+        .blob-2 {
+            width: 450px;
+            height: 450px;
+            background: #8b5cf6;
+            bottom: -50px;
+            right: -50px;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 30px) scale(1.1); }
+        }
+
+        /* --- MAIN CONTAINER (GLASSMORPHISM) --- */
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 1400px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- HEADER --- */
+        header {
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #60a5fa, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 1.5rem;
+            color: #cbd5e1;
+            font-weight: 400;
+        }
+
+        /* --- GRID JENJANG --- */
+        .jenjang-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+        }
+
+        /* --- CARD STYLES --- */
+        .card {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .badge {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .sd-badge {
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+        }
+
+        .smp-badge {
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .card-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* --- BUTTON MATERI (LARGE TOUCH TARGETS FOR IFP) --- */
+        .materi-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .btn-materi {
+            width: 100%;
+            padding: 22px 30px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-materi::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-materi:hover::before {
+            left: 100%;
+        }
+
+        /* Hover & Active Feedback untuk Sentuhan Layar IFP */
+        .btn-materi:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #a78bfa;
+            padding-left: 35px; /* Efek geser kanan */
+        }
+
+        .btn-materi:active {
+            transform: scale(0.97); /* Efek membal saat ditekan jari */
+            background: #8b5cf6;
+        }
+
+        .btn-materi .icon {
+            font-size: 1.6rem;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-materi:hover .icon {
+            transform: translateX(5px);
+        }
+
+        /* --- RESPONSIVE FOR SMALLER SCREENS --- */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+            header p { font-size: 1.1rem; }
+            .jenjang-grid { grid-template-columns: 1fr; }
+            .btn-materi { font-size: 1.2rem; padding: 18px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <header>
+            <h1>Portal Pembelajaran Interaktif</h1>
+            <p>Silakan pilih Jenjang dan Materi Pelajaran di bawah ini</p>
+        </header>
+
+        <div class="jenjang-grid">
+            
+            <!-- SEKSI A: SEKOLAH DASAR (SD) -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="badge sd-badge">SD</div>
+                    <div class="card-title">Sekolah Dasar</div>
+                </div>
+                <div class="materi-list">
+                    <button class="btn-materi" onclick="bukaMateri('SD', 'Matematika')">
+                        <span>1. Matematika</span>
+                        <span class="icon">➔</span>
+                    </button>
+                    <button class="btn-materi" onclick="bukaMateri('SD', 'Bahasa Indonesia')">
+                        <span>2. Bahasa Indonesia</span>
+                        <span class="icon">➔</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SEKSI B: SEKOLAH MENENGAH PERTAMA (SMP) -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="badge smp-badge">SMP</div>
+                    <div class="card-title">Sekolah Menengah Pertama</div>
+                </div>
+                <div class="materi-list">
+                    <button class="btn-materi" onclick="bukaMateri('SMP', 'Matematika')">
+                        <span>1. Matematika</span>
+                        <span class="icon">➔</span>
+                    </button>
+                    <button class="btn-materi" onclick="bukaMateri('SMP', 'Bahasa Indonesia')">
+                        <span>2. Bahasa Indonesia</span>
+                        <span class="icon">➔</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript Interaktif -->
+    <script>
+        function bukaMateri(jenjang, materi) {
+            // Animasi respon saat tombol diklik
+            alert(`Membuka Materi: ${materi} untuk jenjang ${jenjang}`);
+            
+            // Contoh redirect (Silakan ganti URL tujuan sesuai kebutuhan):
+            // if (jenjang === 'SD' && materi === 'Matematika') {
+            //     window.location.href = 'halaman-sd-matematika.html';
+            // }
+        }
+    </script>
+</body>
+</html>
