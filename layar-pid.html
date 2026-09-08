@@ -292,16 +292,21 @@
     </div>
 
     <!-- JavaScript Interaktif -->
-    <script>
-        function bukaMateri(jenjang, materi) {
-            // Animasi respon saat tombol diklik
-            alert(`Membuka Materi: ${materi} untuk jenjang ${jenjang}`);
-            
-            // Contoh redirect (Silakan ganti URL tujuan sesuai kebutuhan):
-            // if (jenjang === 'SD' && materi === 'Matematika') {
-            //     window.location.href = 'halaman-sd-matematika.html';
-            // }
+<script>
+    function bukaMateri(jenjang, materi) {
+        if (jenjang === 'SD' && materi === 'Matematika') {
+            window.location.href = 'https://nirsinggih.github.io/mpi-tka/pid/';
+        } 
+        else if (jenjang === 'SD' && materi === 'Bahasa Indonesia') {
+            window.location.href = 'https://nirsinggih.github.io/mpi-tka/pid/';
         }
-    </script>
+        else if (jenjang === 'SMP' && materi === 'Matematika') {
+            window.location.href = 'https://nirsinggih.github.io/mpi-tka/pid/';
+        }
+        else if (jenjang === 'SMP' && materi === 'Bahasa Indonesia') {
+            window.location.href = 'https://nirsinggih.github.io/mpi-tka/pid/';
+        }
+    }
+</script>
 </body>
 </html>
