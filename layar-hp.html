@@ -299,14 +299,26 @@
 
     <!-- JavaScript Interaktif -->
     <script>
-        function bukaMateri(jenjang, materi) {
-            // Efek getar ringan (Haptic Feedback) jika HP mendukung
-            if (navigator.vibrate) {
-                navigator.vibrate(40);
-            }
-            
-            alert(`Membuka Materi: ${materi} (${jenjang})`);
+    function bukaMateri(jenjang, materi) {
+        // Efek getar ringan di HP (jika mendukung)
+        if (navigator.vibrate) {
+            navigator.vibrate(40);
         }
-    </script>
+
+        // --- ATUR LINK TUJUAN DI SINI ---
+        if (jenjang === 'SD' && materi === 'Matematika') {
+            window.location.href = "https://nirsinggih.github.io/mpi-tka/hp/mtk.html";
+        } 
+        else if (jenjang === 'SD' && materi === 'Bahasa Indonesia') {
+            window.location.href = "https://nirsinggih.github.io/mpi-tka/hp/mtk.html";
+        } 
+        else if (jenjang === 'SMP' && materi === 'Matematika') {
+            window.location.href = "https://nirsinggih.github.io/mpi-tka/hp/mtk.html";
+        } 
+        else if (jenjang === 'SMP' && materi === 'Bahasa Indonesia') {
+            window.location.href = "https://nirsinggih.github.io/mpi-tka/hp/mtk.html";
+        }
+    }
+</script>
 </body>
 </html>
