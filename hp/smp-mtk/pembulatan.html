@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MPI - Estimasi & Perkiraan Hasil Perhitungan</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #0d9488;
+            --accent: #f59e0b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        body {
+            background-color: #0284c7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-main);
+        }
+
+        /* Responsive Mobile Shell */
+        .mobile-container {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            max-height: 932px;
+            background-color: var(--bg);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        @media (min-width: 450px) {
+            .mobile-container {
+                height: 92vh;
+                border-radius: 36px;
+                border: 8px solid #0f172a;
+            }
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 18px 16px 14px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            margin-top: 3px;
+        }
+
+        /* Navigation Tabs */
+        nav {
+            display: flex;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            z-index: 10;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 4px;
+            border: none;
+            background: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background-color: #eff6ff;
+        }
+
+        .tab-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            padding-bottom: 45px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            margin-bottom: 14px;
+            border: 1px solid var(--border);
+        }
+
+        .card h2 {
+            font-size: 0.95rem;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+
+        .card p, .card li {
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: var(--text-main);
+        }
+
+        .badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: var(--primary);
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-bottom: 6px;
+        }
+
+        .formula-box {
+            background: #fffbeb;
+            border-left: 4px solid var(--accent);
+            padding: 10px 12px;
+            border-radius: 0 8px 8px 0;
+            margin: 10px 0 4px;
+            font-size: 0.8rem;
+            color: #78350f;
+        }
+
+        /* Simulator Styles */
+        .interactive-box {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 14px;
+            margin: 8px 0;
+            text-align: center;
+        }
+
+        .calc-display {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+            background: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px dashed var(--primary);
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .input-field {
+            width: 70px;
+            padding: 8px;
+            font-size: 0.9rem;
+            text-align: center;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            outline: none;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 9px 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            touch-action: manipulation;
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        /* Quiz Styles */
+        .quiz-option {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 12px 14px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quiz-option.correct {
+            background: #d1fae5;
+            border-color: var(--success);
+            color: #065f46;
+            font-weight: bold;
+        }
+
+        .quiz-option.wrong {
+            background: #fee2e2;
+            border-color: var(--danger);
+            color: #991b1b;
+        }
+
+        .feedback {
+            margin-top: 8px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            display: none;
+            line-height: 1.4;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            padding: 8px 12px;
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            border-top: 1px solid #1e293b;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            z-index: 20;
+        }
+    </style>
+</head>
+<body>
+
+<div class="mobile-container">
+    <header>
+        <h1>Estimasi & Perkiraan Hasil</h1>
+        <p>Multimedia Pembelajaran Interaktif SMP</p>
+    </header>
+
+    <nav>
+        <button class="tab-btn active" onclick="switchTab('materi')">
+            <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+            Materi
+        </button>
+        <button class="tab-btn" onclick="switchTab('simulasi')">
+            <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+            Simulasi
+        </button>
+        <button class="tab-btn" onclick="switchTab('kuis')">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Latihan
+        </button>
+    </nav>
+
+    <main>
+        <!-- TAB 1: MATERI -->
+        <div id="materi" class="tab-content active">
+            
+            <div class="card">
+                <span class="badge">Konsep Dasar</span>
+                <h2>1. Apa itu Estimasi Hasil Hitung?</h2>
+                <p>Estimasi adalah cara memperkirakan hasil perhitungan secara cepat, masuk akal, dan mendekati nilai sebenarnya tanpa harus menghitung secara detail terlebih dahulu.</p>
+            </div>
+
+            <div class="card">
+                <span class="badge">Aturan Utama</span>
+                <h2>2. Aturan Pembulatan Bilangan</h2>
+                <p>Kunci dari estimasi adalah melakukan pembulatan bilangan terlebih dahulu:</p>
+                <div class="formula-box">
+                    • <strong>Digit acuan < 5 (1, 2, 3, 4):</strong> Pembulatan ke <strong>bawah</strong> (digit menjadi 0).<br>
+                    • <strong>Digit acuan ≥ 5 (5, 6, 7, 8, 9):</strong> Pembulatan ke <strong>atas</strong> (tambah 1 ke digit depan).
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="badge">Teknik Perhitungan</span>
+                <h2>3. Jenis-Jenis Pembulatan</h2>
+                <p style="margin-bottom: 6px;"><strong>a. Puluhan Terdekat:</strong></p>
+                <p>• 43 ➔ 40 (karena 3 < 5)</p>
+                <p>• 68 ➔ 70 (karena 8 ≥ 5)</p>
+                
+                <p style="margin: 8px 0 6px;"><strong>b. Ratusan Terdekat:</strong></p>
+                <p>• 182 ➔ 200 (karena 82 ≥ 50)</p>
+                <p>• 329 ➔ 300 (karena 29 < 50)</p>
+            </div>
+
+            <div class="card">
+                <span class="badge">Contoh Kasus Soal</span>
+                <h2>4. Aplikasi pada Operasi Hitung</h2>
+                <div class="formula-box">
+                    <strong>Contoh Perkalian:</strong><br>
+                    Estimasi dari <strong>49 × 21</strong><br>
+                    ➔ Pembulatan: 50 × 20 = <strong>1.000</strong><br>
+                    <i>(Hasil pasti = 1.029, selisih sangat kecil)</i>
+                </div>
+                <div class="formula-box" style="margin-top: 8px;">
+                    <strong>Contoh Pembagian:</strong><br>
+                    Estimasi dari <strong>238 ÷ 39</strong><br>
+                    ➔ Pembulatan: 240 ÷ 40 = <strong>6</strong>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TAB 2: SIMULASI INTERAKTIF -->
+        <div id="simulasi" class="tab-content">
+            
+            <div class="card">
+                <span class="badge">Simulator Interaktif</span>
+                <h2>Kalkulator Estimasi Otomatis</h2>
+                <p>Masukkan dua angka bebas untuk melihat proses pembulatan dan estimasi hasilnya secara otomatis:</p>
+                
+                <div class="interactive-box">
+                    <div class="input-group">
+                        <input type="number" id="numA" value="78" class="input-field" placeholder="Angka 1">
+                        <select id="opSelect" style="padding: 7px; border-radius: 8px; border: 1px solid var(--border); font-weight: bold;">
+                            <option value="*">×</option>
+                            <option value="+">+</option>
+                            <option value="-">-</option>
+                            <option value="/">÷</option>
+                        </select>
+                        <input type="number" id="numB" value="23" class="input-field" placeholder="Angka 2">
+                    </div>
+
+                    <div class="calc-display" id="estSimResult">
+                        78 × 23 ➔ 80 × 20 ≈ 1600
+                    </div>
+
+                    <button class="btn" onclick="prosesSimulasi()">Hitung Estimasi</button>
+                    <button class="btn btn-secondary" onclick="acakAngkaSimulasi()">Acak Angka</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="badge">Uji Kecepatan Berpikir</span>
+                <h2>Tebak Estimasi Cepat</h2>
+                <p>Berapakah perkiraan hasil dari <strong>196 + 403</strong> ke ratusan terdekat?</p>
+                <div class="interactive-box">
+                    <input type="number" id="userGuess" placeholder="Jawaban..." class="input-field" style="width: 110px;">
+                    <button class="btn" onclick="cekTebakan()">Cek</button>
+                    <div id="guessFeedback" class="feedback"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TAB 3: LATIHAN KUIS -->
+        <div id="kuis" class="tab-content">
+            
+            <div class="card">
+                <span class="badge">Soal 1 (Puluhan Terdekat)</span>
+                <p style="font-weight: 600; margin-bottom: 10px;">Estimasi terbaik dari perkalian 38 × 52 ke puluhan terdekat adalah...</p>
+                
+                <div class="quiz-option" onclick="checkQuiz(this, false, 'q1', 'Salah. 38 dibulatkan ke atas menjadi 40, sedangkan 52 dibulatkan ke bawah menjadi 50.')">
+                    A. 30 × 50 = 1.500
+                </div>
+                <div class="quiz-option" onclick="checkQuiz(this, true, 'q1', 'Benar! 38 ≈ 40 dan 52 ≈ 50. Maka 40 × 50 = 2.000.')">
+                    B. 40 × 50 = 2.000
+                </div>
+                <div class="quiz-option" onclick="checkQuiz(this, false, 'q1', 'Salah. 52 dibulatkan ke bawah menjadi 50, bukan 60.')">
+                    C. 40 × 60 = 2.400
+                </div>
+
+                <div id="q1-feedback" class="feedback"></div>
+            </div>
+
+            <div class="card">
+                <span class="badge">Soal 2 (Ratusan Terdekat)</span>
+                <p style="font-weight: 600; margin-bottom: 10px;">Hasil estimasi dari 489 + 312 ke ratusan terdekat adalah...</p>
+                
+                <div class="quiz-option" onclick="checkQuiz(this, true, 'q2', 'Benar! 489 dibulatkan ke 500, dan 312 dibulatkan ke 300. Maka 500 + 300 = 800.')">
+                    A. 800
+                </div>
+                <div class="quiz-option" onclick="checkQuiz(this, false, 'q2', 'Salah. 489 lebih dekat ke 500 daripada 400.')">
+                    B. 700
+                </div>
+                <div class="quiz-option" onclick="checkQuiz(this, false, 'q2', 'Salah. Coba periksa kembali pembulatan 312.')">
+                    C. 900
+                </div>
+
+                <div id="q2-feedback" class="feedback"></div>
+            </div>
+
+            <div class="card">
+                <span class="badge">Soal 3 (Soal Cerita)</span>
+                <p style="font-weight: 600; margin-bottom: 10px;">Seorang pedagang membeli 19 dus buku. Setiap dus berisi 48 buku. Berapa perkiraan total buku seluruhnya?</p>
+                
+                <div class="quiz-option" onclick="checkQuiz(this, false, 'q3', 'Salah. 19 dibulatkan ke 20, dan 48 dibulatkan ke 50.')">
+                    A. 800 buku
+                </div>
+                <div class="quiz-option" onclick="checkQuiz(this, true, 'q3', 'Tepat! 19 dus ≈ 20 dus, dan 48 buku ≈ 50 buku. Perkiraan: 20 × 50 = 1.000 buku.')">
+                    B. 1.000 buku
+                </div>
+                <div class="quiz-option" onclick="checkQuiz(this, false, 'q3', 'Salah. Hasil pembulatan terlalu tinggi.')">
+                    C. 1.200 buku
+                </div>
+
+                <div id="q3-feedback" class="feedback"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        Rangkuman Materi Tes Kemampuan Akademik (TKA)
+    </footer>
+</div>
+
+<script>
+    function switchTab(tabId) {
+        const contents = document.querySelectorAll('.tab-content');
+        const buttons = document.querySelectorAll('.tab-btn');
+        
+        contents.forEach(content => content.classList.remove('active'));
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        
+        const activeIdx = tabId === 'materi' ? 0 : tabId === 'simulasi' ? 1 : 2;
+        buttons[activeIdx].classList.add('active');
+    }
+
+    function roundSmart(val) {
+        if (Math.abs(val) >= 100) {
+            return Math.round(val / 100) * 100;
+        } else {
+            return Math.round(val / 10) * 10;
+        }
+    }
+
+    function prosesSimulasi() {
+        const a = parseFloat(document.getElementById('numA').value) || 0;
+        const b = parseFloat(document.getElementById('numB').value) || 0;
+        const op = document.getElementById('opSelect').value;
+
+        const rA = roundSmart(a);
+        const rB = roundSmart(b);
+
+        let res = 0;
+        let opSymbol = op;
+
+        if (op === '*') { res = rA * rB; opSymbol = '×'; }
+        if (op === '+') { res = rA + rB; opSymbol = '+'; }
+        if (op === '-') { res = rA - rB; opSymbol = '-'; }
+        if (op === '/') { 
+            opSymbol = '÷';
+            res = rB !== 0 ? (rA / rB).toFixed(1) : 'Tak Terhingga';
+        }
+
+        document.getElementById('estSimResult').innerText = `${a} ${opSymbol} ${b} ➔ ${rA} ${opSymbol} ${rB} ≈ ${res}`;
+    }
+
+    function acakAngkaSimulasi() {
+        document.getElementById('numA').value = Math.floor(Math.random() * 90) + 12;
+        document.getElementById('numB').value = Math.floor(Math.random() * 90) + 12;
+        prosesSimulasi();
+    }
+
+    function cekTebakan() {
+        const val = parseInt(document.getElementById('userGuess').value);
+        const fb = document.getElementById('guessFeedback');
+        
+        // 196 (200) + 403 (400) = 600
+        if (val === 600) {
+            fb.className = "feedback show";
+            fb.style.background = "#d1fae5";
+            fb.style.color = "#065f46";
+            fb.innerText = "Sangat Tepat! 196 ≈ 200 dan 403 ≈ 400. Pembulatan: 200 + 400 = 600.";
+        } else {
+            fb.className = "feedback show";
+            fb.style.background = "#fee2e2";
+            fb.style.color = "#991b1b";
+            fb.innerText = "Belum pas. Bulatkan 196 ke 200 dan 403 ke 400, lalu jumlahkan.";
+        }
+    }
+
+    function checkQuiz(element, isCorrect, qId, message) {
+        const card = element.closest('.card');
+        const options = card.querySelectorAll('.quiz-option');
+        const fb = document.getElementById(qId + '-feedback');
+
+        options.forEach(opt => {
+            opt.classList.remove('correct', 'wrong');
+        });
+
+        if (isCorrect) {
+            element.classList.add('correct');
+            fb.style.background = "#d1fae5";
+            fb.style.color = "#065f46";
+        } else {
+            element.classList.add('wrong');
+            fb.style.background = "#fee2e2";
+            fb.style.color = "#991b1b";
+        }
+
+        fb.className = "feedback show";
+        fb.innerText = message;
+    }
+</script>
+</body>
+</html>
