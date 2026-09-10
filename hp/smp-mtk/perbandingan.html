@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MPI Matematika SMP - Perbandingan Senilai & Berbalik Nilai</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --correct: #2ec4b6;
+            --wrong: #e63946;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Container HP */
+        .app-container {
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+            background-color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Header Fix */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 16px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        header p {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation Bar Bottom (App Style) */
+        nav {
+            display: flex;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            position: sticky;
+            bottom: 30px; /* Space for sub-footer */
+            z-index: 100;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 10px 1px;
+            border: none;
+            background: none;
+            color: #666;
+            font-weight: 600;
+            font-size: 0.62rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            transition: all 0.2s;
+        }
+
+        .nav-btn.active {
+            color: var(--primary);
+            border-top: 3px solid var(--primary);
+            background-color: #f0f4ff;
+        }
+
+        /* Main Content Area */
+        main {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card Component */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #eaedf1;
+        }
+
+        .card h2 {
+            font-size: 0.98rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card p, .card li {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        .card ul {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+
+        .card li {
+            margin-bottom: 6px;
+        }
+
+        .formula-box {
+            background: #eef2ff;
+            border-left: 4px solid var(--primary);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Interactive Element / Simulation */
+        .interactive-box {
+            background: #f8fafc;
+            border: 2px dashed var(--accent);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        input[type="number"], select {
+            width: 80px;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.88rem;
+        }
+
+        select {
+            width: auto;
+        }
+
+        button.action-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        /* Quiz Styling */
+        .quiz-option {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:active {
+            transform: scale(0.98);
+        }
+
+        .quiz-option.selected-correct {
+            background: #d1fae5;
+            border-color: var(--correct);
+            color: #065f46;
+            font-weight: bold;
+        }
+
+        .quiz-option.selected-wrong {
+            background: #ffe4e6;
+            border-color: var(--wrong);
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+        .feedback {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            min-height: 20px;
+        }
+
+        /* Score Display */
+        .score-board {
+            text-align: center;
+            padding: 20px;
+            background: #e0f2fe;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .score-num {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* Footer Kustom */
+        footer {
+            background: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 8px 12px;
+            font-size: 0.7rem;
+            position: sticky;
+            bottom: 0;
+            z-index: 101;
+            border-top: 1px solid #334155;
+        }
+
+        code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #0f172a;
+        }
+
+        @media (max-width: 360px) {
+            header h1 { font-size: 0.95rem; }
+            .card { padding: 12px; }
+            .nav-btn { font-size: 0.58rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Header -->
+    <header>
+        <h1>Matematika SMP: Perbandingan Senilai & Berbalik Nilai</h1>
+        <p>Media Pembelajaran Interaktif Mandiri</p>
+    </header>
+
+    <!-- Content Area -->
+    <main>
+        <!-- TAB 1: Perbandingan Senilai & Berbalik Nilai (Default Active) -->
+        <div id="tab-perbandingan" class="tab-content active">
+            <div class="card">
+                <h2>📈 Perbandingan Senilai</h2>
+                <p>Jika nilai variabel <b>A naik</b>, maka nilai variabel <b>B ikut naik</b> secara sejajar (rasio bernilai tetap).</p>
+                <div class="formula-box">
+                    a1 / b1 = a2 / b2 &nbsp;⟹&nbsp; a1 × b2 = a2 × b1
+                </div>
+                <p><i>Contoh Nyata:</i> Jumlah barang dengan harga total, jumlah bensin dengan jarak tempuh.</p>
+            </div>
+
+            <div class="card">
+                <h2>🔄 Perbandingan Berbalik Nilai</h2>
+                <p>Jika nilai variabel <b>A naik</b>, maka nilai variabel <b>B justru turun</b> (hasil kali bernilai tetap).</p>
+                <div class="formula-box">
+                    a1 × b1 = a2 × b2 &nbsp;⟹&nbsp; a1 / a2 = b2 / b1
+                </div>
+                <p><i>Contoh Nyata:</i> Jumlah pekerja dengan waktu penyelesaian, kecepatan kendaraan dengan waktu tempuh.</p>
+            </div>
+
+            <div class="card">
+                <h2>🧮 Simu-Kalkulator Perbandingan</h2>
+                <div class="interactive-box">
+                    <p style="font-size:0.8rem; margin-bottom:8px;">Pilih Jenis Perbandingan:</p>
+                    <select id="jenisBanding" onchange="hitungPerbandingan()">
+                        <option value="senilai">Perbandingan Senilai</option>
+                        <option value="berbalik">Perbandingan Berbalik Nilai</option>
+                    </select>
+                    <p style="font-size:0.8rem; margin:10px 0 8px;">
+                        Kondisi 1: A1 = <input type="number" id="a1" value="4"> , B1 = <input type="number" id="b1" value="12"><br>
+                        Kondisi 2: A2 = <input type="number" id="a2" value="8"> , B2 = ?
+                    </p>
+                    <button class="action-btn" onclick="hitungPerbandingan()">Hitung Nilai B2</button>
+                    <div id="resPerbandingan" style="margin-top: 10px; font-weight: bold; color: var(--primary);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: Rasio & Skala -->
+        <div id="tab-rasio" class="tab-content">
+            <div class="card">
+                <h2>📏 Rasio & Skala Peta</h2>
+                <p><b>Skala</b> adalah perbandingan antara Jarak Peta (JP) dan Jarak Sebenarnya (JS).</p>
+                <div class="formula-box">
+                    Skala = JP : JS &nbsp;|&nbsp; JS = JP / Skala
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🧮 Simu-Kalkulator Skala Peta</h2>
+                <div class="interactive-box">
+                    <p style="font-size:0.8rem; margin-bottom:8px;">
+                        Skala = 1 : <input type="number" id="skalaVal" value="500000"><br>
+                        Jarak Peta = <input type="number" id="jpVal" value="4"> cm
+                    </p>
+                    <button class="action-btn" onclick="hitungJarakSebenarnya()">Hitung Jarak Sebenarnya</button>
+                    <div id="resJarak" style="margin-top: 10px; font-weight: bold; color: var(--primary);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Faktorisasi Prima -->
+        <div id="tab-faktorisasi" class="tab-content">
+            <div class="card">
+                <h2>🌱 Bilangan Prima & Faktor Prima</h2>
+                <p><b>Bilangan Prima:</b> 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, ...</p>
+            </div>
+
+            <div class="card">
+                <h2>🌳 Generator Faktorisasi Prima</h2>
+                <div class="interactive-box">
+                    <input type="number" id="inputPrima" value="60" min="2" max="1000">
+                    <br>
+                    <button class="action-btn" onclick="hitungFaktorisasi()">Cari Faktorisasi Prima</button>
+                    <div id="resFaktorisasi" style="margin-top: 10px; font-weight: bold; color: var(--primary);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: Sifat & Aritmetika -->
+        <div id="tab-aritmetika" class="tab-content">
+            <div class="card">
+                <h2>⚡ Urutan Operasi (KABATAKU)</h2>
+                <ul>
+                    <li><b>1. Tanda Kurung</b> <code>( )</code></li>
+                    <li><b>2. Perkalian & Pembagian</b></li>
+                    <li><b>3. Penjumlahan & Pengurangan</b></li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>📌 Sifat-Sifat Operasi Bilangan</h2>
+                <ul>
+                    <li><b>Komutatif:</b> a + b = b + a &nbsp;|&nbsp; a × b = b × a</li>
+                    <li><b>Distributif:</b> a × (b + c) = (a × b) + (a × c)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 5: Kuis Interaktif -->
+        <div id="tab-kuis" class="tab-content">
+            <div class="score-board">
+                <p style="font-size: 0.8rem; color: #555;">Skor Latihan Anda</p>
+                <div class="score-num" id="scoreDisplay">0</div>
+            </div>
+
+            <!-- Soal 1: Perbandingan Berbalik Nilai -->
+            <div class="card">
+                <h2>Soal 1 (Berbalik Nilai)</h2>
+                <p style="margin-bottom: 12px;">Suatu pakan ternak cukup untuk 20 ekor sapi selama 15 hari. Jika sapi bertambah menjadi 25 ekor, berapa hari pakan tersebut akan habis?</p>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fbp1', 25)">A. 12 Hari</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fbp1', 25)">B. 18 Hari</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fbp1', 25)">C. 10 Hari</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fbp1', 25)">D. 16 Hari</div>
+                <div id="fbp1" class="feedback"></div>
+            </div>
+
+            <!-- Soal 2: Perbandingan Senilai -->
+            <div class="card">
+                <h2>Soal 2 (Senilai)</h2>
+                <p style="margin-bottom: 12px;">Harga 3 kg mangga adalah Rp45.000,00. Berapakah harga 7 kg mangga tersebut?</p>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fbp2', 25)">A. Rp95.000,00</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fbp2', 25)">B. Rp105.000,00</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fbp2', 25)">C. Rp115.000,00</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fbp2', 25)">D. Rp120.000,00</div>
+                <div id="fbp2" class="feedback"></div>
+            </div>
+
+            <!-- Soal 3: Skala -->
+            <div class="card">
+                <h2>Soal 3 (Skala)</h2>
+                <p style="margin-bottom: 12px;">Jarak kota A dan B pada peta adalah 5 cm. Jika skala peta 1 : 200.000, berapa jarak sebenarnya?</p>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fbr1', 25)">A. 10 km</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fbr1', 25)">B. 1 km</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fbr1', 25)">C. 100 km</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fbr1', 25)">D. 20 km</div>
+                <div id="fbr1" class="feedback"></div>
+            </div>
+
+            <!-- Soal 4: Faktorisasi Prima -->
+            <div class="card">
+                <h2>Soal 4 (Faktorisasi)</h2>
+                <p style="margin-bottom: 12px;">Faktorisasi prima dari bilangan <b>72</b> adalah ...</p>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb4', 25)">A. 2² × 3³</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fb4', 25)">B. 2³ × 3²</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb4', 25)">C. 2 × 3⁴</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb4', 25)">D. 2⁴ × 3</div>
+                <div id="fb4" class="feedback"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <button class="nav-btn active" onclick="switchTab('tab-perbandingan', this)">
+            <span>⚖️</span> Banding
+        </button>
+        <button class="nav-btn" onclick="switchTab('tab-rasio', this)">
+            <span>📏</span> Skala
+        </button>
+        <button class="nav-btn" onclick="switchTab('tab-faktorisasi', this)">
+            <span>🌱</span> Faktorisasi
+        </button>
+        <button class="nav-btn" onclick="switchTab('tab-aritmetika', this)">
+            <span>➕</span> Aritmetika
+        </button>
+        <button class="nav-btn" onclick="switchTab('tab-kuis', this)">
+            <span>📝</span> Kuis TKA
+        </button>
+    </nav>
+
+    <!-- Request Footer -->
+    <footer>
+        Rangkuman Materi Tes Kemampuan Akademik (TKA)
+    </footer>
+</div>
+
+<script>
+    // Tab Navigation Logic
+    function switchTab(tabId, btnElement) {
+        const tabs = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => tab.classList.remove('active'));
+
+        const buttons = document.querySelectorAll('.nav-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        btnElement.classList.add('active');
+        
+        document.querySelector('main').scrollTop = 0;
+    }
+
+    // Interaktif: Kalkulator Perbandingan
+    function hitungPerbandingan() {
+        let jenis = document.getElementById('jenisBanding').value;
+        let a1 = parseFloat(document.getElementById('a1').value);
+        let b1 = parseFloat(document.getElementById('b1').value);
+        let a2 = parseFloat(document.getElementById('a2').value);
+
+        if (isNaN(a1) || isNaN(b1) || isNaN(a2) || a1 <= 0 || a2 <= 0) {
+            document.getElementById('resPerbandingan').innerText = "Masukkan angka yang valid!";
+            return;
+        }
+
+        let b2 = 0;
+        if (jenis === 'senilai') {
+            // a1/b1 = a2/b2 => b2 = (a2 * b1) / a1
+            b2 = (a2 * b1) / a1;
+            document.getElementById('resPerbandingan').innerHTML = 
+                `Perbandingan Senilai: B2 = <b>${b2}</b>`;
+        } else {
+            // a1 * b1 = a2 * b2 => b2 = (a1 * b1) / a2
+            b2 = (a1 * b1) / a2;
+            document.getElementById('resPerbandingan').innerHTML = 
+                `Perbandingan Berbalik Nilai: B2 = <b>${b2}</b>`;
+        }
+    }
+
+    // Interaktif: Kalkulator Skala Peta
+    function hitungJarakSebenarnya() {
+        let skala = parseFloat(document.getElementById('skalaVal').value);
+        let jp = parseFloat(document.getElementById('jpVal').value);
+        
+        if (isNaN(skala) || isNaN(jp) || skala <= 0 || jp <= 0) {
+            document.getElementById('resJarak').innerText = "Masukkan angka yang valid!";
+            return;
+        }
+
+        let jsCm = jp * skala;
+        let jsKm = jsCm / 100000;
+
+        document.getElementById('resJarak').innerHTML = 
+            `Jarak Sebenarnya = <b>${jsKm} km</b> (${jsCm.toLocaleString('id-ID')} cm)`;
+    }
+
+    // Interaktif: Generator Faktorisasi Prima
+    function hitungFaktorisasi() {
+        let num = parseInt(document.getElementById('inputPrima').value);
+        if (isNaN(num) || num < 2 || num > 1000) {
+            document.getElementById('resFaktorisasi').innerText = "Masukkan angka antara 2 - 1000";
+            return;
+        }
+
+        let temp = num;
+        let factors = {};
+        let divisor = 2;
+
+        while (temp >= 2) {
+            if (temp % divisor === 0) {
+                factors[divisor] = (factors[divisor] || 0) + 1;
+                temp /= divisor;
+            } else {
+                divisor++;
+            }
+        }
+
+        let strParts = [];
+        for (let prime in factors) {
+            let count = factors[prime];
+            if (count > 1) {
+                strParts.push(`${prime}<sup>${count}</sup>`);
+            } else {
+                strParts.push(`${prime}`);
+            }
+        }
+
+        document.getElementById('resFaktorisasi').innerHTML = 
+            `${num} = ` + strParts.join(' × ');
+    }
+
+    // Kuis Logic & Score Tracker
+    let totalScore = 0;
+    let answeredQuestions = new Set();
+
+    function checkAnswer(element, isCorrect, feedbackId, points) {
+        const parentCard = element.parentElement;
+        const feedbackEl = document.getElementById(feedbackId);
+        
+        if (parentCard.dataset.answered === "true") return;
+
+        const options = parentCard.querySelectorAll('.quiz-option');
+        options.forEach(opt => {
+            opt.classList.remove('selected-correct', 'selected-wrong');
+        });
+
+        if (isCorrect) {
+            element.classList.add('selected-correct');
+            feedbackEl.innerText = "✓ Benar! Jawaban Anda Tepat.";
+            feedbackEl.style.color = "var(--correct)";
+            
+            if(!answeredQuestions.has(feedbackId)) {
+                totalScore += points;
+                answeredQuestions.add(feedbackId);
+                document.getElementById('scoreDisplay').innerText = totalScore;
+            }
+            parentCard.dataset.answered = "true";
+        } else {
+            element.classList.add('selected-wrong');
+            feedbackEl.innerText = "✗ Kurang tepat, coba pelajari kembali materinya.";
+            feedbackEl.style.color = "var(--wrong)";
+        }
+    }
+</script>
+
+</body>
+</html>
