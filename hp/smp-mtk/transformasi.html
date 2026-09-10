@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MPI Matematika SMP - Transformasi Geometri</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --correct: #2ec4b6;
+            --wrong: #e63946;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+            background-color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 16px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        header p {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            display: flex;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            position: sticky;
+            bottom: 30px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 10px 2px;
+            border: none;
+            background: none;
+            color: #666;
+            font-weight: 600;
+            font-size: 0.7rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .nav-btn.active {
+            color: var(--primary);
+            border-top: 3px solid var(--primary);
+            background-color: #f0f4ff;
+        }
+
+        main {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #eaedf1;
+        }
+
+        .card h2 {
+            font-size: 0.98rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card p, .card li {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        .card ul {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+
+        .card li {
+            margin-bottom: 6px;
+        }
+
+        .formula-box {
+            background: #eef2ff;
+            border-left: 4px solid var(--primary);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .interactive-box {
+            background: #f8fafc;
+            border: 2px dashed var(--accent);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        input[type="number"], select {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.88rem;
+        }
+
+        input[type="number"] {
+            width: 55px;
+        }
+
+        button.action-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .quiz-option {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:active {
+            transform: scale(0.98);
+        }
+
+        .quiz-option.selected-correct {
+            background: #d1fae5;
+            border-color: var(--correct);
+            color: #065f46;
+            font-weight: bold;
+        }
+
+        .quiz-option.selected-wrong {
+            background: #ffe4e6;
+            border-color: var(--wrong);
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+        .feedback {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            min-height: 20px;
+        }
+
+        .score-board {
+            text-align: center;
+            padding: 20px;
+            background: #e0f2fe;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .score-num {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        footer {
+            background: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 8px 12px;
+            font-size: 0.7rem;
+            position: sticky;
+            bottom: 0;
+            z-index: 101;
+            border-top: 1px solid #334155;
+        }
+
+        code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <h1>Matematika SMP: Transformasi Geometri</h1>
+        <p>Media Pembelajaran Interaktif Mandiri</p>
+    </header>
+
+    <main>
+        <!-- TAB 1: Rumus Transformasi -->
+        <div id="tab-materi" class="tab-content active">
+            <div class="card">
+                <h2>➡️ Translasi (Pergeseran)</h2>
+                <p>Menggeser titik P(x, y) sejauh T(a, b):</p>
+                <div class="formula-box">
+                    P'(x', y') = (x + a, y + b)
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🪞 Refleksi (Pencerminan)</h2>
+                <div class="formula-box">
+                    • Terhadap Sumbu X ⟹ (x, -y)<br>
+                    • Terhadap Sumbu Y ⟹ (-x, y)<br>
+                    • Terhadap Titik Pusat (0,0) ⟹ (-x, -y)<br>
+                    • Terhadap Garis y = x ⟹ (y, x)<br>
+                    • Terhadap Garis y = -x ⟹ (-y, -x)
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🔄 Rotasi (Perputaran Pusat (0,0))</h2>
+                <div class="formula-box">
+                    • 90° berlawanan jarum jam (90°) ⟹ (-y, x)<br>
+                    • 180° (searah/berlawanan) ⟹ (-x, -y)<br>
+                    • 270° berlawanan / 90° searah (-90°) ⟹ (y, -x)
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🔍 Dilatasi (Perkalian Skala Pusat (0,0))</h2>
+                <p>Memperbesar/memperkecil bayangan dengan faktor skala k:</p>
+                <div class="formula-box">
+                    P'(x', y') = (k · x, k · y)
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: Kalkulator Koordinat -->
+        <div id="tab-kalkulator" class="tab-content">
+            <div class="card">
+                <h2>🧮 Simu-Kalkulator Bayangan Titik</h2>
+                <div class="interactive-box">
+                    <p style="font-size:0.85rem; margin-bottom:8px;">
+                        Titik A: ( <input type="number" id="ptX" value="3"> , <input type="number" id="ptY" value="2"> )
+                    </p>
+                    <p style="font-size:0.8rem; margin-bottom:8px;">Pilih Jenis Transformasi:</p>
+                    <select id="transType" style="margin-bottom:8px;" onchange="updateTransUI()">
+                        <option value="translasi">Translasi T(a, b)</option>
+                        <option value="ref_x">Refleksi Sumbu X</option>
+                        <option value="ref_y">Refleksi Sumbu Y</option>
+                        <option value="rot_90">Rotasi +90° (0,0)</option>
+                        <option value="rot_180">Rotasi 180° (0,0)</option>
+                        <option value="dilatasi">Dilatasi Pusat (0,0)</option>
+                    </select>
+                    <div id="extraUI">
+                        <p style="margin-bottom:6px; font-size:0.85rem;">
+                            Vektor T: a = <input type="number" id="valA" value="2"> , b = <input type="number" id="valB" value="-1">
+                        </p>
+                    </div>
+                    <button class="action-btn" onclick="hitungTransformasi()">Hitung Bayangan Titik A'</button>
+                    <div id="resTrans" style="margin-top: 10px; font-weight: bold; color: var(--primary);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Kuis TKA -->
+        <div id="tab-kuis" class="tab-content">
+            <div class="score-board">
+                <p style="font-size: 0.8rem; color: #555;">Skor Latihan Anda</p>
+                <div class="score-num" id="scoreDisplay">0</div>
+            </div>
+
+            <div class="card">
+                <h2>Soal 1 (Translasi)</h2>
+                <p style="margin-bottom: 12px;">Bayangan titik P(2, -5) oleh translasi T(3, 4) adalah ...</p>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fb1', 50)">A. P'(5, -1)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">B. P'(-1, -9)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">C. P'(6, -20)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">D. P'(5, 1)</div>
+                <div id="fb1" class="feedback"></div>
+            </div>
+
+            <div class="card">
+                <h2>Soal 2 (Refleksi)</h2>
+                <p style="margin-bottom: 12px;">Bayangan titik A(-3, 4) jika dicerminkan terhadap sumbu Y adalah ...</p>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">A. A'(-3, -4)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fb2', 50)">B. A'(3, 4)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">C. A'(4, -3)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">D. A'(3, -4)</div>
+                <div id="fb2" class="feedback"></div>
+            </div>
+        </div>
+    </main>
+
+    <nav>
+        <button class="nav-btn active" onclick="switchTab('tab-materi', this)">
+            <span>📐</span> Materi
+        </button>
+        <button class="nav-btn" onclick="switchTab('tab-kalkulator', this)">
+            <span>🧮</span> Kalkulator
+        </button>
+        <button class="nav-btn" onclick="switchTab('tab-kuis', this)">
+            <span>📝</span> Kuis TKA
+        </button>
+    </nav>
+
+    <footer>
+        Rangkuman Materi Tes Kemampuan Akademik (TKA)
+    </footer>
+</div>
+
+<script>
+    function switchTab(tabId, btnElement) {
+        const tabs = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => tab.classList.remove('active'));
+
+        const buttons = document.querySelectorAll('.nav-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        btnElement.classList.add('active');
+        document.querySelector('main').scrollTop = 0;
+    }
+
+    function updateTransUI() {
+        let type = document.getElementById('transType').value;
+        let extra = document.getElementById('extraUI');
+        
+        if (type === 'translasi') {
+            extra.innerHTML = '<p style="margin-bottom:6px; font-size:0.85rem;">Vektor T: a = <input type="number" id="valA" value="2"> , b = <input type="number" id="valB" value="-1"></p>';
+        } else if (type === 'dilatasi') {
+            extra.innerHTML = '<p style="margin-bottom:6px; font-size:0.85rem;">Faktor Skala k = <input type="number" id="valK" value="2"></p>';
+        } else {
+            extra.innerHTML = '';
+        }
+    }
+
+    function hitungTransformasi() {
+        let x = parseFloat(document.getElementById('ptX').value);
+        let y = parseFloat(document.getElementById('ptY').value);
+        let type = document.getElementById('transType').value;
+
+        if (isNaN(x) || isNaN(y)) {
+            document.getElementById('resTrans').innerText = "Masukkan koordinat titik yang valid!";
+            return;
+        }
+
+        let resX = 0, resY = 0;
+        let desc = "";
+
+        if (type === 'translasi') {
+            let a = parseFloat(document.getElementById('valA').value) || 0;
+            let b = parseFloat(document.getElementById('valB').value) || 0;
+            resX = x + a;
+            resY = y + b;
+            desc = `A' = (${x} + ${a}, ${y} + ${b})`;
+        } else if (type === 'ref_x') {
+            resX = x;
+            resY = -y;
+            desc = `A' = (${x}, -(${y}))`;
+        } else if (type === 'ref_y') {
+            resX = -x;
+            resY = y;
+            desc = `A' = (-(${x}), ${y})`;
+        } else if (type === 'rot_90') {
+            resX = -y;
+            resY = x;
+            desc = `A' = (-(${y}), ${x})`;
+        } else if (type === 'rot_180') {
+            resX = -x;
+            resY = -y;
+            desc = `A' = (-(${x}), -(${y}))`;
+        } else if (type === 'dilatasi') {
+            let k = parseFloat(document.getElementById('valK').value) || 1;
+            resX = x * k;
+            resY = y * k;
+            desc = `A' = (${k}·${x}, ${k}·${y})`;
+        }
+
+        document.getElementById('resTrans').innerHTML = 
+            `Bayangan Titik A' = <b>(${resX}, ${resY})</b><br>` +
+            `<span style='font-size:0.75rem; color:#555;'>Proses: ${desc}</span>`;
+    }
+
+    let totalScore = 0;
+    let answeredQuestions = new Set();
+
+    function checkAnswer(element, isCorrect, feedbackId, points) {
+        const parentCard = element.parentElement;
+        const feedbackEl = document.getElementById(feedbackId);
+        
+        if (parentCard.dataset.answered === "true") return;
+
+        const options = parentCard.querySelectorAll('.quiz-option');
+        options.forEach(opt => opt.classList.remove('selected-correct', 'selected-wrong'));
+
+        if (isCorrect) {
+            element.classList.add('selected-correct');
+            feedbackEl.innerText = "✓ Benar! Jawaban Anda Tepat.";
+            feedbackEl.style.color = "var(--correct)";
+            
+            if(!answeredQuestions.has(feedbackId)) {
+                totalScore += points;
+                answeredQuestions.add(feedbackId);
+                document.getElementById('scoreDisplay').innerText = totalScore;
+            }
+            parentCard.dataset.answered = "true";
+        } else {
+            element.classList.add('selected-wrong');
+            feedbackEl.innerText = "✗ Kurang tepat, periksa kembali rumusnya.";
+            feedbackEl.style.color = "var(--wrong)";
+        }
+    }
+</script>
+
+</body>
+</html>
