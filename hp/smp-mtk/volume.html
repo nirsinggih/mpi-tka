@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MPI Matematika SMP - Volume Bangun Ruang</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --correct: #2ec4b6;
+            --wrong: #e63946;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+            background-color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 16px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        header p {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            display: flex;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            position: sticky;
+            bottom: 30px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 10px 2px;
+            border: none;
+            background: none;
+            color: #666;
+            font-weight: 600;
+            font-size: 0.7rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .nav-btn.active {
+            color: var(--primary);
+            border-top: 3px solid var(--primary);
+            background-color: #f0f4ff;
+        }
+
+        main {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #eaedf1;
+        }
+
+        .card h2 {
+            font-size: 0.98rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card p, .card li {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        .card ul {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+
+        .card li {
+            margin-bottom: 6px;
+        }
+
+        .formula-box {
+            background: #eef2ff;
+            border-left: 4px solid var(--primary);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .interactive-box {
+            background: #f8fafc;
+            border: 2px dashed var(--accent);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        input[type="number"], select {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.88rem;
+        }
+
+        input[type="number"] {
+            width: 60px;
+        }
+
+        button.action-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .quiz-option {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:active {
+            transform: scale(0.98);
+        }
+
+        .quiz-option.selected-correct {
+            background: #d1fae5;
+            border-color: var(--correct);
+            color: #065f46;
+            font-weight: bold;
+        }
+
+        .quiz-option.selected-wrong {
+            background: #ffe4e6;
+            border-color: var(--wrong);
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+        .feedback {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            min-height: 20px;
+        }
+
+        .score-board {
+            text-align: center;
+            padding: 20px;
+            background: #e0f2fe;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .score-num {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        footer {
+            background: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 8px 12px;
+            font-size: 0.7rem;
+            position: sticky;
+            bottom: 0;
+            z-index: 101;
+            border-top: 1px solid #334155;
+        }
+
+        code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <h1>Matematika SMP: Volume Bangun Ruang</h1>
+        <p>Media Pembelajaran Interaktif Mandiri</p>
+    </header>
+
+    <main>
+        <!-- TAB 1: Rumus Volume -->
+        <div id="tab-materi" class="tab-content active">
+            <div class="card">
+                <h2>📦 Volume Prisma</h2>
+                <p>Volume prisma ditentukan oleh luas alas dan tingginya (termasuk kubus, balok, dan tabung).</p>
+                <div class="formula-box">
+                    • Volume Prisma = Luas Alas × tinggi (t)<br>
+                    • Prisma Segitiga: V = (½ × a × t<sub>alas</sub>) × t<br>
+                    • Tabung (Prisma Lingkaran): V = π × r² × t
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>⛺ Volume Limas</h2>
+                <p>Volume limas selalu sepertiga dari volume prisma yang memiliki alas dan tinggi yang sama (termasuk kerucut).</p>
+                <div class="formula-box">
+                    • Volume Limas = ⅓ × Luas Alas × tinggi (t)<br>
+                    • Limas Segi-4 (Persegi): V = ⅓ × (s × s) × t<br>
+                    • Kerucut (Limas Lingkaran): V = ⅓ × π × r² × t
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>⚽ Volume Bola</h2>
+                <p>Volume bangun ruang bola bergantung pada jari-jarinya (r).</p>
+                <div class="formula-box">
+                    • Volume Bola: V = ⁴⁄₃ × π × r³<br>
+                    • Volume ½ Bola Padat: V = ⅔ × π × r³
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: Kalkulator Interaktif -->
+        <div id="tab-kalkulator" class="tab-content">
+            <div class="card">
+                <h2>🧮 Simu-Kalkulator Volume</h2>
+                <div class="interactive-box">
+                    <p style="font-size:0.8rem; margin-bottom:8px;">Pilih Bangun Ruang:</p>
+                    <select id="volType" style="margin-bottom:8px;" onchange="updateVolInputs()">
+                        <option value="prisma_segitiga">Prisma Segitiga</option>
+                        <option value="limas_segiempat">Limas Segi-4 (Persegi)</option>
+                        <option value="bola">Bola</option>
+                    </select>
+                    <div id="volInputs">
+                        <p style="margin-bottom:6px; font-size:0.85rem;">
+                            Alas Segitiga (a) = <input type="number" id="inpA" value="6"> cm<br>
+                            Tinggi Segitiga (t_a) = <input type="number" id="inpTa" value="4"> cm<br>
+                            Tinggi Prisma (t) = <input type="number" id="inpT" value="10"> cm
+                        </p>
+                    </div>
+                    <button class="action-btn" onclick="hitungVolume()">Hitung Volume</button>
+                    <div id="resVolume" style="margin-top: 10px; font-weight: bold; color: var(--primary);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Kuis TKA -->
+        <div id="tab-kuis" class="tab-content">
+            <div class="score-board">
+                <p style="font-size: 0.8rem; color: #555;">Skor Latihan Anda</p>
+                <div class="score-num" id="scoreDisplay">0</div>
+            </div>
+
+            <div class="card">
+                <h2>Soal 1 (Volume Limas)</h2>
+                <p style="margin-bottom: 12px;">Sebuah limas memiliki alas berbentuk persegi dengan panjang sisi 6 cm dan tinggi limas 10 cm. Volume limas tersebut adalah ...</p>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fb1', 50)">A. 120 cm³</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">B. 360 cm³</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">C. 180 cm³</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">D. 60 cm³</div>
+                <div id="fb1" class="feedback"></div>
+            </div>
+
+            <div class="card">
+                <h2>Soal 2 (Volume Bola)</h2>
+                <p style="margin-bottom: 12px;">Volume bola dengan jari-jari 21 cm adalah ... (π = 22/7)</p>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">A. 9.702 cm³</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fb2', 50)">B. 38.808 cm³</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">C. 19.404 cm³</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">D. 12.936 cm³</div>
+                <div id="fb2" class="feedback"></div>
+            </div>
+        </div>
+    </main>
+
+    <nav>
+        <button class="nav-btn active" onclick="switchTab('tab-materi', this)">
+            <span>📦</span> Materi
+        </button>
+        <button class="nav-btn" onclick="switchTab('tab-kalkulator', this)">
+            <span>🧮</span> Kalkulator
+        </button>
+        <button class="nav-btn" onclick="switchTab('tab-kuis', this)">
+            <span>📝</span> Kuis TKA
+        </button>
+    </nav>
+
+    <footer>
+        Rangkuman Materi Tes Kemampuan Akademik (TKA)
+    </footer>
+</div>
+
+<script>
+    function switchTab(tabId, btnElement) {
+        const tabs = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => tab.classList.remove('active'));
+
+        const buttons = document.querySelectorAll('.nav-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        btnElement.classList.add('active');
+        document.querySelector('main').scrollTop = 0;
+    }
+
+    function updateVolInputs() {
+        let type = document.getElementById('volType').value;
+        let inputs = document.getElementById('volInputs');
+
+        if (type === 'prisma_segitiga') {
+            inputs.innerHTML = '<p style="margin-bottom:6px; font-size:0.85rem;">Alas Segitiga (a) = <input type="number" id="inpA" value="6"> cm<br>Tinggi Segitiga (t_a) = <input type="number" id="inpTa" value="4"> cm<br>Tinggi Prisma (t) = <input type="number" id="inpT" value="10"> cm</p>';
+        } else if (type === 'limas_segiempat') {
+            inputs.innerHTML = '<p style="margin-bottom:6px; font-size:0.85rem;">Sisi Alas Persegi (s) = <input type="number" id="inpS" value="6"> cm<br>Tinggi Limas (t) = <input type="number" id="inpT" value="10"> cm</p>';
+        } else if (type === 'bola') {
+            inputs.innerHTML = '<p style="margin-bottom:6px; font-size:0.85rem;">Jari-jari (r) = <input type="number" id="inpR" value="7"> cm</p>';
+        }
+    }
+
+    function hitungVolume() {
+        let type = document.getElementById('volType').value;
+        let resHTML = "";
+
+        if (type === 'prisma_segitiga') {
+            let a = parseFloat(document.getElementById('inpA').value);
+            let ta = parseFloat(document.getElementById('inpTa').value);
+            let t = parseFloat(document.getElementById('inpT').value);
+
+            if (isNaN(a) || isNaN(ta) || isNaN(t) || a <= 0 || ta <= 0 || t <= 0) {
+                document.getElementById('resVolume').innerText = "Masukkan ukuran positif yang valid!";
+                return;
+            }
+            let luasAlas = 0.5 * a * ta;
+            let vol = luasAlas * t;
+            resHTML = `Luas Alas = <b>${luasAlas.toFixed(2)} cm²</b><br>Volume Prisma = <b>${vol.toFixed(2)} cm³</b>`;
+        } else if (type === 'limas_segiempat') {
+            let s = parseFloat(document.getElementById('inpS').value);
+            let t = parseFloat(document.getElementById('inpT').value);
+
+            if (isNaN(s) || isNaN(t) || s <= 0 || t <= 0) {
+                document.getElementById('resVolume').innerText = "Masukkan ukuran positif yang valid!";
+                return;
+            }
+            let luasAlas = s * s;
+            let vol = (1/3) * luasAlas * t;
+            resHTML = `Luas Alas = <b>${luasAlas.toFixed(2)} cm²</b><br>Volume Limas = <b>${vol.toFixed(2)} cm³</b>`;
+        } else if (type === 'bola') {
+            let r = parseFloat(document.getElementById('inpR').value);
+
+            if (isNaN(r) || r <= 0) {
+                document.getElementById('resVolume').innerText = "Masukkan jari-jari yang valid!";
+                return;
+            }
+            let pi = (r % 7 === 0) ? (22/7) : 3.14;
+            let vol = (4/3) * pi * Math.pow(r, 3);
+            resHTML = `Volume Bola = <b>${vol.toFixed(2)} cm³</b>`;
+        }
+
+        document.getElementById('resVolume').innerHTML = resHTML;
+    }
+
+    let totalScore = 0;
+    let answeredQuestions = new Set();
+
+    function checkAnswer(element, isCorrect, feedbackId, points) {
+        const parentCard = element.parentElement;
+        const feedbackEl = document.getElementById(feedbackId);
+        
+        if (parentCard.dataset.answered === "true") return;
+
+        const options = parentCard.querySelectorAll('.quiz-option');
+        options.forEach(opt => opt.classList.remove('selected-correct', 'selected-wrong'));
+
+        if (isCorrect) {
+            element.classList.add('selected-correct');
+            feedbackEl.innerText = "✓ Benar! Jawaban Anda Tepat.";
+            feedbackEl.style.color = "var(--correct)";
+            
+            if(!answeredQuestions.has(feedbackId)) {
+                totalScore += points;
+                answeredQuestions.add(feedbackId);
+                document.getElementById('scoreDisplay').innerText = totalScore;
+            }
+            parentCard.dataset.answered = "true";
+        } else {
+            element.classList.add('selected-wrong');
+            feedbackEl.innerText = "✗ Kurang tepat, periksa kembali rumusnya (ingat 1/3 untuk limas dan 4/3 untuk bola).";
+            feedbackEl.style.color = "var(--wrong)";
+        }
+    }
+</script>
+
+</body>
+</html>
