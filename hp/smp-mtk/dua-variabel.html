@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MPI Matematika SMP - SPLDV</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --correct: #2ec4b6;
+            --wrong: #e63946;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+            background-color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 16px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        header p {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            display: flex;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            position: sticky;
+            bottom: 30px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 10px 2px;
+            border: none;
+            background: none;
+            color: #666;
+            font-weight: 600;
+            font-size: 0.7rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .nav-btn.active {
+            color: var(--primary);
+            border-top: 3px solid var(--primary);
+            background-color: #f0f4ff;
+        }
+
+        main {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #eaedf1;
+        }
+
+        .card h2 {
+            font-size: 0.98rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card p, .card li {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        .card ul {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+
+        .card li {
+            margin-bottom: 6px;
+        }
+
+        .formula-box {
+            background: #eef2ff;
+            border-left: 4px solid var(--primary);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .interactive-box {
+            background: #f8fafc;
+            border: 2px dashed var(--accent);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        input[type="number"] {
+            width: 55px;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.88rem;
+        }
+
+        button.action-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .quiz-option {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:active {
+            transform: scale(0.98);
+        }
+
+        .quiz-option.selected-correct {
+            background: #d1fae5;
+            border-color: var(--correct);
+            color: #065f46;
+            font-weight: bold;
+        }
+
+        .quiz-option.selected-wrong {
+            background: #ffe4e6;
+            border-color: var(--wrong);
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+        .feedback {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            min-height: 20px;
+        }
+
+        .score-board {
+            text-align: center;
+            padding: 20px;
+            background: #e0f2fe;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .score-num {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        footer {
+            background: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 8px 12px;
+            font-size: 0.7rem;
+            position: sticky;
+            bottom: 0;
+            z-index: 101;
+            border-top: 1px solid #334155;
+        }
+
+        code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <h1>Matematika SMP: Sistem Persamaan Linear Dua Variabel</h1>
+        <p>Media Pembelajaran Interaktif Mandiri</p>
+    </header>
+
+    <main>
+        <!-- TAB 1: Konsep SPLDV -->
+        <div id="tab-spldv" class="tab-content active">
+            <div class="card">
+                <h2>📌 Pengertian & Bentuk Umum SPLDV</h2>
+                <p>Sistem dua persamaan linear yang masing-masing memiliki dua variabel berpangkat satu dan memiliki satu pasangan penyelesaian (x, y).</p>
+                <div class="formula-box">
+                    a₁x + b₁y = c₁<br>
+                    a₂x + b₂y = c₂
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🧮 Solver SPLDV Interaktif</h2>
+                <p style="font-size:0.8rem; margin-bottom:8px;">Masukkan koefisien sistem persamaan:</p>
+                <div class="interactive-box">
+                    <p style="margin-bottom:6px;">
+                        P1: <input type="number" id="a1" value="2"> x + 
+                        <input type="number" id="b1" value="1"> y = 
+                        <input type="number" id="c1" value="7">
+                    </p>
+                    <p style="margin-bottom:6px;">
+                        P2: <input type="number" id="a2" value="1"> x - 
+                        <input type="number" id="b2" value="1"> y = 
+                        <input type="number" id="c2" value="2">
+                    </p>
+                    <button class="action-btn" onclick="solveSPLDV()">Hitung (x, y)</button>
+                    <div id="resSPLDV" style="margin-top: 10px; font-weight: bold; color: var(--primary);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: Metode Penyelesaian -->
+        <div id="tab-metode" class="tab-content">
+            <div class="card">
+                <h2>🛠️ Metode Penyelesaian SPLDV</h2>
+                <ul>
+                    <li><b>Metode Eliminasi:</b> Menghilangkan salah satu variabel dengan menyamakan koefisiennya.</li>
+                    <li><b>Metode Substitusi:</b> Mengganti salah satu variabel dengan persamaan variabel lain.</li>
+                    <li><b>Metode Campuran:</b> Menggabungkan eliminasi (mencari variabel pertama) dan substitusi (mencari variabel kedua).</li>
+                    <li><b>Metode Grafik:</b> Menentukan titik potong dari grafik dua garis lurus.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>💡 Contoh Aplikasi Soal Cerita</h2>
+                <p>Harga 2 buku dan 1 pensil Rp7.000, sedangkan 1 buku dan 1 pensil Rp4.500.</p>
+                <div class="formula-box">
+                    Misal: buku = x, pensil = y<br>
+                    2x + y = 7.000<br>
+                    x + y = 4.500<br>
+                    Hasil: x = 2.500, y = 2.000
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Kuis TKA -->
+        <div id="tab-kuis" class="tab-content">
+            <div class="score-board">
+                <p style="font-size: 0.8rem; color: #555;">Skor Latihan Anda</p>
+                <div class="score-num" id="scoreDisplay">0</div>
+            </div>
+
+            <div class="card">
+                <h2>Soal 1 (SPLDV Dasar)</h2>
+                <p style="margin-bottom: 12px;">Himpunan penyelesaian dari sistem <b>x + y = 5</b> dan <b>x - y = 1</b> adalah ...</p>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fb1', 50)">A. (3, 2)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">B. (2, 3)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">C. (4, 1)</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">D. (3, 1)</div>
+                <div id="fb1" class="feedback"></div>
+            </div>
+
+            <div class="card">
+                <h2>Soal 2 (Soal Cerita SPLDV)</h2>
+                <p style="margin-bottom: 12px;">Harga 3 kg apel dan 2 kg jeruk adalah Rp65.000. Jika harga 1 kg apel dan 2 kg jeruk adalah Rp35.000, berapakah harga 1 kg apel?</p>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">A. Rp10.000</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fb2', 50)">B. Rp15.000</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">C. Rp20.000</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">D. Rp25.000</div>
+                <div id="fb2" class="feedback"></div>
+            </div>
+        </div>
+    </main>
+
+    <nav>
+        <button class="nav-btn active" onclick="switchTab('tab-spldv', this)">
+            <span>🔢</span> SPLDV
+        </button>
+        <button class="nav-btn" onclick="switchTab('tab-metode', this)">
+            <span>🛠️</span> Metode
+        </button>
+        <button class="nav-btn" onclick="switchTab('tab-kuis', this)">
+            <span>📝</span> Kuis TKA
+        </button>
+    </nav>
+
+    <footer>
+        Rangkuman Materi Tes Kemampuan Akademik (TKA)
+    </footer>
+</div>
+
+<script>
+    function switchTab(tabId, btnElement) {
+        const tabs = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => tab.classList.remove('active'));
+
+        const buttons = document.querySelectorAll('.nav-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        btnElement.classList.add('active');
+        document.querySelector('main').scrollTop = 0;
+    }
+
+    function solveSPLDV() {
+        let a1 = parseFloat(document.getElementById('a1').value);
+        let b1 = parseFloat(document.getElementById('b1').value);
+        let c1 = parseFloat(document.getElementById('c1').value);
+        
+        let a2 = parseFloat(document.getElementById('a2').value);
+        let b2 = parseFloat(document.getElementById('b2').value);
+        let c2 = parseFloat(document.getElementById('c2').value);
+
+        if (isNaN(a1) || isNaN(b1) || isNaN(c1) || isNaN(a2) || isNaN(b2) || isNaN(c2)) {
+            document.getElementById('resSPLDV').innerText = "Masukkan semua angka dengan benar!";
+            return;
+        }
+
+        // Metode Determinan (Aturan Cramer)
+        let D = (a1 * b2) - (a2 * b1);
+        let Dx = (c1 * b2) - (c2 * b1);
+        let Dy = (a1 * c2) - (a2 * c1);
+
+        if (D === 0) {
+            if (Dx === 0 && Dy === 0) {
+                document.getElementById('resSPLDV').innerText = "Sistem memiliki tak hingga penyelesaian.";
+            } else {
+                document.getElementById('resSPLDV').innerText = "Sistem tidak memiliki penyelesaian (garis sejajar).";
+            }
+            return;
+        }
+
+        let x = Dx / D;
+        let y = Dy / D;
+
+        document.getElementById('resSPLDV').innerHTML = 
+            `Penyelesaian:<br>` +
+            `x = <b>${x}</b> &nbsp;|&nbsp; y = <b>${y}</b><br>` +
+            `<span style='font-size:0.8rem; color:#666;'>HP = {(${x}, ${y})}</span>`;
+    }
+
+    let totalScore = 0;
+    let answeredQuestions = new Set();
+
+    function checkAnswer(element, isCorrect, feedbackId, points) {
+        const parentCard = element.parentElement;
+        const feedbackEl = document.getElementById(feedbackId);
+        
+        if (parentCard.dataset.answered === "true") return;
+
+        const options = parentCard.querySelectorAll('.quiz-option');
+        options.forEach(opt => opt.classList.remove('selected-correct', 'selected-wrong'));
+
+        if (isCorrect) {
+            element.classList.add('selected-correct');
+            feedbackEl.innerText = "✓ Benar! Jawaban Anda Tepat.";
+            feedbackEl.style.color = "var(--correct)";
+            
+            if(!answeredQuestions.has(feedbackId)) {
+                totalScore += points;
+                answeredQuestions.add(feedbackId);
+                document.getElementById('scoreDisplay').innerText = totalScore;
+            }
+            parentCard.dataset.answered = "true";
+        } else {
+            element.classList.add('selected-wrong');
+            feedbackEl.innerText = "✗ Kurang tepat, coba gunakan metode eliminasi.";
+            feedbackEl.style.color = "var(--wrong)";
+        }
+    }
+</script>
+
+</body>
+</html>
