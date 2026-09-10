@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MPI Matematika SMP - Barisan & Deret Berhingga</title>
+    <title>MPI Matematika SMP - Hubungan Antar-Sudut & Segitiga</title>
     <style>
         :root {
             --primary: #4361ee;
@@ -170,17 +170,14 @@
             text-align: center;
         }
 
-        input[type="number"], select {
+        input[type="number"] {
+            width: 60px;
             padding: 6px;
             border: 1px solid #ccc;
             border-radius: 6px;
             text-align: center;
             font-weight: bold;
             font-size: 0.88rem;
-        }
-
-        input[type="number"] {
-            width: 55px;
         }
 
         button.action-btn {
@@ -270,51 +267,62 @@
 
 <div class="app-container">
     <header>
-        <h1>Matematika SMP: Barisan & Deret Berhingga</h1>
+        <h1>Matematika SMP: Hubungan Antar-Sudut & Segitiga</h1>
         <p>Media Pembelajaran Interaktif Mandiri</p>
     </header>
 
     <main>
-        <!-- TAB 1: Konsep Barisan & Deret -->
-        <div id="tab-materi" class="tab-content active">
+        <!-- TAB 1: Hubungan Antar-Sudut -->
+        <div id="tab-sudut" class="tab-content active">
             <div class="card">
-                <h2>📊 Barisan & Deret Aritmetika</h2>
-                <p>Memiliki <b>beda (b)</b> yang tetap antara dua suku berurutan melalui penjumlahan/pengurangan.</p>
-                <div class="formula-box">
-                    • Suku ke-n: U<sub>n</sub> = a + (n - 1)b<br>
-                    • Jumlah n suku: S<sub>n</sub> = n/2 × (2a + (n - 1)b)
-                </div>
-                <p><i>Contoh Barisan:</i> 3, 7, 11, 15 (a = 3, b = 4)</p>
+                <h2>✂️ Sudut Berpotongan</h2>
+                <ul>
+                    <li><b>Sudut Berpelurus (Suplemen):</b> Jumlah sudut = 180°.</li>
+                    <li><b>Sudut Berpenyiku (Komplemen):</b> Jumlah sudut = 90°.</li>
+                    <li><b>Sudut Bertolak Belakang:</b> Besar sudutnya **sama besar**.</li>
+                </ul>
             </div>
 
             <div class="card">
-                <h2>📈 Barisan & Deret Geometri</h2>
-                <p>Memiliki <b>rasio (r)</b> yang tetap antara dua suku berurutan melalui perkalian/pembagian.</p>
+                <h2>📐 Dua Garis Sejajar Dipotong Transversal</h2>
                 <div class="formula-box">
-                    • Suku ke-n: U<sub>n</sub> = a · r<sup>(n - 1)</sup><br>
-                    • Jumlah n suku (r > 1): S<sub>n</sub> = a(r<sup>n</sup> - 1) / (r - 1)
+                    • Sehadap: Sama besar (misal: ∠A1 = ∠B1)<br>
+                    • Dalam/Luar Berseberangan: Sama besar<br>
+                    • Dalam/Luar Sepihak: Jumlahnya = 180°
                 </div>
-                <p><i>Contoh Barisan:</i> 2, 6, 18, 54 (a = 2, r = 3)</p>
+            </div>
+
+            <div class="card">
+                <h2>🔺 Sudut Dalam & Luar Segitiga</h2>
+                <div class="formula-box">
+                    • Jumlah sudut dalam segitiga = 180°<br>
+                    • Sudut luar = jumlah 2 sudut dalam yang tidak berpelurus dengannya
+                </div>
             </div>
         </div>
 
-        <!-- TAB 2: Kalkulator Interaktif -->
+        <!-- TAB 2: Kalkulator Sudut -->
         <div id="tab-kalkulator" class="tab-content">
             <div class="card">
-                <h2>🧮 Simu-Kalkulator Barisan & Deret</h2>
+                <h2>🧮 Simu-Kalkulator Sudut Ketiga Segitiga</h2>
                 <div class="interactive-box">
-                    <p style="font-size:0.8rem; margin-bottom:8px;">Pilih Jenis Pola:</p>
-                    <select id="seqType" style="margin-bottom:8px;">
-                        <option value="aritmetika">Barisan Aritmetika</option>
-                        <option value="geometri">Barisan Geometri</option>
-                    </select>
                     <p style="margin-bottom:6px; font-size:0.85rem;">
-                        Suku Pertama (a) = <input type="number" id="inpA" value="2"><br>
-                        Beda/Rasio (b/r) = <input type="number" id="inpBR" value="3"><br>
-                        Banyak Suku (n) = <input type="number" id="inpN" value="5">
+                        Sudut A = <input type="number" id="degA" value="60"> °<br>
+                        Sudut B = <input type="number" id="degB" value="50"> °
                     </p>
-                    <button class="action-btn" onclick="hitungBarisan()">Hitung U<sub>n</sub> & S<sub>n</sub></button>
-                    <div id="resBarisan" style="margin-top: 10px; font-weight: bold; color: var(--primary);"></div>
+                    <button class="action-btn" onclick="hitungSudutC()">Hitung Sudut C</button>
+                    <div id="resSudutC" style="margin-top: 10px; font-weight: bold; color: var(--primary);"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📐 Kalkulator Pelurus & Penyiku</h2>
+                <div class="interactive-box">
+                    <p style="margin-bottom:6px; font-size:0.85rem;">
+                        Besar Sudut = <input type="number" id="degX" value="40"> °
+                    </p>
+                    <button class="action-btn" onclick="hitungPelurusPenyiku()">Hitung Pelurus & Penyiku</button>
+                    <div id="resPelurus" style="margin-top: 10px; font-weight: bold; color: var(--primary);"></div>
                 </div>
             </div>
         </div>
@@ -327,30 +335,30 @@
             </div>
 
             <div class="card">
-                <h2>Soal 1 (Barisan Aritmetika)</h2>
-                <p style="margin-bottom: 12px;">Diketahui barisan aritmetika: <b>5, 8, 11, 14, ...</b> Suku ke-10 (U<sub>10</sub>) barisan tersebut adalah ...</p>
-                <div class="quiz-option" onclick="checkAnswer(this, true, 'fb1', 50)">A. 32</div>
-                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">B. 35</div>
-                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">C. 30</div>
-                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">D. 29</div>
+                <h2>Soal 1 (Pelurus)</h2>
+                <p style="margin-bottom: 12px;">Jika sudut A dan B saling berpelurus, dan besar sudut A = 65°, maka besar sudut B adalah ...</p>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fb1', 50)">A. 115°</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">B. 25°</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">C. 125°</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">D. 35°</div>
                 <div id="fb1" class="feedback"></div>
             </div>
 
             <div class="card">
-                <h2>Soal 2 (Deret Aritmetika)</h2>
-                <p style="margin-bottom: 12px;">Jumlah 6 suku pertama (S<sub>6</sub>) dari deret <b>2 + 4 + 6 + 8 + ...</b> adalah ...</p>
-                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">A. 36</div>
-                <div class="quiz-option" onclick="checkAnswer(this, true, 'fb2', 50)">B. 42</div>
-                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">C. 48</div>
-                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">D. 30</div>
+                <h2>Soal 2 (Sudut Segitiga)</h2>
+                <p style="margin-bottom: 12px;">Sebuah segitiga memiliki sudut A = 50° dan sudut B = 70°. Besar sudut C adalah ...</p>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">A. 50°</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fb2', 50)">B. 60°</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">C. 70°</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">D. 80°</div>
                 <div id="fb2" class="feedback"></div>
             </div>
         </div>
     </main>
 
     <nav>
-        <button class="nav-btn active" onclick="switchTab('tab-materi', this)">
-            <span>📚</span> Materi
+        <button class="nav-btn active" onclick="switchTab('tab-sudut', this)">
+            <span>📐</span> Materi
         </button>
         <button class="nav-btn" onclick="switchTab('tab-kalkulator', this)">
             <span>🧮</span> Kalkulator
@@ -378,43 +386,34 @@
         document.querySelector('main').scrollTop = 0;
     }
 
-    function hitungBarisan() {
-        let type = document.getElementById('seqType').value;
-        let a = parseFloat(document.getElementById('inpA').value);
-        let br = parseFloat(document.getElementById('inpBR').value);
-        let n = parseInt(document.getElementById('inpN').value);
+    function hitungSudutC() {
+        let a = parseFloat(document.getElementById('degA').value);
+        let b = parseFloat(document.getElementById('degB').value);
 
-        if (isNaN(a) || isNaN(br) || isNaN(n) || n < 1) {
-            document.getElementById('resBarisan').innerText = "Masukkan angka yang valid (n ≥ 1)!";
+        if (isNaN(a) || isNaN(b) || a <= 0 || b <= 0 || (a + b) >= 180) {
+            document.getElementById('resSudutC').innerText = "Masukkan sudut yang valid (A + B < 180°)!";
             return;
         }
 
-        let Un = 0;
-        let Sn = 0;
-        let seqArr = [];
+        let c = 180 - (a + b);
+        document.getElementById('resSudutC').innerHTML = 
+            `Sudut C = 180° - (${a}° + ${b}°) = <b>${c}°</b>`;
+    }
 
-        if (type === 'aritmetika') {
-            Un = a + (n - 1) * br;
-            Sn = (n / 2) * (2 * a + (n - 1) * br);
-            for (let i = 1; i <= n; i++) {
-                seqArr.push(a + (i - 1) * br);
-            }
-        } else {
-            Un = a * Math.pow(br, n - 1);
-            if (br === 1) {
-                Sn = a * n;
-            } else {
-                Sn = a * (Math.pow(br, n) - 1) / (br - 1);
-            }
-            for (let i = 1; i <= n; i++) {
-                seqArr.push(a * Math.pow(br, i - 1));
-            }
+    function hitungPelurusPenyiku() {
+        let x = parseFloat(document.getElementById('degX').value);
+
+        if (isNaN(x) || x <= 0 || x >= 180) {
+            document.getElementById('resPelurus').innerText = "Masukkan nilai sudut antara 0° dan 180°!";
+            return;
         }
 
-        document.getElementById('resBarisan').innerHTML = 
-            `Suku ke-${n} (U<sub>${n}</sub>) = <b>${Un}</b><br>` +
-            `Jumlah ${n} suku (S<sub>${n}</sub>) = <b>${Sn}</b><br>` +
-            `<span style='font-size:0.75rem; color:#555;'>Barisan: ${seqArr.join(', ')}</span>`;
+        let pelurus = 180 - x;
+        let penyiku = x < 90 ? (90 - x) + "°" : "Tidak ada (sudut > 90°)";
+
+        document.getElementById('resPelurus').innerHTML = 
+            `Sudut Pelurus = <b>${pelurus}°</b><br>` +
+            `Sudut Penyiku = <b>${penyiku}</b>`;
     }
 
     let totalScore = 0;
@@ -442,7 +441,7 @@
             parentCard.dataset.answered = "true";
         } else {
             element.classList.add('selected-wrong');
-            feedbackEl.innerText = "✗ Kurang tepat, coba gunakan rumus Un = a + (n-1)b.";
+            feedbackEl.innerText = "✗ Kurang tepat, ingat bahwa total sudut dalam segitiga = 180° dan sudut berpelurus = 180°.";
             feedbackEl.style.color = "var(--wrong)";
         }
     }
