@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MPI Matematika SMP - Peluang & Frekuensi Relatif</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --correct: #2ec4b6;
+            --wrong: #e63946;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+            background-color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 16px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        header p {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            display: flex;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            position: sticky;
+            bottom: 30px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 10px 2px;
+            border: none;
+            background: none;
+            color: #666;
+            font-weight: 600;
+            font-size: 0.7rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .nav-btn.active {
+            color: var(--primary);
+            border-top: 3px solid var(--primary);
+            background-color: #f0f4ff;
+        }
+
+        main {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #eaedf1;
+        }
+
+        .card h2 {
+            font-size: 0.98rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card p, .card li {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        .card ul {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+
+        .card li {
+            margin-bottom: 6px;
+        }
+
+        .formula-box {
+            background: #eef2ff;
+            border-left: 4px solid var(--primary);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .interactive-box {
+            background: #f8fafc;
+            border: 2px dashed var(--accent);
+            border-radius: 10px;
+            padding: 12px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.88rem;
+        }
+
+        button.action-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .quiz-option {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:active {
+            transform: scale(0.98);
+        }
+
+        .quiz-option.selected-correct {
+            background: #d1fae5;
+            border-color: var(--correct);
+            color: #065f46;
+            font-weight: bold;
+        }
+
+        .quiz-option.selected-wrong {
+            background: #ffe4e6;
+            border-color: var(--wrong);
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+        .feedback {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            min-height: 20px;
+        }
+
+        .score-board {
+            text-align: center;
+            padding: 20px;
+            background: #e0f2fe;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .score-num {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        footer {
+            background: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 8px 12px;
+            font-size: 0.7rem;
+            position: sticky;
+            bottom: 0;
+            z-index: 101;
+            border-top: 1px solid #334155;
+        }
+
+        code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #0f172a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <h1>Matematika SMP: Peluang & Frekuensi Relatif</h1>
+        <p>Media Pembelajaran Interaktif Mandiri</p>
+    </header>
+
+    <main>
+        <!-- TAB 1: Konsep Peluang -->
+        <div id="tab-materi" class="tab-content active">
+            <div class="card">
+                <h2>🎲 Peluang Teoretis Kejadian Tunggal</h2>
+                <p>Rasio antara banyaknya kejadian yang diharapkan dengan banyaknya seluruh anggota ruang sampel.</p>
+                <div class="formula-box">
+                    • P(A) = n(A) / n(S)<br>
+                    • Kisaran Nilai Peluang: 0 ≤ P(A) ≤ 1<br>
+                    • P(A) = 0 ⟹ Kejadian Mustahil<br>
+                    • P(A) = 1 ⟹ Kejadian Pasti
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📊 Frekuensi Relatif & Harapan</h2>
+                <p><b>Frekuensi Relatif (Empiris):</b> Perbandingan munculnya kejadian dari sekumpulan percobaan nyata.</p>
+                <div class="formula-box">
+                    • Frekuensi Relatif (Fr) = Banyak Kejadian Muncul (k) / Banyak Percobaan (n)
+                </div>
+                <p style="margin-top:6px;"><b>Frekuensi Harapan:</b> Perkiraan banyaknya kejadian terjadi dalam N kali percobaan.</p>
+                <div class="formula-box">
+                    • Fh(A) = P(A) × N
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: Kalkulator & Simulasi -->
+        <div id="tab-kalkulator" class="tab-content">
+            <div class="card">
+                <h2>🧮 Simu-Kalkulator Peluang & Frekuensi Harapan</h2>
+                <div class="interactive-box">
+                    <p style="margin-bottom:6px; font-size:0.85rem;">
+                        Anggota Kejadian n(A) = <input type="number" id="inpNA" value="2"><br>
+                        Ruang Sampel n(S) = <input type="number" id="inpNS" value="6"><br>
+                        Banyak Percobaan (N) = <input type="number" id="inpNExp" value="60">
+                    </p>
+                    <button class="action-btn" onclick="hitungPeluang()">Hitung Peluang & Fh</button>
+                    <div id="resPeluang" style="margin-top: 10px; font-weight: bold; color: var(--primary);"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🪙 Simulasi Lempar Koin (Frekuensi Relatif)</h2>
+                <div class="interactive-box">
+                    <p style="margin-bottom:6px; font-size:0.85rem;">
+                        Lempar Koin Sebanyak: <input type="number" id="coinTimes" value="100"> Kali
+                    </p>
+                    <button class="action-btn" onclick="simulasiKoin()">Jalankan Simulasi</button>
+                    <div id="resKoin" style="margin-top: 10px; font-weight: bold; color: var(--primary);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Kuis TKA -->
+        <div id="tab-kuis" class="tab-content">
+            <div class="score-board">
+                <p style="font-size: 0.8rem; color: #555;">Skor Latihan Anda</p>
+                <div class="score-num" id="scoreDisplay">0</div>
+            </div>
+
+            <div class="card">
+                <h2>Soal 1 (Peluang Dadu)</h2>
+                <p style="margin-bottom: 12px;">Sebuah dadu prima dilempar sekali. Peluang muncul mata dadu bernilai <b>prima</b> adalah ...</p>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fb1', 50)">A. 1/2</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">B. 1/3</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">C. 2/3</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb1', 50)">D. 1/6</div>
+                <div id="fb1" class="feedback"></div>
+            </div>
+
+            <div class="card">
+                <h2>Soal 2 (Frekuensi Harapan)</h2>
+                <p style="margin-bottom: 12px;">Peluang seorang anak sembuh dari flu adalah 0,85. Jika terdapat 200 anak yang terkena flu, perkiraan (frekuensi harapan) anak yang sembuh adalah ...</p>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">A. 150 anak</div>
+                <div class="quiz-option" onclick="checkAnswer(this, true, 'fb2', 50)">B. 170 anak</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">C. 180 anak</div>
+                <div class="quiz-option" onclick="checkAnswer(this, false, 'fb2', 50)">D. 190 anak</div>
+                <div id="fb2" class="feedback"></div>
+            </div>
+        </div>
+    </main>
+
+    <nav>
+        <button class="nav-btn active" onclick="switchTab('tab-materi', this)">
+            <span>🎲</span> Materi
+        </button>
+        <button class="nav-btn" onclick="switchTab('tab-kalkulator', this)">
+            <span>🧮</span> Simulasi
+        </button>
+        <button class="nav-btn" onclick="switchTab('tab-kuis', this)">
+            <span>📝</span> Kuis TKA
+        </button>
+    </nav>
+
+    <footer>
+        Rangkuman Materi Tes Kemampuan Akademik (TKA)
+    </footer>
+</div>
+
+<script>
+    function switchTab(tabId, btnElement) {
+        const tabs = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => tab.classList.remove('active'));
+
+        const buttons = document.querySelectorAll('.nav-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        document.getElementById(tabId).classList.add('active');
+        btnElement.classList.add('active');
+        document.querySelector('main').scrollTop = 0;
+    }
+
+    function hitungPeluang() {
+        let na = parseFloat(document.getElementById('inpNA').value);
+        let ns = parseFloat(document.getElementById('inpNS').value);
+        let nExp = parseFloat(document.getElementById('inpNExp').value);
+
+        if (isNaN(na) || isNaN(ns) || na < 0 || ns <= 0 || na > ns) {
+            document.getElementById('resPeluang').innerText = "Masukkan n(A) ≤ n(S) yang valid!";
+            return;
+        }
+
+        let p = na / ns;
+        let fh = p * (isNaN(nExp) ? 0 : nExp);
+
+        document.getElementById('resPeluang').innerHTML = 
+            `Peluang P(A) = ${na}/${ns} = <b>${p.toFixed(3)}</b><br>` +
+            `Frekuensi Harapan Fh = <b>${fh.toFixed(1)} kali</b> (dari ${nExp} percobaan)`;
+    }
+
+    function simulasiKoin() {
+        let times = parseInt(document.getElementById('coinTimes').value);
+
+        if (isNaN(times) || times <= 0) {
+            document.getElementById('resKoin').innerText = "Masukkan jumlah pelemparan positif!";
+            return;
+        }
+
+        let angkaCount = 0;
+        for (let i = 0; i < times; i++) {
+            if (Math.random() < 0.5) {
+                angkaCount++;
+            }
+        }
+
+        let gambarCount = times - angkaCount;
+        let frAngka = angkaCount / times;
+
+        document.getElementById('resKoin').innerHTML = 
+            `Muncul Angka: ${angkaCount}x | Gambar: ${gambarCount}x<br>` +
+            `Frekuensi Relatif (Angka) = ${angkaCount}/${times} = <b>${frAngka.toFixed(3)}</b><br>` +
+            `<span style='font-size:0.75rem; color:#555;'>(Peluang Teoretis Koin = 0,500)</span>`;
+    }
+
+    let totalScore = 0;
+    let answeredQuestions = new Set();
+
+    function checkAnswer(element, isCorrect, feedbackId, points) {
+        const parentCard = element.parentElement;
+        const feedbackEl = document.getElementById(feedbackId);
+        
+        if (parentCard.dataset.answered === "true") return;
+
+        const options = parentCard.querySelectorAll('.quiz-option');
+        options.forEach(opt => opt.classList.remove('selected-correct', 'selected-wrong'));
+
+        if (isCorrect) {
+            element.classList.add('selected-correct');
+            feedbackEl.innerText = "✓ Benar! Jawaban Anda Tepat.";
+            feedbackEl.style.color = "var(--correct)";
+            
+            if(!answeredQuestions.has(feedbackId)) {
+                totalScore += points;
+                answeredQuestions.add(feedbackId);
+                document.getElementById('scoreDisplay').innerText = totalScore;
+            }
+            parentCard.dataset.answered = "true";
+        } else {
+            element.classList.add('selected-wrong');
+            feedbackEl.innerText = "✗ Kurang tepat, angka prima pada dadu adalah {2, 3, 5} dari total 6 muka.";
+            feedbackEl.style.color = "var(--wrong)";
+        }
+    }
+</script>
+
+</body>
+</html>
