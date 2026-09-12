@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rangkuman Materi TKA SMP</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    font-family:'Poppins',Arial,sans-serif;
+}
+
+body{
+    margin:0;
+    background:#f5f7ff;
+    color:#222;
+}
+
+.hero{
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    color:white;
+    padding:35px 20px 45px;
+    text-align:center;
+    border-radius:0 0 35px 35px;
+}
+
+.hero h1{
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    font-size:14px;
+    line-height:1.6;
+    opacity:.95;
+}
+
+.container{
+    padding:20px;
+    max-width:700px;
+    margin:auto;
+}
+
+
+.quote{
+    background:white;
+    padding:18px;
+    border-radius:18px;
+    margin-top:-25px;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+    line-height:1.7;
+    font-size:14px;
+}
+
+
+.search{
+    width:100%;
+    margin:25px 0;
+    padding:14px 18px;
+    border:none;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    font-size:15px;
+}
+
+
+.card{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    background:white;
+    padding:15px;
+    border-radius:18px;
+    margin-bottom:15px;
+    text-decoration:none;
+    color:#222;
+    box-shadow:0 6px 18px rgba(0,0,0,.06);
+    transition:.3s;
+}
+
+
+.card:hover{
+    transform:translateY(-3px);
+}
+
+
+.number{
+    min-width:40px;
+    height:40px;
+    background:#2563eb;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:12px;
+    font-weight:bold;
+}
+
+
+.title{
+    font-size:14px;
+    font-weight:600;
+}
+
+
+.footer{
+    text-align:center;
+    padding:30px;
+    font-size:13px;
+    color:#555;
+}
+
+
+/* WhatsApp */
+.whatsapp{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    width:60px;
+    height:60px;
+    background:#25D366;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:30px;
+    text-decoration:none;
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+    z-index:99;
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<section class="hero">
+
+<h1>📐 Rangkuman Materi TKA SMP</h1>
+
+<p>
+Persiapkan diri menghadapi Tes Kemampuan Akademik (TKA)
+dengan rangkuman materi sesuai kisi-kisi resmi Kemendikdasmen.
+</p>
+
+</section>
+
+
+
+<div class="container">
+
+
+<div class="quote">
+
+✨ Keberhasilan bukan kebetulan, tetapi hasil dari latihan yang konsisten dan terarah.
+
+<br><br>
+
+Mari belajar sedikit demi sedikit setiap hari.
+Semoga menjadi langkah menuju hasil terbaik dengan doa kepada Tuhan Yang Maha Esa.
+
+</div>
+
+
+<input 
+type="text" 
+id="search"
+class="search"
+placeholder="🔎 Cari materi TKA..."
+>
+
+
+<div id="list"></div>
+
+
+</div>
+
+
+
+<div class="footer">
+
+⭐ Beri bintang agar tidak terhapus<br>
+📤 Share, semoga bermanfaat
+
+</div>
+
+
+
+<a class="whatsapp"
+onclick="shareWA()">
+☘
+</a>
+
+
+
+<script>
+
+
+const materi=[
+
+["Perbandingan dan sifat-sifat bilangan",
+"bilangan"],
+
+["Operasi aritmetika pada bilangan",
+"aritmetika"],
+
+["Estimasi/perkiraan hasil perhitungan",
+"perkiraan"],
+
+["Faktorisasi prima bilangan asli",
+"faktorisasi"],
+
+["Rasio (skala, proporsi, dan laju perubahan)",
+"rasio"],
+
+["Perbandingan senilai dan berbalik nilai",
+"perbandingan"],
+
+["Persamaan linear satu variabel",
+"persamaan"],
+
+["Pertidaksamaan linear satu variabel",
+"pertidaksamaan"],
+
+["Sistem persamaan linear dua variabel",
+"dua-variabel"],
+
+["Bentuk aljabar dan sifat operasinya",
+"bentuk-aljabar"],
+
+["Relasi dan fungsi",
+"relasi-fungsi"],
+
+["Barisan dan deret bilangan",
+"barisan-deret"],
+
+["Hubungan antar sudut",
+"sudut"],
+
+["Teorema Pythagoras",
+"pythagoras"],
+
+["Kekongruenan dan kesebangunan",
+"kekongruenan-kesebangunan"],
+
+["Jaring-jaring bangun ruang",
+"bangun-ruang"],
+
+["Transformasi geometri",
+"transformasi"],
+
+["Keliling dan luas bangun datar",
+"keliling-luas"],
+
+["Volume bangun ruang",
+"volume"],
+
+["Pengolahan dan penyajian data",
+"pengolahan-penyajian-data"],
+
+["Mean, median, modus, dan range",
+"penentuan-data"],
+
+["Ukuran pemusatan dan penyebaran data",
+"perbandingan-data"],
+
+["Peluang dan frekuensi relatif",
+"peluang"]
+
+];
+
+
+
+function tampil(data){
+
+let html="";
+
+data.forEach((item,index)=>{
+
+html+=`
+
+<a class="card" 
+href="https://nirsinggih.github.io/mpi-tka/hp/smp-mtk/${item[1]}.html"
+target="_blank">
+
+<div class="number">
+${index+1}
+</div>
+
+<div class="title">
+${item[0]}
+</div>
+
+</a>
+
+`;
+
+});
+
+
+document.getElementById("list").innerHTML=html;
+
+}
+
+
+tampil(materi);
+
+
+
+document.getElementById("search")
+.addEventListener("input",function(){
+
+let hasil=materi.filter(x=>
+x[0].toLowerCase()
+.includes(this.value.toLowerCase())
+);
+
+tampil(hasil);
+
+});
+
+
+
+function shareWA(){
+
+let text=
+`📐 Rangkuman Materi TKA SMP
+
+Persiapkan diri menghadapi Tes Kemampuan Akademik dengan materi lengkap:
+
+https://nirsinggih.github.io/mpi-tka/
+
+Semoga bermanfaat ⭐`;
+
+window.open(
+"https://wa.me/?text="+encodeURIComponent(text),
+"_blank"
+);
+
+}
+
+
+</script>
+
+
+</body>
+</html>
