@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+MPI Menyusun Kerangka Teks
+</title>
+
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:"Segoe UI",Arial,sans-serif;
+}
+
+
+body{
+
+margin:0;
+background:#f1f5f9;
+color:#1e293b;
+line-height:1.7;
+
+}
+
+
+header{
+
+background:linear-gradient(135deg,#ea580c,#2563eb);
+color:white;
+padding:25px 15px;
+text-align:center;
+
+}
+
+
+header h1{
+
+font-size:23px;
+
+}
+
+
+.container{
+
+max-width:700px;
+margin:auto;
+padding:15px;
+
+}
+
+
+.card{
+
+background:white;
+padding:20px;
+margin-bottom:18px;
+border-radius:18px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+
+}
+
+
+h2{
+
+color:#2563eb;
+
+}
+
+
+
+.info{
+
+background:#fff7ed;
+border-left:5px solid #ea580c;
+padding:15px;
+border-radius:10px;
+
+}
+
+
+
+.bagan{
+
+background:#eff6ff;
+padding:15px;
+border-radius:12px;
+margin-top:15px;
+
+}
+
+
+
+button{
+
+width:100%;
+padding:14px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:12px;
+font-size:16px;
+
+}
+
+
+
+.hidden{
+
+display:none;
+
+}
+
+
+
+.option{
+
+padding:12px;
+background:#f8fafc;
+border:1px solid #cbd5e1;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+.option:hover{
+
+background:#dbeafe;
+
+}
+
+
+
+.hasil{
+
+text-align:center;
+font-size:22px;
+font-weight:bold;
+color:#2563eb;
+
+}
+
+
+
+footer{
+
+background:#0f172a;
+color:white;
+text-align:center;
+padding:18px;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+
+<header>
+
+<h1>
+Multimedia Pembelajaran Interaktif
+</h1>
+
+<p>
+Pemahaman Tekstual:
+Menyusun Kerangka atau Bagan Berdasarkan Bagian Penting dalam Teks
+</p>
+
+<p>
+Bahasa Indonesia SMP
+</p>
+
+</header>
+
+
+
+
+
+<div class="container">
+
+
+
+<div class="card" id="awal">
+
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+
+<p>
+Peserta didik mampu:
+</p>
+
+
+<ul>
+
+<li>Menentukan gagasan utama dalam setiap bagian teks.</li>
+
+<li>Menyusun kerangka berdasarkan informasi penting.</li>
+
+<li>Membuat bagan hubungan antarbagian teks.</li>
+
+</ul>
+
+
+<button onclick="mulai()">
+Mulai Pembelajaran
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+<div id="materi" class="hidden">
+
+
+
+<div class="card">
+
+
+<h2>
+📖 Pengertian Kerangka Teks
+</h2>
+
+
+<p>
+
+Kerangka teks adalah susunan singkat yang berisi bagian-bagian penting
+dari sebuah teks. Kerangka membantu pembaca memahami isi bacaan secara
+lebih terstruktur tanpa harus membaca seluruh teks kembali.
+
+</p>
+
+
+<div class="info">
+
+
+<b>Langkah menyusun kerangka:</b>
+
+<br><br>
+
+1. Membaca teks secara keseluruhan.
+
+<br>
+
+2. Menentukan topik utama.
+
+<br>
+
+3. Menemukan gagasan utama setiap paragraf.
+
+<br>
+
+4. Menuliskan informasi penting secara singkat.
+
+<br>
+
+5. Menyusun hubungan antarbagian menjadi bagan.
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📌 Bentuk Kerangka Teks
+</h2>
+
+
+
+<div class="bagan">
+
+
+<b>Judul Teks</b>
+
+<br>
+
+⬇️
+
+<br>
+
+<b>Gagasan Utama</b>
+
+<br>
+
+⬇️
+
+<br>
+
+├── Bagian 1: Pembuka/Pengenalan
+
+<br>
+
+├── Bagian 2: Pembahasan Utama
+
+<br>
+
+├── Bagian 3: Data atau Penjelasan
+
+<br>
+
+└── Bagian 4: Kesimpulan
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📚 Teks Nonfiksi:
+"Manfaat Membaca bagi Pelajar"
+</h2>
+
+
+
+<p>
+
+Membaca merupakan kegiatan yang memberikan banyak manfaat bagi pelajar.
+Melalui membaca, siswa dapat memperoleh pengetahuan baru dan memperluas
+wawasan tentang berbagai hal.
+
+</p>
+
+
+<p>
+
+Selain menambah informasi, membaca juga dapat meningkatkan kemampuan
+berpikir kritis. Siswa yang terbiasa membaca akan lebih mudah memahami
+suatu masalah dan mencari solusi berdasarkan informasi yang diperoleh.
+
+</p>
+
+
+<p>
+
+Kebiasaan membaca perlu ditanamkan sejak dini. Sekolah dan keluarga
+memiliki peran penting dalam menciptakan lingkungan yang mendukung
+kegiatan membaca.
+
+</p>
+
+
+<div class="bagan">
+
+
+<b>Kerangka Teks:</b>
+
+
+<br><br>
+
+
+📌 Topik:
+Manfaat membaca bagi pelajar.
+
+
+<br><br>
+
+
+1. Pendahuluan
+
+<br>
+→ Membaca memberikan pengetahuan dan wawasan.
+
+
+<br><br>
+
+
+2. Manfaat Membaca
+
+<br>
+→ Meningkatkan kemampuan berpikir kritis.
+
+
+<br><br>
+
+
+3. Peran Lingkungan
+
+<br>
+→ Sekolah dan keluarga mendukung kebiasaan membaca.
+
+
+<br><br>
+
+
+4. Kesimpulan
+
+<br>
+→ Membaca perlu menjadi kebiasaan sejak dini.
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📚 Teks Fiksi:
+"Persahabatan di Sekolah Baru"
+</h2>
+
+
+
+<p>
+
+Hari pertama masuk sekolah baru membuat Raka merasa gugup. Ia belum
+mengenal teman-teman di kelasnya dan merasa khawatir tidak dapat
+beradaptasi.
+
+</p>
+
+
+<p>
+
+Seorang siswa bernama Bima kemudian mengajak Raka berbicara dan
+memperkenalkannya kepada teman-teman lain. Perlahan, Raka mulai merasa
+nyaman dan memiliki banyak teman.
+
+</p>
+
+
+<p>
+
+Sejak saat itu, Raka dan Bima menjadi sahabat dekat. Mereka sering
+belajar bersama dan saling membantu ketika menghadapi kesulitan.
+
+</p>
+
+
+
+<div class="bagan">
+
+
+<b>Kerangka Cerita:</b>
+
+
+<br><br>
+
+
+📌 Tema:
+Persahabatan.
+
+
+<br><br>
+
+
+1. Awal Cerita
+
+<br>
+→ Raka masuk sekolah baru dan merasa gugup.
+
+
+<br><br>
+
+
+2. Konflik
+
+<br>
+→ Raka kesulitan beradaptasi.
+
+
+<br><br>
+
+
+3. Penyelesaian
+
+<br>
+→ Bima membantu Raka mendapatkan teman.
+
+
+<br><br>
+
+
+4. Akhir Cerita
+
+<br>
+→ Raka dan Bima menjadi sahabat.
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+🧠 Tips Menyusun Bagan Teks
+</h2>
+
+
+<ul>
+
+<li>Gunakan kata kunci, bukan kalimat panjang.</li>
+
+<li>Susun informasi sesuai urutan teks.</li>
+
+<li>Bedakan gagasan utama dan gagasan pendukung.</li>
+
+<li>Gunakan bentuk bercabang agar hubungan informasi terlihat jelas.</li>
+
+</ul>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📝 Evaluasi TKA
+</h2>
+
+
+
+
+<h3>
+1. Langkah pertama menyusun kerangka teks adalah...
+</h3>
+
+
+<div class="option" onclick="jawab(0,'A')">
+A. Membaca teks secara keseluruhan
+</div>
+
+
+<div class="option" onclick="jawab(0,'B')">
+B. Menghapus isi teks
+</div>
+
+
+<div class="option" onclick="jawab(0,'C')">
+C. Mengubah judul teks
+</div>
+
+
+
+
+
+
+
+<h3>
+2. Bagian "manfaat membaca" pada kerangka teks berisi...
+</h3>
+
+
+<div class="option" onclick="jawab(1,'A')">
+A. Dampak membaca terhadap kemampuan berpikir
+</div>
+
+
+<div class="option" onclick="jawab(1,'B')">
+B. Nama tokoh dalam cerita
+</div>
+
+
+<div class="option" onclick="jawab(1,'C')">
+C. Tempat kejadian cerita
+</div>
+
+
+
+
+
+
+
+
+<h3>
+3. Kerangka teks dibuat agar pembaca dapat...
+</h3>
+
+
+<div class="option" onclick="jawab(2,'A')">
+A. Memahami isi teks secara terstruktur
+</div>
+
+
+<div class="option" onclick="jawab(2,'B')">
+B. Mengubah isi teks
+</div>
+
+
+<div class="option" onclick="jawab(2,'C')">
+C. Menghilangkan informasi penting
+</div>
+
+
+
+
+
+<button onclick="cekNilai()">
+Lihat Nilai
+</button>
+
+
+
+<div class="hasil" id="hasil"></div>
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<footer>
+
+Rangkuman Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+
+
+
+
+<script>
+
+
+let kunci=[
+
+"A",
+"A",
+"A"
+
+];
+
+
+let jawaban=[];
+
+
+
+function mulai(){
+
+document.getElementById("awal").style.display="none";
+
+document.getElementById("materi").classList.remove("hidden");
+
+}
+
+
+
+function jawab(no,pil){
+
+jawaban[no]=pil;
+
+}
+
+
+
+function cekNilai(){
+
+let skor=0;
+
+
+for(let i=0;i<kunci.length;i++){
+
+if(jawaban[i]==kunci[i]){
+
+skor++;
+
+}
+
+}
+
+
+document.getElementById("hasil").innerHTML=
+"Skor Kamu: "+skor+" / 3";
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
