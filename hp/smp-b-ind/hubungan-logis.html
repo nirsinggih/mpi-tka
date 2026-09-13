@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+MPI Pemahaman Inferensial - Hubungan Logis Teks
+</title>
+
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:"Segoe UI",Arial,sans-serif;
+}
+
+body{
+margin:0;
+background:#f1f5f9;
+color:#1e293b;
+line-height:1.7;
+}
+
+
+header{
+background:linear-gradient(135deg,#0891b2,#7c3aed);
+color:white;
+text-align:center;
+padding:25px 15px;
+}
+
+
+header h1{
+font-size:23px;
+margin:5px;
+}
+
+
+.container{
+max-width:700px;
+margin:auto;
+padding:15px;
+}
+
+
+.card{
+background:white;
+padding:20px;
+border-radius:18px;
+margin-bottom:18px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+
+h2{
+color:#2563eb;
+}
+
+
+.info{
+background:#ecfeff;
+border-left:5px solid #0891b2;
+padding:15px;
+border-radius:10px;
+}
+
+
+.bagan{
+background:#f5f3ff;
+padding:15px;
+border-radius:10px;
+}
+
+
+button{
+width:100%;
+padding:14px;
+background:#2563eb;
+border:none;
+border-radius:12px;
+color:white;
+font-size:16px;
+}
+
+
+.hidden{
+display:none;
+}
+
+
+.option{
+padding:12px;
+background:#f8fafc;
+border:1px solid #cbd5e1;
+border-radius:10px;
+margin:8px 0;
+}
+
+
+.option:hover{
+background:#dbeafe;
+}
+
+
+.hasil{
+text-align:center;
+font-size:22px;
+font-weight:bold;
+color:#2563eb;
+}
+
+
+footer{
+background:#0f172a;
+color:white;
+text-align:center;
+padding:18px;
+}
+
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+
+<header>
+
+<h1>
+Multimedia Pembelajaran Interaktif
+</h1>
+
+<p>
+Pemahaman Inferensial:
+Menjelaskan Kelogisan Hubungan Antarperistiwa, Antargagasan, dan Antarinformasi
+</p>
+
+<p>
+Bahasa Indonesia SMP - TKA
+</p>
+
+</header>
+
+
+
+
+
+<div class="container">
+
+
+
+<div class="card" id="awal">
+
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+
+<ul>
+
+<li>Menganalisis hubungan logis dalam sebuah teks.</li>
+
+<li>Menentukan hubungan sebab-akibat antarperistiwa.</li>
+
+<li>Menjelaskan hubungan antargagasan dalam teks.</li>
+
+<li>Membandingkan hubungan informasi dari beberapa teks.</li>
+
+</ul>
+
+
+<button onclick="mulai()">
+Mulai Pembelajaran
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="materi" class="hidden">
+
+
+
+<div class="card">
+
+<h2>
+📖 Pengertian Hubungan Logis dalam Teks
+</h2>
+
+
+<p>
+
+Hubungan logis adalah keterkaitan yang masuk akal antara satu informasi
+dengan informasi lainnya. Pembaca harus memahami hubungan tersebut agar
+dapat menarik kesimpulan yang tepat.
+
+</p>
+
+
+<div class="info">
+
+
+<b>Bentuk hubungan logis:</b>
+
+
+<br><br>
+
+
+<b>1. Sebab - Akibat</b><br>
+Satu peristiwa menjadi penyebab terjadinya peristiwa lain.
+
+
+<br><br>
+
+
+<b>2. Kronologi</b><br>
+Hubungan berdasarkan urutan waktu kejadian.
+
+
+<br><br>
+
+
+<b>3. Masalah - Solusi</b><br>
+Hubungan antara permasalahan dan cara penyelesaiannya.
+
+
+<br><br>
+
+
+<b>4. Perbandingan</b><br>
+Hubungan yang menunjukkan persamaan atau perbedaan.
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+🔎 Contoh Hubungan Logis
+</h2>
+
+
+<div class="bagan">
+
+
+<b>Sebab → Akibat</b>
+
+<br><br>
+
+Hutan ditebang secara berlebihan
+
+<br>
+⬇️
+
+<br>
+
+Jumlah pohon berkurang
+
+<br>
+⬇️
+
+<br>
+
+Risiko banjir meningkat
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📚 Teks Fiksi:
+"Keputusan Nisa"
+</h2>
+
+
+<p>
+
+Nisa dikenal sebagai siswa yang rajin belajar. Namun, beberapa minggu
+terakhir nilai ujiannya menurun karena ia sering menggunakan waktu
+belajar untuk bermain gim.
+
+</p>
+
+
+<p>
+
+Melihat perubahan tersebut, Nisa mulai mengatur jadwal harian. Ia
+membatasi waktu bermain dan menyediakan waktu khusus untuk membaca serta
+mengerjakan tugas sekolah.
+
+</p>
+
+
+<p>
+
+Setelah menerapkan kebiasaan baru, nilai Nisa kembali meningkat. Ia
+menyadari bahwa pengaturan waktu sangat penting untuk mencapai tujuan.
+
+</p>
+
+
+
+<div class="bagan">
+
+
+<b>Analisis Hubungan Peristiwa:</b>
+
+
+<br><br>
+
+
+Sering bermain gim
+
+<br>
+⬇️
+
+<br>
+
+Waktu belajar berkurang
+
+<br>
+⬇️
+
+<br>
+
+Nilai menurun
+
+
+<br><br>
+
+
+Kemudian:
+
+
+<br>
+
+Mengatur waktu belajar
+
+<br>
+⬇️
+
+<br>
+
+Belajar lebih teratur
+
+<br>
+⬇️
+
+<br>
+
+Nilai meningkat
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📚 Teks Nonfiksi:
+"Penggunaan Transportasi Ramah Lingkungan"
+</h2>
+
+
+<p>
+
+Jumlah kendaraan bermotor terus meningkat seiring pertumbuhan penduduk.
+Peningkatan jumlah kendaraan menyebabkan emisi gas buang semakin besar.
+
+</p>
+
+
+<p>
+
+Salah satu solusi yang dapat dilakukan adalah menggunakan transportasi
+ramah lingkungan seperti sepeda dan kendaraan listrik. Penggunaan
+transportasi tersebut dapat membantu mengurangi pencemaran udara.
+
+</p>
+
+
+<p>
+
+Selain itu, pemerintah juga menyediakan fasilitas pendukung seperti
+jalur sepeda dan transportasi umum agar masyarakat memiliki pilihan
+perjalanan yang lebih ramah lingkungan.
+
+</p>
+
+
+
+<div class="bagan">
+
+
+<b>Hubungan Antargagasan:</b>
+
+
+<br><br>
+
+
+<b>Gagasan 1:</b>
+
+<br>
+Jumlah kendaraan meningkat.
+
+
+<br>
+⬇️
+
+
+<br>
+
+
+<b>Gagasan 2:</b>
+
+<br>
+Pencemaran udara bertambah.
+
+
+<br>
+⬇️
+
+
+<br>
+
+
+<b>Gagasan 3:</b>
+
+<br>
+Transportasi ramah lingkungan menjadi solusi.
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+🔗 Hubungan Antarteks
+</h2>
+
+
+
+<div class="info">
+
+
+<b>Teks Nisa:</b>
+
+<br>
+Membahas pentingnya mengatur waktu untuk mencapai keberhasilan.
+
+
+<br><br>
+
+
+<b>Teks Transportasi:</b>
+
+<br>
+Membahas pentingnya memilih tindakan yang memberikan dampak positif.
+
+
+<br><br>
+
+
+<b>Hubungan:</b>
+
+<br>
+Kedua teks menunjukkan bahwa keputusan manusia dapat menyebabkan
+dampak tertentu sehingga diperlukan tindakan yang tepat.
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+🧠 Cara Menilai Kelogisan Hubungan
+</h2>
+
+
+<ol>
+
+<li>
+Identifikasi peristiwa atau gagasan utama.
+</li>
+
+<li>
+Cari hubungan penyebab dan akibat.
+</li>
+
+<li>
+Periksa apakah hubungan tersebut sesuai fakta dalam teks.
+</li>
+
+<li>
+Bandingkan informasi jika terdapat lebih dari satu teks.
+</li>
+
+</ol>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📝 Evaluasi TKA
+</h2>
+
+
+
+
+<h3>
+1. Penyebab nilai Nisa menurun adalah...
+</h3>
+
+
+<div class="option" onclick="jawab(0,'A')">
+A. Waktu belajar berkurang karena sering bermain gim
+</div>
+
+
+<div class="option" onclick="jawab(0,'B')">
+B. Tidak memiliki buku pelajaran
+</div>
+
+
+<div class="option" onclick="jawab(0,'C')">
+C. Tidak masuk sekolah
+</div>
+
+
+
+
+
+
+
+<h3>
+2. Hubungan "kendaraan meningkat → pencemaran udara bertambah"
+merupakan hubungan...
+</h3>
+
+
+<div class="option" onclick="jawab(1,'A')">
+A. Sebab-akibat
+</div>
+
+
+<div class="option" onclick="jawab(1,'B')">
+B. Perbandingan
+</div>
+
+
+<div class="option" onclick="jawab(1,'C')">
+B. Urutan tempat
+</div>
+
+
+
+
+
+
+
+<h3>
+3. Kesamaan kedua teks adalah...
+</h3>
+
+
+<div class="option" onclick="jawab(2,'A')">
+A. Tindakan manusia dapat menghasilkan dampak tertentu
+</div>
+
+
+<div class="option" onclick="jawab(2,'B')">
+B. Semua masalah tidak memiliki solusi
+</div>
+
+
+<div class="option" onclick="jawab(2,'C')">
+C. Perubahan selalu memberikan dampak buruk
+</div>
+
+
+
+
+
+
+<button onclick="cekNilai()">
+Lihat Nilai
+</button>
+
+
+
+<div id="hasil" class="hasil"></div>
+
+
+
+</div>
+
+
+
+
+</div>
+
+</div>
+
+
+
+
+
+<footer>
+
+Rangkuman Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+
+
+
+<script>
+
+
+let kunci=[
+
+"A",
+"A",
+"A"
+
+];
+
+
+let jawaban=[];
+
+
+
+function mulai(){
+
+document.getElementById("awal").style.display="none";
+
+document.getElementById("materi").classList.remove("hidden");
+
+}
+
+
+
+function jawab(no,pil){
+
+jawaban[no]=pil;
+
+}
+
+
+
+function cekNilai(){
+
+let skor=0;
+
+
+for(let i=0;i<kunci.length;i++){
+
+if(jawaban[i]==kunci[i]){
+
+skor++;
+
+}
+
+}
+
+
+document.getElementById("hasil").innerHTML=
+"Skor Kamu: "+skor+" / 3";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
