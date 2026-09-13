@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+MPI Informasi Tersurat dalam Teks
+</title>
+
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:"Segoe UI",Arial,sans-serif;
+}
+
+
+body{
+margin:0;
+background:#f1f5f9;
+color:#1e293b;
+line-height:1.7;
+}
+
+
+header{
+
+background:linear-gradient(135deg,#7c3aed,#2563eb);
+color:white;
+text-align:center;
+padding:25px 15px;
+
+}
+
+
+header h1{
+
+font-size:24px;
+margin:5px;
+
+}
+
+
+header p{
+
+font-size:14px;
+
+}
+
+
+.container{
+
+max-width:700px;
+margin:auto;
+padding:15px;
+
+}
+
+
+.card{
+
+background:white;
+padding:20px;
+border-radius:18px;
+margin-bottom:18px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+
+h2{
+
+color:#2563eb;
+font-size:21px;
+
+}
+
+
+
+.info{
+
+background:#eef2ff;
+border-left:5px solid #6366f1;
+padding:15px;
+border-radius:10px;
+
+}
+
+
+button{
+
+width:100%;
+padding:14px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:12px;
+font-size:16px;
+cursor:pointer;
+
+}
+
+
+button:hover{
+
+background:#1d4ed8;
+
+}
+
+
+
+.hidden{
+
+display:none;
+
+}
+
+
+
+.option{
+
+background:#f8fafc;
+border:1px solid #cbd5e1;
+padding:12px;
+margin:8px 0;
+border-radius:10px;
+cursor:pointer;
+
+}
+
+
+
+.option:hover{
+
+background:#dbeafe;
+
+}
+
+
+
+.hasil{
+
+text-align:center;
+font-size:22px;
+font-weight:bold;
+color:#2563eb;
+
+}
+
+
+
+footer{
+
+background:#0f172a;
+color:white;
+text-align:center;
+padding:18px;
+font-size:14px;
+
+}
+
+
+</style>
+
+
+</head>
+
+
+
+<body>
+
+
+
+<header>
+
+<h1>
+Multimedia Pembelajaran Interaktif
+</h1>
+
+<p>
+Pemahaman Tekstual:
+Mengidentifikasi Informasi Penting yang Tersurat dalam Teks
+</p>
+
+
+<p>
+Bahasa Indonesia SMP
+</p>
+
+
+</header>
+
+
+
+
+
+
+<div class="container">
+
+
+
+<div class="card" id="awal">
+
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+
+<p>
+Setelah mengikuti pembelajaran ini, peserta didik mampu:
+</p>
+
+
+<ul>
+
+<li>Menemukan informasi yang tertulis secara langsung dalam teks.</li>
+
+<li>Mengidentifikasi unsur informasi berdasarkan isi bacaan.</li>
+
+<li>Membedakan informasi tersurat dan tersirat.</li>
+
+</ul>
+
+
+<button onclick="mulai()">
+Mulai Pembelajaran
+</button>
+
+
+</div>
+
+
+
+
+
+
+<div id="materi" class="hidden">
+
+
+
+
+
+<div class="card">
+
+
+<h2>📖 Pengertian Informasi Tersurat</h2>
+
+
+<p>
+
+Informasi tersurat adalah informasi yang disampaikan secara langsung
+oleh penulis dalam sebuah teks. Informasi tersebut dapat ditemukan
+dengan membaca kalimat atau paragraf tanpa harus melakukan penafsiran
+yang mendalam.
+
+</p>
+
+
+<div class="info">
+
+<b>Ciri-ciri informasi tersurat:</b>
+
+<ul>
+
+<li>Tertulis secara langsung dalam teks.</li>
+
+<li>Dapat ditemukan melalui kata atau kalimat tertentu.</li>
+
+<li>Memiliki bukti yang jelas dari bacaan.</li>
+
+</ul>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+🔎 Teknik Menemukan Informasi Tersurat
+</h2>
+
+
+<p>
+Gunakan pertanyaan 5W+1H:
+</p>
+
+
+<div class="info">
+
+<b>What (Apa)</b><br>
+Menemukan peristiwa atau hal yang dibahas.
+
+
+<br><br>
+
+
+<b>Who (Siapa)</b><br>
+Menemukan tokoh atau pihak yang terlibat.
+
+
+<br><br>
+
+
+<b>When (Kapan)</b><br>
+Menemukan waktu kejadian.
+
+
+<br><br>
+
+
+<b>Where (Di mana)</b><br>
+Menemukan tempat kejadian.
+
+
+<br><br>
+
+
+<b>Why (Mengapa)</b><br>
+Menemukan alasan suatu peristiwa.
+
+
+<br><br>
+
+
+<b>How (Bagaimana)</b><br>
+Menemukan proses atau cara terjadinya sesuatu.
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📚 Teks Nonfiksi:
+"Manfaat Energi Matahari"
+</h2>
+
+
+
+<p>
+
+Matahari merupakan sumber energi terbesar bagi kehidupan di bumi.
+Energi matahari dapat dimanfaatkan dalam berbagai bidang, seperti
+pembangkit listrik, pertanian, dan kehidupan sehari-hari.
+
+</p>
+
+
+<p>
+
+Salah satu pemanfaatan energi matahari adalah penggunaan panel surya.
+Panel surya merupakan alat yang dapat mengubah energi cahaya matahari
+menjadi energi listrik.
+
+</p>
+
+
+<p>
+
+Penggunaan energi matahari memberikan banyak manfaat karena termasuk
+sumber energi terbarukan. Energi ini dapat membantu mengurangi
+ketergantungan terhadap bahan bakar fosil yang jumlahnya terbatas.
+
+</p>
+
+
+
+
+<div class="info">
+
+
+<b>Informasi Tersurat:</b>
+
+
+<br><br>
+
+
+<b>Apa:</b><br>
+Energi matahari dimanfaatkan sebagai sumber energi.
+
+
+<br><br>
+
+
+<b>Siapa:</b><br>
+Manusia atau masyarakat pengguna energi.
+
+
+<br><br>
+
+
+<b>Bagaimana:</b><br>
+Energi matahari diubah menjadi listrik menggunakan panel surya.
+
+
+<br><br>
+
+
+<b>Mengapa penting:</b><br>
+Karena energi matahari merupakan energi terbarukan.
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📚 Teks Fiksi:
+"Perjuangan Rani Membaca"
+</h2>
+
+
+
+<p>
+
+Setiap sore, Rani pergi ke perpustakaan desa untuk membaca buku.
+Meskipun jarak rumahnya cukup jauh, ia tetap berusaha datang karena
+ingin menambah pengetahuan.
+
+</p>
+
+
+<p>
+
+Di perpustakaan tersebut, Rani membaca berbagai jenis buku mulai dari
+cerita sejarah hingga ilmu pengetahuan. Ia mencatat informasi penting
+yang diperoleh dari buku-buku tersebut.
+
+</p>
+
+
+<p>
+
+Suatu hari, Rani berhasil memenangkan lomba membaca tingkat sekolah.
+Keberhasilannya diperoleh karena kebiasaan membaca yang dilakukan
+secara rutin.
+
+</p>
+
+
+
+
+<div class="info">
+
+
+<b>Informasi Tersurat:</b>
+
+
+<br><br>
+
+
+<b>Siapa:</b><br>
+Rani.
+
+
+<br><br>
+
+
+<b>Di mana:</b><br>
+Perpustakaan desa.
+
+
+<br><br>
+
+
+<b>Kapan:</b><br>
+Setiap sore.
+
+
+<br><br>
+
+
+<b>Mengapa Rani berhasil:</b><br>
+Karena rutin membaca dan mencatat informasi.
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+💡 Perbedaan Informasi Tersurat dan Tersirat
+</h2>
+
+
+
+<div class="info">
+
+
+<b>Tersurat:</b><br>
+
+Informasi tertulis langsung dalam teks.
+
+
+<br><br>
+
+
+Contoh:
+
+"Rani pergi ke perpustakaan setiap sore."
+
+Informasi:
+Rani pergi ke perpustakaan pada sore hari.
+
+
+<br><br><br>
+
+
+<b>Tersirat:</b><br>
+
+Informasi yang harus disimpulkan berdasarkan isi teks.
+
+
+<br><br>
+
+
+Contoh:
+
+Rani selalu membaca buku.
+
+Kesimpulan:
+Rani memiliki kebiasaan belajar yang baik.
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📝 Tes Kemampuan Akademik
+</h2>
+
+
+
+<h3>
+1. Berdasarkan teks energi matahari, alat yang mengubah cahaya matahari
+menjadi listrik adalah...
+</h3>
+
+
+<div class="option" onclick="jawab(0,'A')">
+A. Panel surya
+</div>
+
+
+<div class="option" onclick="jawab(0,'B')">
+B. Turbin air
+</div>
+
+
+<div class="option" onclick="jawab(0,'C')">
+C. Mesin diesel
+</div>
+
+
+
+
+
+
+<h3>
+2. Berdasarkan teks Rani, kapan Rani pergi ke perpustakaan?
+</h3>
+
+
+<div class="option" onclick="jawab(1,'A')">
+A. Setiap pagi
+</div>
+
+
+<div class="option" onclick="jawab(1,'B')">
+B. Setiap sore
+</div>
+
+
+<div class="option" onclick="jawab(1,'C')">
+C. Setiap malam
+</div>
+
+
+
+
+
+
+<h3>
+3. Informasi tersurat dapat ditemukan dengan cara...
+</h3>
+
+
+<div class="option" onclick="jawab(2,'A')">
+A. Membaca langsung isi teks
+</div>
+
+
+<div class="option" onclick="jawab(2,'B')">
+B. Membuat pendapat pribadi
+</div>
+
+
+<div class="option" onclick="jawab(2,'C')">
+C. Mengubah isi bacaan
+</div>
+
+
+
+
+
+<button onclick="cekNilai()">
+Lihat Nilai
+</button>
+
+
+
+<div id="hasil" class="hasil"></div>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<footer>
+
+Rangkuman Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+
+
+<script>
+
+
+let kunci=[
+
+"A",
+"B",
+"A"
+
+];
+
+
+let jawaban=[];
+
+
+
+function mulai(){
+
+document.getElementById("awal").style.display="none";
+
+document.getElementById("materi").classList.remove("hidden");
+
+}
+
+
+
+function jawab(no,pilihan){
+
+jawaban[no]=pilihan;
+
+}
+
+
+
+function cekNilai(){
+
+let skor=0;
+
+
+for(let i=0;i<kunci.length;i++){
+
+if(jawaban[i]==kunci[i]){
+
+skor++;
+
+}
+
+}
+
+
+document.getElementById("hasil").innerHTML=
+"Skor Kamu: "+skor+" / 3";
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
