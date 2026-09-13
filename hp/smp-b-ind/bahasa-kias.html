@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+MPI Bahasa Kias dan Citraan Teks Fiksi
+</title>
+
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:"Segoe UI",Arial,sans-serif;
+}
+
+
+body{
+
+margin:0;
+background:#f1f5f9;
+color:#1e293b;
+line-height:1.7;
+
+}
+
+
+header{
+
+background:linear-gradient(135deg,#db2777,#7c3aed);
+color:white;
+padding:25px 15px;
+text-align:center;
+
+}
+
+
+header h1{
+
+font-size:23px;
+
+}
+
+
+.container{
+
+max-width:700px;
+margin:auto;
+padding:15px;
+
+}
+
+
+
+.card{
+
+background:white;
+padding:20px;
+border-radius:18px;
+margin-bottom:18px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+
+}
+
+
+
+h2{
+
+color:#7c3aed;
+
+}
+
+
+
+.info{
+
+background:#fdf2f8;
+border-left:5px solid #db2777;
+padding:15px;
+border-radius:10px;
+
+}
+
+
+
+.bagan{
+
+background:#ede9fe;
+padding:15px;
+border-radius:10px;
+
+}
+
+
+
+button{
+
+width:100%;
+padding:14px;
+background:#7c3aed;
+color:white;
+border:none;
+border-radius:12px;
+font-size:16px;
+
+}
+
+
+
+.hidden{
+
+display:none;
+
+}
+
+
+
+.option{
+
+padding:12px;
+background:#f8fafc;
+border:1px solid #cbd5e1;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+.option:hover{
+
+background:#fce7f3;
+
+}
+
+
+
+.hasil{
+
+text-align:center;
+font-size:22px;
+font-weight:bold;
+color:#7c3aed;
+
+}
+
+
+
+footer{
+
+background:#0f172a;
+color:white;
+padding:18px;
+text-align:center;
+
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+
+<header>
+
+<h1>
+Multimedia Pembelajaran Interaktif
+</h1>
+
+
+<p>
+Pemahaman Inferensial:
+Menjelaskan Bahasa Kias dan Citraan dalam Teks Fiksi
+</p>
+
+
+<p>
+Bahasa Indonesia SMP - TKA
+</p>
+
+
+</header>
+
+
+
+
+
+
+<div class="container">
+
+
+
+<div class="card" id="awal">
+
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+
+<ul>
+
+<li>Mengidentifikasi penggunaan bahasa kias dalam teks fiksi.</li>
+
+<li>Menjelaskan makna ungkapan kias berdasarkan konteks.</li>
+
+<li>Menganalisis citraan yang digunakan pengarang.</li>
+
+<li>Menjelaskan pengaruh bahasa kias dan citraan terhadap keindahan teks.</li>
+
+</ul>
+
+
+
+<button onclick="mulai()">
+Mulai Pembelajaran
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="materi" class="hidden">
+
+
+
+<div class="card">
+
+
+<h2>
+📖 Pengertian Bahasa Kias
+</h2>
+
+
+<p>
+
+Bahasa kias adalah penggunaan kata atau ungkapan yang memiliki makna
+tidak langsung. Pengarang menggunakan bahasa kias untuk memperindah
+cerita, memperkuat emosi, dan membuat pembaca membayangkan suatu keadaan.
+
+</p>
+
+
+
+<div class="info">
+
+
+<b>Jenis Bahasa Kias:</b>
+
+
+<br><br>
+
+
+<b>1. Metafora</b>
+
+<br>
+Perbandingan langsung tanpa kata pembanding.
+
+<br>
+Contoh:
+"Dia adalah bintang kelas."
+
+<br>
+Makna:
+Dia adalah siswa yang berprestasi.
+
+
+<br><br>
+
+
+<b>2. Personifikasi</b>
+
+<br>
+Memberikan sifat manusia kepada benda atau alam.
+
+<br>
+Contoh:
+"Angin berbisik di antara pepohonan."
+
+
+<br><br>
+
+
+<b>3. Simile (Perumpamaan)</b>
+
+<br>
+Perbandingan menggunakan kata seperti, bagai, laksana.
+
+<br>
+Contoh:
+"Wajahnya cerah seperti bulan."
+
+
+<br><br>
+
+
+<b>4. Hiperbola</b>
+
+<br>
+Pernyataan yang dilebihkan.
+
+<br>
+Contoh:
+"Aku menunggumu seribu tahun."
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+👁️ Pengertian Citraan
+</h2>
+
+
+<p>
+
+Citraan adalah gambaran yang diciptakan pengarang melalui kata-kata
+sehingga pembaca seolah-olah dapat melihat, mendengar, merasakan, atau
+mengalami peristiwa dalam cerita.
+
+</p>
+
+
+
+<div class="info">
+
+
+<b>Jenis Citraan:</b>
+
+
+<br><br>
+
+
+👀 <b>Citraan Penglihatan</b>
+
+<br>
+Menggambarkan sesuatu yang dapat dilihat.
+
+<br>
+Contoh:
+"Langit merah keemasan menghiasi sore."
+
+
+<br><br>
+
+
+👂 <b>Citraan Pendengaran</b>
+
+<br>
+Menggambarkan suara.
+
+<br>
+Contoh:
+"Suara gemericik air terdengar dari sungai."
+
+
+<br><br>
+
+
+👃 <b>Citraan Penciuman</b>
+
+<br>
+Menggambarkan aroma.
+
+<br>
+Contoh:
+"Aroma bunga memenuhi halaman."
+
+
+<br><br>
+
+
+❤️ <b>Citraan Perasaan</b>
+
+<br>
+Menggambarkan emosi.
+
+<br>
+Contoh:
+"Hatinya dipenuhi rasa bahagia."
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📚 Teks Fiksi:
+"Senandung Alam di Pagi Hari"
+</h2>
+
+
+
+<p>
+
+Pagi itu, matahari tersenyum menyambut kedatangan para penghuni desa.
+Cahaya keemasan perlahan menyentuh dedaunan yang masih basah oleh embun.
+
+</p>
+
+
+<p>
+
+Angin berbisik lembut di antara pepohonan. Suara burung bernyanyi
+mengiringi langkah para petani yang mulai menuju ladang. Udara pagi
+membawa aroma tanah yang segar setelah hujan semalam.
+
+</p>
+
+
+<p>
+
+Bagi Lila, pagi itu adalah hadiah terindah dari alam. Ia merasa hatinya
+dipenuhi kedamaian ketika melihat keindahan desa tempat tinggalnya.
+
+</p>
+
+
+
+<div class="bagan">
+
+
+<b>Analisis Bahasa Kias:</b>
+
+
+<br><br>
+
+
+<b>"Matahari tersenyum"</b>
+
+<br>
+Jenis:
+Personifikasi
+
+<br>
+Makna:
+Matahari digambarkan memberikan kesan hangat dan menyenangkan.
+
+
+<br><br>
+
+
+<b>"Angin berbisik"</b>
+
+<br>
+Jenis:
+Personifikasi
+
+<br>
+Makna:
+Angin bergerak perlahan sehingga terasa lembut.
+
+
+<br><br>
+
+
+<b>"Pagi adalah hadiah terindah"</b>
+
+<br>
+Jenis:
+Metafora
+
+<br>
+Makna:
+Pagi memberikan kebahagiaan bagi Lila.
+
+
+
+<br><br>
+
+
+<b>Analisis Citraan:</b>
+
+
+<br><br>
+
+
+👀 Penglihatan:
+Cahaya keemasan dan dedaunan basah.
+
+
+<br>
+
+
+👂 Pendengaran:
+Suara burung bernyanyi.
+
+
+<br>
+
+
+👃 Penciuman:
+Aroma tanah segar.
+
+
+<br>
+
+
+❤️ Perasaan:
+Kedamaian dan kebahagiaan.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+🧠 Fungsi Bahasa Kias dan Citraan
+</h2>
+
+
+<ul>
+
+<li>Membuat cerita lebih menarik.</li>
+
+<li>Membantu pembaca membayangkan suasana.</li>
+
+<li>Memperkuat emosi dalam cerita.</li>
+
+<li>Menyampaikan pesan secara lebih indah.</li>
+
+</ul>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📝 Evaluasi TKA
+</h2>
+
+
+
+<h3>
+1. Kalimat "angin berbisik di antara pepohonan" menggunakan majas...
+</h3>
+
+
+<div class="option" onclick="jawab(0,'A')">
+A. Personifikasi
+</div>
+
+
+<div class="option" onclick="jawab(0,'B')">
+B. Hiperbola
+</div>
+
+
+<div class="option" onclick="jawab(0,'C')">
+C. Simile
+</div>
+
+
+
+
+
+
+<h3>
+2. Citraan pada kalimat "suara burung bernyanyi" adalah...
+</h3>
+
+
+<div class="option" onclick="jawab(1,'A')">
+A. Pendengaran
+</div>
+
+
+<div class="option" onclick="jawab(1,'B')">
+B. Penglihatan
+</div>
+
+
+<div class="option" onclick="jawab(1,'C')">
+C. Penciuman
+</div>
+
+
+
+
+
+
+
+<h3>
+3. Fungsi penggunaan bahasa kias dalam teks fiksi adalah...
+</h3>
+
+
+<div class="option" onclick="jawab(2,'A')">
+A. Memperindah dan memperkuat makna cerita
+</div>
+
+
+<div class="option" onclick="jawab(2,'B')">
+B. Menghilangkan pesan cerita
+</div>
+
+
+<div class="option" onclick="jawab(2,'C')">
+C. Membuat teks sulit dipahami
+</div>
+
+
+
+
+<button onclick="cekNilai()">
+Lihat Nilai
+</button>
+
+
+<div id="hasil" class="hasil"></div>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<footer>
+
+Rangkuman Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+
+
+<script>
+
+
+let kunci=[
+
+"A",
+"A",
+"A"
+
+];
+
+
+let jawaban=[];
+
+
+
+function mulai(){
+
+document.getElementById("awal").style.display="none";
+
+document.getElementById("materi").classList.remove("hidden");
+
+}
+
+
+
+function jawab(no,pil){
+
+jawaban[no]=pil;
+
+}
+
+
+
+function cekNilai(){
+
+let skor=0;
+
+
+for(let i=0;i<kunci.length;i++){
+
+if(jawaban[i]==kunci[i]){
+
+skor++;
+
+}
+
+}
+
+
+document.getElementById("hasil").innerHTML=
+"Skor Kamu: "+skor+" / 3";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
