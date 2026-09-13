@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+MPI Pemahaman Tekstual - Objek dan Latar
+</title>
+
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:"Segoe UI",Arial,sans-serif;
+}
+
+
+body{
+
+margin:0;
+background:#f1f5f9;
+color:#1e293b;
+line-height:1.7;
+
+}
+
+
+
+header{
+
+background:linear-gradient(135deg,#0f766e,#2563eb);
+color:white;
+text-align:center;
+padding:25px 15px;
+
+}
+
+
+header h1{
+
+font-size:24px;
+margin:5px;
+
+}
+
+
+header p{
+
+font-size:14px;
+
+}
+
+
+
+.container{
+
+max-width:700px;
+margin:auto;
+padding:15px;
+
+}
+
+
+
+.card{
+
+background:white;
+padding:20px;
+margin-bottom:18px;
+border-radius:18px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+
+
+h2{
+
+color:#2563eb;
+font-size:21px;
+
+}
+
+
+h3{
+
+font-size:17px;
+
+}
+
+
+
+.info{
+
+background:#eff6ff;
+border-left:5px solid #2563eb;
+padding:15px;
+border-radius:10px;
+
+}
+
+
+
+button{
+
+width:100%;
+padding:14px;
+border:none;
+border-radius:12px;
+background:#2563eb;
+color:white;
+font-size:16px;
+cursor:pointer;
+
+}
+
+
+
+button:hover{
+
+background:#1d4ed8;
+
+}
+
+
+
+.hidden{
+
+display:none;
+
+}
+
+
+
+.option{
+
+padding:12px;
+background:#f8fafc;
+border:1px solid #cbd5e1;
+border-radius:10px;
+margin:8px 0;
+cursor:pointer;
+
+}
+
+
+
+.option:hover{
+
+background:#dbeafe;
+
+}
+
+
+
+.hasil{
+
+text-align:center;
+font-size:22px;
+font-weight:bold;
+color:#2563eb;
+
+}
+
+
+
+footer{
+
+background:#0f172a;
+color:white;
+padding:18px;
+text-align:center;
+
+}
+
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>
+Multimedia Pembelajaran Interaktif
+</h1>
+
+<p>
+Pemahaman Tekstual:
+Mengidentifikasi Objek dan Latar Berdasarkan Kosakata dalam Teks
+</p>
+
+<p>
+Bahasa Indonesia SMP
+</p>
+
+</header>
+
+
+
+
+<div class="container">
+
+
+
+<div class="card" id="awal">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+
+<p>
+Setelah mengikuti pembelajaran ini, peserta didik mampu:
+</p>
+
+
+<ul>
+
+<li>Mengidentifikasi objek dalam teks fiksi dan nonfiksi.</li>
+
+<li>Menentukan latar tempat, waktu, dan suasana berdasarkan kosakata.</li>
+
+<li>Menganalisis penggunaan kata yang menggambarkan objek dan latar.</li>
+
+</ul>
+
+
+<button onclick="mulai()">
+Mulai Pembelajaran
+</button>
+
+
+</div>
+
+
+
+
+
+
+<div id="materi" class="hidden">
+
+
+
+<div class="card">
+
+<h2>📖 Konsep Dasar</h2>
+
+
+<p>
+Dalam sebuah teks, penulis menggunakan kosakata tertentu untuk
+membantu pembaca memahami objek dan keadaan yang sedang dibahas.
+Pemilihan kata tersebut dapat memberikan gambaran yang jelas mengenai
+suatu benda, tempat, peristiwa, maupun suasana.
+</p>
+
+
+<div class="info">
+
+<b>Objek</b><br>
+Objek adalah sesuatu yang menjadi pusat pembahasan dalam teks.
+Objek dapat berupa benda, manusia, tempat, makhluk hidup, maupun
+gagasan tertentu.
+
+
+<br><br>
+
+
+<b>Latar</b><br>
+Latar adalah keterangan mengenai tempat, waktu, dan suasana yang
+mendukung suatu peristiwa.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>📍 Unsur Latar</h2>
+
+
+<div class="info">
+
+<b>1. Latar Tempat</b><br>
+Menjelaskan lokasi terjadinya peristiwa.<br>
+Contoh: sekolah, rumah, hutan, pasar.
+
+
+<br><br>
+
+
+<b>2. Latar Waktu</b><br>
+Menjelaskan kapan peristiwa terjadi.<br>
+Contoh: pagi hari, malam minggu, musim hujan.
+
+
+<br><br>
+
+
+<b>3. Latar Suasana</b><br>
+Menjelaskan keadaan atau perasaan dalam teks.<br>
+Contoh: ramai, mencekam, bahagia, tenang.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>
+📚 Teks Fiksi:
+"Senja di Danau Biru"
+</h2>
+
+
+
+<p>
+
+Langit mulai berubah warna ketika matahari perlahan tenggelam di balik
+perbukitan. Cahaya jingga terlihat memantul di permukaan Danau Biru
+yang berada di sebuah desa kecil.
+
+</p>
+
+
+<p>
+
+Alya berjalan menyusuri jalan setapak yang dipenuhi rerumputan hijau.
+Udara sore terasa sejuk dan suara burung terdengar dari pepohonan di
+sekitar danau. Beberapa warga duduk di tepi danau sambil menikmati
+keindahan pemandangan.
+
+</p>
+
+
+<p>
+
+Di tempat itu, Alya merasa sangat tenang. Ia membuka buku catatannya
+dan menulis pengalaman tentang keindahan alam yang baru saja dilihatnya.
+Baginya, suasana sore di Danau Biru memberikan kenangan yang sulit
+dilupakan.
+
+</p>
+
+
+
+<div class="info">
+
+<b>Analisis Objek:</b><br><br>
+
+- Danau Biru<br>
+- Perbukitan<br>
+- Pepohonan<br>
+- Jalan setapak<br>
+- Buku catatan
+
+
+<br><br>
+
+
+<b>Analisis Latar:</b><br><br>
+
+<b>Latar Tempat:</b><br>
+Danau Biru, desa kecil, jalan setapak.
+
+
+<br><br>
+
+<b>Latar Waktu:</b><br>
+Sore hari ketika matahari tenggelam.
+
+
+<br><br>
+
+<b>Latar Suasana:</b><br>
+Tenang, nyaman, dan indah.
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📚 Teks Nonfiksi:
+"Keanekaragaman Hutan Indonesia"
+</h2>
+
+
+
+<p>
+
+Indonesia memiliki hutan tropis yang menjadi salah satu kekayaan alam
+terbesar di dunia. Hutan tersebut menjadi tempat hidup berbagai jenis
+tumbuhan dan hewan yang memiliki peran penting bagi keseimbangan
+ekosistem.
+
+</p>
+
+
+<p>
+
+Pepohonan besar yang tumbuh di kawasan hutan membantu menyerap karbon
+dioksida dan menghasilkan oksigen. Selain itu, akar tanaman membantu
+menyimpan air sehingga dapat mengurangi risiko banjir.
+
+</p>
+
+
+<p>
+
+Namun, hutan menghadapi berbagai ancaman akibat aktivitas manusia.
+Penebangan liar dan perubahan fungsi lahan dapat menyebabkan kerusakan
+lingkungan. Oleh karena itu, konservasi hutan perlu dilakukan agar
+keanekaragaman hayati tetap terjaga.
+
+</p>
+
+
+
+<div class="info">
+
+<b>Analisis Objek:</b><br><br>
+
+- Hutan tropis<br>
+- Tumbuhan<br>
+- Hewan<br>
+- Pepohonan<br>
+- Ekosistem
+
+
+<br><br>
+
+
+<b>Analisis Latar:</b><br><br>
+
+
+<b>Latar Tempat:</b><br>
+Kawasan hutan Indonesia.
+
+
+<br><br>
+
+
+<b>Latar Waktu:</b><br>
+Tidak disebutkan karena berupa informasi umum.
+
+
+<br><br>
+
+
+<b>Latar Suasana:</b><br>
+Serius dan informatif.
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+🔎 Cara Menentukan Objek dan Latar
+</h2>
+
+
+
+<ol>
+
+<li>
+Cari kata benda yang sering dibahas dalam teks untuk menemukan objek.
+</li>
+
+
+<li>
+Cari kata yang menunjukkan lokasi untuk menentukan latar tempat.
+</li>
+
+
+<li>
+Cari kata penunjuk waktu seperti pagi, malam, atau musim tertentu.
+</li>
+
+
+<li>
+Perhatikan kata sifat yang menunjukkan suasana.
+</li>
+
+
+<li>
+Gunakan hubungan antar kalimat untuk memahami konteks.
+</li>
+
+
+</ol>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📝 Tes Kemampuan Akademik
+</h2>
+
+
+
+<h3>
+1. Dalam teks "Senja di Danau Biru", objek utama yang dibahas adalah...
+</h3>
+
+
+<div class="option" onclick="jawab(0,'A')">
+A. Keindahan Danau Biru
+</div>
+
+
+<div class="option" onclick="jawab(0,'B')">
+B. Perkembangan teknologi
+</div>
+
+
+<div class="option" onclick="jawab(0,'C')">
+C. Aktivitas perdagangan
+</div>
+
+
+
+
+
+<h3>
+2. Kata "jalan setapak", "danau", dan "pepohonan" menunjukkan...
+</h3>
+
+
+<div class="option" onclick="jawab(1,'A')">
+A. Latar tempat
+</div>
+
+
+<div class="option" onclick="jawab(1,'B')">
+B. Latar waktu
+</div>
+
+
+<div class="option" onclick="jawab(1,'C')">
+C. Latar suasana
+</div>
+
+
+
+
+
+<h3>
+3. Dalam teks hutan Indonesia, objek yang menjadi pembahasan adalah...
+</h3>
+
+
+<div class="option" onclick="jawab(2,'A')">
+A. Ekosistem hutan
+</div>
+
+
+<div class="option" onclick="jawab(2,'B')">
+B. Kendaraan modern
+</div>
+
+
+<div class="option" onclick="jawab(2,'C')">
+C. Peralatan sekolah
+</div>
+
+
+
+
+<button onclick="cekNilai()">
+Lihat Nilai
+</button>
+
+
+<div class="hasil" id="hasil"></div>
+
+
+</div>
+
+
+
+
+</div>
+
+</div>
+
+
+
+
+
+<footer>
+
+Rangkuman Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+
+
+
+<script>
+
+
+let kunci=[
+"A",
+"A",
+"A"
+];
+
+
+let jawaban=[];
+
+
+
+function mulai(){
+
+document.getElementById("awal").style.display="none";
+
+document.getElementById("materi").classList.remove("hidden");
+
+}
+
+
+
+
+function jawab(no,pilihan){
+
+jawaban[no]=pilihan;
+
+}
+
+
+
+
+function cekNilai(){
+
+let skor=0;
+
+
+for(let i=0;i<kunci.length;i++){
+
+if(jawaban[i]==kunci[i]){
+
+skor++;
+
+}
+
+}
+
+
+document.getElementById("hasil").innerHTML=
+"Skor Kamu: "+skor+" / 3";
+
+
+}
+
+
+</script>
+
+
+
+</body>
+</html>
