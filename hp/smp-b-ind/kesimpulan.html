@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+MPI Pemahaman Inferensial Teks SMP
+</title>
+
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:"Segoe UI",Arial,sans-serif;
+}
+
+
+body{
+
+margin:0;
+background:#f1f5f9;
+color:#1e293b;
+line-height:1.7;
+
+}
+
+
+header{
+
+background:linear-gradient(135deg,#be123c,#7c3aed);
+color:white;
+padding:25px 15px;
+text-align:center;
+
+}
+
+
+header h1{
+
+font-size:23px;
+margin:5px;
+
+}
+
+
+header p{
+
+font-size:14px;
+
+}
+
+
+
+.container{
+
+max-width:700px;
+margin:auto;
+padding:15px;
+
+}
+
+
+
+.card{
+
+background:white;
+padding:20px;
+margin-bottom:18px;
+border-radius:18px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+
+}
+
+
+
+h2{
+
+color:#7c3aed;
+
+}
+
+
+
+.info{
+
+background:#f5f3ff;
+border-left:5px solid #7c3aed;
+padding:15px;
+border-radius:10px;
+
+}
+
+
+
+.bagan{
+
+background:#fff1f2;
+padding:15px;
+border-radius:10px;
+
+}
+
+
+
+button{
+
+width:100%;
+padding:14px;
+background:#7c3aed;
+color:white;
+border:none;
+border-radius:12px;
+font-size:16px;
+
+}
+
+
+
+.hidden{
+
+display:none;
+
+}
+
+
+
+.option{
+
+background:#f8fafc;
+border:1px solid #cbd5e1;
+padding:12px;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+.option:hover{
+
+background:#ede9fe;
+
+}
+
+
+
+.hasil{
+
+text-align:center;
+font-size:22px;
+font-weight:bold;
+color:#7c3aed;
+
+}
+
+
+
+footer{
+
+background:#0f172a;
+color:white;
+padding:18px;
+text-align:center;
+
+}
+
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+
+<header>
+
+<h1>
+Multimedia Pembelajaran Interaktif
+</h1>
+
+<p>
+Pemahaman Inferensial:
+Menyimpulkan Ide Pokok, Tokoh, Peristiwa, Latar, dan Nilai Teks
+</p>
+
+<p>
+Bahasa Indonesia SMP - TKA
+</p>
+
+
+</header>
+
+
+
+
+
+
+<div class="container">
+
+
+
+<div class="card" id="awal">
+
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+
+<p>
+Peserta didik mampu:
+</p>
+
+
+<ul>
+
+<li>Menyimpulkan informasi berdasarkan isi teks.</li>
+
+<li>Menentukan ide pokok dan gagasan pendukung.</li>
+
+<li>Menganalisis tokoh, peristiwa, latar, dan nilai dalam teks.</li>
+
+<li>Menghubungkan informasi dari dua teks berbeda.</li>
+
+</ul>
+
+
+<button onclick="mulai()">
+Mulai Pembelajaran
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="materi" class="hidden">
+
+
+
+<div class="card">
+
+
+<h2>
+📖 Pengertian Pemahaman Inferensial
+</h2>
+
+
+<p>
+
+Pemahaman inferensial adalah kemampuan memahami informasi yang tidak
+langsung tertulis dalam teks. Pembaca perlu menghubungkan berbagai
+informasi untuk membuat kesimpulan.
+
+</p>
+
+
+<div class="info">
+
+<b>Contoh:</b>
+
+<br><br>
+
+Teks:
+"Rina selalu membawa botol minum sendiri dan menggunakan tas kain saat
+berbelanja."
+
+<br><br>
+
+Kesimpulan:
+Rina memiliki kepedulian terhadap lingkungan.
+
+<br><br>
+
+Kesimpulan tersebut diperoleh dari hubungan beberapa informasi dalam
+teks.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+🔎 Unsur yang Dianalisis
+</h2>
+
+
+<div class="info">
+
+
+<b>1. Ide Pokok</b><br>
+Gagasan utama yang menjadi dasar pembahasan teks.
+
+
+<br><br>
+
+
+<b>2. Gagasan Pendukung</b><br>
+Informasi yang menjelaskan ide pokok.
+
+
+<br><br>
+
+
+<b>3. Tokoh</b><br>
+Pelaku yang terlibat dalam cerita.
+
+
+<br><br>
+
+
+<b>4. Peristiwa</b><br>
+Kejadian penting dalam teks.
+
+
+<br><br>
+
+
+<b>5. Latar</b><br>
+Tempat, waktu, dan suasana.
+
+
+<br><br>
+
+
+<b>6. Nilai</b><br>
+Pesan atau pelajaran yang dapat diterapkan dalam kehidupan.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📚 Teks Fiksi:
+"Langkah Kecil Arga"
+</h2>
+
+
+
+<p>
+
+Arga adalah seorang siswa yang tinggal di sebuah desa dekat pegunungan.
+Setiap hari ia berjalan cukup jauh untuk pergi ke sekolah. Meskipun
+perjalanan tersebut melelahkan, Arga tidak pernah kehilangan semangat
+untuk belajar.
+
+</p>
+
+
+<p>
+
+Suatu hari, Arga melihat perpustakaan sekolahnya memiliki banyak buku
+yang tidak terawat. Ia kemudian mengajak teman-temannya membersihkan
+perpustakaan dan menyusun kembali buku-buku tersebut.
+
+</p>
+
+
+<p>
+
+Kegiatan yang dilakukan Arga membuat perpustakaan menjadi lebih nyaman.
+Banyak siswa mulai tertarik membaca karena ruangan tersebut menjadi lebih
+rapi dan menarik.
+
+</p>
+
+
+
+<div class="bagan">
+
+
+<b>Analisis Inferensial:</b>
+
+
+<br><br>
+
+
+<b>Ide Pokok:</b>
+
+<br>
+Semangat Arga dalam meningkatkan budaya membaca di sekolah.
+
+
+<br><br>
+
+
+<b>Gagasan Pendukung:</b>
+
+<br>
+- Arga tetap sekolah meskipun perjalanan jauh.
+
+<br>
+- Arga memperbaiki perpustakaan bersama teman-temannya.
+
+
+<br><br>
+
+
+<b>Tokoh:</b>
+
+<br>
+Arga dan teman-temannya.
+
+
+<br><br>
+
+
+<b>Peristiwa:</b>
+
+<br>
+Membersihkan dan memperbaiki perpustakaan.
+
+
+<br><br>
+
+
+<b>Latar:</b>
+
+<br>
+Desa, sekolah, perpustakaan.
+
+
+<br><br>
+
+
+<b>Nilai:</b>
+
+<br>
+Kepedulian, kerja sama, dan semangat belajar.
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📚 Teks Nonfiksi:
+"Air Bersih untuk Kehidupan"
+</h2>
+
+
+
+<p>
+
+Air merupakan kebutuhan utama bagi seluruh makhluk hidup. Manusia
+membutuhkan air untuk minum, memasak, membersihkan diri, dan berbagai
+aktivitas lainnya.
+
+</p>
+
+
+<p>
+
+Namun, ketersediaan air bersih semakin berkurang akibat pencemaran
+lingkungan. Limbah rumah tangga dan industri yang dibuang ke sungai
+dapat menurunkan kualitas air.
+
+</p>
+
+
+<p>
+
+Oleh karena itu, masyarakat perlu menjaga sumber air dengan mengurangi
+pencemaran dan menggunakan air secara bijak.
+
+</p>
+
+
+
+<div class="bagan">
+
+
+<b>Kesimpulan Teks:</b>
+
+
+<br><br>
+
+
+<b>Ide Pokok:</b>
+
+<br>
+Pentingnya menjaga ketersediaan air bersih.
+
+
+<br><br>
+
+
+<b>Gagasan Pendukung:</b>
+
+<br>
+- Air diperlukan dalam kehidupan.
+
+<br>
+- Pencemaran menyebabkan berkurangnya air bersih.
+
+
+<br><br>
+
+
+<b>Nilai:</b>
+
+<br>
+Manusia harus bertanggung jawab menjaga lingkungan.
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+🔗 Membandingkan Dua Teks
+</h2>
+
+
+
+<div class="info">
+
+
+<b>Teks Arga:</b>
+
+<br>
+Menunjukkan nilai kepedulian melalui tindakan nyata.
+
+
+<br><br>
+
+
+<b>Teks Air Bersih:</b>
+
+<br>
+Menunjukkan nilai tanggung jawab terhadap lingkungan.
+
+
+<br><br>
+
+
+<b>Persamaan:</b>
+
+<br>
+Keduanya mengajarkan bahwa manusia harus peduli terhadap lingkungan
+sekitar.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📝 Evaluasi TKA
+</h2>
+
+
+
+<h3>
+1. Ide pokok teks "Langkah Kecil Arga" adalah...
+</h3>
+
+
+<div class="option" onclick="jawab(0,'A')">
+A. Semangat Arga meningkatkan budaya membaca
+</div>
+
+
+<div class="option" onclick="jawab(0,'B')">
+B. Perjalanan Arga menuju sekolah
+</div>
+
+
+<div class="option" onclick="jawab(0,'C')">
+C. Keadaan desa Arga
+</div>
+
+
+
+
+
+
+
+<h3>
+2. Nilai yang terdapat dalam cerita Arga adalah...
+</h3>
+
+
+<div class="option" onclick="jawab(1,'A')">
+A. Kerja sama dan kepedulian
+</div>
+
+
+<div class="option" onclick="jawab(1,'B')">
+B. Persaingan dan kemenangan
+</div>
+
+
+<div class="option" onclick="jawab(1,'C')">
+C. Kemewahan hidup
+</div>
+
+
+
+
+
+
+
+<h3>
+3. Kesimpulan teks air bersih adalah...
+</h3>
+
+
+<div class="option" onclick="jawab(2,'A')">
+A. Air perlu dijaga agar tetap tersedia
+</div>
+
+
+<div class="option" onclick="jawab(2,'B')">
+B. Sungai harus digunakan sebagai tempat sampah
+</div>
+
+
+<div class="option" onclick="jawab(2,'C')">
+C. Air tidak diperlukan manusia
+</div>
+
+
+
+
+<button onclick="cekNilai()">
+Lihat Nilai
+</button>
+
+
+
+<div id="hasil" class="hasil"></div>
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+
+
+
+
+<footer>
+
+Rangkuman Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+
+
+
+<script>
+
+
+let kunci=[
+
+"A",
+"A",
+"A"
+
+];
+
+
+let jawaban=[];
+
+
+
+function mulai(){
+
+document.getElementById("awal").style.display="none";
+
+document.getElementById("materi").classList.remove("hidden");
+
+}
+
+
+
+
+function jawab(no,pil){
+
+jawaban[no]=pil;
+
+}
+
+
+
+
+function cekNilai(){
+
+let skor=0;
+
+
+for(let i=0;i<kunci.length;i++){
+
+if(jawaban[i]==kunci[i]){
+
+skor++;
+
+}
+
+}
+
+
+document.getElementById("hasil").innerHTML=
+
+"Skor Kamu: "+skor+" / 3";
+
+
+}
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
