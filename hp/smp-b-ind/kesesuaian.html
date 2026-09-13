@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+MPI Evaluasi Keakuratan dan Perbandingan Teks
+</title>
+
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:"Segoe UI",Arial,sans-serif;
+}
+
+
+body{
+
+margin:0;
+background:#f1f5f9;
+color:#1e293b;
+line-height:1.7;
+
+}
+
+
+header{
+
+background:linear-gradient(135deg,#2563eb,#9333ea);
+color:white;
+text-align:center;
+padding:25px 15px;
+
+}
+
+
+header h1{
+
+font-size:23px;
+
+}
+
+
+
+.container{
+
+max-width:700px;
+margin:auto;
+padding:15px;
+
+}
+
+
+
+.card{
+
+background:white;
+padding:20px;
+border-radius:18px;
+margin-bottom:18px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+
+}
+
+
+
+h2{
+
+color:#2563eb;
+
+}
+
+
+
+.info{
+
+background:#eff6ff;
+border-left:5px solid #2563eb;
+padding:15px;
+border-radius:10px;
+
+}
+
+
+
+.banding{
+
+background:#f5f3ff;
+padding:15px;
+border-radius:10px;
+
+}
+
+
+
+button{
+
+width:100%;
+padding:14px;
+background:#2563eb;
+border:none;
+border-radius:12px;
+color:white;
+font-size:16px;
+
+}
+
+
+
+.hidden{
+
+display:none;
+
+}
+
+
+
+.option{
+
+padding:12px;
+background:#f8fafc;
+border:1px solid #cbd5e1;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+.option:hover{
+
+background:#dbeafe;
+
+}
+
+
+
+.hasil{
+
+text-align:center;
+font-size:22px;
+font-weight:bold;
+color:#2563eb;
+
+}
+
+
+
+footer{
+
+background:#0f172a;
+color:white;
+padding:18px;
+text-align:center;
+
+}
+
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+<header>
+
+<h1>
+Multimedia Pembelajaran Interaktif
+</h1>
+
+
+<p>
+Evaluasi dan Apresiasi:
+Menilai Kesesuaian dan Keakuratan Informasi Berdasarkan Perbandingan Teks
+</p>
+
+
+<p>
+Bahasa Indonesia SMP - TKA
+</p>
+
+
+</header>
+
+
+
+
+
+<div class="container">
+
+
+
+<div class="card" id="awal">
+
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+
+<ul>
+
+<li>Membandingkan informasi dari dua teks.</li>
+
+<li>Menilai kesesuaian isi berdasarkan bukti.</li>
+
+<li>Menentukan keakuratan informasi dalam teks.</li>
+
+<li>Menganalisis penggunaan bahasa yang efektif.</li>
+
+</ul>
+
+
+<button onclick="mulai()">
+Mulai Pembelajaran
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="materi" class="hidden">
+
+
+
+<div class="card">
+
+
+<h2>
+📖 Pengertian Evaluasi Teks
+</h2>
+
+
+<p>
+
+Evaluasi teks adalah kegiatan memberikan penilaian terhadap isi,
+struktur, dan penggunaan bahasa berdasarkan bukti yang terdapat dalam
+teks.
+
+</p>
+
+
+<div class="info">
+
+
+<b>Hal yang dapat dievaluasi:</b>
+
+
+<br><br>
+
+
+<b>1. Kesesuaian Isi</b>
+
+<br>
+Apakah informasi sesuai dengan topik dan fakta.
+
+
+<br><br>
+
+
+<b>2. Keakuratan Informasi</b>
+
+<br>
+Apakah informasi dapat dipercaya dan didukung bukti.
+
+
+<br><br>
+
+
+<b>3. Unsur Kebahasaan</b>
+
+<br>
+Apakah pilihan kata, kalimat, dan gaya bahasa sesuai.
+
+
+<br><br>
+
+
+<b>4. Perbandingan Antarteks</b>
+
+<br>
+Menemukan persamaan dan perbedaan informasi dari beberapa sumber.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+🔎 Langkah Membandingkan Teks
+</h2>
+
+
+<div class="banding">
+
+
+<b>Langkah 1:</b>
+
+<br>
+Baca kedua teks secara menyeluruh.
+
+
+<br><br>
+
+
+<b>Langkah 2:</b>
+
+<br>
+Temukan informasi utama setiap teks.
+
+
+<br><br>
+
+
+<b>Langkah 3:</b>
+
+<br>
+Cari persamaan dan perbedaan.
+
+
+<br><br>
+
+
+<b>Langkah 4:</b>
+
+<br>
+Nilai informasi berdasarkan bukti yang tersedia.
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📚 Teks 1 (Nonfiksi):
+"Manfaat Tanaman di Lingkungan Sekolah"
+</h2>
+
+
+<p>
+
+Tanaman di lingkungan sekolah memiliki berbagai manfaat. Selain
+membuat lingkungan menjadi lebih indah, tanaman juga membantu
+mengurangi suhu udara yang panas.
+
+</p>
+
+
+<p>
+
+Pepohonan dapat menghasilkan oksigen dan menyerap karbon dioksida.
+Oleh karena itu, keberadaan tanaman dapat menciptakan lingkungan
+sekolah yang lebih nyaman.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📚 Teks 2 (Nonfiksi):
+"Pentingnya Ruang Hijau"
+</h2>
+
+
+<p>
+
+Ruang hijau merupakan area yang memiliki banyak tumbuhan dan berfungsi
+menjaga keseimbangan lingkungan. Keberadaan ruang hijau dapat membantu
+mengurangi polusi udara.
+
+</p>
+
+
+<p>
+
+Selain itu, ruang hijau dapat menjadi tempat bagi manusia untuk
+melakukan aktivitas yang mendukung kesehatan fisik dan mental.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📊 Analisis Perbandingan Informasi
+</h2>
+
+
+<div class="banding">
+
+
+<b>Persamaan:</b>
+
+<br>
+
+- Kedua teks membahas manfaat tumbuhan.
+
+<br>
+
+- Keduanya menjelaskan fungsi tanaman terhadap lingkungan.
+
+
+<br><br>
+
+
+<b>Perbedaan:</b>
+
+<br>
+
+Teks 1 fokus pada lingkungan sekolah.
+
+<br>
+
+Teks 2 membahas ruang hijau secara lebih umum.
+
+
+<br><br>
+
+
+<b>Kesimpulan:</b>
+
+<br>
+
+Informasi kedua teks saling mendukung sehingga memiliki kesesuaian isi.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📚 Contoh Evaluasi Kebahasaan
+</h2>
+
+
+<div class="info">
+
+
+Kalimat:
+
+<br>
+
+"Tanaman memberikan kontribusi positif terhadap kualitas udara."
+
+
+<br><br>
+
+
+Penilaian:
+
+<br>
+
+✔ Menggunakan kata baku.
+
+<br>
+
+✔ Sesuai dengan teks ilmiah.
+
+<br>
+
+✔ Memiliki makna yang jelas.
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+🧠 Cara Menilai Keakuratan Informasi
+</h2>
+
+
+<ul>
+
+<li>Cari bukti pendukung dalam teks.</li>
+
+<li>Bandingkan dengan informasi lain.</li>
+
+<li>Perhatikan penggunaan fakta dan opini.</li>
+
+<li>Pastikan informasi tidak bertentangan.</li>
+
+</ul>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📝 Evaluasi TKA
+</h2>
+
+
+
+
+<h3>
+1. Persamaan kedua teks adalah...
+</h3>
+
+
+<div class="option" onclick="jawab(0,'A')">
+A. Membahas manfaat tumbuhan bagi lingkungan
+</div>
+
+
+<div class="option" onclick="jawab(0,'B')">
+B. Membahas teknologi digital
+</div>
+
+
+<div class="option" onclick="jawab(0,'C')">
+C. Membahas masalah kesehatan
+</div>
+
+
+
+
+
+
+
+<h3>
+2. Informasi kedua teks dianggap sesuai karena...
+</h3>
+
+
+<div class="option" onclick="jawab(1,'A')">
+A. Saling mendukung tentang fungsi tanaman
+</div>
+
+
+<div class="option" onclick="jawab(1,'B')">
+B. Memiliki isi yang bertentangan
+</div>
+
+
+<div class="option" onclick="jawab(1,'C')">
+C. Menggunakan kata yang sama seluruhnya
+</div>
+
+
+
+
+
+
+
+<h3>
+3. Menilai keakuratan informasi dapat dilakukan dengan cara...
+</h3>
+
+
+<div class="option" onclick="jawab(2,'A')">
+A. Membandingkan informasi dengan sumber atau bukti lain
+</div>
+
+
+<div class="option" onclick="jawab(2,'B')">
+B. Mengabaikan isi teks
+</div>
+
+
+<div class="option" onclick="jawab(2,'C')">
+C. Mengubah informasi sesuai pendapat pribadi
+</div>
+
+
+
+
+
+
+<button onclick="cekNilai()">
+Lihat Nilai
+</button>
+
+
+<div id="hasil" class="hasil"></div>
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<footer>
+
+Rangkuman Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+
+
+
+
+<script>
+
+
+let kunci=[
+
+"A",
+"A",
+"A"
+
+];
+
+
+let jawaban=[];
+
+
+
+function mulai(){
+
+document.getElementById("awal").style.display="none";
+
+document.getElementById("materi").classList.remove("hidden");
+
+}
+
+
+
+function jawab(no,pil){
+
+jawaban[no]=pil;
+
+}
+
+
+
+function cekNilai(){
+
+let skor=0;
+
+
+for(let i=0;i<kunci.length;i++){
+
+if(jawaban[i]==kunci[i]){
+
+skor++;
+
+}
+
+}
+
+
+document.getElementById("hasil").innerHTML=
+
+"Skor Kamu: "+skor+" / 3";
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
