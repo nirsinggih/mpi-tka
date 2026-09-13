@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rangkuman Materi TKA Bahasa Indonesia SMP</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:'Poppins',Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:linear-gradient(-45deg,#007bff,#00c6ff,#e8f7ff,#2563eb);
+    background-size:400% 400%;
+    animation:bgMove 12s ease infinite;
+    color:#17324d;
+    padding:20px;
+    overflow-x:hidden;
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+
+/* Bubble animation */
+
+body::before,
+body::after{
+    content:"";
+    position:fixed;
+    width:250px;
+    height:250px;
+    border-radius:50%;
+    background:rgba(255,255,255,.25);
+    animation:float 8s infinite alternate;
+    z-index:-1;
+}
+
+body::before{
+    top:10%;
+    left:-80px;
+}
+
+body::after{
+    bottom:10%;
+    right:-80px;
+    animation-delay:3s;
+}
+
+
+@keyframes float{
+    from{
+        transform:translateY(0);
+    }
+    to{
+        transform:translateY(60px);
+    }
+}
+
+
+
+.container{
+    max-width:700px;
+    margin:auto;
+}
+
+
+/* Header */
+
+.hero{
+    background:white;
+    padding:25px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+    animation:fade .8s;
+}
+
+.hero h1{
+    color:#0066ff;
+    font-size:25px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    font-size:14px;
+    line-height:1.6;
+}
+
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+    }
+}
+
+
+
+/* Card */
+
+.card{
+    background:white;
+    margin-top:18px;
+    padding:18px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+    transition:.3s;
+}
+
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+
+.number{
+    display:inline-block;
+    background:#0066ff;
+    color:white;
+    width:32px;
+    height:32px;
+    text-align:center;
+    line-height:32px;
+    border-radius:50%;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+
+.card h3{
+    font-size:15px;
+    margin-bottom:12px;
+}
+
+
+.btn{
+    display:block;
+    background:#0066ff;
+    color:white;
+    text-decoration:none;
+    padding:10px;
+    border-radius:15px;
+    text-align:center;
+    font-size:14px;
+}
+
+
+
+/* Footer */
+
+.footer{
+    margin-top:20px;
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    text-align:center;
+    line-height:1.7;
+    font-size:14px;
+}
+
+
+
+/* Whatsapp Floating */
+
+.whatsapp{
+    position:fixed;
+    bottom:25px;
+    right:20px;
+    width:60px;
+    height:60px;
+    background:#25D366;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:30px;
+    text-decoration:none;
+    box-shadow:0 8px 20px rgba(0,0,0,.3);
+    animation:pulse 2s infinite;
+}
+
+
+@keyframes pulse{
+    0%{
+        transform:scale(1);
+    }
+    50%{
+        transform:scale(1.15);
+    }
+    100%{
+        transform:scale(1);
+    }
+}
+
+
+@media(max-width:480px){
+
+body{
+    padding:12px;
+}
+
+.hero h1{
+    font-size:21px;
+}
+
+.card h3{
+    font-size:14px;
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="hero">
+
+<h1>📖💙 Rangkuman Materi TKA</h1>
+
+<p>
+Tes Kemampuan Akademik (TKA)<br>
+<strong>Bahasa Indonesia Jenjang SMP</strong>
+</p>
+
+<br>
+
+<p>
+Materi disusun berdasarkan kisi-kisi resmi Kemendikdasmen.
+</p>
+
+</div>
+
+
+
+<div class="card">
+<div class="number">1</div>
+
+<h3>
+Pemahaman Tekstual: Mengidentifikasi penggunaan istilah dalam berbagai bidang
+</h3>
+
+<a class="btn" href="https://nirsinggih.github.io/mpi-tka/hp/smp-b-ind/istilah.html">
+Buka Materi
+</a>
+
+</div>
+
+
+
+<div class="card">
+<div class="number">2</div>
+
+<h3>
+Mengidentifikasi objek dan/atau latar berdasarkan kosakata dalam teks fiksi dan nonfiksi
+</h3>
+
+<a class="btn" href="https://nirsinggih.github.io/mpi-tka/hp/smp-b-ind/objek-latar.html">
+Buka Materi
+</a>
+
+</div>
+
+
+
+<div class="card">
+<div class="number">3</div>
+
+<h3>
+Mengidentifikasi informasi penting yang tersurat dalam teks
+</h3>
+
+<a class="btn" href="https://nirsinggih.github.io/mpi-tka/hp/smp-b-ind/informasi.html">
+Buka Materi
+</a>
+
+</div>
+
+
+<div class="card">
+<div class="number">4</div>
+
+<h3>
+Menyusun kerangka atau bagan berdasarkan bagian penting dalam teks
+</h3>
+
+<a class="btn" href="https://nirsinggih.github.io/mpi-tka/hp/smp-b-ind/kerangka-teks.html">
+Buka Materi
+</a>
+
+</div>
+
+
+<div class="card">
+<div class="number">5</div>
+
+<h3>
+Menyimpulkan ide pokok, gagasan pendukung, tokoh, peristiwa, latar, dan nilai dalam teks
+</h3>
+
+<a class="btn" href="https://nirsinggih.github.io/mpi-tka/hp/smp-b-ind/kesimpulan.html">
+Buka Materi
+</a>
+
+</div>
+
+
+<div class="card">
+<div class="number">6</div>
+
+<h3>
+Menjelaskan hubungan logis antarperistiwa, gagasan, dan informasi
+</h3>
+
+<a class="btn" href="https://nirsinggih.github.io/mpi-tka/hp/smp-b-ind/hubungan-logis.html">
+Buka Materi
+</a>
+
+</div>
+
+
+<div class="card">
+<div class="number">7</div>
+
+<h3>
+Memprediksi peristiwa dalam teks
+</h3>
+
+<a class="btn" href="https://nirsinggih.github.io/mpi-tka/hp/smp-b-ind/memprediksi-peristiwa.html">
+Buka Materi
+</a>
+
+</div>
+
+
+<div class="card">
+<div class="number">8</div>
+
+<h3>
+Menjelaskan bahasa kias dan citraan dalam teks fiksi
+</h3>
+
+<a class="btn" href="https://nirsinggih.github.io/mpi-tka/hp/smp-b-ind/bahasa-kias.html">
+Buka Materi
+</a>
+
+</div>
+
+
+<div class="card">
+<div class="number">9</div>
+
+<h3>
+Menilai relevansi peristiwa dalam teks dengan kehidupan sehari-hari
+</h3>
+
+<a class="btn" href="https://nirsinggih.github.io/mpi-tka/hp/smp-b-ind/relevansi-peristiwa.html">
+Buka Materi
+</a>
+
+</div>
+
+
+<div class="card">
+<div class="number">10</div>
+
+<h3>
+Menilai kesesuaian dan keakuratan unsur berdasarkan perbandingan teks
+</h3>
+
+<a class="btn" href="https://nirsinggih.github.io/mpi-tka/hp/smp-b-ind/kesesuaian.html">
+Buka Materi
+</a>
+
+</div>
+
+
+<div class="card">
+<div class="number">11</div>
+
+<h3>
+Menyimpulkan respons emosional terhadap unsur teks fiksi
+</h3>
+
+<a class="btn" href="https://nirsinggih.github.io/mpi-tka/hp/smp-b-ind/respons.html">
+Buka Materi
+</a>
+
+</div>
+
+
+
+<div class="footer">
+
+✅ <b>TIPS:</b><br>
+
+Pilih dan tandai materi yang sesuai dengan pembelajaran saat ini.
+Tambahkan materi yang masih perlu dipahami.
+
+<br><br>
+
+⭐ Beri bintang agar tidak terhapus.<br>
+📢 Share agar bermanfaat bagi teman lainnya.
+
+</div>
+
+
+</div>
+
+
+
+<a class="whatsapp"
+href="https://wa.me/?text=📖💙 Rangkuman Materi TKA Bahasa Indonesia SMP%0A%0Ahttps://nirsinggih.github.io/mpi-tka/"
+target="_blank">
+💬
+</a>
+
+
+</body>
+  </html>
