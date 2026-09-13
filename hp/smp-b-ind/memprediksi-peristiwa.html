@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+MPI Pemahaman Inferensial - Memprediksi Peristiwa
+</title>
+
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:"Segoe UI",Arial,sans-serif;
+}
+
+body{
+margin:0;
+background:#f1f5f9;
+color:#1e293b;
+line-height:1.7;
+}
+
+
+header{
+background:linear-gradient(135deg,#16a34a,#2563eb);
+color:white;
+padding:25px 15px;
+text-align:center;
+}
+
+
+header h1{
+font-size:23px;
+}
+
+
+.container{
+max-width:700px;
+margin:auto;
+padding:15px;
+}
+
+
+.card{
+background:white;
+padding:20px;
+border-radius:18px;
+margin-bottom:18px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+
+h2{
+color:#2563eb;
+}
+
+
+.info{
+background:#ecfdf5;
+border-left:5px solid #16a34a;
+padding:15px;
+border-radius:10px;
+}
+
+
+.prediksi{
+background:#eff6ff;
+padding:15px;
+border-radius:10px;
+}
+
+
+button{
+width:100%;
+padding:14px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:12px;
+font-size:16px;
+}
+
+
+.hidden{
+display:none;
+}
+
+
+.option{
+padding:12px;
+margin:8px 0;
+border:1px solid #cbd5e1;
+background:#f8fafc;
+border-radius:10px;
+}
+
+
+.option:hover{
+background:#dbeafe;
+}
+
+
+.hasil{
+text-align:center;
+font-size:22px;
+font-weight:bold;
+color:#2563eb;
+}
+
+
+footer{
+background:#0f172a;
+color:white;
+padding:18px;
+text-align:center;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>
+Multimedia Pembelajaran Interaktif
+</h1>
+
+<p>
+Pemahaman Inferensial:
+Memprediksi Peristiwa dalam Teks
+</p>
+
+<p>
+Bahasa Indonesia SMP - TKA
+</p>
+
+</header>
+
+
+
+<div class="container">
+
+
+<div class="card" id="awal">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+<ul>
+
+<li>Memahami cara membuat prediksi berdasarkan informasi dalam teks.</li>
+
+<li>Menggunakan bukti teks untuk memperkirakan peristiwa berikutnya.</li>
+
+<li>Membedakan prediksi logis dan pendapat tanpa dasar.</li>
+
+</ul>
+
+
+<button onclick="mulai()">
+Mulai Pembelajaran
+</button>
+
+
+</div>
+
+
+
+
+
+<div id="materi" class="hidden">
+
+
+
+<div class="card">
+
+<h2>
+📖 Pengertian Prediksi dalam Teks
+</h2>
+
+
+<p>
+
+Prediksi adalah perkiraan terhadap suatu peristiwa yang mungkin terjadi
+berdasarkan informasi, fakta, atau petunjuk yang terdapat dalam teks.
+Prediksi bukan sekadar tebakan, tetapi harus memiliki alasan yang sesuai
+dengan isi bacaan.
+
+</p>
+
+
+<div class="info">
+
+<b>Contoh:</b>
+
+<br><br>
+
+Teks:
+"Langit terlihat gelap. Angin bertiup kencang dan beberapa orang mulai
+menutup jendela rumah."
+
+<br><br>
+
+Prediksi:
+Kemungkinan akan turun hujan.
+
+<br><br>
+
+Alasan:
+Ada tanda-tanda perubahan cuaca dalam teks.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>
+🔎 Langkah Membuat Prediksi
+</h2>
+
+
+<div class="prediksi">
+
+
+<b>1.</b> Baca informasi yang tersedia.
+
+<br><br>
+
+
+<b>2.</b> Temukan petunjuk penting.
+
+<br><br>
+
+
+<b>3.</b> Hubungkan petunjuk dengan pengalaman atau pengetahuan.
+
+<br><br>
+
+
+<b>4.</b> Buat perkiraan peristiwa yang paling masuk akal.
+
+<br><br>
+
+
+<b>5.</b> Sertakan alasan berdasarkan teks.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>
+📚 Teks Fiksi:
+"Tanaman di Halaman Sekolah"
+</h2>
+
+
+<p>
+
+Setiap pagi, Sinta memperhatikan tanaman di halaman sekolah. Ia melihat
+beberapa tanaman mulai layu karena tanah di sekitarnya terlihat kering.
+
+</p>
+
+
+<p>
+
+Sinta kemudian mengajak teman-temannya membuat jadwal penyiraman.
+Mereka membawa air secara bergantian agar tanaman tetap mendapatkan
+cukup air.
+
+</p>
+
+
+<p>
+
+Seminggu kemudian, tanaman mulai terlihat lebih segar. Daun-daun yang
+sebelumnya menguning mulai tumbuh kembali.
+
+</p>
+
+
+
+<div class="prediksi">
+
+
+<b>Petunjuk Teks:</b>
+
+<br>
+
+- Tanaman layu.
+
+<br>
+
+- Tanah kering.
+
+<br>
+
+- Sinta membuat jadwal penyiraman.
+
+
+<br><br>
+
+
+<b>Prediksi:</b>
+
+<br>
+
+Tanaman akan tumbuh lebih sehat karena mendapatkan perawatan rutin.
+
+
+<br><br>
+
+
+<b>Alasan:</b>
+
+<br>
+
+Perubahan kondisi tanaman terjadi setelah dilakukan penyiraman.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>
+📚 Teks Nonfiksi:
+"Perubahan Teknologi Pembelajaran"
+</h2>
+
+
+<p>
+
+Sekolah mulai menggunakan perangkat digital seperti komputer dan tablet
+untuk mendukung kegiatan belajar. Guru juga mengikuti pelatihan agar
+mampu menggunakan teknologi tersebut.
+
+</p>
+
+
+<p>
+
+Penggunaan teknologi membuat siswa dapat mengakses berbagai sumber
+belajar secara lebih mudah. Namun, sekolah tetap mengingatkan siswa
+untuk menggunakan internet secara bertanggung jawab.
+
+</p>
+
+
+<div class="prediksi">
+
+
+<b>Petunjuk Teks:</b>
+
+<br>
+
+- Sekolah menggunakan perangkat digital.
+
+<br>
+
+- Guru mengikuti pelatihan teknologi.
+
+<br>
+
+- Siswa mengakses sumber belajar online.
+
+
+<br><br>
+
+
+<b>Prediksi:</b>
+
+<br>
+
+Pembelajaran digital akan semakin berkembang di sekolah.
+
+
+<br><br>
+
+
+<b>Alasan:</b>
+
+<br>
+
+Sekolah telah mulai menyiapkan fasilitas dan kemampuan pengguna.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>
+🧠 Jenis Prediksi
+</h2>
+
+
+<div class="info">
+
+
+<b>Prediksi Peristiwa:</b>
+
+<br>
+
+Memperkirakan kejadian berikutnya.
+
+
+<br><br>
+
+
+<b>Prediksi Akibat:</b>
+
+<br>
+
+Memperkirakan dampak dari suatu tindakan.
+
+
+<br><br>
+
+
+<b>Prediksi Perubahan:</b>
+
+<br>
+
+Memperkirakan perkembangan suatu keadaan.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📝 Evaluasi TKA
+</h2>
+
+
+
+<h3>
+1. Berdasarkan teks tanaman, peristiwa yang mungkin terjadi adalah...
+</h3>
+
+
+<div class="option" onclick="jawab(0,'A')">
+A. Tanaman menjadi lebih sehat karena dirawat
+</div>
+
+
+<div class="option" onclick="jawab(0,'B')">
+B. Tanaman akan langsung mati
+</div>
+
+
+<div class="option" onclick="jawab(0,'C')">
+C. Halaman sekolah akan ditutup
+</div>
+
+
+
+
+
+
+
+<h3>
+2. Prediksi yang baik harus berdasarkan...
+</h3>
+
+
+<div class="option" onclick="jawab(1,'A')">
+A. Bukti atau petunjuk dalam teks
+</div>
+
+
+<div class="option" onclick="jawab(1,'B')">
+B. Keinginan pembaca
+</div>
+
+
+<div class="option" onclick="jawab(1,'C')">
+C. Tebakan tanpa alasan
+</div>
+
+
+
+
+
+
+
+<h3>
+3. Berdasarkan teks teknologi, kemungkinan yang terjadi adalah...
+</h3>
+
+
+<div class="option" onclick="jawab(2,'A')">
+A. Penggunaan teknologi pembelajaran semakin berkembang
+</div>
+
+
+<div class="option" onclick="jawab(2,'B')">
+B. Sekolah berhenti menggunakan teknologi
+</div>
+
+
+<div class="option" onclick="jawab(2,'C')">
+C. Guru tidak perlu belajar teknologi
+</div>
+
+
+
+
+
+<button onclick="cekNilai()">
+Lihat Nilai
+</button>
+
+
+<div id="hasil" class="hasil"></div>
+
+
+</div>
+
+
+
+</div>
+
+</div>
+
+
+
+
+<footer>
+
+Rangkuman Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+<script>
+
+
+let kunci=[
+
+"A",
+"A",
+"A"
+
+];
+
+
+let jawaban=[];
+
+
+
+function mulai(){
+
+document.getElementById("awal").style.display="none";
+
+document.getElementById("materi").classList.remove("hidden");
+
+}
+
+
+
+function jawab(no,pil){
+
+jawaban[no]=pil;
+
+}
+
+
+
+function cekNilai(){
+
+let skor=0;
+
+
+for(let i=0;i<kunci.length;i++){
+
+if(jawaban[i]==kunci[i]){
+
+skor++;
+
+}
+
+}
+
+
+document.getElementById("hasil").innerHTML=
+"Skor Kamu: "+skor+" / 3";
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
