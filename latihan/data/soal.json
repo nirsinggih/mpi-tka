@@ -1,63 +1,103 @@
 {
   "judul": "Quiz TKA Matematika SMP",
+
   "kkm": 70,
+
   "acak_soal": true,
+
   "acak_opsi": true,
 
   "soal": [
 
     {
       "id": 1,
+
       "tipe": "pilihan_ganda",
+
       "pertanyaan": "Hasil dari 25 + 17 adalah ...",
+
       "opsi": [
         "32",
         "42",
         "52",
         "62"
       ],
+
       "jawaban": "42"
     },
 
+
     {
       "id": 2,
+
       "tipe": "pilihan_ganda",
+
       "pertanyaan": "Hasil dari 8 × 7 adalah ...",
+
       "opsi": [
         "48",
         "54",
         "56",
         "64"
       ],
+
       "jawaban": "56"
     },
 
+
     {
       "id": 3,
+
+      "tipe": "pilihan_ganda",
+
+      "pertanyaan": "Hasil dari 144 ÷ 12 adalah ...",
+
+      "opsi": [
+        "10",
+        "11",
+        "12",
+        "14"
+      ],
+
+      "jawaban": "12"
+    },
+
+
+    {
+      "id": 4,
+
       "tipe": "pilihan_ganda_kompleks",
+
       "pertanyaan": "Pilih semua bilangan yang merupakan bilangan prima.",
+
       "opsi": [
         "2",
         "4",
         "7",
         "9"
       ],
+
       "jawaban": [
         "2",
         "7"
       ]
     },
 
+
     {
-      "id": 4,
+      "id": 5,
+
       "tipe": "pilihan_ganda_kompleks",
+
       "pertanyaan": "Pilih semua pernyataan yang benar tentang pecahan.",
+
       "opsi": [
         "1/2 = 0,5",
         "1/4 = 0,25",
         "1/5 = 0,5",
         "2/4 = 1/2"
       ],
+
       "jawaban": [
         "1/2 = 0,5",
         "1/4 = 0,25",
@@ -65,75 +105,100 @@
       ]
     },
 
-    {
-      "id": 5,
-      "tipe": "benar_salah",
-      "pertanyaan": "Bilangan 15 merupakan bilangan prima.",
-      "opsi": [
-        "Benar",
-        "Salah"
-      ],
-      "jawaban": "Salah"
-    },
 
     {
       "id": 6,
-      "tipe": "benar_salah",
-      "pertanyaan": "Hasil dari 9 × 9 adalah 81.",
-      "opsi": [
-        "Benar",
-        "Salah"
-      ],
-      "jawaban": "Benar"
+
+      "tipe": "benar_salah_kompleks",
+
+      "pertanyaan":
+        "Tentukan apakah setiap pernyataan berikut Benar atau Salah.",
+
+      "pernyataan": [
+
+        {
+          "teks":
+            "2 merupakan bilangan prima.",
+
+          "jawaban":
+            "Benar"
+        },
+
+        {
+          "teks":
+            "9 merupakan bilangan prima.",
+
+          "jawaban":
+            "Salah"
+        },
+
+        {
+          "teks":
+            "11 merupakan bilangan prima.",
+
+          "jawaban":
+            "Benar"
+        },
+
+        {
+          "teks":
+            "15 merupakan bilangan prima.",
+
+          "jawaban":
+            "Salah"
+        }
+
+      ]
+
     },
+
 
     {
       "id": 7,
-      "tipe": "menjodohkan",
-      "pertanyaan": "Jodohkan operasi berikut dengan hasil yang tepat.",
-      "pasangan": [
-        {
-          "pertanyaan": "5 × 4",
-          "jawaban": "20"
-        },
-        {
-          "pertanyaan": "6 × 3",
-          "jawaban": "18"
-        },
-        {
-          "pertanyaan": "8 × 2",
-          "jawaban": "16"
-        },
-        {
-          "pertanyaan": "9 × 3",
-          "jawaban": "27"
-        }
-      ]
-    },
 
-    {
-      "id": 8,
-      "tipe": "menjodohkan",
-      "pertanyaan": "Jodohkan bangun dengan jumlah sisinya.",
-      "pasangan": [
+      "tipe": "benar_salah_kompleks",
+
+      "pertanyaan":
+        "Tentukan Benar atau Salah berdasarkan sifat operasi hitung.",
+
+      "pernyataan": [
+
         {
-          "pertanyaan": "Segitiga",
-          "jawaban": "3"
+          "teks":
+            "5 × 6 = 30.",
+
+          "jawaban":
+            "Benar"
         },
+
         {
-          "pertanyaan": "Persegi",
-          "jawaban": "4"
+          "teks":
+            "7 × 8 = 54.",
+
+          "jawaban":
+            "Salah"
         },
+
         {
-          "pertanyaan": "Segilima",
-          "jawaban": "5"
+          "teks":
+            "100 ÷ 10 = 10.",
+
+          "jawaban":
+            "Benar"
         },
+
         {
-          "pertanyaan": "Segienam",
-          "jawaban": "6"
+          "teks":
+            "45 + 15 = 50.",
+
+          "jawaban":
+            "Salah"
         }
+
       ]
+
     }
 
   ]
+
 }
