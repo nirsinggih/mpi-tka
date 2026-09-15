@@ -12,9 +12,9 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
 
 
-        // ==============================
+        // ==========================================
         // AMBIL DATA IDENTITAS
-        // ==============================
+        // ==========================================
 
         const nama =
             document.getElementById("nama").value.trim();
@@ -29,9 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("nomor").value.trim();
 
 
-        // ==============================
+        // ==========================================
         // VALIDASI
-        // ==============================
+        // ==========================================
 
         if (!nama) {
 
@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("nama").focus();
 
             return;
-
         }
 
 
@@ -51,7 +50,6 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("sekolah").focus();
 
             return;
-
         }
 
 
@@ -62,13 +60,12 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("kelas").focus();
 
             return;
-
         }
 
 
-        // ==============================
+        // ==========================================
         // DATA SISWA
-        // ==============================
+        // ==========================================
 
         const dataSiswa = {
 
@@ -83,9 +80,9 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
 
-        // ==============================
-        // SIMPAN IDENTITAS
-        // ==============================
+        // ==========================================
+        // SIMPAN DATA SISWA
+        // ==========================================
 
         localStorage.setItem(
             "dataSiswa",
@@ -93,22 +90,14 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        // ==============================
+        // ==========================================
         // SIMPAN FILE SOAL
-        // ==============================
+        // ==========================================
 
-        /*
-            FILE_SOAL berasal dari halaman
-            mapel.
-
-            Contoh:
-
-            mtk-sd.html
-            ↓
-            data/mtk-sd.json
-        */
-
-        if (typeof FILE_SOAL !== "undefined") {
+        if (
+            typeof FILE_SOAL !== "undefined" &&
+            FILE_SOAL
+        ) {
 
             localStorage.setItem(
                 "fileSoal",
@@ -122,22 +111,24 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
             return;
-
         }
 
 
-        // ==============================
+        // ==========================================
         // HAPUS HASIL QUIZ SEBELUMNYA
-        // ==============================
+        // ==========================================
 
-        localStorage.removeItem("hasilQuiz");
+        localStorage.removeItem(
+            "hasilQuiz"
+        );
 
 
-        // ==============================
-        // MENUJU HALAMAN QUIZ
-        // ==============================
+        // ==========================================
+        // MASUK KE HALAMAN QUIZ
+        // ==========================================
 
-        window.location.href = "quiz.html";
+        window.location.href =
+            "quiz.html";
 
     });
 
