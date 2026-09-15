@@ -699,16 +699,16 @@ const DATA_QUIZ = {
             tipe: "pilihan_ganda",
 
             pertanyaan:
-                "Hasil dari 125 + 378 adalah ...",
+                "Hasil dari (-18) + 25 - (-7) adalah ...",
 
             opsi: [
-                "493",
-                "503",
-                "513",
-                "523"
+                "10",
+                "14",
+                "18",
+                "24"
             ],
 
-            jawaban: "503"
+            jawaban: "14"
         },
 
 
@@ -718,16 +718,16 @@ const DATA_QUIZ = {
             tipe: "pilihan_ganda",
 
             pertanyaan:
-                "Hasil dari 750 - 286 adalah ...",
+                "Bilangan yang paling besar di antara bilangan berikut adalah ...",
 
             opsi: [
-                "454",
-                "464",
-                "474",
-                "484"
+                "-0,75",
+                "-2/3",
+                "-0,6",
+                "-5/8"
             ],
 
-            jawaban: "464"
+            jawaban: "-0,6"
         },
 
 
@@ -737,16 +737,16 @@ const DATA_QUIZ = {
             tipe: "pilihan_ganda",
 
             pertanyaan:
-                "Hasil dari 24 × 15 adalah ...",
+                "Hasil dari 48 ÷ (-6) + 15 × 2 adalah ...",
 
             opsi: [
-                "340",
-                "350",
-                "360",
-                "370"
+                "22",
+                "24",
+                "26",
+                "28"
             ],
 
-            jawaban: "360"
+            jawaban: "22"
         },
 
 
@@ -756,35 +756,39 @@ const DATA_QUIZ = {
             tipe: "pilihan_ganda",
 
             pertanyaan:
-                "Hasil dari 864 ÷ 12 adalah ...",
+                "Tanpa menghitung secara tepat, hasil 398 × 51 paling dekat dengan ...",
 
             opsi: [
-                "62",
-                "72",
-                "82",
-                "92"
+                "18.000",
+                "20.000",
+                "22.000",
+                "24.000"
             ],
 
-            jawaban: "72"
+            jawaban: "20.000"
         },
 
 
         {
             id: 5,
 
-            tipe: "pilihan_ganda",
+            tipe: "pilihan_ganda_kompleks",
 
             pertanyaan:
-                "Bilangan berikut yang merupakan bilangan prima adalah ...",
+                "Pilih semua pernyataan yang benar.",
 
             opsi: [
-                "21",
-                "27",
-                "31",
-                "39"
+                "2³ × 2² = 2⁵",
+                "3² × 3³ = 3⁶",
+                "5⁴ ÷ 5² = 5²",
+                "7³ ÷ 7 = 7²"
             ],
 
-            jawaban: "31"
+            jawaban: [
+                "2³ × 2² = 2⁵",
+                "5⁴ ÷ 5² = 5²",
+                "7³ ÷ 7 = 7²"
+            ]
         },
 
 
@@ -794,16 +798,16 @@ const DATA_QUIZ = {
             tipe: "pilihan_ganda",
 
             pertanyaan:
-                "FPB dari 24 dan 36 adalah ...",
+                "Faktorisasi prima dari 360 adalah ...",
 
             opsi: [
-                "6",
-                "8",
-                "12",
-                "18"
+                "2³ × 3² × 5",
+                "2² × 3² × 5",
+                "2³ × 3 × 5²",
+                "2 × 3² × 5²"
             ],
 
-            jawaban: "12"
+            jawaban: "2³ × 3² × 5"
         },
 
 
@@ -813,16 +817,16 @@ const DATA_QUIZ = {
             tipe: "pilihan_ganda",
 
             pertanyaan:
-                "KPK dari 12 dan 18 adalah ...",
+                "Sebuah peta memiliki skala 1 : 250.000. Jika jarak dua kota pada peta adalah 6 cm, jarak sebenarnya adalah ...",
 
             opsi: [
-                "24",
-                "30",
-                "36",
-                "48"
+                "1,5 km",
+                "15 km",
+                "150 km",
+                "1.500 km"
             ],
 
-            jawaban: "36"
+            jawaban: "15 km"
         },
 
 
@@ -832,16 +836,16 @@ const DATA_QUIZ = {
             tipe: "pilihan_ganda",
 
             pertanyaan:
-                "Perbandingan 12 : 18 jika disederhanakan menjadi ...",
+                "Untuk membuat 12 kue diperlukan 300 gram tepung. Dengan perbandingan yang sama, tepung yang diperlukan untuk membuat 30 kue adalah ...",
 
             opsi: [
-                "2 : 3",
-                "3 : 4",
-                "4 : 5",
-                "6 : 9"
+                "600 gram",
+                "700 gram",
+                "750 gram",
+                "900 gram"
             ],
 
-            jawaban: "2 : 3"
+            jawaban: "750 gram"
         },
 
 
@@ -851,16 +855,16 @@ const DATA_QUIZ = {
             tipe: "pilihan_ganda",
 
             pertanyaan:
-                "Sebuah peta memiliki skala 1 : 100.000. Jika jarak pada peta 5 cm, jarak sebenarnya adalah ...",
+                "Sebuah pekerjaan dapat diselesaikan 8 pekerja dalam 15 hari. Jika jumlah pekerja menjadi 12 orang dengan kemampuan yang sama, pekerjaan tersebut diperkirakan selesai dalam ...",
 
             opsi: [
-                "500 m",
-                "5 km",
-                "50 km",
-                "500 km"
+                "8 hari",
+                "10 hari",
+                "12 hari",
+                "15 hari"
             ],
 
-            jawaban: "5 km"
+            jawaban: "10 hari"
         },
 
 
@@ -870,111 +874,158 @@ const DATA_QUIZ = {
             tipe: "pilihan_ganda",
 
             pertanyaan:
-                "Harga sebuah buku Rp20.000. Jika mendapat diskon 10%, harga setelah diskon adalah ...",
+                "Nilai x yang memenuhi persamaan 3x + 7 = 25 adalah ...",
 
             opsi: [
-                "Rp17.000",
-                "Rp18.000",
-                "Rp19.000",
-                "Rp19.500"
+                "4",
+                "5",
+                "6",
+                "7"
             ],
 
-            jawaban: "Rp18.000"
+            jawaban: "6"
         },
 
 
         {
             id: 11,
 
-            tipe: "pilihan_ganda_kompleks",
+            tipe: "pilihan_ganda",
 
             pertanyaan:
-                "Pilih semua bilangan yang merupakan faktor dari 36.",
+                "Umur ayah 4 kali umur anaknya. Jumlah umur mereka 50 tahun. Umur anak adalah ...",
 
             opsi: [
-                "2",
-                "3",
-                "5",
-                "6"
+                "8 tahun",
+                "10 tahun",
+                "12 tahun",
+                "14 tahun"
             ],
 
-            jawaban: [
-                "2",
-                "3",
-                "6"
-            ]
+            jawaban: "10 tahun"
         },
 
 
         {
             id: 12,
 
-            tipe: "pilihan_ganda_kompleks",
+            tipe: "pilihan_ganda",
 
             pertanyaan:
-                "Pilih semua bilangan prima berikut.",
+                "Himpunan penyelesaian dari 2x - 5 > 9 adalah ...",
 
             opsi: [
-                "11",
-                "15",
-                "17",
-                "21"
+                "x > 2",
+                "x > 5",
+                "x > 7",
+                "x > 9"
             ],
 
-            jawaban: [
-                "11",
-                "17"
-            ]
+            jawaban: "x > 7"
         },
 
 
         {
             id: 13,
 
-            tipe: "pilihan_ganda_kompleks",
+            tipe: "pilihan_ganda",
 
             pertanyaan:
-                "Pilih semua bilangan genap.",
+                "Harga 2 buku dan 3 pensil adalah Rp21.000. Harga 1 buku dan 2 pensil adalah Rp13.000. Harga satu buku adalah ...",
 
             opsi: [
-                "12",
-                "17",
-                "24",
-                "31"
+                "Rp3.000",
+                "Rp5.000",
+                "Rp7.000",
+                "Rp9.000"
             ],
 
-            jawaban: [
-                "12",
-                "24"
-            ]
+            jawaban: "Rp3.000"
         },
 
 
         {
             id: 14,
 
-            tipe: "pilihan_ganda_kompleks",
+            tipe: "pilihan_ganda",
 
             pertanyaan:
-                "Pilih semua pernyataan yang benar tentang perbandingan senilai.",
+                "Bentuk sederhana dari 3(2x - 4) + 2(x + 5) adalah ...",
 
             opsi: [
-                "Jika satu besaran bertambah, besaran lain juga bertambah secara sebanding.",
-                "Grafiknya dapat berupa garis lurus melalui titik asal.",
-                "Jika satu besaran bertambah, besaran lain selalu berkurang.",
-                "Nilai perbandingan tetap."
+                "8x - 2",
+                "8x + 2",
+                "6x + 10",
+                "4x + 2"
             ],
 
-            jawaban: [
-                "Jika satu besaran bertambah, besaran lain juga bertambah secara sebanding.",
-                "Grafiknya dapat berupa garis lurus melalui titik asal.",
-                "Nilai perbandingan tetap."
-            ]
+            jawaban: "8x - 2"
         },
 
 
         {
             id: 15,
+
+            tipe: "pilihan_ganda_kompleks",
+
+            pertanyaan:
+                "Pilih semua pernyataan yang benar tentang operasi bentuk aljabar.",
+
+            opsi: [
+                "a + b = b + a",
+                "(a + b) + c = a + (b + c)",
+                "a(b + c) = ab + ac",
+                "a - b = b - a"
+            ],
+
+            jawaban: [
+                "a + b = b + a",
+                "(a + b) + c = a + (b + c)",
+                "a(b + c) = ab + ac"
+            ]
+        },
+
+
+        {
+            id: 16,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Diketahui fungsi f(x) = 2x + 3. Nilai f(5) adalah ...",
+
+            opsi: [
+                "10",
+                "11",
+                "13",
+                "15"
+            ],
+
+            jawaban: "13"
+        },
+
+
+        {
+            id: 17,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Diketahui A = {1, 2, 3} dan B = {2, 4, 6}. Relasi dari A ke B adalah setiap anggota A dipasangkan dengan dua kalinya. Range relasi tersebut adalah ...",
+
+            opsi: [
+                "{1, 2, 3}",
+                "{2, 4, 6}",
+                "{1, 4, 9}",
+                "{2, 3, 6}"
+            ],
+
+            jawaban: "{2, 4, 6}"
+        },
+
+
+        {
+            id: 18,
 
             tipe: "benar_salah_kompleks",
 
@@ -985,7 +1036,7 @@ const DATA_QUIZ = {
 
                 {
                     teks:
-                        "Bilangan 2 merupakan bilangan prima.",
+                        "Domain adalah himpunan asal dalam suatu fungsi.",
 
                     jawaban:
                         "Benar"
@@ -993,7 +1044,7 @@ const DATA_QUIZ = {
 
                 {
                     teks:
-                        "Bilangan 1 merupakan bilangan prima.",
+                        "Kodomain selalu sama dengan range.",
 
                     jawaban:
                         "Salah"
@@ -1001,10 +1052,10 @@ const DATA_QUIZ = {
 
                 {
                     teks:
-                        "Semua bilangan genap merupakan bilangan prima.",
+                        "Range adalah himpunan hasil pemetaan.",
 
                     jawaban:
-                        "Salah"
+                        "Benar"
                 }
 
             ]
@@ -1012,69 +1063,317 @@ const DATA_QUIZ = {
 
 
         {
-            id: 16,
-
-            tipe: "benar_salah_kompleks",
-
-            pertanyaan:
-                "Tentukan Benar atau Salah.",
-
-            pernyataan: [
-
-                {
-                    teks:
-                        "Perbandingan 2 : 3 sama dengan 4 : 6.",
-
-                    jawaban:
-                        "Benar"
-                },
-
-                {
-                    teks:
-                        "Skala 1 : 100 berarti 1 cm pada gambar mewakili 100 cm sebenarnya.",
-
-                    jawaban:
-                        "Benar"
-                },
-
-                {
-                    teks:
-                        "Perbandingan 5 : 10 sama dengan 1 : 3.",
-
-                    jawaban:
-                        "Salah"
-                }
-
-            ]
-        },
-
-
-        {
-            id: 17,
+            id: 19,
 
             tipe: "pilihan_ganda",
 
             pertanyaan:
-                "Rata-rata dari 6, 8, 10, dan 12 adalah ...",
+                "Suku berikutnya dari barisan 4, 7, 10, 13, ... adalah ...",
 
             opsi: [
-                "8",
-                "9",
-                "10",
-                "11"
+                "15",
+                "16",
+                "17",
+                "18"
             ],
 
-            jawaban: "9"
+            jawaban: "16"
         },
 
 
         {
-            id: 18,
+            id: 20,
 
             tipe: "pilihan_ganda",
 
             pertanyaan:
-                "Median dari data 4, 7, 8, 10, 12 adalah ...",
+                "Jumlah 10 suku pertama barisan 2, 5, 8, 11, ... adalah ...",
+
+            opsi: [
+                "145",
+                "150",
+                "155",
+                "160"
+            ],
+
+            jawaban: "155"
+        },
+
+
+        {
+            id: 21,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Dua garis berpotongan membentuk salah satu sudut 65°. Besar sudut yang bertolak belakang dengan sudut tersebut adalah ...",
+
+            opsi: [
+                "25°",
+                "65°",
+                "115°",
+                "180°"
+            ],
+
+            jawaban: "65°"
+        },
+
+
+        {
+            id: 22,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Dua garis sejajar dipotong sebuah garis transversal. Jika salah satu sudut sehadap besarnya 70°, maka sudut sehadap lainnya adalah ...",
+
+            opsi: [
+                "70°",
+                "90°",
+                "110°",
+                "180°"
+            ],
+
+            jawaban: "70°"
+        },
+
+
+        {
+            id: 23,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Sebuah segitiga memiliki dua sudut masing-masing 45° dan 65°. Besar sudut ketiga adalah ...",
+
+            opsi: [
+                "60°",
+                "70°",
+                "80°",
+                "90°"
+            ],
+
+            jawaban: "70°"
+        },
+
+
+        {
+            id: 24,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Sebuah segitiga siku-siku memiliki sisi siku-siku 9 cm dan 12 cm. Panjang sisi miringnya adalah ...",
+
+            opsi: [
+                "13 cm",
+                "14 cm",
+                "15 cm",
+                "16 cm"
+            ],
+
+            jawaban: "15 cm"
+        },
+
+
+        {
+            id: 25,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Dua segitiga sebangun. Sisi pada segitiga pertama yang panjangnya 8 cm bersesuaian dengan sisi 12 cm pada segitiga kedua. Jika sisi lain pada segitiga pertama 10 cm, panjang sisi yang bersesuaian pada segitiga kedua adalah ...",
+
+            opsi: [
+                "12 cm",
+                "15 cm",
+                "16 cm",
+                "18 cm"
+            ],
+
+            jawaban: "15 cm"
+        },
+
+
+        {
+            id: 26,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Manakah yang merupakan jaring-jaring tabung?",
+
+            opsi: [
+                "Satu persegi dan dua lingkaran",
+                "Satu persegi panjang dan dua lingkaran",
+                "Empat segitiga dan satu persegi",
+                "Enam persegi yang sama besar"
+            ],
+
+            jawaban: "Satu persegi panjang dan dua lingkaran"
+        },
+
+
+        {
+            id: 27,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Titik A(3, -2) ditranslasikan 4 satuan ke kiri dan 5 satuan ke atas. Koordinat bayangan A adalah ...",
+
+            opsi: [
+                "(-1, 3)",
+                "(7, 3)",
+                "(-1, -7)",
+                "(7, -7)"
+            ],
+
+            jawaban: "(-1, 3)"
+        },
+
+
+        {
+            id: 28,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Titik P(4, -3) direfleksikan terhadap sumbu-X. Koordinat bayangan P adalah ...",
+
+            opsi: [
+                "(-4, -3)",
+                "(-4, 3)",
+                "(4, 3)",
+                "(3, 4)"
+            ],
+
+            jawaban: "(4, 3)"
+        },
+
+
+        {
+            id: 29,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Sebuah persegi memiliki sisi 14 cm. Di dalamnya terdapat lingkaran yang diameternya sama dengan sisi persegi. Jika π = 22/7, luas daerah persegi yang tidak tertutup lingkaran adalah ...",
+
+            opsi: [
+                "42 cm²",
+                "49 cm²",
+                "56 cm²",
+                "84 cm²"
+            ],
+
+            jawaban: "42 cm²"
+        },
+
+
+        {
+            id: 30,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Sebuah prisma memiliki luas alas 30 cm² dan tinggi 12 cm. Volume prisma tersebut adalah ...",
+
+            opsi: [
+                "180 cm³",
+                "240 cm³",
+                "360 cm³",
+                "420 cm³"
+            ],
+
+            jawaban: "360 cm³"
+        },
+
+
+        {
+            id: 31,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Sebuah limas memiliki luas alas 48 cm² dan tinggi 10 cm. Volume limas tersebut adalah ...",
+
+            opsi: [
+                "120 cm³",
+                "160 cm³",
+                "240 cm³",
+                "480 cm³"
+            ],
+
+            jawaban: "160 cm³"
+        },
+
+
+        {
+            id: 32,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Sebuah bola memiliki jari-jari 3 cm. Jika π = 3,14, volume bola tersebut kira-kira adalah ...",
+
+            opsi: [
+                "56,52 cm³",
+                "84,78 cm³",
+                "113,04 cm³",
+                "169,56 cm³"
+            ],
+
+            jawaban: "113,04 cm³"
+        },
+
+
+        {
+            id: 33,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Seorang siswa ingin mengetahui jenis transportasi yang digunakan teman-temannya untuk pergi ke sekolah. Pertanyaan yang paling tepat untuk mengumpulkan data adalah ...",
+
+            opsi: [
+                "Berapa umur kamu?",
+                "Apa warna kesukaanmu?",
+                "Apa transportasi yang kamu gunakan untuk pergi ke sekolah?",
+                "Berapa nilai matematika kamu?"
+            ],
+
+            jawaban:
+                "Apa transportasi yang kamu gunakan untuk pergi ke sekolah?"
+        },
+
+
+        {
+            id: 34,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Data nilai lima siswa adalah 70, 75, 80, 85, dan 90. Rata-rata nilai tersebut adalah ...",
+
+            opsi: [
+                "75",
+                "80",
+                "85",
+                "90"
+            ],
+
+            jawaban: "80"
+        },
+
+
+        {
+            id: 35,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Data berikut adalah 6, 7, 7, 8, 9, 10, 12. Median dari data tersebut adalah ...",
 
             opsi: [
                 "7",
@@ -1088,40 +1387,129 @@ const DATA_QUIZ = {
 
 
         {
-            id: 19,
+            id: 36,
 
-            tipe: "pilihan_ganda",
+            tipe: "pilihan_ganda_kompleks",
 
             pertanyaan:
-                "Modus dari data 4, 5, 5, 6, 7, 5, 8 adalah ...",
+                "Perhatikan data A: 5, 6, 6, 7, 8 dan data B: 3, 5, 7, 9, 10. Pilih semua pernyataan yang benar.",
 
             opsi: [
-                "4",
-                "5",
-                "6",
-                "7"
+                "Modus data A adalah 6.",
+                "Range data A adalah 3.",
+                "Range data B adalah 7.",
+                "Median data B adalah 7."
             ],
 
-            jawaban: "5"
+            jawaban: [
+                "Modus data A adalah 6.",
+                "Range data A adalah 3.",
+                "Range data B adalah 7.",
+                "Median data B adalah 7."
+            ]
         },
 
 
         {
-            id: 20,
+            id: 37,
+
+            tipe: "benar_salah_kompleks",
+
+            pertanyaan:
+                "Perhatikan dua kelompok data berikut. Kelompok A: 10, 10, 10, 10, 10. Kelompok B: 6, 8, 10, 12, 14. Tentukan Benar atau Salah.",
+
+            pernyataan: [
+
+                {
+                    teks:
+                        "Rata-rata kedua kelompok data sama-sama 10.",
+
+                    jawaban:
+                        "Benar"
+                },
+
+                {
+                    teks:
+                        "Jangkauan kelompok A lebih besar daripada kelompok B.",
+
+                    jawaban:
+                        "Salah"
+                },
+
+                {
+                    teks:
+                        "Kelompok B memiliki penyebaran data lebih besar daripada kelompok A.",
+
+                    jawaban:
+                        "Benar"
+                },
+
+                {
+                    teks:
+                        "Kedua kelompok memiliki jumlah data yang sama.",
+
+                    jawaban:
+                        "Benar"
+                }
+
+            ]
+        },
+
+
+        {
+            id: 38,
 
             tipe: "pilihan_ganda",
 
             pertanyaan:
-                "Jangkauan data 12, 15, 18, 20, 25 adalah ...",
+                "Sebuah dadu bersisi enam dilempar satu kali. Peluang muncul mata dadu 4 adalah ...",
 
             opsi: [
-                "10",
-                "11",
-                "12",
-                "13"
+                "1/2",
+                "1/4",
+                "1/6",
+                "1/12"
             ],
 
-            jawaban: "13"
+            jawaban: "1/6"
+        },
+
+
+        {
+            id: 39,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Sebuah kantong berisi 5 bola merah, 3 bola biru, dan 2 bola hijau. Jika satu bola diambil secara acak, peluang mendapatkan bola biru adalah ...",
+
+            opsi: [
+                "1/5",
+                "3/10",
+                "1/3",
+                "1/2"
+            ],
+
+            jawaban: "3/10"
+        },
+
+
+        {
+            id: 40,
+
+            tipe: "pilihan_ganda",
+
+            pertanyaan:
+                "Sebuah koin dilempar 50 kali dan muncul sisi angka sebanyak 27 kali. Frekuensi relatif muncul sisi angka adalah ...",
+
+            opsi: [
+                "27%",
+                "46%",
+                "54%",
+                "73%"
+            ],
+
+            jawaban: "54%"
         }
 
     ]
