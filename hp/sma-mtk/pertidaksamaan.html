@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MPI Aljabar - Sistem Pertidaksamaan Linear Multivariabel</title>
+
+<!-- Font Eksternal -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:#333;
+}
+
+.container{
+    width:100%;
+    max-width:500px;
+    margin:auto;
+    padding:15px;
+}
+
+.card{
+    background:white;
+    border-radius:20px;
+    padding:20px;
+    margin-bottom:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+    animation:fade .5s;
+}
+
+@keyframes fade{
+    from{opacity:0;transform:translateY(20px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+.header{
+    text-align:center;
+    color:white;
+    padding:25px 10px;
+}
+
+.header h1{
+    font-size:24px;
+    margin:5px;
+}
+
+.header p{
+    font-size:14px;
+}
+
+h2{
+    color:#6c5ce7;
+}
+
+h3{
+    color:#ff6b6b;
+}
+
+.box{
+    background:#f1f5ff;
+    padding:12px;
+    border-left:5px solid #667eea;
+    border-radius:10px;
+    margin:10px 0;
+}
+
+.example{
+    background:#fff5e6;
+    border-left:5px solid #ff9f43;
+}
+
+button{
+    width:100%;
+    padding:13px;
+    border:none;
+    border-radius:30px;
+    background:linear-gradient(90deg,#ff6b6b,#ffa502);
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+button:hover{
+    opacity:.8;
+}
+
+.option{
+    background:#f8f9fa;
+    padding:12px;
+    border-radius:12px;
+    margin:8px 0;
+    border:2px solid #ddd;
+}
+
+.option:hover{
+    border-color:#667eea;
+}
+
+#hasil{
+    font-weight:bold;
+    text-align:center;
+    margin-top:15px;
+}
+
+footer{
+    text-align:center;
+    color:white;
+    font-size:11px;
+    padding:15px;
+}
+
+.math{
+    font-size:18px;
+    text-align:center;
+    font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+<h1>📚 MPI ALJABAR</h1>
+<p>Sistem Pertidaksamaan Linear Multivariabel SMA</p>
+</div>
+
+
+<div class="card">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+<p>
+Setelah mempelajari materi ini, peserta didik mampu:
+</p>
+
+<ul>
+<li>Memahami konsep pertidaksamaan linear multivariabel.</li>
+<li>Menentukan daerah penyelesaian sistem pertidaksamaan.</li>
+<li>Menyelesaikan masalah kontekstual menggunakan model matematika.</li>
+</ul>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>📖 Konsep Dasar</h2>
+
+<p>
+Pertidaksamaan linear multivariabel adalah pertidaksamaan yang memiliki dua atau lebih variabel dengan pangkat satu.
+</p>
+
+<div class="box math">
+ax + by ≤ c
+</div>
+
+<p>
+Keterangan:
+<br>
+a dan b = koefisien variabel
+<br>
+x dan y = variabel
+<br>
+c = konstanta
+</p>
+
+
+<h3>Simbol Pertidaksamaan</h3>
+
+<div class="box">
+≤ : kurang dari atau sama dengan
+<br>
+≥ : lebih dari atau sama dengan
+<br>
+&lt; : kurang dari
+<br>
+&gt; : lebih dari
+</div>
+
+
+</div>
+
+
+
+<div class="card">
+
+<h2>✏️ Contoh Soal</h2>
+
+<div class="box example">
+
+Tentukan daerah penyelesaian:
+
+<br><br>
+
+2x + y ≤ 6
+
+<br>
+
+x ≥ 0
+
+<br>
+
+y ≥ 0
+
+</div>
+
+
+<p>
+Langkah:
+</p>
+
+<ol>
+<li>Menggambar garis batas 2x+y=6.</li>
+<li>Menentukan titik potong sumbu.</li>
+<li>Memilih daerah yang memenuhi semua syarat.</li>
+</ol>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>🌟 Penerapan</h2>
+
+<p>
+Sistem pertidaksamaan linear multivariabel digunakan dalam:
+</p>
+
+<ul>
+<li>Perencanaan produksi.</li>
+<li>Optimasi keuntungan.</li>
+<li>Pengaturan penggunaan bahan.</li>
+<li>Masalah ekonomi dan bisnis.</li>
+</ul>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>🧠 Latihan Interaktif</h2>
+
+<p>
+Manakah yang merupakan pertidaksamaan linear dua variabel?
+</p>
+
+
+<div class="option">
+<input type="radio" name="jawaban" value="salah">
+x² + y ≤ 5
+</div>
+
+
+<div class="option">
+<input type="radio" name="jawaban" value="benar">
+2x + 3y ≥ 12
+</div>
+
+
+<div class="option">
+<input type="radio" name="jawaban" value="salah">
+xy ≤ 8
+</div>
+
+
+<button onclick="cekJawaban()">
+Periksa Jawaban
+</button>
+
+
+<div id="hasil"></div>
+
+
+</div>
+
+
+<div class="card">
+
+<h2>🚀 Ringkasan</h2>
+
+<div class="box">
+
+Sistem pertidaksamaan linear multivariabel:
+<br><br>
+
+✔ Memiliki lebih dari satu variabel.
+<br>
+✔ Pangkat variabel harus satu.
+<br>
+✔ Penyelesaian berupa daerah yang memenuhi semua pertidaksamaan.
+
+</div>
+
+</div>
+
+
+<footer>
+Rangkuman Materi Tes Kemampuan Akademik (TKA)
+</footer>
+
+
+</div>
+
+
+<script>
+
+function cekJawaban(){
+
+let jawaban=document.querySelector(
+'input[name="jawaban"]:checked'
+);
+
+let hasil=document.getElementById("hasil");
+
+
+if(!jawaban){
+hasil.innerHTML="⚠️ Pilih jawaban terlebih dahulu!";
+hasil.style.color="orange";
+}
+
+else if(jawaban.value=="benar"){
+hasil.innerHTML="🎉 Benar! 2x + 3y ≥ 12 adalah pertidaksamaan linear dua variabel.";
+hasil.style.color="green";
+}
+
+else{
+hasil.innerHTML="❌ Kurang tepat. Ingat, variabel tidak boleh berpangkat dua atau dikalikan.";
+hasil.style.color="red";
+}
+
+}
+
+</script>
+
+
+</body>
+</html>
