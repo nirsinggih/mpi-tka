@@ -8,11 +8,20 @@ let dataSiswa = null;
 
 let judulQuiz = "";
 
+let fileSoal = "";
+
+
+/* =========================
+   LOAD QUIZ
+========================= */
 
 document.addEventListener(
     "DOMContentLoaded",
     async function() {
 
+        /* =========================
+           AMBIL DATA SISWA
+        ========================= */
 
         dataSiswa =
             JSON.parse(
@@ -25,59 +34,149 @@ document.addEventListener(
         if (!dataSiswa) {
 
             window.location.href =
-                "index.html";
+                "mtk-sd.html";
 
             return;
 
         }
 
 
-        document.getElementById(
-            "identitasMini"
-        ).textContent =
+        /* =========================
+           TAMPILKAN IDENTITAS
+        ========================= */
 
-            dataSiswa.nama +
-            " • " +
-            dataSiswa.sekolah;
+        const identitasMini =
+            document.getElementById(
+                "identitasMini"
+            );
+
+
+        if (identitasMini) {
+
+            identitasMini.textContent =
+
+                dataSiswa.nama +
+                " • " +
+                dataSiswa.sekolah;
+
+        }
 
 
         try {
 
+            /* =========================
+               AMBIL FILE SOAL
+            ========================= */
+
+            fileSoal =
+                localStorage.getItem(
+                    "fileSoal"
+                );
+
+
+            if (!fileSoal) {
+
+                throw new Error(
+                    "File soal belum ditentukan."
+                );
+
+            }
+
+
+            /* =========================
+               BACA FILE JSON
+            ========================= */
 
             const response =
                 await fetch(
-                    "data/soal.json"
+                    fileSoal
                 );
 
 
             if (!response.ok) {
 
                 throw new Error(
-                    "Gagal membaca soal.json"
+                    "Gagal membaca file soal: " +
+                    fileSoal
                 );
 
             }
 
 
+            /* =========================
+               UBAH JSON MENJADI DATA
+            ========================= */
+
             const data =
                 await response.json();
 
 
+            /* =========================
+               JUDUL QUIZ
+            ========================= */
+
             judulQuiz =
-                data.judul;
+                data.judul ||
+                "Quiz";
 
 
-            document.getElementById(
-                "judulQuiz"
-            ).textContent =
-                judulQuiz;
+            const judulElement =
+                document.getElementById(
+                    "judulQuiz"
+                );
 
+
+            if (judulElement) {
+
+                judulElement.textContent =
+                    judulQuiz;
+
+            }
+
+
+            /* =========================
+               CEK DATA SOAL
+            ========================= */
+
+            if (
+                !Array.isArray(
+                    data.soal
+                )
+            ) {
+
+                throw new Error(
+                    "Data soal tidak ditemukan atau format JSON tidak benar."
+                );
+
+            }
+
+
+            if (
+                data.soal.length === 0
+            ) {
+
+                throw new Error(
+                    "File soal tidak memiliki soal."
+                );
+
+            }
+
+
+            /* =========================
+               SALIN SOAL
+            ========================= */
 
             semuaSoal =
                 [...data.soal];
 
 
-            if (data.acak_soal) {
+            /* =========================
+               ACAK SOAL
+            ========================= */
+
+            if (
+                data.acak_soal === true
+            ) {
 
                 semuaSoal =
                     acakArray(
@@ -87,19 +186,28 @@ document.addEventListener(
             }
 
 
-            if (data.acak_opsi) {
+            /* =========================
+               ACAK OPSI
+            ========================= */
+
+            if (
+                data.acak_opsi === true
+            ) {
 
                 semuaSoal.forEach(
                     soal => {
 
-
                         if (
-                            soal.opsi
+                            Array.isArray(
+                                soal.opsi
+                            )
                         ) {
 
                             soal.opsi =
                                 acakArray(
-                                    [...soal.opsi]
+                                    [
+                                        ...soal.opsi
+                                    ]
                                 );
 
                         }
@@ -110,47 +218,83 @@ document.addEventListener(
             }
 
 
+            /* =========================
+               SIAPKAN JAWABAN SISWA
+            ========================= */
+
             jawabanSiswa =
                 new Array(
                     semuaSoal.length
                 ).fill(null);
 
 
+            /* =========================
+               TAMPILKAN SOAL PERTAMA
+            ========================= */
+
             tampilkanSoal();
 
 
         } catch(error) {
 
+            console.error(
+                "ERROR QUIZ:",
+                error
+            );
 
-            console.error(error);
+
+            const container =
+                document.getElementById(
+                    "soalContainer"
+                );
 
 
-            document.getElementById(
-                "soalContainer"
-            ).innerHTML = `
+            if (container) {
 
-                <div class="alert alert-danger">
+                container.innerHTML = `
 
-                    <strong>
-                        Gagal memuat soal.
-                    </strong>
+                    <div class="alert alert-danger">
 
-                    <br>
+                        <h5>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            Gagal Memuat Soal
+                        </h5>
 
-                    Pastikan file
-                    <strong>
-                        data/soal.json
-                    </strong>
-                    tersedia.
+                        <hr>
 
-                    <br><br>
+                        <p class="mb-2">
 
-                    Detail:
-                    ${escapeHTML(error.message)}
+                            <strong>
+                                File soal:
+                            </strong>
 
-                </div>
+                            ${escapeHTML(
+                                fileSoal ||
+                                localStorage.getItem(
+                                    "fileSoal"
+                                ) ||
+                                "-"
+                            )}
 
-            `;
+                        </p>
+
+                        <p class="mb-0">
+
+                            <strong>
+                                Detail:
+                            </strong>
+
+                            ${escapeHTML(
+                                error.message
+                            )}
+
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
 
         }
 
@@ -164,13 +308,11 @@ document.addEventListener(
 
 function acakArray(array) {
 
-
     for (
         let i = array.length - 1;
         i > 0;
         i--
     ) {
-
 
         const j =
             Math.floor(
@@ -202,9 +344,17 @@ function acakArray(array) {
 
 function tampilkanSoal() {
 
-
     const soal =
-        semuaSoal[soalAktif];
+        semuaSoal[
+            soalAktif
+        ];
+
+
+    if (!soal) {
+
+        return;
+
+    }
 
 
     const container =
@@ -213,25 +363,54 @@ function tampilkanSoal() {
         );
 
 
-    document.getElementById(
-        "nomorSoal"
-    ).textContent =
+    /* =========================
+       NOMOR SOAL
+    ========================= */
 
-        `${soalAktif + 1}/${semuaSoal.length}`;
+    const nomorElement =
+        document.getElementById(
+            "nomorSoal"
+        );
 
+
+    if (nomorElement) {
+
+        nomorElement.textContent =
+
+            `${soalAktif + 1}/${semuaSoal.length}`;
+
+    }
+
+
+    /* =========================
+       PROGRESS BAR
+    ========================= */
 
     const persen =
+
         (
             (soalAktif + 1) /
             semuaSoal.length
         ) * 100;
 
 
-    document.getElementById(
-        "progressBar"
-    ).style.width =
-        persen + "%";
+    const progressBar =
+        document.getElementById(
+            "progressBar"
+        );
 
+
+    if (progressBar) {
+
+        progressBar.style.width =
+            persen + "%";
+
+    }
+
+
+    /* =========================
+       PERTANYAAN
+    ========================= */
 
     let html = `
 
@@ -260,11 +439,14 @@ function tampilkanSoal() {
     `;
 
 
+    /* =========================
+       PILIHAN GANDA
+    ========================= */
+
     if (
         soal.tipe ===
         "pilihan_ganda"
     ) {
-
 
         html +=
             buatPilihanGanda(
@@ -274,11 +456,14 @@ function tampilkanSoal() {
     }
 
 
+    /* =========================
+       PILIHAN GANDA KOMPLEKS
+    ========================= */
+
     else if (
         soal.tipe ===
         "pilihan_ganda_kompleks"
     ) {
-
 
         html +=
             buatPilihanGandaKompleks(
@@ -288,11 +473,14 @@ function tampilkanSoal() {
     }
 
 
+    /* =========================
+       BENAR SALAH KOMPLEKS
+    ========================= */
+
     else if (
         soal.tipe ===
         "benar_salah_kompleks"
     ) {
-
 
         html +=
             buatBenarSalahKompleks(
@@ -302,14 +490,19 @@ function tampilkanSoal() {
     }
 
 
-    else {
+    /* =========================
+       TIPE TIDAK DIKENALI
+    ========================= */
 
+    else {
 
         html += `
 
             <div class="alert alert-danger">
 
-                Tipe soal tidak dikenali:
+                <strong>
+                    Tipe soal tidak dikenali:
+                </strong>
 
                 ${escapeHTML(
                     soal.tipe
@@ -326,11 +519,27 @@ function tampilkanSoal() {
         html;
 
 
-    document.getElementById(
-        "btnSebelumnya"
-    ).disabled =
-        soalAktif === 0;
+    /* =========================
+       TOMBOL SEBELUMNYA
+    ========================= */
 
+    const btnSebelumnya =
+        document.getElementById(
+            "btnSebelumnya"
+        );
+
+
+    if (btnSebelumnya) {
+
+        btnSebelumnya.disabled =
+            soalAktif === 0;
+
+    }
+
+
+    /* =========================
+       TOMBOL BERIKUTNYA
+    ========================= */
 
     const btnBerikutnya =
         document.getElementById(
@@ -338,33 +547,41 @@ function tampilkanSoal() {
         );
 
 
-    if (
-        soalAktif ===
-        semuaSoal.length - 1
-    ) {
+    if (btnBerikutnya) {
 
+        if (
+            soalAktif ===
+            semuaSoal.length - 1
+        ) {
 
-        btnBerikutnya.innerHTML = `
+            btnBerikutnya.innerHTML = `
 
-            <i class="fa-solid fa-check"></i>
+                <i class="fa-solid fa-check"></i>
 
-            Selesai
+                Selesai
 
-        `;
+            `;
 
-    } else {
+        }
 
+        else {
 
-        btnBerikutnya.innerHTML = `
+            btnBerikutnya.innerHTML = `
 
-            Berikutnya
+                Berikutnya
 
-            <i class="fa-solid fa-arrow-right"></i>
+                <i class="fa-solid fa-arrow-right"></i>
 
-        `;
+            `;
+
+        }
 
     }
 
+
+    /* =========================
+       TAMPILKAN JAWABAN LAMA
+    ========================= */
 
     tampilkanJawabanTersimpan();
 
@@ -372,34 +589,41 @@ function tampilkanSoal() {
 
 
 /* =========================
-   NAMA TIPE
+   NAMA TIPE SOAL
 ========================= */
 
-function namaTipeSoal(tipe) {
-
+function namaTipeSoal(
+    tipe
+) {
 
     if (
         tipe ===
         "pilihan_ganda"
-    )
+    ) {
 
         return "Pilihan Ganda";
+
+    }
 
 
     if (
         tipe ===
         "pilihan_ganda_kompleks"
-    )
+    ) {
 
         return "Pilihan Ganda Kompleks";
+
+    }
 
 
     if (
         tipe ===
         "benar_salah_kompleks"
-    )
+    ) {
 
         return "Benar / Salah Kompleks";
+
+    }
 
 
     return "Soal";
@@ -415,13 +639,33 @@ function buatPilihanGanda(
     soal
 ) {
 
-
     let html = "";
 
 
-    soal.opsi.forEach(
-        (opsi, index) => {
+    if (
+        !Array.isArray(
+            soal.opsi
+        )
+    ) {
 
+        return `
+
+            <div class="alert alert-danger">
+
+                Pilihan jawaban tidak tersedia.
+
+            </div>
+
+        `;
+
+    }
+
+
+    soal.opsi.forEach(
+        (
+            opsi,
+            index
+        ) => {
 
             const id =
                 `opsi_${soal.id}_${index}`;
@@ -473,7 +717,6 @@ function buatPilihanGandaKompleks(
     soal
 ) {
 
-
     let html = `
 
         <div class="alert alert-warning">
@@ -487,9 +730,30 @@ function buatPilihanGandaKompleks(
     `;
 
 
-    soal.opsi.forEach(
-        (opsi, index) => {
+    if (
+        !Array.isArray(
+            soal.opsi
+        )
+    ) {
 
+        return html + `
+
+            <div class="alert alert-danger">
+
+                Pilihan jawaban tidak tersedia.
+
+            </div>
+
+        `;
+
+    }
+
+
+    soal.opsi.forEach(
+        (
+            opsi,
+            index
+        ) => {
 
             const id =
                 `kompleks_${soal.id}_${index}`;
@@ -541,7 +805,6 @@ function buatBenarSalahKompleks(
     soal
 ) {
 
-
     let html = `
 
         <div class="alert alert-warning">
@@ -556,9 +819,30 @@ function buatBenarSalahKompleks(
     `;
 
 
-    soal.pernyataan.forEach(
-        (item, index) => {
+    if (
+        !Array.isArray(
+            soal.pernyataan
+        )
+    ) {
 
+        return html + `
+
+            <div class="alert alert-danger">
+
+                Pernyataan soal tidak tersedia.
+
+            </div>
+
+        `;
+
+    }
+
+
+    soal.pernyataan.forEach(
+        (
+            item,
+            index
+        ) => {
 
             html += `
 
@@ -567,6 +851,7 @@ function buatBenarSalahKompleks(
                     <div class="bs-pernyataan">
 
                         ${index + 1}.
+
                         ${escapeHTML(
                             item.teks
                         )}
@@ -575,7 +860,6 @@ function buatBenarSalahKompleks(
 
 
                     <div class="bs-options">
-
 
                         <label>
 
@@ -610,7 +894,6 @@ function buatBenarSalahKompleks(
 
                         </label>
 
-
                     </div>
 
                 </div>
@@ -632,18 +915,27 @@ function buatBenarSalahKompleks(
 
 function simpanJawaban() {
 
-
     const soal =
-        semuaSoal[soalAktif];
+        semuaSoal[
+            soalAktif
+        ];
 
 
-    /* PILIHAN GANDA */
+    if (!soal) {
+
+        return;
+
+    }
+
+
+    /* =========================
+       PILIHAN GANDA
+    ========================= */
 
     if (
         soal.tipe ===
         "pilihan_ganda"
     ) {
-
 
         const pilihan =
             document.querySelector(
@@ -651,7 +943,10 @@ function simpanJawaban() {
             );
 
 
-        jawabanSiswa[soalAktif] =
+        jawabanSiswa[
+            soalAktif
+        ] =
+
             pilihan
                 ? pilihan.value
                 : null;
@@ -659,13 +954,14 @@ function simpanJawaban() {
     }
 
 
-    /* PILIHAN GANDA KOMPLEKS */
+    /* =========================
+       PILIHAN GANDA KOMPLEKS
+    ========================= */
 
     else if (
         soal.tipe ===
         "pilihan_ganda_kompleks"
     ) {
-
 
         const pilihan =
             document.querySelectorAll(
@@ -673,31 +969,37 @@ function simpanJawaban() {
             );
 
 
-        jawabanSiswa[soalAktif] =
+        jawabanSiswa[
+            soalAktif
+        ] =
 
             Array.from(
                 pilihan
             ).map(
-                item => item.value
+                item =>
+                    item.value
             );
 
     }
 
 
-    /* BENAR SALAH KOMPLEKS */
+    /* =========================
+       BENAR SALAH KOMPLEKS
+    ========================= */
 
     else if (
         soal.tipe ===
         "benar_salah_kompleks"
     ) {
 
-
         const hasil = [];
 
 
         soal.pernyataan.forEach(
-            (item, index) => {
-
+            (
+                item,
+                index
+            ) => {
 
                 const pilihan =
                     document.querySelector(
@@ -706,17 +1008,20 @@ function simpanJawaban() {
 
 
                 hasil.push(
+
                     pilihan
                         ? pilihan.value
                         : null
+
                 );
 
             }
         );
 
 
-        jawabanSiswa[soalAktif] =
-            hasil;
+        jawabanSiswa[
+            soalAktif
+        ] = hasil;
 
     }
 
@@ -724,65 +1029,97 @@ function simpanJawaban() {
 
 
 /* =========================
-   TAMPILKAN JAWABAN
+   TAMPILKAN JAWABAN TERSIMPAN
 ========================= */
 
 function tampilkanJawabanTersimpan() {
 
-
     const jawaban =
-        jawabanSiswa[soalAktif];
+        jawabanSiswa[
+            soalAktif
+        ];
 
 
-    if (!jawaban)
+    if (
+        jawaban === null ||
+        jawaban === undefined
+    ) {
+
         return;
+
+    }
 
 
     const soal =
-        semuaSoal[soalAktif];
+        semuaSoal[
+            soalAktif
+        ];
 
 
-    /* PG */
+    /* =========================
+       PILIHAN GANDA
+    ========================= */
 
     if (
         soal.tipe ===
         "pilihan_ganda"
     ) {
 
-
         const radio =
             document.querySelector(
-                `input[name="jawaban"][value="${CSS.escape(jawaban)}"]`
+                `input[name="jawaban"][value="${CSS.escape(
+                    jawaban
+                )}"]`
             );
 
 
-        if (radio)
-            radio.checked = true;
+        if (radio) {
+
+            radio.checked =
+                true;
+
+        }
 
     }
 
 
-    /* PG KOMPLEKS */
+    /* =========================
+       PILIHAN GANDA KOMPLEKS
+    ========================= */
 
     else if (
         soal.tipe ===
         "pilihan_ganda_kompleks"
     ) {
 
+        if (
+            !Array.isArray(
+                jawaban
+            )
+        ) {
+
+            return;
+
+        }
+
 
         jawaban.forEach(
             item => {
 
-
                 const checkbox =
                     document.querySelector(
-                        `input[name="jawabanKompleks"][value="${CSS.escape(item)}"]`
+                        `input[name="jawabanKompleks"][value="${CSS.escape(
+                            item
+                        )}"]`
                     );
 
 
-                if (checkbox)
+                if (checkbox) {
+
                     checkbox.checked =
                         true;
+
+                }
 
             }
         );
@@ -790,31 +1127,53 @@ function tampilkanJawabanTersimpan() {
     }
 
 
-    /* BENAR SALAH KOMPLEKS */
+    /* =========================
+       BENAR SALAH KOMPLEKS
+    ========================= */
 
     else if (
         soal.tipe ===
         "benar_salah_kompleks"
     ) {
 
+        if (
+            !Array.isArray(
+                jawaban
+            )
+        ) {
+
+            return;
+
+        }
+
 
         jawaban.forEach(
-            (nilai, index) => {
+            (
+                nilai,
+                index
+            ) => {
 
+                if (!nilai) {
 
-                if (!nilai)
                     return;
+
+                }
 
 
                 const radio =
                     document.querySelector(
-                        `input[name="bs_${soal.id}_${index}"][value="${nilai}"]`
+                        `input[name="bs_${soal.id}_${index}"][value="${CSS.escape(
+                            nilai
+                        )}"]`
                     );
 
 
-                if (radio)
+                if (radio) {
+
                     radio.checked =
                         true;
+
+                }
 
             }
         );
@@ -828,23 +1187,29 @@ function tampilkanJawabanTersimpan() {
    TOMBOL BERIKUTNYA
 ========================= */
 
-document
-    .getElementById(
+const btnBerikutnya =
+    document.getElementById(
         "btnBerikutnya"
-    )
-    .addEventListener(
+    );
+
+
+if (btnBerikutnya) {
+
+    btnBerikutnya.addEventListener(
         "click",
         function() {
 
-
             simpanJawaban();
 
+
+            /* =========================
+               SOAL TERAKHIR
+            ========================= */
 
             if (
                 soalAktif ===
                 semuaSoal.length - 1
             ) {
-
 
                 if (
                     confirm(
@@ -852,14 +1217,13 @@ document
                     )
                 ) {
 
-
                     hitungNilai();
 
                 }
 
+            }
 
-            } else {
-
+            else {
 
                 soalAktif++;
 
@@ -880,19 +1244,24 @@ document
         }
     );
 
+}
+
 
 /* =========================
    TOMBOL SEBELUMNYA
 ========================= */
 
-document
-    .getElementById(
+const btnSebelumnya =
+    document.getElementById(
         "btnSebelumnya"
-    )
-    .addEventListener(
+    );
+
+
+if (btnSebelumnya) {
+
+    btnSebelumnya.addEventListener(
         "click",
         function() {
-
 
             simpanJawaban();
 
@@ -900,7 +1269,6 @@ document
             if (
                 soalAktif > 0
             ) {
-
 
                 soalAktif--;
 
@@ -921,6 +1289,8 @@ document
         }
     );
 
+}
+
 
 /* =========================
    HITUNG NILAI
@@ -928,28 +1298,31 @@ document
 
 function hitungNilai() {
 
-
     let totalSkor = 0;
-
 
     let totalMaksimal = 0;
 
 
     semuaSoal.forEach(
-        (soal, index) => {
-
+        (
+            soal,
+            index
+        ) => {
 
             const jawaban =
-                jawabanSiswa[index];
+                jawabanSiswa[
+                    index
+                ];
 
 
-            /* PG */
+            /* =========================
+               PILIHAN GANDA
+            ========================= */
 
             if (
                 soal.tipe ===
                 "pilihan_ganda"
             ) {
-
 
                 totalMaksimal += 1;
 
@@ -966,13 +1339,14 @@ function hitungNilai() {
             }
 
 
-            /* PG KOMPLEKS */
+            /* =========================
+               PILIHAN GANDA KOMPLEKS
+            ========================= */
 
             else if (
                 soal.tipe ===
                 "pilihan_ganda_kompleks"
             ) {
-
 
                 totalMaksimal += 1;
 
@@ -995,16 +1369,21 @@ function hitungNilai() {
             }
 
 
-            /* BENAR SALAH KOMPLEKS */
+            /* =========================
+               BENAR SALAH KOMPLEKS
+            ========================= */
 
             else if (
                 soal.tipe ===
                 "benar_salah_kompleks"
             ) {
 
-
                 const jumlah =
-                    soal.pernyataan.length;
+                    Array.isArray(
+                        soal.pernyataan
+                    )
+                        ? soal.pernyataan.length
+                        : 0;
 
 
                 totalMaksimal +=
@@ -1017,10 +1396,11 @@ function hitungNilai() {
                     )
                 ) {
 
-
                     soal.pernyataan.forEach(
-                        (item, i) => {
-
+                        (
+                            item,
+                            i
+                        ) => {
 
                             if (
                                 jawaban[i] ===
@@ -1042,58 +1422,58 @@ function hitungNilai() {
     );
 
 
+    /* =========================
+       NILAI AKHIR
+    ========================= */
+
     const nilai =
 
         totalMaksimal > 0
 
             ? Math.round(
+
                 (
                     totalSkor /
                     totalMaksimal
                 ) * 100
+
             )
 
             : 0;
 
 
-    const hasil = {
+    /* =========================
+       DATA HASIL
+    ========================= */
 
+    const hasil = {
 
         nama:
             dataSiswa.nama,
 
-
         sekolah:
             dataSiswa.sekolah,
-
 
         kelas:
             dataSiswa.kelas,
 
-
         nomor:
             dataSiswa.nomor,
-
 
         judul:
             judulQuiz,
 
-
         jumlahSoal:
             semuaSoal.length,
-
 
         skor:
             totalSkor,
 
-
         skorMaksimal:
             totalMaksimal,
 
-
         nilai:
             nilai,
-
 
         tanggal:
             new Date()
@@ -1114,6 +1494,10 @@ function hitungNilai() {
     };
 
 
+    /* =========================
+       SIMPAN HASIL
+    ========================= */
+
     localStorage.setItem(
 
         "hasilQuiz",
@@ -1124,6 +1508,10 @@ function hitungNilai() {
 
     );
 
+
+    /* =========================
+       KE HALAMAN HASIL
+    ========================= */
 
     window.location.href =
         "hasil.html";
@@ -1139,7 +1527,6 @@ function arraySama(
     a,
     b
 ) {
-
 
     if (
         !Array.isArray(a) ||
@@ -1174,8 +1561,10 @@ function arraySama(
             value,
             index
         ) =>
+
             value ===
             y[index]
+
     );
 
 }
@@ -1189,8 +1578,9 @@ function escapeHTML(
     text
 ) {
 
-
-    return String(text)
+    return String(
+        text
+    )
 
         .replace(
             /&/g,
