@@ -1,80 +1,144 @@
-document
-    .getElementById("formIdentitas")
-    .addEventListener(
-        "submit",
-        function(e) {
+document.addEventListener("DOMContentLoaded", function () {
 
-            e.preventDefault();
+    const form = document.getElementById("formIdentitas");
 
-
-            const nama =
-                document
-                    .getElementById("nama")
-                    .value
-                    .trim();
+    if (!form) {
+        return;
+    }
 
 
-            const sekolah =
-                document
-                    .getElementById("sekolah")
-                    .value
-                    .trim();
+    form.addEventListener("submit", function (event) {
+
+        event.preventDefault();
 
 
-            const kelas =
-                document
-                    .getElementById("kelas")
-                    .value;
+        // ==============================
+        // AMBIL DATA IDENTITAS
+        // ==============================
+
+        const nama =
+            document.getElementById("nama").value.trim();
+
+        const sekolah =
+            document.getElementById("sekolah").value.trim();
+
+        const kelas =
+            document.getElementById("kelas").value.trim();
+
+        const nomor =
+            document.getElementById("nomor").value.trim();
 
 
-            const nomor =
-                document
-                    .getElementById("nomor")
-                    .value
-                    .trim();
+        // ==============================
+        // VALIDASI
+        // ==============================
 
+        if (!nama) {
 
-            if (
-                !nama ||
-                !sekolah ||
-                !kelas
-            ) {
+            alert("Nama siswa wajib diisi.");
 
-                alert(
-                    "Mohon lengkapi identitas siswa."
-                );
+            document.getElementById("nama").focus();
 
-                return;
-
-            }
-
-
-            const siswa = {
-
-                nama: nama,
-
-                sekolah: sekolah,
-
-                kelas: kelas,
-
-                nomor: nomor
-
-            };
-
-
-            localStorage.setItem(
-                "dataSiswa",
-                JSON.stringify(siswa)
-            );
-
-
-            localStorage.removeItem(
-                "hasilQuiz"
-            );
-
-
-            window.location.href =
-                "quiz.html";
+            return;
 
         }
-    );
+
+
+        if (!sekolah) {
+
+            alert("Asal sekolah wajib diisi.");
+
+            document.getElementById("sekolah").focus();
+
+            return;
+
+        }
+
+
+        if (!kelas) {
+
+            alert("Kelas wajib diisi.");
+
+            document.getElementById("kelas").focus();
+
+            return;
+
+        }
+
+
+        // ==============================
+        // DATA SISWA
+        // ==============================
+
+        const dataSiswa = {
+
+            nama: nama,
+
+            sekolah: sekolah,
+
+            kelas: kelas,
+
+            nomor: nomor
+
+        };
+
+
+        // ==============================
+        // SIMPAN IDENTITAS
+        // ==============================
+
+        localStorage.setItem(
+            "dataSiswa",
+            JSON.stringify(dataSiswa)
+        );
+
+
+        // ==============================
+        // SIMPAN FILE SOAL
+        // ==============================
+
+        /*
+            FILE_SOAL berasal dari halaman
+            mapel.
+
+            Contoh:
+
+            mtk-sd.html
+            ↓
+            data/mtk-sd.json
+        */
+
+        if (typeof FILE_SOAL !== "undefined") {
+
+            localStorage.setItem(
+                "fileSoal",
+                FILE_SOAL
+            );
+
+        } else {
+
+            alert(
+                "File soal belum ditentukan."
+            );
+
+            return;
+
+        }
+
+
+        // ==============================
+        // HAPUS HASIL QUIZ SEBELUMNYA
+        // ==============================
+
+        localStorage.removeItem("hasilQuiz");
+
+
+        // ==============================
+        // MENUJU HALAMAN QUIZ
+        // ==============================
+
+        window.location.href = "quiz.html";
+
+    });
+
+});
