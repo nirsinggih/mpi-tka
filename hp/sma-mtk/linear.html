@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MPI Program Linear SMA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Poppins,sans-serif;
+background:linear-gradient(135deg,#1d976c,#93f9b9);
+}
+
+.container{
+max-width:500px;
+margin:auto;
+padding:15px;
+}
+
+.header{
+color:white;
+text-align:center;
+padding:25px 10px;
+}
+
+.header h1{
+font-size:25px;
+}
+
+
+.card{
+background:white;
+border-radius:22px;
+padding:20px;
+margin-bottom:15px;
+box-shadow:0 8px 18px rgba(0,0,0,.15);
+}
+
+
+h2{
+color:#00897b;
+}
+
+h3{
+color:#ff7043;
+}
+
+
+.box{
+background:#e8f5e9;
+border-left:5px solid #009688;
+padding:12px;
+border-radius:10px;
+margin:10px 0;
+}
+
+
+.formula{
+background:#fff8e1;
+border-left-color:#ffb300;
+text-align:center;
+font-weight:bold;
+font-size:18px;
+}
+
+
+.step{
+display:flex;
+gap:10px;
+align-items:center;
+margin:10px 0;
+}
+
+.number{
+background:#009688;
+color:white;
+width:30px;
+height:30px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+}
+
+
+.simulasi{
+background:#f3e5f5;
+padding:15px;
+border-radius:15px;
+}
+
+
+button{
+
+width:100%;
+padding:13px;
+border:none;
+border-radius:30px;
+background:linear-gradient(90deg,#ff512f,#dd2476);
+color:white;
+font-size:16px;
+font-weight:bold;
+margin-top:10px;
+
+}
+
+
+.option{
+
+padding:12px;
+background:#f5f5f5;
+border:2px solid #ddd;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+#hasil{
+
+text-align:center;
+font-weight:bold;
+margin-top:15px;
+
+}
+
+
+footer{
+
+text-align:center;
+color:white;
+font-size:11px;
+padding:15px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="header">
+
+<h1>📊 MPI PROGRAM LINEAR</h1>
+
+<p>
+Optimasi Masalah Matematika SMA
+</p>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+<p>
+Peserta didik mampu membuat model matematika, menentukan daerah penyelesaian, dan mencari nilai optimum pada masalah program linear.
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>📚 Konsep Dasar</h2>
+
+
+<p>
+Program linear adalah metode matematika untuk menentukan nilai maksimum atau minimum suatu fungsi dengan batasan tertentu.
+</p>
+
+
+<div class="box formula">
+
+Fungsi Objektif:
+
+Z = ax + by
+
+</div>
+
+
+<p>
+
+Keterangan:
+
+<br>
+x,y = variabel keputusan
+
+<br>
+a,b = koefisien
+
+<br>
+Z = nilai yang ingin dioptimalkan
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>🔎 Unsur Program Linear</h2>
+
+
+<h3>1. Variabel Keputusan</h3>
+
+<p>
+Besaran yang belum diketahui dan akan dicari nilainya.
+</p>
+
+
+<h3>2. Fungsi Tujuan</h3>
+
+<p>
+Fungsi yang akan dimaksimumkan atau diminimumkan.
+</p>
+
+
+<div class="box">
+
+Contoh:
+
+<br>
+
+Maksimumkan:
+
+<br>
+
+Z = 5x + 3y
+
+</div>
+
+
+
+<h3>3. Kendala</h3>
+
+<p>
+Batasan yang harus dipenuhi.
+</p>
+
+
+<div class="box">
+
+2x + y ≤ 10
+
+<br>
+
+x ≥ 0
+
+<br>
+
+y ≥ 0
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+<h2>📝 Langkah Penyelesaian</h2>
+
+
+<div class="step">
+
+<div class="number">1</div>
+
+Buat variabel keputusan
+
+</div>
+
+
+<div class="step">
+
+<div class="number">2</div>
+
+Susun model matematika
+
+</div>
+
+
+<div class="step">
+
+<div class="number">3</div>
+
+Gambar daerah penyelesaian
+
+</div>
+
+
+<div class="step">
+
+<div class="number">4</div>
+
+Tentukan titik pojok
+
+</div>
+
+
+<div class="step">
+
+<div class="number">5</div>
+
+Hitung nilai maksimum/minimum
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+<h2>🏭 Simulasi Masalah</h2>
+
+
+<div class="simulasi">
+
+
+Sebuah toko membuat:
+
+<br><br>
+
+x = jumlah meja
+
+<br>
+
+y = jumlah kursi
+
+<br><br>
+
+
+Keuntungan:
+
+<br>
+
+Meja = Rp50.000
+
+<br>
+
+Kursi = Rp30.000
+
+<br><br>
+
+
+Fungsi tujuan:
+
+<br>
+
+Z = 50000x + 30000y
+
+
+</div>
+
+
+<p>
+
+Tujuan:
+
+Mencari kombinasi meja dan kursi agar keuntungan maksimum.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>📈 Daerah Penyelesaian</h2>
+
+
+<p>
+Pada program linear dua variabel, solusi berada pada daerah yang memenuhi semua pertidaksamaan.
+</p>
+
+
+<div class="box">
+
+Daerah yang memenuhi semua kendala disebut:
+
+<br><br>
+
+<strong>Daerah feasible</strong>
+
+</div>
+
+
+<p>
+
+Nilai optimum biasanya terdapat pada titik pojok daerah penyelesaian.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🧠 Latihan TKA</h2>
+
+
+<p>
+
+Fungsi tujuan program linear biasanya digunakan untuk menentukan...
+
+</p>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+Daerah asal fungsi
+
+</div>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="benar">
+
+Nilai maksimum atau minimum
+
+</div>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+Bentuk grafik parabola
+
+</div>
+
+
+<button onclick="cekJawaban()">
+
+Periksa Jawaban
+
+</button>
+
+
+<div id="hasil"></div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>⭐ Kesimpulan</h2>
+
+
+<div class="box">
+
+✔ Program linear digunakan untuk optimasi.
+
+<br>
+
+✔ Memiliki variabel keputusan.
+
+<br>
+
+✔ Menggunakan fungsi tujuan.
+
+<br>
+
+✔ Memiliki kendala berupa pertidaksamaan.
+
+<br>
+
+✔ Solusi optimum berada pada titik pojok.
+
+</div>
+
+
+</div>
+
+
+
+
+<footer>
+
+Rangkuman Materi Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+</div>
+
+
+
+<script>
+
+function cekJawaban(){
+
+let pilih=document.querySelector(
+'input[name="jawaban"]:checked'
+);
+
+let hasil=document.getElementById("hasil");
+
+
+if(!pilih){
+
+hasil.innerHTML="⚠️ Pilih jawaban terlebih dahulu";
+
+hasil.style.color="orange";
+
+}
+
+else if(pilih.value=="benar"){
+
+hasil.innerHTML="🎉 Benar! Fungsi tujuan menentukan nilai maksimum atau minimum.";
+
+hasil.style.color="green";
+
+}
+
+else{
+
+hasil.innerHTML="❌ Belum tepat. Pelajari kembali konsep fungsi tujuan.";
+
+hasil.style.color="red";
+
+}
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
