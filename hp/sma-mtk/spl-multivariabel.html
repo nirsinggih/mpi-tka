@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI - Aljabar SPL Multivariabel (TKA SMA)</title>
+    
+    <!-- Google Fonts Eksternal: Poppins & Fredoka -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons Eksternal -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- KaTeX untuk Render Matematika Eksternal -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #FFF7ED;
+            --primary-orange: #FF6B35;
+            --primary-yellow: #FFD166;
+            --accent-pink: #FF477E;
+            --accent-green: #06D6A0;
+            --accent-blue: #118AB2;
+            --purple-card: #9D4EDD;
+            --text-dark: #2B2D42;
+            --card-radius: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 107, 53, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(6, 214, 160, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 209, 102, 0.2) 0%, transparent 50%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Container Simulasi HP */
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #FFFFFF;
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 480px) {
+            .app-container {
+                min-height: 92vh;
+                height: 92vh;
+                border-radius: 35px;
+                border: 4px solid #FFE5D9;
+                margin: 20px 0;
+            }
+        }
+
+        /* Header Vibrant */
+        header {
+            padding: 24px 20px 18px 20px;
+            background: linear-gradient(135deg, #118AB2 0%, #9D4EDD 100%);
+            color: white;
+            text-align: center;
+            border-bottom-left-radius: 28px;
+            border-bottom-right-radius: 28px;
+            box-shadow: 0 8px 20px rgba(157, 78, 221, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.5px;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        header p {
+            font-size: 0.85rem;
+            background: rgba(255, 255, 255, 0.25);
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* Navigasi Tab Ceria */
+        nav {
+            display: flex;
+            gap: 6px;
+            padding: 14px 10px 6px 10px;
+            background: transparent;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 2px;
+            border: none;
+            background: #F1F5F9;
+            color: #64748B;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 0.85rem;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tab-btn i {
+            font-size: 1.1rem;
+        }
+
+        .tab-btn.active {
+            color: white;
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+        }
+
+        .tab-btn[data-tab="konsep"].active { background: var(--accent-blue); }
+        .tab-btn[data-tab="metode"].active { background: var(--accent-pink); }
+        .tab-btn[data-tab="spltv"].active { background: var(--purple-card); }
+        .tab-btn[data-tab="kuis"].active { background: var(--accent-green); }
+
+        /* Area Konten Utama */
+        main {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .tab-content {
+            display: none;
+            animation: bounceIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+            70% { transform: scale(1.01) translateY(-2px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Colorful Cards */
+        .card {
+            border-radius: var(--card-radius);
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            border: 2px solid transparent;
+        }
+
+        .card-blue { background: #E0F2FE; border-color: #BAE6FD; }
+        .card-pink { background: #FFE4E6; border-color: #FECDD3; }
+        .card-orange { background: #FFEDD5; border-color: #FED7AA; }
+        .card-green { background: #D1FAE5; border-color: #A7F3D0; }
+        .card-purple { background: #F3E8FF; border-color: #E9D5FF; }
+
+        .card h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-blue h2 { color: #0284C7; }
+        .card-pink h2 { color: #E11D48; }
+        .card-orange h2 { color: #EA580C; }
+        .card-green h2 { color: #059669; }
+        .card-purple h2 { color: #7E22CE; }
+
+        .card p, .card li {
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: #334155;
+        }
+
+        /* Formula Box Colorful */
+        .formula-box {
+            background: #FFFFFF;
+            border-radius: 14px;
+            padding: 12px 16px;
+            margin: 12px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-left: 5px solid var(--accent-blue);
+            color: #1E293B;
+        }
+
+        .tree-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tree-list > li {
+            background: #FFFFFF;
+            margin-bottom: 10px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .tree-list strong {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        /* Interactive Quiz Options */
+        .quiz-option {
+            background: #FFFFFF;
+            border: 2px solid #E2E8F0;
+            padding: 14px 16px;
+            border-radius: 16px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.88rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .quiz-option:hover {
+            border-color: var(--accent-pink);
+            background: #FFF1F2;
+        }
+
+        .quiz-option.correct {
+            background: #D1FAE5 !important;
+            border-color: #10B981 !important;
+            color: #065F46;
+            font-weight: 600;
+        }
+
+        .quiz-option.wrong {
+            background: #FEE2E2 !important;
+            border-color: #EF4444 !important;
+            color: #991B1B;
+        }
+
+        .feedback {
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 14px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: bounceIn 0.3s ease;
+        }
+
+        .feedback.correct-bg { background: #10B981; color: white; }
+        .feedback.wrong-bg { background: #EF4444; color: white; }
+
+        footer {
+            text-align: center;
+            padding: 14px 10px;
+            background: #FFF7ED;
+            border-top: 2px dashed #FFEDD5;
+            font-size: 0.78rem;
+            color: #EA580C;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <!-- Header Vibrant -->
+    <header>
+        <h1><i class="fa-solid fa-xmarks-lines"></i> SPL Multivariabel</h1>
+        <p><i class="fa-solid fa-graduation-cap"></i> Aljabar - TKA SMA</p>
+    </header>
+
+    <!-- Navigasi Tab -->
+    <nav>
+        <button class="tab-btn active" data-tab="konsep" onclick="openTab(event, 'konsep')">
+            <i class="fa-solid fa-lightbulb"></i> Konsep
+        </button>
+        <button class="tab-btn" data-tab="metode" onclick="openTab(event, 'metode')">
+            <i class="fa-solid fa-sliders"></i> Metode
+        </button>
+        <button class="tab-btn" data-tab="spltv" onclick="openTab(event, 'spltv')">
+            <i class="fa-solid fa-cubes"></i> SPLTV
+        </button>
+        <button class="tab-btn" data-tab="kuis" onclick="openTab(event, 'kuis')">
+            <i class="fa-solid fa-gamepad"></i> Kuis
+        </button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main>
+        <!-- Tab 1: Konsep Dasar -->
+        <div id="konsep" class="tab-content active">
+            <div class="card card-blue">
+                <h2><i class="fa-solid fa-compass"></i> Bentuk Umum SPLDV</h2>
+                <p>Sistem Persamaan Linear Dua Variabel memuat dua variabel berpangkat satu:</p>
+                <div class="formula-box">
+                    $\begin{cases} a_1x + b_1y = c_1 \\ a_2x + b_2y = c_2 \end{cases}$
+                </div>
+            </div>
+
+            <div class="card card-orange">
+                <h2><i class="fa-solid fa-diagram-project"></i> Sifat Banyak Penyelesaian</h2>
+                <ul class="tree-list">
+                    <li>
+                        <strong style="color: #EA580C;">1. Tepat Satu Penyelesaian:</strong><br>
+                        Garis berpotongan: $\frac{a_1}{a_2} \neq \frac{b_1}{b_2}$
+                    </li>
+                    <li>
+                        <strong style="color: #0284C7;">2. Tak Hingga Penyelesaian:</strong><br>
+                        Garis berimpit: $\frac{a_1}{a_2} = \frac{b_1}{b_2} = \frac{c_1}{c_2}$
+                    </li>
+                    <li>
+                        <strong style="color: #E11D48;">3. Tidak Ada Penyelesaian:</strong><br>
+                        Garis sejajar: $\frac{a_1}{a_2} = \frac{b_1}{b_2} \neq \frac{c_1}{c_2}$
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tab 2: Metode Penyelesaian -->
+        <div id="metode" class="tab-content">
+            <div class="card card-pink">
+                <h2><i class="fa-solid fa-arrows-rotate"></i> 1. Substitusi & Eliminasi</h2>
+                <ul class="tree-list">
+                    <li><strong>Substitusi:</strong> Menyatakan satu variabel ke variabel lain lalu menggantikannya.</li>
+                    <li><strong>Eliminasi:</strong> Menghilangkan salah satu variabel dengan menyamakan koefisiennya.</li>
+                    <li><strong>Campuran:</strong> Menggabungkan eliminasi (mencari variabel 1) lalu substitusi (mencari variabel 2).</li>
+                </ul>
+            </div>
+
+            <div class="card card-green">
+                <h2><i class="fa-solid fa-table-cells"></i> 2. Metode Matriks (Aturan Cramer)</h2>
+                <p>Nilai $x$ dan $y$ dihitung menggunakan determinan matriks ($D$):</p>
+                <div class="formula-box" style="border-left-color: #059669;">
+                    $x = \frac{D_x}{D}, \quad y = \frac{D_y}{D}$
+                </div>
+                <p>Dengan $D = \begin{vmatrix} a_1 & b_1 \\ a_2 & b_2 \end{vmatrix} \neq 0$</p>
+            </div>
+        </div>
+
+        <!-- Tab 3: SPLTV (3 Variabel) -->
+        <div id="spltv" class="tab-content">
+            <div class="card card-purple">
+                <h2><i class="fa-solid fa-cube"></i> Bentuk Umum SPLTV</h2>
+                <p>Sistem tiga variabel ($x, y, z$) membentuk persamaan bidang 3D:</p>
+                <div class="formula-box" style="border-left-color: #7E22CE;">
+                    $\begin{cases} 
+                    a_1x + b_1y + c_1z = d_1 \\ 
+                    a_2x + b_2y + c_2z = d_2 \\ 
+                    a_3x + b_3y + c_3z = d_3 
+                    \end{cases}$
+                </div>
+            </div>
+
+            <div class="card card-blue">
+                <h2><i class="fa-solid fa-list-check"></i> Strategi Penyelesaian</h2>
+                <p>1. Eliminasi $1$ variabel dari $2$ pasang persamaan untuk membentuk **SPLDV** baru.<br>
+                2. Selesaikan SPLDV tersebut untuk mendapatkan nilai $2$ variabel.<br>
+                3. Substitusikan hasil ke persamaan awal untuk mendapat variabel ke-$3$.</p>
+            </div>
+        </div>
+
+        <!-- Tab 4: Kuis Interaktif -->
+        <div id="kuis" class="tab-content">
+            <div class="card card-green">
+                <h2><i class="fa-solid fa-trophy"></i> Kuis SPLDV</h2>
+                <p style="margin-bottom: 14px; font-weight: 500;">
+                    Diketahui $\begin{cases} 2x + y = 7 \\ x - y = 2 \end{cases}$. Nilai $x$ dan $y$ adalah?
+                </p>
+
+                <div class="quiz-option" onclick="checkAnswer(this, false)">
+                    <span>A. $x = 2, y = 3$</span>
+                    <i class="fa-regular fa-circle"></i>
+                </div>
+                <div class="quiz-option" onclick="checkAnswer(this, true)">
+                    <span>B. $x = 3, y = 1$</span>
+                    <i class="fa-regular fa-circle"></i>
+                </div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">
+                    <span>C. $x = 1, y = 5$</span>
+                    <i class="fa-regular fa-circle"></i>
+                </div>
+                <div class="quiz-option" onclick="checkAnswer(this, false)">
+                    <span>D. $x = 4, y = -1$</span>
+                    <i class="fa-regular fa-circle"></i>
+                </div>
+
+                <div id="quiz-feedback" class="feedback"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        Rangkuman Materi Tes Kemampuan Akademik (TKA)
+    </footer>
+</div>
+
+<script>
+    // Inisialisasi Render KaTeX
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError : false
+        });
+    });
+
+    // Tab Navigation Logic
+    function openTab(evt, tabName) {
+        let i, tabcontent, tablinks;
+        
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+        
+        tablinks = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    // Quiz Checking Logic
+    function checkAnswer(element, isCorrect) {
+        let options = document.querySelectorAll('.quiz-option');
+        options.forEach(opt => {
+            opt.classList.remove('correct', 'wrong');
+            opt.querySelector('i').className = 'fa-regular fa-circle';
+        });
+
+        let feedback = document.getElementById('quiz-feedback');
+        feedback.className = 'feedback show';
+
+        if (isCorrect) {
+            element.classList.add('correct');
+            element.querySelector('i').className = 'fa-solid fa-circle-check';
+            feedback.classList.add('correct-bg');
+            feedback.innerHTML = '<i class="fa-solid fa-face-laugh-beam"></i> Benar! (Jumlahkan kedua persamaan: 3x = 9 → x = 3, maka y = 1)';
+        } else {
+            element.classList.add('wrong');
+            element.querySelector('i').className = 'fa-solid fa-circle-xmark';
+            feedback.classList.add('wrong-bg');
+            feedback.innerHTML = '<i class="fa-solid fa-face-sad-tear"></i> Masih kurang tepat. Coba eliminasi variabel y!';
+        }
+    }
+</script>
+
+</body>
+</html>
