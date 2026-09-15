@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MPI Fungsi SMA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#00b09b,#96c93d);
+}
+
+.container{
+max-width:500px;
+margin:auto;
+padding:15px;
+}
+
+.header{
+text-align:center;
+color:white;
+padding:20px;
+}
+
+.header h1{
+font-size:24px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:20px;
+margin-bottom:15px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+animation:fade .5s;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+
+h2{
+color:#009688;
+}
+
+h3{
+color:#ff5722;
+}
+
+
+.box{
+background:#e8f8f5;
+border-left:5px solid #00b09b;
+padding:12px;
+border-radius:10px;
+margin:10px 0;
+}
+
+
+.formula{
+text-align:center;
+font-size:18px;
+font-weight:bold;
+background:#fff3cd;
+border-left:5px solid #ffc107;
+}
+
+
+.option{
+padding:12px;
+background:#f5f5f5;
+border-radius:10px;
+margin:8px 0;
+border:2px solid #ddd;
+}
+
+
+button{
+width:100%;
+padding:13px;
+border:none;
+border-radius:30px;
+background:linear-gradient(90deg,#ff512f,#dd2476);
+color:white;
+font-size:16px;
+font-weight:bold;
+}
+
+
+#hasil{
+text-align:center;
+font-weight:bold;
+margin-top:15px;
+}
+
+
+footer{
+text-align:center;
+font-size:11px;
+color:white;
+padding:15px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="header">
+
+<h1>📘 MPI MATEMATIKA</h1>
+
+<p>
+Domain, Kodomain, Range & Representasi Fungsi
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+<p>
+Peserta didik mampu memahami konsep fungsi serta menentukan domain, kodomain, range, dan menyajikan fungsi dalam berbagai bentuk.
+</p>
+
+
+</div>
+
+
+
+<div class="card">
+
+<h2>📌 Konsep Fungsi</h2>
+
+<p>
+Fungsi adalah hubungan antara dua himpunan yang memasangkan setiap anggota domain dengan tepat satu anggota kodomain.
+</p>
+
+
+<div class="box formula">
+
+f : A → B
+
+</div>
+
+
+<p>
+Artinya setiap anggota A dipetakan ke anggota B.
+</p>
+
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>🔵 Domain, Kodomain, dan Range</h2>
+
+
+<h3>1. Domain</h3>
+
+<p>
+Domain adalah daerah asal atau himpunan nilai input (nilai x).
+</p>
+
+
+<div class="box">
+
+Contoh:
+
+<br>
+
+f(x)=2x+3
+
+<br><br>
+
+Domain = nilai x yang diperbolehkan.
+
+</div>
+
+
+
+<h3>2. Kodomain</h3>
+
+<p>
+Kodomain adalah daerah kawan atau himpunan tujuan dari fungsi.
+</p>
+
+
+
+<h3>3. Range (Daerah Hasil)</h3>
+
+<p>
+Range adalah hasil pemetaan atau nilai output yang benar-benar diperoleh.
+</p>
+
+
+<div class="box">
+
+x → f(x)
+
+<br>
+
+Input → Output
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="card">
+
+
+<h2>📈 Representasi Fungsi Linear</h2>
+
+
+<p>
+Fungsi linear memiliki bentuk umum:
+</p>
+
+
+<div class="box formula">
+
+f(x)=ax+b
+
+</div>
+
+
+<p>
+
+Ciri-ciri:
+
+</p>
+
+<ul>
+<li>Grafiknya berupa garis lurus.</li>
+<li>Pangkat variabel satu.</li>
+<li>a menunjukkan gradien.</li>
+</ul>
+
+
+<h3>Bentuk Representasi:</h3>
+
+
+<div class="box">
+
+1. Aljabar:
+
+<br>
+y = 2x + 1
+
+<br><br>
+
+2. Tabel:
+
+<br>
+
+x | y
+
+<br>
+0 | 1
+
+<br>
+1 | 3
+
+<br><br>
+
+3. Grafik:
+
+<br>
+Garis lurus pada bidang koordinat.
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h2>📊 Fungsi Kuadrat</h2>
+
+
+<p>
+Fungsi kuadrat memiliki bentuk:
+</p>
+
+
+<div class="box formula">
+
+f(x)=ax²+bx+c
+
+</div>
+
+
+<p>
+
+Ciri-ciri:
+
+</p>
+
+<ul>
+<li>Grafik berbentuk parabola.</li>
+<li>Pangkat tertinggi adalah dua.</li>
+<li>Memiliki titik puncak.</li>
+</ul>
+
+
+
+<div class="box">
+
+Contoh:
+
+<br>
+
+f(x)=x²-4x+3
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>➗ Fungsi Rasional</h2>
+
+
+<p>
+Fungsi rasional adalah fungsi yang berbentuk pecahan dengan variabel pada penyebut.
+</p>
+
+
+<div class="box formula">
+
+f(x)=P(x)/Q(x)
+
+</div>
+
+
+<p>
+Dengan syarat:
+</p>
+
+
+<div class="box">
+
+Q(x) ≠ 0
+
+</div>
+
+
+<div class="box">
+
+Contoh:
+
+<br>
+
+f(x)= (x+2)/(x-3)
+
+<br>
+
+Domain:
+
+<br>
+
+x ≠ 3
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>🧠 Latihan Interaktif</h2>
+
+
+<p>
+Diketahui fungsi:
+
+<br><br>
+
+f(x)=x²+2
+
+<br><br>
+
+Berapakah nilai f(3)?
+</p>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+5
+
+</div>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="benar">
+
+11
+
+</div>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+9
+
+</div>
+
+
+
+<button onclick="cek()">
+
+Periksa Jawaban
+
+</button>
+
+
+<div id="hasil"></div>
+
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>⭐ Ringkasan</h2>
+
+
+<div class="box">
+
+✔ Domain = nilai input
+
+<br>
+
+✔ Kodomain = himpunan tujuan
+
+<br>
+
+✔ Range = hasil pemetaan
+
+<br>
+
+✔ Linear → garis lurus
+
+<br>
+
+✔ Kuadrat → parabola
+
+<br>
+
+✔ Rasional → fungsi berbentuk pecahan
+
+</div>
+
+
+</div>
+
+
+
+<footer>
+
+Rangkuman Materi Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+</div>
+
+
+
+
+<script>
+
+function cek(){
+
+let jawaban=document.querySelector(
+'input[name="jawaban"]:checked'
+);
+
+let hasil=document.getElementById("hasil");
+
+
+if(!jawaban){
+
+hasil.innerHTML="⚠️ Pilih jawaban dahulu";
+
+hasil.style.color="orange";
+
+}
+
+else if(jawaban.value=="benar"){
+
+hasil.innerHTML="🎉 Benar! f(3)=3²+2=11";
+
+hasil.style.color="green";
+
+}
+
+else{
+
+hasil.innerHTML="❌ Salah. Hitung kembali nilai fungsi.";
+
+hasil.style.color="red";
+
+}
+
+}
+
+
+</script>
+
+
+</body>
+</html>
