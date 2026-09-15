@@ -1,144 +1,182 @@
-document.addEventListener("DOMContentLoaded", function () {
+{
+    "judul": "Quiz TKA Matematika SD",
+    "mapel": "Matematika",
+    "jenjang": "SD",
+    "kkm": 70,
+    "acak_soal": true,
+    "acak_opsi": true,
 
-    const form = document.getElementById("formIdentitas");
+    "soal": [
 
-    if (!form) {
-        return;
-    }
-
-
-    form.addEventListener("submit", function (event) {
-
-        event.preventDefault();
-
-
-        // ==============================
-        // AMBIL DATA IDENTITAS
-        // ==============================
-
-        const nama =
-            document.getElementById("nama").value.trim();
-
-        const sekolah =
-            document.getElementById("sekolah").value.trim();
-
-        const kelas =
-            document.getElementById("kelas").value.trim();
-
-        const nomor =
-            document.getElementById("nomor").value.trim();
+        {
+            "id": 1,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Hasil dari 245 + 378 adalah ...",
+            "opsi": [
+                "613",
+                "623",
+                "633",
+                "643"
+            ],
+            "jawaban": "623"
+        },
 
 
-        // ==============================
-        // VALIDASI
-        // ==============================
+        {
+            "id": 2,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Hasil dari 800 - 365 adalah ...",
+            "opsi": [
+                "425",
+                "435",
+                "445",
+                "455"
+            ],
+            "jawaban": "435"
+        },
 
-        if (!nama) {
 
-            alert("Nama siswa wajib diisi.");
+        {
+            "id": 3,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Hasil dari 24 × 6 adalah ...",
+            "opsi": [
+                "124",
+                "134",
+                "144",
+                "154"
+            ],
+            "jawaban": "144"
+        },
 
-            document.getElementById("nama").focus();
 
-            return;
+        {
+            "id": 4,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Hasil dari 144 ÷ 12 adalah ...",
+            "opsi": [
+                "10",
+                "11",
+                "12",
+                "13"
+            ],
+            "jawaban": "12"
+        },
 
+
+        {
+            "id": 5,
+            "tipe": "pilihan_ganda_kompleks",
+            "pertanyaan": "Pilih semua bilangan yang merupakan faktor dari 24.",
+            "opsi": [
+                "2",
+                "3",
+                "5",
+                "6"
+            ],
+            "jawaban": [
+                "2",
+                "3",
+                "6"
+            ]
+        },
+
+
+        {
+            "id": 6,
+            "tipe": "pilihan_ganda_kompleks",
+            "pertanyaan": "Pilih semua bilangan yang merupakan bilangan genap.",
+            "opsi": [
+                "12",
+                "17",
+                "24",
+                "31"
+            ],
+            "jawaban": [
+                "12",
+                "24"
+            ]
+        },
+
+
+        {
+            "id": 7,
+            "tipe": "benar_salah_kompleks",
+            "pertanyaan": "Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+
+            "pernyataan": [
+
+                {
+                    "teks": "1 meter sama dengan 100 sentimeter.",
+                    "jawaban": "Benar"
+                },
+
+                {
+                    "teks": "1 kilogram sama dengan 100 gram.",
+                    "jawaban": "Salah"
+                },
+
+                {
+                    "teks": "1 jam sama dengan 60 menit.",
+                    "jawaban": "Benar"
+                }
+
+            ]
+        },
+
+
+        {
+            "id": 8,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Sebuah persegi memiliki panjang sisi 8 cm. Luas persegi tersebut adalah ...",
+            "opsi": [
+                "16 cm²",
+                "32 cm²",
+                "64 cm²",
+                "128 cm²"
+            ],
+            "jawaban": "64 cm²"
+        },
+
+
+        {
+            "id": 9,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Rata-rata dari 6, 8, dan 10 adalah ...",
+            "opsi": [
+                "6",
+                "7",
+                "8",
+                "9"
+            ],
+            "jawaban": "8"
+        },
+
+
+        {
+            "id": 10,
+            "tipe": "benar_salah_kompleks",
+            "pertanyaan": "Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+
+            "pernyataan": [
+
+                {
+                    "teks": "Pecahan 1/2 sama dengan 0,5.",
+                    "jawaban": "Benar"
+                },
+
+                {
+                    "teks": "Pecahan 3/4 sama dengan 0,25.",
+                    "jawaban": "Salah"
+                },
+
+                {
+                    "teks": "Pecahan 1/4 sama dengan 25%.",
+                    "jawaban": "Benar"
+                }
+
+            ]
         }
 
-
-        if (!sekolah) {
-
-            alert("Asal sekolah wajib diisi.");
-
-            document.getElementById("sekolah").focus();
-
-            return;
-
-        }
-
-
-        if (!kelas) {
-
-            alert("Kelas wajib diisi.");
-
-            document.getElementById("kelas").focus();
-
-            return;
-
-        }
-
-
-        // ==============================
-        // DATA SISWA
-        // ==============================
-
-        const dataSiswa = {
-
-            nama: nama,
-
-            sekolah: sekolah,
-
-            kelas: kelas,
-
-            nomor: nomor
-
-        };
-
-
-        // ==============================
-        // SIMPAN IDENTITAS
-        // ==============================
-
-        localStorage.setItem(
-            "dataSiswa",
-            JSON.stringify(dataSiswa)
-        );
-
-
-        // ==============================
-        // SIMPAN FILE SOAL
-        // ==============================
-
-        /*
-            FILE_SOAL berasal dari halaman
-            mapel.
-
-            Contoh:
-
-            mtk-sd.html
-            ↓
-            data/mtk-sd.json
-        */
-
-        if (typeof FILE_SOAL !== "undefined") {
-
-            localStorage.setItem(
-                "fileSoal",
-                FILE_SOAL
-            );
-
-        } else {
-
-            alert(
-                "File soal belum ditentukan."
-            );
-
-            return;
-
-        }
-
-
-        // ==============================
-        // HAPUS HASIL QUIZ SEBELUMNYA
-        // ==============================
-
-        localStorage.removeItem("hasilQuiz");
-
-
-        // ==============================
-        // MENUJU HALAMAN QUIZ
-        // ==============================
-
-        window.location.href = "quiz.html";
-
-    });
-
-});
+    ]
+}
