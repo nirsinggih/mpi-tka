@@ -2,12 +2,14 @@ document.addEventListener(
     "DOMContentLoaded",
     function() {
 
+
         const hasil =
             JSON.parse(
                 localStorage.getItem(
                     "hasilQuiz"
                 )
             );
+
 
         if (!hasil) {
 
@@ -52,6 +54,7 @@ document.addEventListener(
         document.getElementById(
             "sertifikatPredikat"
         ).textContent =
+
             tentukanPredikat(
                 hasil.nilai
             );
@@ -60,7 +63,9 @@ document.addEventListener(
         document.getElementById(
             "sertifikatNomor"
         ).textContent =
-            hasil.nomor || "-";
+
+            hasil.nomor ||
+            "-";
 
 
         document.getElementById(
@@ -72,16 +77,25 @@ document.addEventListener(
 );
 
 
-function tentukanPredikat(nilai) {
+function tentukanPredikat(
+    nilai
+) {
+
 
     if (nilai >= 90)
+
         return "SANGAT BAIK";
 
+
     if (nilai >= 80)
+
         return "BAIK";
 
+
     if (nilai >= 70)
+
         return "CUKUP";
+
 
     return "PERLU BELAJAR LAGI";
 
@@ -97,6 +111,7 @@ function cetakSertifikat() {
 
 async function downloadJPG() {
 
+
     const sertifikat =
         document.getElementById(
             "sertifikat"
@@ -105,19 +120,27 @@ async function downloadJPG() {
 
     try {
 
+
         const canvas =
             await html2canvas(
                 sertifikat,
                 {
+
                     scale: 2,
+
                     useCORS: true,
-                    backgroundColor: "#ffffff"
+
+                    backgroundColor:
+                        "#ffffff"
+
                 }
             );
 
 
         const link =
-            document.createElement("a");
+            document.createElement(
+                "a"
+            );
 
 
         const hasil =
@@ -129,10 +152,13 @@ async function downloadJPG() {
 
 
         const namaFile =
+
             "Sertifikat-" +
+
             bersihkanNama(
                 hasil.nama
             ) +
+
             ".jpg";
 
 
@@ -149,9 +175,12 @@ async function downloadJPG() {
 
         link.click();
 
+
     } catch(error) {
 
+
         console.error(error);
+
 
         alert(
             "Gagal membuat JPG. Silakan coba lagi."
@@ -162,13 +191,18 @@ async function downloadJPG() {
 }
 
 
-function bersihkanNama(nama) {
+function bersihkanNama(
+    nama
+) {
+
 
     return nama
+
         .replace(
             /[^a-zA-Z0-9\s]/g,
             ""
         )
+
         .replace(
             /\s+/g,
             "-"
