@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MPI Barisan dan Deret Aritmetika SMA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#11998e,#38ef7d);
+}
+
+
+.container{
+max-width:500px;
+margin:auto;
+padding:15px;
+}
+
+
+.header{
+text-align:center;
+color:white;
+padding:25px 10px;
+}
+
+
+.header h1{
+font-size:25px;
+}
+
+
+
+.card{
+
+background:white;
+border-radius:22px;
+padding:20px;
+margin-bottom:15px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+
+
+h2{
+color:#009688;
+}
+
+
+h3{
+color:#ff7043;
+}
+
+
+
+.box{
+
+background:#e8f8f5;
+border-left:5px solid #00b894;
+padding:12px;
+border-radius:10px;
+margin:10px 0;
+
+}
+
+
+
+.pattern{
+
+display:flex;
+justify-content:center;
+gap:8px;
+flex-wrap:wrap;
+
+}
+
+
+
+.term{
+
+background:#009688;
+color:white;
+padding:10px;
+border-radius:12px;
+font-weight:bold;
+
+}
+
+
+
+.arrow{
+
+font-size:20px;
+color:#ff7043;
+
+}
+
+
+
+.formula{
+
+background:#fff3cd;
+border-left:5px solid #ffc107;
+text-align:center;
+font-size:18px;
+font-weight:bold;
+
+}
+
+
+
+.step{
+
+background:#f1f2f6;
+padding:12px;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+.option{
+
+background:#fafafa;
+border:2px solid #ddd;
+padding:12px;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+button{
+
+width:100%;
+padding:13px;
+border:none;
+border-radius:30px;
+background:linear-gradient(90deg,#667eea,#764ba2);
+color:white;
+font-size:16px;
+font-weight:bold;
+
+}
+
+
+
+#hasil{
+
+text-align:center;
+font-weight:bold;
+margin-top:15px;
+
+}
+
+
+
+footer{
+
+text-align:center;
+font-size:11px;
+color:white;
+padding:15px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+
+<div class="header">
+
+<h1>🔢 MPI BARISAN & DERET</h1>
+
+<p>
+Barisan dan Deret Aritmetika SMA
+</p>
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+<p>
+Peserta didik mampu menentukan pola barisan aritmetika, mencari suku ke-n, serta menghitung jumlah deret aritmetika.
+</p>
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📚 Konsep Barisan Aritmetika</h2>
+
+
+<p>
+Barisan aritmetika adalah barisan bilangan yang memiliki selisih tetap antara dua suku berurutan.
+</p>
+
+
+
+<div class="pattern">
+
+<div class="term">
+2
+</div>
+
+<div class="arrow">
++
+</div>
+
+<div class="term">
+5
+</div>
+
+<div class="arrow">
++
+</div>
+
+<div class="term">
+8
+</div>
+
+<div class="arrow">
++
+</div>
+
+<div class="term">
+11
+</div>
+
+</div>
+
+
+
+<div class="box">
+
+Beda (d) = 3
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📌 Rumus Suku ke-n</h2>
+
+
+<div class="box formula">
+
+aₙ = a₁ + (n - 1)d
+
+</div>
+
+
+
+<p>
+
+Keterangan:
+
+</p>
+
+<ul>
+
+<li>aₙ = suku ke-n</li>
+
+<li>a₁ = suku pertama</li>
+
+<li>n = nomor suku</li>
+
+<li>d = beda antar suku</li>
+
+</ul>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🔍 Contoh Barisan</h2>
+
+
+<div class="box">
+
+3, 7, 11, 15, ...
+
+<br><br>
+
+a₁ = 3
+
+<br>
+
+d = 4
+
+</div>
+
+
+
+<p>
+
+Suku ke-5:
+
+</p>
+
+
+<div class="box">
+
+a₅ = 3 + (5-1)4
+
+<br>
+
+a₅ = 19
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>➕ Konsep Deret Aritmetika</h2>
+
+
+<p>
+Deret aritmetika adalah penjumlahan dari suku-suku pada barisan aritmetika.
+</p>
+
+
+<div class="box">
+
+Barisan:
+
+<br>
+
+2, 5, 8, 11
+
+<br><br>
+
+Deret:
+
+<br>
+
+2 + 5 + 8 + 11
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📊 Rumus Jumlah Deret</h2>
+
+
+<div class="box formula">
+
+Sₙ = n/2 (a₁ + aₙ)
+
+</div>
+
+
+
+<p>
+
+atau
+
+</p>
+
+
+<div class="box formula">
+
+Sₙ = n/2 (2a₁+(n-1)d)
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>🌎 Penerapan Kehidupan</h2>
+
+
+<div class="box">
+
+Contoh:
+
+<br><br>
+
+Seseorang menabung:
+
+<br>
+
+Hari pertama Rp10.000
+
+<br>
+
+Setiap hari bertambah Rp5.000
+
+<br><br>
+
+Jumlah tabungan mengikuti pola deret aritmetika.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>🧠 Latihan Interaktif</h2>
+
+
+<p>
+
+Barisan:
+
+<br>
+
+4, 7, 10, 13, ...
+
+<br><br>
+
+Nilai suku ke-10 adalah...
+
+</p>
+
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+28
+
+</div>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="benar">
+
+31
+
+</div>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+34
+
+</div>
+
+
+<button onclick="cek()">
+
+Periksa Jawaban
+
+</button>
+
+
+<div id="hasil"></div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>⭐ Ringkasan</h2>
+
+
+<div class="box">
+
+✔ Barisan = susunan bilangan berpola.
+
+<br>
+
+✔ Deret = jumlah seluruh suku barisan.
+
+<br>
+
+✔ Beda aritmetika selalu tetap.
+
+<br>
+
+✔ Suku ke-n menggunakan rumus aₙ.
+
+<br>
+
+✔ Jumlah n suku menggunakan rumus Sₙ.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<footer>
+
+Rangkuman Materi Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+function cek(){
+
+let jawaban=document.querySelector(
+'input[name="jawaban"]:checked'
+);
+
+
+let hasil=document.getElementById("hasil");
+
+
+if(!jawaban){
+
+hasil.innerHTML="⚠️ Pilih jawaban terlebih dahulu";
+
+hasil.style.color="orange";
+
+}
+
+else if(jawaban.value=="benar"){
+
+hasil.innerHTML="🎉 Benar! a₁=4 dan d=3, maka a₁₀=4+(9×3)=31.";
+
+hasil.style.color="green";
+
+}
+
+else{
+
+hasil.innerHTML="❌ Coba hitung kembali menggunakan rumus aₙ.";
+
+hasil.style.color="red";
+
+}
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
