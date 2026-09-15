@@ -2,12 +2,14 @@ document.addEventListener(
     "DOMContentLoaded",
     function() {
 
+
         const hasil =
             JSON.parse(
                 localStorage.getItem(
                     "hasilQuiz"
                 )
             );
+
 
         if (!hasil) {
 
@@ -21,18 +23,21 @@ document.addEventListener(
 
         document.getElementById(
             "hasilNama"
-        ).textContent = hasil.nama;
+        ).textContent =
+            hasil.nama;
 
 
         document.getElementById(
             "hasilSekolah"
-        ).textContent = hasil.sekolah;
+        ).textContent =
+            hasil.sekolah;
 
 
         document.getElementById(
             "hasilKelas"
         ).textContent =
-            "Kelas " + hasil.kelas;
+            "Kelas " +
+            hasil.kelas;
 
 
         document.getElementById(
@@ -44,7 +49,10 @@ document.addEventListener(
         document.getElementById(
             "jumlahBenar"
         ).textContent =
-            hasil.benar;
+
+            hasil.skor +
+            " / " +
+            hasil.skorMaksimal;
 
 
         document.getElementById(
@@ -53,31 +61,37 @@ document.addEventListener(
             hasil.nilai;
 
 
-        const predikat =
-            tentukanPredikat(
-                hasil.nilai
-            );
-
-
         document.getElementById(
             "predikat"
         ).textContent =
-            predikat;
+
+            tentukanPredikat(
+                hasil.nilai
+            );
 
     }
 );
 
 
-function tentukanPredikat(nilai) {
+function tentukanPredikat(
+    nilai
+) {
+
 
     if (nilai >= 90)
+
         return "SANGAT BAIK";
 
+
     if (nilai >= 80)
+
         return "BAIK";
 
+
     if (nilai >= 70)
+
         return "CUKUP";
+
 
     return "PERLU BELAJAR LAGI";
 
@@ -86,9 +100,11 @@ function tentukanPredikat(nilai) {
 
 function ulangQuiz() {
 
+
     localStorage.removeItem(
         "hasilQuiz"
     );
+
 
     window.location.href =
         "index.html";
