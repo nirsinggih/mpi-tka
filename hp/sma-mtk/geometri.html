@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MPI Barisan dan Deret Geometri SMA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#4776e6,#8e54e9);
+
+}
+
+
+.container{
+
+max-width:500px;
+margin:auto;
+padding:15px;
+
+}
+
+
+
+.header{
+
+text-align:center;
+color:white;
+padding:25px 10px;
+
+}
+
+
+
+.header h1{
+
+font-size:25px;
+
+}
+
+
+
+.card{
+
+background:white;
+border-radius:22px;
+padding:20px;
+margin-bottom:15px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+
+
+h2{
+
+color:#5e35b1;
+
+}
+
+
+
+h3{
+
+color:#ff7043;
+
+}
+
+
+
+.box{
+
+background:#f3e5f5;
+border-left:5px solid #8e54e9;
+padding:12px;
+border-radius:10px;
+margin:10px 0;
+
+}
+
+
+
+.pattern{
+
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+flex-wrap:wrap;
+
+}
+
+
+
+.term{
+
+background:#5e35b1;
+color:white;
+padding:10px;
+border-radius:12px;
+font-weight:bold;
+
+}
+
+
+
+.arrow{
+
+font-size:22px;
+color:#ff7043;
+
+}
+
+
+
+.formula{
+
+background:#fff8e1;
+border-left:5px solid #ffc107;
+text-align:center;
+font-size:18px;
+font-weight:bold;
+
+}
+
+
+
+.step{
+
+background:#f5f5f5;
+padding:12px;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+.option{
+
+background:#fafafa;
+border:2px solid #ddd;
+padding:12px;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+button{
+
+width:100%;
+padding:13px;
+border:none;
+border-radius:30px;
+background:linear-gradient(90deg,#ff512f,#dd2476);
+color:white;
+font-size:16px;
+font-weight:bold;
+
+}
+
+
+
+#hasil{
+
+text-align:center;
+font-weight:bold;
+margin-top:15px;
+
+}
+
+
+
+footer{
+
+text-align:center;
+font-size:11px;
+color:white;
+padding:15px;
+
+}
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="header">
+
+<h1>📈 MPI BARISAN & DERET</h1>
+
+<p>
+Barisan dan Deret Geometri SMA
+</p>
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+
+<p>
+Peserta didik mampu memahami pola geometri, menentukan suku ke-n, serta menghitung jumlah deret geometri.
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📚 Konsep Barisan Geometri</h2>
+
+
+<p>
+Barisan geometri adalah barisan bilangan yang memiliki perbandingan tetap antara dua suku yang berurutan.
+</p>
+
+
+
+<div class="pattern">
+
+
+<div class="term">
+2
+</div>
+
+
+<div class="arrow">
+×2
+</div>
+
+
+<div class="term">
+4
+</div>
+
+
+<div class="arrow">
+×2
+</div>
+
+
+<div class="term">
+8
+</div>
+
+
+<div class="arrow">
+×2
+</div>
+
+
+<div class="term">
+16
+</div>
+
+
+</div>
+
+
+
+<div class="box">
+
+Rasio (r) = 2
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>📌 Rumus Suku ke-n</h2>
+
+
+<div class="box formula">
+
+aₙ = a₁ × rⁿ⁻¹
+
+</div>
+
+
+<p>
+
+Keterangan:
+
+</p>
+
+
+<ul>
+
+<li>aₙ = suku ke-n</li>
+
+<li>a₁ = suku pertama</li>
+
+<li>r = rasio</li>
+
+<li>n = nomor suku</li>
+
+</ul>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🔍 Contoh Barisan Geometri</h2>
+
+
+<div class="box">
+
+3, 6, 12, 24, ...
+
+<br><br>
+
+a₁ = 3
+
+<br>
+
+r = 2
+
+</div>
+
+
+
+<p>
+
+Suku ke-5:
+
+</p>
+
+
+<div class="box">
+
+a₅ = 3 × 2⁴
+
+<br>
+
+a₅ = 48
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>➕ Konsep Deret Geometri</h2>
+
+
+<p>
+Deret geometri adalah penjumlahan suku-suku pada barisan geometri.
+</p>
+
+
+
+<div class="box">
+
+Barisan:
+
+<br>
+
+2, 4, 8, 16
+
+<br><br>
+
+Deret:
+
+<br>
+
+2 + 4 + 8 + 16
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>📊 Jumlah n Suku Deret Geometri</h2>
+
+
+
+<div class="box formula">
+
+Sₙ = a₁(rⁿ-1)/(r-1)
+
+</div>
+
+
+<p>
+
+Untuk r ≠ 1
+
+</p>
+
+
+<div class="box formula">
+
+S∞ = a₁/(1-r)
+
+</div>
+
+
+<p>
+
+Untuk deret tak hingga dengan |r| &lt; 1
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🌎 Penerapan Geometri</h2>
+
+
+<div class="box">
+
+Contoh:
+
+<br><br>
+
+Jumlah bakteri menjadi dua kali lipat setiap jam.
+
+<br><br>
+
+1 → 2 → 4 → 8 → 16
+
+<br><br>
+
+Pertumbuhan tersebut mengikuti pola geometri.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>🧠 Latihan Interaktif</h2>
+
+
+<p>
+
+Barisan:
+
+<br>
+
+5, 10, 20, 40, ...
+
+<br><br>
+
+Nilai suku ke-6 adalah...
+
+</p>
+
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+100
+
+</div>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="benar">
+
+160
+
+</div>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+200
+
+</div>
+
+
+
+<button onclick="cek()">
+
+Periksa Jawaban
+
+</button>
+
+
+<div id="hasil"></div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>⭐ Ringkasan</h2>
+
+
+<div class="box">
+
+✔ Barisan geometri memiliki rasio tetap.
+
+<br>
+
+✔ Rasio diperoleh dari pembagian dua suku berurutan.
+
+<br>
+
+✔ Rumus suku ke-n menggunakan pangkat.
+
+<br>
+
+✔ Deret geometri adalah penjumlahan barisan geometri.
+
+<br>
+
+✔ Deret tak hingga berlaku jika |r| &lt; 1.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<footer>
+
+Rangkuman Materi Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+</div>
+
+
+
+
+
+
+<script>
+
+
+function cek(){
+
+
+let jawaban=document.querySelector(
+'input[name="jawaban"]:checked'
+);
+
+
+let hasil=document.getElementById("hasil");
+
+
+
+if(!jawaban){
+
+hasil.innerHTML="⚠️ Pilih jawaban terlebih dahulu";
+
+hasil.style.color="orange";
+
+}
+
+else if(jawaban.value=="benar"){
+
+
+hasil.innerHTML="🎉 Benar! a₆ = 5 × 2⁵ = 160.";
+
+hasil.style.color="green";
+
+
+}
+
+else{
+
+
+hasil.innerHTML="❌ Coba gunakan rumus aₙ = a₁ × rⁿ⁻¹.";
+
+hasil.style.color="red";
+
+
+}
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
