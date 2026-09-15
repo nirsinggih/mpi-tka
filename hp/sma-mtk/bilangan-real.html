@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MPI - Bilangan Real (TKA SMA)</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Mobile Container Layout */
+        .app-container {
+            width: 100%;
+            max-width: 480px; /* Lebar maksimal menyerupai layar HP */
+            margin: 0 auto;
+            background-color: var(--bg-color);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 1.25rem;
+            margin-bottom: 5px;
+        }
+        
+        header p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        main {
+            padding: 0 15px;
+            flex: 1;
+        }
+
+        /* Interactive Accordion Styles */
+        .accordion {
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 16px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion:after {
+            content: '\002B'; /* Simbol Plus */
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary);
+            transition: transform 0.3s ease;
+        }
+
+        .active:after {
+            content: '\2212'; /* Simbol Minus */
+            transform: rotate(90deg);
+        }
+
+        .active, .accordion:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .panel {
+            padding: 0 15px;
+            background-color: var(--card-bg);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            border-radius: 0 0 8px 8px;
+            margin-top: -10px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .panel-content {
+            padding: 15px 0;
+        }
+
+        /* Styling Konten Materi */
+        .highlight-box {
+            background-color: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .formula {
+            display: block;
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 5px 0;
+            letter-spacing: 1px;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+        /* Latihan Soal Sederhana */
+        .quiz-section {
+            background-color: #fffbeb;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #fde68a;
+            margin-top: 15px;
+        }
+        
+        .quiz-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background-color: white;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <h1>Matematika Dasar</h1>
+        <p>Materi: Sistem Bilangan Real</p>
+    </header>
+
+    <main>
+        <!-- Materi 1 -->
+        <button class="accordion">1. Jenis & Sifat Bilangan</button>
+        <div class="panel">
+            <div class="panel-content">
+                <p>Bilangan Real adalah gabungan dari himpunan bilangan rasional dan irasional. Jenis-jenisnya meliputi:</p>
+                <ul>
+                    <li><b>Bilangan Asli (N):</b> Mulai dari 1, 2, 3, 4, ...</li>
+                    <li><b>Bilangan Cacah (W):</b> Mulai dari 0, 1, 2, 3, ...</li>
+                    <li><b>Bilangan Bulat (Z):</b> Negatif, nol, dan positif (..., -2, -1, 0, 1, 2, ...)</li>
+                    <li><b>Bilangan Rasional (Q):</b> Dapat dibentuk pecahan a/b (b ≠ 0). Contoh: 1/2, 0.75</li>
+                    <li><b>Bilangan Irasional:</b> Tidak dapat dibentuk a/b. Contoh: √2, π (pi)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Materi 2 -->
+        <button class="accordion">2. Operasi Bilangan</button>
+        <div class="panel">
+            <div class="panel-content">
+                <p>Urutan hierarki dalam operasi bilangan gabungan (KABATAKU / PEMDAS):</p>
+                <div class="highlight-box">
+                    <ol>
+                        <li>Tanda Kurung ( )</li>
+                        <li>Pangkat / Akar</li>
+                        <li>Perkalian (×) dan Pembagian (÷) — dari kiri ke kanan</li>
+                        <li>Penjumlahan (+) dan Pengurangan (−) — dari kiri ke kanan</li>
+                    </ol>
+                </div>
+                <p><b>Contoh Kasus:</b></p>
+                <p>2 + 3 × 4 = ? <br> <i>(Kerjakan perkalian dulu)</i> = 2 + 12 = 14</p>
+            </div>
+        </div>
+
+        <!-- Materi 3 -->
+        <button class="accordion">3. Sifat-sifat Operasi</button>
+        <div class="panel">
+            <div class="panel-content">
+                <p>Sifat-sifat dasar pada operasi penjumlahan dan perkalian bilangan real:</p>
+                
+                <div class="highlight-box">
+                    <b>A. Komutatif (Pertukaran)</b>
+                    <span class="formula">a + b = b + a</span>
+                    <span class="formula">a × b = b × a</span>
+                    <i>Catatan: Tidak berlaku untuk pengurangan dan pembagian.</i>
+                </div>
+
+                <div class="highlight-box">
+                    <b>B. Asosiatif (Pengelompokan)</b>
+                    <span class="formula">(a + b) + c = a + (b + c)</span>
+                    <span class="formula">(a × b) × c = a × (b × c)</span>
+                </div>
+
+                <div class="highlight-box">
+                    <b>C. Distributif (Penyebaran)</b>
+                    <span class="formula">a × (b + c) = (a × b) + (a × c)</span>
+                    <span class="formula">a × (b - c) = (a × b) - (a × c)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Quiz / Evaluasi Kecil -->
+        <div class="quiz-section">
+            <b>Cek Pemahaman</b>
+            <p style="font-size: 0.9rem; margin-top: 5px;">Berapa hasil dari: <b>5 × (3 + 2)</b> dengan sifat distributif?</p>
+            <button class="quiz-btn" onclick="cekJawaban()">Lihat Pembahasan</button>
+            <p id="hasil-quiz" style="display: none; margin-top: 10px; font-size: 0.9rem; color: var(--primary); font-weight: bold;"></p>
+        </div>
+
+    </main>
+
+    <footer>
+        Rangkuman Materi Tes Kemampuan Akademik (TKA)
+    </footer>
+</div>
+
+<script>
+    // Script untuk fungsi Accordion
+    const accordions = document.querySelectorAll(".accordion");
+    
+    accordions.forEach(acc => {
+        acc.addEventListener("click", function() {
+            // Tutup accordion lain yang sedang terbuka (opsional, agar lebih rapi)
+            accordions.forEach(item => {
+                if(item !== this && item.classList.contains("active")) {
+                    item.classList.remove("active");
+                    item.nextElementSibling.style.maxHeight = null;
+                }
+            });
+
+            this.classList.toggle("active");
+            let panel = this.nextElementSibling;
+            
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            } 
+        });
+    });
+
+    // Script untuk interaksi Cek Jawaban
+    function cekJawaban() {
+        const hasil = document.getElementById('hasil-quiz');
+        if (hasil.style.display === 'none') {
+            hasil.style.display = 'block';
+            hasil.innerHTML = "= (5 × 3) + (5 × 2) <br>= 15 + 10 <br>= 25";
+        } else {
+            hasil.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>
