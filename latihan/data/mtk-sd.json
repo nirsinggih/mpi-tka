@@ -7,176 +7,562 @@
     "acak_opsi": true,
 
     "soal": [
-
         {
             "id": 1,
             "tipe": "pilihan_ganda",
-            "pertanyaan": "Hasil dari 245 + 378 adalah ...",
+            "pertanyaan": "Sebuah kue dibagi menjadi 8 bagian sama besar. Rani memakan 4 bagian. Pecahan yang menunjukkan bagian kue yang dimakan Rani adalah ...",
             "opsi": [
-                "613",
-                "623",
-                "633",
-                "643"
+                "1/2",
+                "1/4",
+                "3/4",
+                "4/8"
             ],
-            "jawaban": "623"
+            "jawaban": "1/2"
         },
-
 
         {
             "id": 2,
             "tipe": "pilihan_ganda",
-            "pertanyaan": "Hasil dari 800 - 365 adalah ...",
+            "pertanyaan": "Pecahan manakah yang senilai dengan 3/4?",
             "opsi": [
-                "425",
-                "435",
-                "445",
-                "455"
+                "4/6",
+                "6/8",
+                "8/12",
+                "9/16"
             ],
-            "jawaban": "435"
+            "jawaban": "6/8"
         },
-
 
         {
             "id": 3,
             "tipe": "pilihan_ganda",
-            "pertanyaan": "Hasil dari 24 × 6 adalah ...",
+            "pertanyaan": "Urutan pecahan berikut dari yang terkecil ke terbesar adalah ...",
             "opsi": [
-                "124",
-                "134",
-                "144",
-                "154"
+                "1/2, 1/4, 3/4, 2/3",
+                "1/4, 1/2, 2/3, 3/4",
+                "1/4, 2/3, 1/2, 3/4",
+                "3/4, 2/3, 1/2, 1/4"
             ],
-            "jawaban": "144"
+            "jawaban": "1/4, 1/2, 2/3, 3/4"
         },
-
 
         {
             "id": 4,
             "tipe": "pilihan_ganda",
-            "pertanyaan": "Hasil dari 144 ÷ 12 adalah ...",
+            "pertanyaan": "Bentuk persen dari pecahan 3/5 adalah ...",
             "opsi": [
-                "10",
-                "11",
-                "12",
-                "13"
+                "30%",
+                "40%",
+                "50%",
+                "60%"
             ],
-            "jawaban": "12"
+            "jawaban": "60%"
         },
-
 
         {
             "id": 5,
             "tipe": "pilihan_ganda_kompleks",
-            "pertanyaan": "Pilih semua bilangan yang merupakan faktor dari 24.",
+            "pertanyaan": "Pilih semua bentuk bilangan yang senilai dengan 1/2.",
             "opsi": [
-                "2",
-                "3",
-                "5",
-                "6"
+                "2/4",
+                "0,5",
+                "50%",
+                "3/4"
             ],
             "jawaban": [
-                "2",
-                "3",
-                "6"
+                "2/4",
+                "0,5",
+                "50%"
             ]
         },
-
 
         {
             "id": 6,
-            "tipe": "pilihan_ganda_kompleks",
-            "pertanyaan": "Pilih semua bilangan yang merupakan bilangan genap.",
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Ibu memiliki 2.450 gram beras. Kemudian membeli lagi 1.375 gram. Jumlah beras ibu sekarang adalah ...",
             "opsi": [
-                "12",
-                "17",
-                "24",
-                "31"
+                "3.725 gram",
+                "3.825 gram",
+                "3.925 gram",
+                "4.025 gram"
             ],
-            "jawaban": [
-                "12",
-                "24"
-            ]
+            "jawaban": "3.825 gram"
         },
-
 
         {
             "id": 7,
-            "tipe": "benar_salah_kompleks",
-            "pertanyaan": "Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
-
-            "pernyataan": [
-
-                {
-                    "teks": "1 meter sama dengan 100 sentimeter.",
-                    "jawaban": "Benar"
-                },
-
-                {
-                    "teks": "1 kilogram sama dengan 100 gram.",
-                    "jawaban": "Salah"
-                },
-
-                {
-                    "teks": "1 jam sama dengan 60 menit.",
-                    "jawaban": "Benar"
-                }
-
-            ]
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Sebuah toko memiliki 5.000 pensil. Sebanyak 2.375 pensil terjual. Sisa pensil adalah ...",
+            "opsi": [
+                "2.525",
+                "2.625",
+                "2.725",
+                "2.825"
+            ],
+            "jawaban": "2.625"
         },
-
 
         {
             "id": 8,
             "tipe": "pilihan_ganda",
-            "pertanyaan": "Sebuah persegi memiliki panjang sisi 8 cm. Luas persegi tersebut adalah ...",
+            "pertanyaan": "Sebuah sekolah membeli 24 kotak pensil. Setiap kotak berisi 36 pensil. Jumlah seluruh pensil adalah ...",
             "opsi": [
-                "16 cm²",
-                "32 cm²",
-                "64 cm²",
-                "128 cm²"
+                "764",
+                "824",
+                "864",
+                "924"
             ],
-            "jawaban": "64 cm²"
+            "jawaban": "864"
         },
-
 
         {
             "id": 9,
             "tipe": "pilihan_ganda",
-            "pertanyaan": "Rata-rata dari 6, 8, dan 10 adalah ...",
+            "pertanyaan": "Sebanyak 1.260 buku dibagikan sama rata kepada 35 siswa. Setiap siswa memperoleh ... buku.",
             "opsi": [
-                "6",
-                "7",
-                "8",
-                "9"
+                "34",
+                "36",
+                "38",
+                "40"
             ],
-            "jawaban": "8"
+            "jawaban": "36"
         },
-
 
         {
             "id": 10,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Hasil dari 2/3 + 1/6 adalah ...",
+            "opsi": [
+                "1/2",
+                "2/3",
+                "5/6",
+                "1"
+            ],
+            "jawaban": "5/6"
+        },
+
+        {
+            "id": 11,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Hasil dari 5/6 - 1/3 adalah ...",
+            "opsi": [
+                "1/3",
+                "1/2",
+                "2/3",
+                "3/4"
+            ],
+            "jawaban": "1/2"
+        },
+
+        {
+            "id": 12,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Siti memiliki 3/4 liter jus. Jus tersebut dituangkan sama banyak ke dalam 3 gelas. Banyak jus dalam setiap gelas adalah ...",
+            "opsi": [
+                "1/8 liter",
+                "1/4 liter",
+                "1/3 liter",
+                "1/2 liter"
+            ],
+            "jawaban": "1/4 liter"
+        },
+
+        {
+            "id": 13,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "KPK dari 12 dan 18 adalah ...",
+            "opsi": [
+                "24",
+                "30",
+                "36",
+                "42"
+            ],
+            "jawaban": "36"
+        },
+
+        {
+            "id": 14,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "FPB dari 36 dan 48 adalah ...",
+            "opsi": [
+                "6",
+                "8",
+                "12",
+                "16"
+            ],
+            "jawaban": "12"
+        },
+
+        {
+            "id": 15,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Lampu A berkedip setiap 6 detik dan lampu B setiap 8 detik. Jika keduanya berkedip bersama sekarang, keduanya akan berkedip bersama lagi setelah ... detik.",
+            "opsi": [
+                "12",
+                "18",
+                "24",
+                "48"
+            ],
+            "jawaban": "24"
+        },
+
+        {
+            "id": 16,
+            "tipe": "pilihan_ganda_kompleks",
+            "pertanyaan": "Pilih semua bilangan yang merupakan faktor dari 36.",
+            "opsi": [
+                "3",
+                "4",
+                "6",
+                "8"
+            ],
+            "jawaban": [
+                "3",
+                "4",
+                "6"
+            ]
+        },
+
+        {
+            "id": 17,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Sebuah bangun datar memiliki 4 sisi sama panjang dan 4 sudut siku-siku. Bangun tersebut adalah ...",
+            "opsi": [
+                "Persegi",
+                "Persegi panjang",
+                "Segitiga",
+                "Trapesium"
+            ],
+            "jawaban": "Persegi"
+        },
+
+        {
+            "id": 18,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Sebuah persegi panjang memiliki panjang 15 cm dan lebar 8 cm. Kelilingnya adalah ...",
+            "opsi": [
+                "38 cm",
+                "46 cm",
+                "56 cm",
+                "120 cm"
+            ],
+            "jawaban": "46 cm"
+        },
+
+        {
+            "id": 19,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Sebuah segitiga memiliki alas 12 cm dan tinggi 10 cm. Luas segitiga tersebut adalah ...",
+            "opsi": [
+                "50 cm²",
+                "60 cm²",
+                "100 cm²",
+                "120 cm²"
+            ],
+            "jawaban": "60 cm²"
+        },
+
+        {
+            "id": 20,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Sebuah taman berbentuk persegi memiliki sisi 14 m. Jika di sekeliling taman akan dipasang pagar, panjang pagar yang diperlukan adalah ...",
+            "opsi": [
+                "28 m",
+                "42 m",
+                "56 m",
+                "196 m"
+            ],
+            "jawaban": "56 m"
+        },
+
+        {
+            "id": 21,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Sebuah kubus tersusun dari kubus-kubus kecil yang sama besar. Jika dilihat dari bagian depan tampak 3 kubus berjajar dan 2 kubus bertumpuk. Banyak kubus kecil yang terlihat pada susunan tersebut dari depan adalah ...",
+            "opsi": [
+                "5",
+                "6",
+                "8",
+                "9"
+            ],
+            "jawaban": "6"
+        },
+
+        {
+            "id": 22,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Sebuah kotak berbentuk balok memiliki panjang 10 cm, lebar 6 cm, dan tinggi 4 cm. Volumenya adalah ...",
+            "opsi": [
+                "120 cm³",
+                "200 cm³",
+                "240 cm³",
+                "260 cm³"
+            ],
+            "jawaban": "240 cm³"
+        },
+
+        {
+            "id": 23,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Sebuah kubus memiliki panjang rusuk 5 cm. Volume kubus tersebut adalah ...",
+            "opsi": [
+                "25 cm³",
+                "75 cm³",
+                "100 cm³",
+                "125 cm³"
+            ],
+            "jawaban": "125 cm³"
+        },
+
+        {
+            "id": 24,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Panjang sebuah meja adalah 1,5 meter. Panjang meja tersebut dalam sentimeter adalah ...",
+            "opsi": [
+                "15 cm",
+                "150 cm",
+                "1.500 cm",
+                "15.000 cm"
+            ],
+            "jawaban": "150 cm"
+        },
+
+        {
+            "id": 25,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Sebuah pita panjangnya 2 meter 35 sentimeter. Panjang pita tersebut dalam sentimeter adalah ...",
+            "opsi": [
+                "205 cm",
+                "225 cm",
+                "235 cm",
+                "250 cm"
+            ],
+            "jawaban": "235 cm"
+        },
+
+        {
+            "id": 26,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Sebuah botol berisi 1,5 liter air. Jika dinyatakan dalam mililiter, volumenya adalah ...",
+            "opsi": [
+                "150 ml",
+                "500 ml",
+                "1.050 ml",
+                "1.500 ml"
+            ],
+            "jawaban": "1.500 ml"
+        },
+
+        {
+            "id": 27,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Ibu membeli 2 kg 500 gram gula. Berat gula tersebut dalam gram adalah ...",
+            "opsi": [
+                "2.050 gram",
+                "2.500 gram",
+                "3.000 gram",
+                "3.500 gram"
+            ],
+            "jawaban": "2.500 gram"
+        },
+
+        {
+            "id": 28,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Ayah mulai bekerja pukul 07.30 dan selesai pukul 15.00. Lama ayah bekerja adalah ...",
+            "opsi": [
+                "6 jam 30 menit",
+                "7 jam",
+                "7 jam 30 menit",
+                "8 jam"
+            ],
+            "jawaban": "7 jam 30 menit"
+        },
+
+        {
+            "id": 29,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Sebuah sepeda menempuh jarak 36 km dalam waktu 3 jam. Kecepatan rata-rata sepeda tersebut adalah ...",
+            "opsi": [
+                "9 km/jam",
+                "12 km/jam",
+                "15 km/jam",
+                "18 km/jam"
+            ],
+            "jawaban": "12 km/jam"
+        },
+
+        {
+            "id": 30,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Sebuah mobil melaju dengan kecepatan 60 km/jam selama 2 jam. Jarak yang ditempuh mobil adalah ...",
+            "opsi": [
+                "30 km",
+                "60 km",
+                "120 km",
+                "180 km"
+            ],
+            "jawaban": "120 km"
+        },
+
+        {
+            "id": 31,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Sebuah sudut besarnya 90°. Sudut tersebut disebut sudut ...",
+            "opsi": [
+                "Lancip",
+                "Siku-siku",
+                "Tumpul",
+                "Lurus"
+            ],
+            "jawaban": "Siku-siku"
+        },
+
+        {
+            "id": 32,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Tanpa mengukur dengan penggaris, manakah perkiraan panjang yang paling masuk akal untuk panjang sebuah pensil?",
+            "opsi": [
+                "15 cm",
+                "15 m",
+                "15 km",
+                "15 mm"
+            ],
+            "jawaban": "15 cm"
+        },
+
+        {
+            "id": 33,
+            "tipe": "pilihan_ganda_kompleks",
+            "pertanyaan": "Pilih semua pernyataan yang benar tentang satuan panjang.",
+            "opsi": [
+                "1 m = 100 cm",
+                "1 km = 1.000 m",
+                "1 dm = 100 cm",
+                "1 cm = 10 mm"
+            ],
+            "jawaban": [
+                "1 m = 100 cm",
+                "1 km = 1.000 m",
+                "1 cm = 10 mm"
+            ]
+        },
+
+        {
+            "id": 34,
             "tipe": "benar_salah_kompleks",
             "pertanyaan": "Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
-
             "pernyataan": [
-
                 {
-                    "teks": "Pecahan 1/2 sama dengan 0,5.",
+                    "teks": "1 liter sama dengan 1.000 mililiter.",
                     "jawaban": "Benar"
                 },
-
                 {
-                    "teks": "Pecahan 3/4 sama dengan 0,25.",
+                    "teks": "1 kilogram sama dengan 100 gram.",
                     "jawaban": "Salah"
                 },
-
                 {
-                    "teks": "Pecahan 1/4 sama dengan 25%.",
+                    "teks": "1 jam sama dengan 60 menit.",
+                    "jawaban": "Benar"
+                },
+                {
+                    "teks": "1 pekan sama dengan 7 hari.",
                     "jawaban": "Benar"
                 }
+            ]
+        },
 
+        {
+            "id": 35,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Perhatikan data jumlah buku yang dibaca siswa berikut: Senin 5 buku, Selasa 8 buku, Rabu 6 buku, Kamis 10 buku, Jumat 7 buku. Pada hari apa jumlah buku yang dibaca paling banyak?",
+            "opsi": [
+                "Senin",
+                "Selasa",
+                "Rabu",
+                "Kamis"
+            ],
+            "jawaban": "Kamis"
+        },
+
+        {
+            "id": 36,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Sebuah piktogram menunjukkan 1 gambar buku mewakili 5 buku. Jika terdapat 6 gambar buku, jumlah buku sebenarnya adalah ...",
+            "opsi": [
+                "11 buku",
+                "25 buku",
+                "30 buku",
+                "35 buku"
+            ],
+            "jawaban": "30 buku"
+        },
+
+        {
+            "id": 37,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Data jumlah siswa yang mengikuti kegiatan olahraga adalah: sepak bola 24 siswa, bola voli 18 siswa, bulu tangkis 12 siswa, dan basket 16 siswa. Selisih peserta sepak bola dan bulu tangkis adalah ...",
+            "opsi": [
+                "8 siswa",
+                "10 siswa",
+                "12 siswa",
+                "14 siswa"
+            ],
+            "jawaban": "12 siswa"
+        },
+
+        {
+            "id": 38,
+            "tipe": "pilihan_ganda",
+            "pertanyaan": "Tabel frekuensi menunjukkan jumlah buah yang terjual: apel 15, jeruk 20, mangga 12, dan pisang 18. Jika pedagang ingin mengetahui jumlah seluruh buah yang terjual, operasi yang tepat adalah ...",
+            "opsi": [
+                "20 - 15 + 18 - 12",
+                "15 + 20 + 12 + 18",
+                "20 × 15 + 12",
+                "18 × 12 - 15"
+            ],
+            "jawaban": "15 + 20 + 12 + 18"
+        },
+
+        {
+            "id": 39,
+            "tipe": "pilihan_ganda_kompleks",
+            "pertanyaan": "Perhatikan data nilai berikut: 70, 80, 80, 90, 100. Pilih semua pernyataan yang benar.",
+            "opsi": [
+                "Nilai tertinggi adalah 100.",
+                "Nilai terendah adalah 70.",
+                "Nilai yang paling sering muncul adalah 80.",
+                "Jumlah seluruh nilai adalah 400."
+            ],
+            "jawaban": [
+                "Nilai tertinggi adalah 100.",
+                "Nilai terendah adalah 70.",
+                "Nilai yang paling sering muncul adalah 80."
+            ]
+        },
+
+        {
+            "id": 40,
+            "tipe": "benar_salah_kompleks",
+            "pertanyaan": "Perhatikan data berikut: Dalam satu kelas terdapat 30 siswa. Sebanyak 12 siswa menyukai sepak bola, 8 siswa menyukai bulu tangkis, dan 10 siswa menyukai bola voli. Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+            "pernyataan": [
+                {
+                    "teks": "Jumlah siswa yang menyukai sepak bola lebih banyak daripada bulu tangkis.",
+                    "jawaban": "Benar"
+                },
+                {
+                    "teks": "Jumlah siswa yang menyukai bola voli adalah 10 siswa.",
+                    "jawaban": "Benar"
+                },
+                {
+                    "teks": "Jumlah siswa yang menyukai bulu tangkis lebih banyak daripada sepak bola.",
+                    "jawaban": "Salah"
+                },
+                {
+                    "teks": "Jumlah seluruh siswa yang tercatat dalam ketiga kelompok adalah 30 siswa.",
+                    "jawaban": "Benar"
+                }
             ]
         }
-
     ]
 }
