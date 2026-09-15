@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MPI - Bilangan Real (TKA SMA)</title>
+    
     <!-- Google Fonts Eksternal: Poppins & Fredoka -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <!-- FontAwesome Icons Eksternal -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <!-- KaTeX untuk Render Matematika Eksternal -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
     <style>
         :root {
@@ -25,7 +28,6 @@
             --accent-blue: #118AB2;
             --purple-card: #9D4EDD;
             --text-dark: #2B2D42;
-            --text-light: #FFFFFF;
             --card-radius: 20px;
         }
 
@@ -238,7 +240,7 @@
             margin: 12px 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
             font-weight: 600;
-            font-size: 0.92rem;
+            font-size: 0.95rem;
             border-left: 5px solid var(--primary-orange);
             color: #1E293B;
         }
@@ -384,7 +386,7 @@
                         <strong style="color: #0284C7;"><i class="fa-solid fa-star"></i> 2. Bilangan Rasional</strong><br>
                         Dapat diubah ke pecahan $\frac{a}{b}$ ($b \neq 0$).
                         <ul style="margin-left: 18px; margin-top: 6px;">
-                            <li><strong>Pecahan:</strong> $\frac{1}{2}, 0.75$</li>
+                            <li><strong>Pecahan:</strong> $\frac{1}{2}, \frac{3}{4}, 0.75$</li>
                             <li><strong>Bulat ($\mathbb{Z}$):</strong> $\{\dots, -2, -1, 0, 1, 2, \dots\}$</li>
                         </ul>
                     </li>
@@ -487,6 +489,17 @@
 </div>
 
 <script>
+    // Inisialisasi KaTeX Render setelah DOM siap
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError : false
+        });
+    });
+
     // Tab Navigation Logic
     function openTab(evt, tabName) {
         let i, tabcontent, tablinks;
