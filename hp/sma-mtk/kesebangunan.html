@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MPI Kesebangunan dan Kekongruenan</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Poppins,sans-serif;
+background:linear-gradient(135deg,#f7971e,#ffd200);
+}
+
+
+.container{
+max-width:500px;
+margin:auto;
+padding:15px;
+}
+
+
+.header{
+
+text-align:center;
+color:white;
+padding:25px 10px;
+
+}
+
+
+.header h1{
+font-size:24px;
+}
+
+
+
+.tabs{
+
+display:flex;
+gap:5px;
+margin-bottom:15px;
+
+}
+
+
+.tabs button{
+
+flex:1;
+padding:10px 5px;
+border:none;
+border-radius:15px;
+background:white;
+color:#e67e22;
+font-weight:bold;
+
+}
+
+
+
+.content{
+
+display:none;
+
+}
+
+
+.active{
+
+display:block;
+
+}
+
+
+
+.card{
+
+background:white;
+padding:20px;
+border-radius:22px;
+margin-bottom:15px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+
+
+h2{
+color:#e67e22;
+}
+
+
+h3{
+color:#e74c3c;
+}
+
+
+
+.box{
+
+background:#fff8e1;
+border-left:5px solid #f39c12;
+padding:12px;
+border-radius:10px;
+margin:10px 0;
+
+}
+
+
+
+.shape-area{
+
+display:flex;
+justify-content:center;
+align-items:center;
+gap:20px;
+padding:20px;
+
+}
+
+
+
+.square{
+
+width:70px;
+height:70px;
+background:#3498db;
+
+}
+
+
+
+.small{
+
+width:45px;
+height:45px;
+background:#3498db;
+
+}
+
+
+
+.simulator{
+
+background:#f0f8ff;
+padding:15px;
+border-radius:15px;
+text-align:center;
+
+}
+
+
+
+input[type=range]{
+
+width:100%;
+
+}
+
+
+
+.option{
+
+padding:12px;
+border:2px solid #ddd;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+button.action{
+
+width:100%;
+padding:13px;
+border:none;
+border-radius:30px;
+background:linear-gradient(90deg,#ff512f,#dd2476);
+color:white;
+font-weight:bold;
+
+}
+
+
+
+#hasil{
+
+text-align:center;
+font-weight:bold;
+margin-top:15px;
+
+}
+
+
+
+footer{
+
+text-align:center;
+font-size:11px;
+color:white;
+padding:15px;
+
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="header">
+
+<h1>📐 MPI GEOMETRI</h1>
+
+<p>
+Kesebangunan & Kekongruenan Bangun Datar
+</p>
+
+</div>
+
+
+
+
+
+<div class="tabs">
+
+<button onclick="buka('materi')">
+📚 Materi
+</button>
+
+<button onclick="buka('simulasi')">
+🎮 Simulasi
+</button>
+
+<button onclick="buka('latihan')">
+🧠 Latihan
+</button>
+
+<button onclick="buka('ringkasan')">
+⭐ Ringkasan
+</button>
+
+</div>
+
+
+
+
+
+
+
+
+<div id="materi" class="content active">
+
+
+<div class="card">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+<p>
+Peserta didik mampu membedakan kesebangunan dan kekongruenan serta menerapkan konsep perbandingan pada bangun datar.
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>🔶 Kesebangunan</h2>
+
+
+<p>
+Kesebangunan adalah kondisi ketika dua bangun memiliki bentuk yang sama tetapi ukuran dapat berbeda.
+</p>
+
+
+<div class="shape-area">
+
+<div class="square"></div>
+
+<div>
+
+≈
+
+</div>
+
+<div class="small"></div>
+
+</div>
+
+
+<div class="box">
+
+Syarat kesebangunan:
+
+<br><br>
+
+✔ Sudut-sudut bersesuaian sama besar.
+
+<br>
+
+✔ Perbandingan sisi bersesuaian sama.
+
+</div>
+
+
+<div class="box">
+
+Contoh:
+
+<br>
+
+Foto dengan ukuran berbeda tetapi bentuk sama.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🔷 Kekongruenan</h2>
+
+
+<p>
+Kekongruenan adalah kondisi ketika dua bangun memiliki bentuk dan ukuran yang sama.
+</p>
+
+
+<div class="box">
+
+Syarat:
+
+<br><br>
+
+✔ Sisi bersesuaian sama panjang.
+
+<br>
+
+✔ Sudut bersesuaian sama besar.
+
+</div>
+
+
+<div class="box">
+
+Contoh:
+
+<br>
+
+Dua ubin dengan bentuk dan ukuran identik.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📏 Perbandingan Skala</h2>
+
+
+<div class="box">
+
+Skala =
+
+<br>
+
+Ukuran gambar / Ukuran sebenarnya
+
+</div>
+
+
+<p>
+
+Pada bangun sebangun:
+
+</p>
+
+
+<div class="box">
+
+a₁/a₂ = b₁/b₂ = c₁/c₂
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+<h2>✏️ Contoh</h2>
+
+
+<p>
+
+Sebuah segitiga memiliki sisi 4 cm, 6 cm, dan 8 cm.
+
+Segitiga lain sebangun dengan faktor skala 2.
+
+</p>
+
+
+<div class="box">
+
+Sisi baru:
+
+<br>
+
+8 cm, 12 cm, dan 16 cm
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="simulasi" class="content">
+
+
+<div class="card">
+
+
+<h2>🎮 Simulasi Skala Bangun</h2>
+
+
+<div class="simulator">
+
+
+<p>
+Atur skala bangun:
+</p>
+
+
+<input type="range" min="50" max="150" value="100" id="skala" oninput="ubah()">
+
+
+<p id="nilai">
+
+Skala: 100%
+
+</p>
+
+
+<div id="bangun" class="square">
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<div class="card">
+
+<h2>🔍 Pengamatan</h2>
+
+
+<div class="box">
+
+Jika ukuran berubah tetapi bentuk tetap:
+
+<br>
+
+➡ Sebangun
+
+</div>
+
+
+<div class="box">
+
+Jika ukuran dan bentuk sama:
+
+<br>
+
+➡ Kongruen
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="latihan" class="content">
+
+
+<div class="card">
+
+
+<h2>🧠 Latihan TKA</h2>
+
+
+<p>
+
+Dua bangun yang memiliki bentuk sama tetapi ukuran berbeda disebut...
+
+</p>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="benar">
+
+Sebangun
+
+</div>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+Kongruen
+
+</div>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+Simetri
+
+</div>
+
+
+
+<button class="action" onclick="cek()">
+
+Periksa Jawaban
+
+</button>
+
+
+<div id="hasil"></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="ringkasan" class="content">
+
+
+<div class="card">
+
+<h2>⭐ Ringkasan</h2>
+
+
+<div class="box">
+
+✔ Sebangun = bentuk sama, ukuran boleh berbeda.
+
+<br>
+
+✔ Kongruen = bentuk dan ukuran sama.
+
+<br>
+
+✔ Kesebangunan menggunakan perbandingan sisi.
+
+<br>
+
+✔ Sudut bersesuaian pada bangun sebangun sama besar.
+
+<br>
+
+✔ Kekongruenan mempertahankan ukuran asli.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<footer>
+
+Rangkuman Materi Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+</div>
+
+
+
+
+
+
+
+<script>
+
+
+function buka(id){
+
+document.querySelectorAll('.content')
+.forEach(function(x){
+
+x.classList.remove('active');
+
+});
+
+
+document.getElementById(id)
+.classList.add('active');
+
+}
+
+
+
+
+function ubah(){
+
+let nilai=document.getElementById("skala").value;
+
+let bangun=document.getElementById("bangun");
+
+
+bangun.style.width=nilai/2+"px";
+
+bangun.style.height=nilai/2+"px";
+
+
+document.getElementById("nilai").innerHTML=
+"Skala: "+nilai+"%";
+
+
+}
+
+
+
+
+function cek(){
+
+let jawaban=document.querySelector(
+'input[name="jawaban"]:checked'
+);
+
+
+let hasil=document.getElementById("hasil");
+
+
+if(!jawaban){
+
+hasil.innerHTML="⚠️ Pilih jawaban";
+
+}
+
+else if(jawaban.value=="benar"){
+
+hasil.innerHTML="🎉 Benar! Bentuk sama dengan ukuran berbeda adalah sebangun.";
+
+hasil.style.color="green";
+
+}
+
+else{
+
+hasil.innerHTML="❌ Perhatikan perbedaan sebangun dan kongruen.";
+
+hasil.style.color="red";
+
+}
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
