@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MPI Volume dan Luas Permukaan Bangun Ruang</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#2193b0,#6dd5ed);
+
+}
+
+
+.container{
+
+max-width:500px;
+margin:auto;
+padding:15px;
+
+}
+
+
+.header{
+
+text-align:center;
+color:white;
+padding:25px 10px;
+
+}
+
+
+.header h1{
+
+font-size:24px;
+
+}
+
+
+
+.tabs{
+
+display:flex;
+gap:5px;
+margin-bottom:15px;
+
+}
+
+
+.tabs button{
+
+flex:1;
+padding:10px 5px;
+border:none;
+border-radius:15px;
+background:white;
+color:#0277bd;
+font-weight:bold;
+
+}
+
+
+
+.content{
+
+display:none;
+
+}
+
+
+.active{
+
+display:block;
+
+}
+
+
+
+.card{
+
+background:white;
+padding:20px;
+border-radius:22px;
+margin-bottom:15px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+
+
+h2{
+
+color:#0277bd;
+
+}
+
+
+h3{
+
+color:#ff7043;
+
+}
+
+
+
+.box{
+
+background:#e3f2fd;
+border-left:5px solid #0288d1;
+padding:12px;
+border-radius:10px;
+margin:10px 0;
+
+}
+
+
+
+.shape{
+
+margin:20px auto;
+background:#42a5f5;
+
+}
+
+
+.cube{
+
+width:80px;
+height:80px;
+
+}
+
+
+.balok{
+
+width:130px;
+height:70px;
+
+}
+
+
+
+.simulator{
+
+background:#e8f5e9;
+padding:15px;
+border-radius:15px;
+
+}
+
+
+
+input[type=range]{
+
+width:100%;
+
+}
+
+
+
+.result{
+
+background:white;
+padding:12px;
+border-radius:10px;
+text-align:center;
+font-weight:bold;
+
+}
+
+
+
+.option{
+
+padding:12px;
+border:2px solid #ddd;
+background:#fafafa;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+button.action{
+
+width:100%;
+padding:13px;
+border:none;
+border-radius:30px;
+background:linear-gradient(90deg,#ff512f,#dd2476);
+color:white;
+font-weight:bold;
+
+}
+
+
+
+#hasil{
+
+text-align:center;
+font-weight:bold;
+margin-top:15px;
+
+}
+
+
+
+footer{
+
+text-align:center;
+font-size:11px;
+color:white;
+padding:15px;
+
+}
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+<div class="container">
+
+
+
+<div class="header">
+
+<h1>🧊 MPI BANGUN RUANG</h1>
+
+<p>
+Volume dan Luas Permukaan Bangun Ruang
+</p>
+
+</div>
+
+
+
+
+
+<div class="tabs">
+
+<button onclick="buka('materi')">
+📚 Materi
+</button>
+
+
+<button onclick="buka('simulasi')">
+🎮 Simulasi
+</button>
+
+
+<button onclick="buka('latihan')">
+🧠 Latihan
+</button>
+
+
+<button onclick="buka('ringkasan')">
+⭐ Ringkasan
+</button>
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="materi" class="content active">
+
+
+<div class="card">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+
+<p>
+Peserta didik mampu menentukan volume dan luas permukaan berbagai bangun ruang serta menerapkannya pada masalah sehari-hari.
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📦 Konsep Bangun Ruang</h2>
+
+
+<p>
+Bangun ruang adalah objek tiga dimensi yang memiliki panjang, lebar, dan tinggi.
+</p>
+
+
+<div class="box">
+
+Volume:
+
+<br>
+
+Ukuran ruang yang ditempati benda.
+
+<br><br>
+
+Luas permukaan:
+
+<br>
+
+Jumlah luas seluruh sisi bangun.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🧊 Kubus</h2>
+
+
+<div class="shape cube"></div>
+
+
+<div class="box">
+
+Volume:
+
+<br>
+
+V = s³
+
+<br><br>
+
+Luas Permukaan:
+
+<br>
+
+LP = 6s²
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📦 Balok</h2>
+
+
+<div class="shape balok"></div>
+
+
+<div class="box">
+
+Volume:
+
+<br>
+
+V = p × l × t
+
+<br><br>
+
+Luas Permukaan:
+
+<br>
+
+LP = 2(pl + pt + lt)
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🔺 Prisma dan Limas</h2>
+
+
+<div class="box">
+
+Prisma:
+
+<br>
+
+V = luas alas × tinggi
+
+<br><br>
+
+Limas:
+
+<br>
+
+V = ⅓ × luas alas × tinggi
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🥫 Tabung</h2>
+
+
+<div class="box">
+
+Volume:
+
+<br>
+
+V = πr²t
+
+<br><br>
+
+Luas Permukaan:
+
+<br>
+
+LP = 2πr(r+t)
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>⚽ Bola</h2>
+
+
+<div class="box">
+
+Volume:
+
+<br>
+
+V = 4/3 πr³
+
+<br><br>
+
+Luas Permukaan:
+
+<br>
+
+LP = 4πr²
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="simulasi" class="content">
+
+
+<div class="card">
+
+
+<h2>🎮 Simulasi Kubus</h2>
+
+
+<div class="simulator">
+
+
+<p>
+
+Atur panjang sisi kubus:
+
+</p>
+
+
+<input type="range" min="1" max="15" value="5" id="sisi" oninput="hitung()">
+
+
+
+<div class="shape cube" id="kubus">
+
+</div>
+
+
+<div class="result" id="hasilSimulasi">
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="latihan" class="content">
+
+
+<div class="card">
+
+
+<h2>🧠 Latihan TKA</h2>
+
+
+<p>
+
+Sebuah kubus memiliki panjang sisi 4 cm.
+
+Volume kubus adalah...
+
+</p>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+16 cm³
+
+</div>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="benar">
+
+64 cm³
+
+</div>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+24 cm³
+
+</div>
+
+
+
+<button class="action" onclick="cek()">
+
+Periksa Jawaban
+
+</button>
+
+
+<div id="hasil"></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="ringkasan" class="content">
+
+
+<div class="card">
+
+
+<h2>⭐ Ringkasan</h2>
+
+
+<div class="box">
+
+✔ Volume = ukuran ruang benda.
+
+<br>
+
+✔ Luas permukaan = total seluruh sisi.
+
+<br>
+
+✔ Kubus: V=s³.
+
+<br>
+
+✔ Balok: V=plt.
+
+<br>
+
+✔ Tabung: V=πr²t.
+
+<br>
+
+✔ Bola: V=4/3πr³.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<footer>
+
+Rangkuman Materi Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+</div>
+
+
+
+
+
+
+
+<script>
+
+
+function buka(id){
+
+document.querySelectorAll('.content')
+.forEach(function(x){
+
+x.classList.remove('active');
+
+});
+
+
+document.getElementById(id)
+.classList.add('active');
+
+}
+
+
+
+
+function hitung(){
+
+let s=document.getElementById("sisi").value;
+
+
+let volume=s*s*s;
+
+let luas=6*s*s;
+
+
+document.getElementById("kubus").style.width=
+(s*10)+"px";
+
+document.getElementById("kubus").style.height=
+(s*10)+"px";
+
+
+document.getElementById("hasilSimulasi").innerHTML=
+
+"Sisi = "+s+" cm<br><br>"+
+"Volume = "+volume+" cm³<br>"+
+"Luas Permukaan = "+luas+" cm²";
+
+
+}
+
+
+hitung();
+
+
+
+
+
+function cek(){
+
+let jawaban=document.querySelector(
+'input[name="jawaban"]:checked'
+);
+
+
+let hasil=document.getElementById("hasil");
+
+
+if(!jawaban){
+
+hasil.innerHTML="⚠️ Pilih jawaban";
+
+}
+
+else if(jawaban.value=="benar"){
+
+hasil.innerHTML="🎉 Benar! 4³ = 64 cm³.";
+
+hasil.style.color="green";
+
+}
+
+else{
+
+hasil.innerHTML="❌ Gunakan rumus V=s³.";
+
+hasil.style.color="red";
+
+}
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
