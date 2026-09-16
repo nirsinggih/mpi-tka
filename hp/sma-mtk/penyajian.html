@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MPI Penyajian Data SMA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+
+margin:0;
+font-family:Poppins,sans-serif;
+background:linear-gradient(135deg,#11998e,#38ef7d);
+
+}
+
+
+.container{
+
+max-width:500px;
+margin:auto;
+padding:15px;
+
+}
+
+
+.header{
+
+text-align:center;
+color:white;
+padding:25px 10px;
+
+}
+
+
+.header h1{
+
+font-size:24px;
+
+}
+
+
+
+.tabs{
+
+display:flex;
+gap:5px;
+margin-bottom:15px;
+
+}
+
+
+
+.tabs button{
+
+flex:1;
+padding:10px 5px;
+border:none;
+border-radius:15px;
+background:white;
+color:#00897b;
+font-weight:bold;
+
+}
+
+
+
+.content{
+
+display:none;
+
+}
+
+
+.active{
+
+display:block;
+
+}
+
+
+
+.card{
+
+background:white;
+padding:20px;
+border-radius:22px;
+margin-bottom:15px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+
+
+h2{
+
+color:#00897b;
+
+}
+
+
+h3{
+
+color:#ff7043;
+
+}
+
+
+
+.box{
+
+background:#e8f5e9;
+border-left:5px solid #009688;
+padding:12px;
+border-radius:10px;
+margin:10px 0;
+
+}
+
+
+
+.table{
+
+width:100%;
+border-collapse:collapse;
+margin:10px 0;
+
+}
+
+
+.table td,.table th{
+
+border:1px solid #ccc;
+padding:8px;
+text-align:center;
+
+}
+
+
+
+.bar{
+
+height:25px;
+background:#42a5f5;
+margin:8px 0;
+border-radius:10px;
+color:white;
+padding-left:10px;
+
+}
+
+
+
+.line-chart{
+
+height:150px;
+position:relative;
+background:#f5f5f5;
+border-radius:10px;
+
+}
+
+
+
+.dot{
+
+width:15px;
+height:15px;
+background:#e91e63;
+border-radius:50%;
+position:absolute;
+
+}
+
+
+
+.simulator{
+
+background:#e3f2fd;
+padding:15px;
+border-radius:15px;
+
+}
+
+
+
+input{
+
+width:100%;
+
+}
+
+
+
+.option{
+
+padding:12px;
+border:2px solid #ddd;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+button.action{
+
+width:100%;
+padding:13px;
+border:none;
+border-radius:30px;
+background:linear-gradient(90deg,#ff512f,#dd2476);
+color:white;
+font-weight:bold;
+
+}
+
+
+
+#hasil{
+
+text-align:center;
+font-weight:bold;
+margin-top:15px;
+
+}
+
+
+
+footer{
+
+text-align:center;
+font-size:11px;
+color:white;
+padding:15px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="header">
+
+<h1>📊 MPI PENYAJIAN DATA</h1>
+
+<p>
+Diagram, Grafik, Tabel, dan Visualisasi Data
+</p>
+
+</div>
+
+
+
+
+
+<div class="tabs">
+
+<button onclick="buka('materi')">
+📚 Materi
+</button>
+
+
+<button onclick="buka('simulasi')">
+🎮 Simulasi
+</button>
+
+
+<button onclick="buka('latihan')">
+🧠 Latihan
+</button>
+
+
+<button onclick="buka('ringkasan')">
+⭐ Ringkasan
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="materi" class="content active">
+
+
+<div class="card">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+
+<p>
+Peserta didik mampu menyajikan, membaca, dan menganalisis data dalam berbagai bentuk visual.
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📋 Tabel Data</h2>
+
+
+<p>
+Tabel menyajikan data dalam bentuk baris dan kolom sehingga mudah dibaca.
+</p>
+
+
+<table class="table">
+
+<tr>
+<th>Bulan</th>
+<th>Penjualan</th>
+</tr>
+
+
+<tr>
+<td>Jan</td>
+<td>20</td>
+</tr>
+
+
+<tr>
+<td>Feb</td>
+<td>35</td>
+</tr>
+
+
+<tr>
+<td>Mar</td>
+<td>50</td>
+</tr>
+
+
+</table>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📊 Diagram Batang</h2>
+
+
+<p>
+Digunakan untuk membandingkan jumlah antar kategori.
+</p>
+
+
+<div class="bar" style="width:40%">
+A = 20
+</div>
+
+
+<div class="bar" style="width:70%">
+B = 35
+</div>
+
+
+<div class="bar" style="width:100%">
+C = 50
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📈 Diagram Garis</h2>
+
+
+<p>
+Digunakan untuk melihat perubahan atau tren dari waktu ke waktu.
+</p>
+
+
+<div class="line-chart">
+
+<div class="dot" style="left:20%;top:80%"></div>
+
+<div class="dot" style="left:50%;top:45%"></div>
+
+<div class="dot" style="left:80%;top:20%"></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🥧 Diagram Lingkaran</h2>
+
+
+<p>
+Menunjukkan perbandingan bagian terhadap keseluruhan dalam bentuk persentase.
+</p>
+
+
+<div class="box">
+
+Sudut sektor:
+
+<br>
+
+= nilai/keseluruhan × 360°
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🖼️ Bentuk Visual Data</h2>
+
+
+<div class="box">
+
+Contoh:
+
+<br><br>
+
+✔ Infografis
+
+<br>
+
+✔ Peta konsep
+
+<br>
+
+✔ Ikon statistik
+
+<br>
+
+✔ Dashboard data
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="simulasi" class="content">
+
+
+<div class="card">
+
+
+<h2>🎮 Simulasi Diagram Batang</h2>
+
+
+<div class="simulator">
+
+
+<p>
+
+Ubah nilai kategori A:
+
+</p>
+
+
+<input type="range" min="10" max="100" value="50" id="nilai" oninput="ubah()">
+
+
+
+<div class="bar" id="simBar">
+
+</div>
+
+
+
+<p id="hasilSim">
+
+Nilai = 50
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="latihan" class="content">
+
+
+<div class="card">
+
+
+<h2>🧠 Latihan TKA</h2>
+
+
+<p>
+
+Diagram yang paling tepat untuk melihat perkembangan jumlah siswa dari tahun ke tahun adalah...
+
+</p>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+Diagram batang
+
+</div>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="benar">
+
+Diagram garis
+
+</div>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+Diagram lingkaran
+
+</div>
+
+
+
+<button class="action" onclick="cek()">
+
+Periksa Jawaban
+
+</button>
+
+
+<div id="hasil"></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="ringkasan" class="content">
+
+
+<div class="card">
+
+
+<h2>⭐ Ringkasan</h2>
+
+
+<div class="box">
+
+✔ Tabel → data rinci.
+
+<br>
+
+✔ Diagram batang → perbandingan kategori.
+
+<br>
+
+✔ Diagram garis → perubahan waktu.
+
+<br>
+
+✔ Diagram lingkaran → persentase bagian.
+
+<br>
+
+✔ Grafik → melihat pola hubungan data.
+
+<br>
+
+✔ Visual → mempermudah komunikasi data.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<footer>
+
+Rangkuman Materi Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+</div>
+
+
+
+
+
+
+
+
+<script>
+
+
+function buka(id){
+
+document.querySelectorAll('.content')
+.forEach(function(x){
+
+x.classList.remove('active');
+
+});
+
+
+document.getElementById(id)
+.classList.add('active');
+
+}
+
+
+
+
+function ubah(){
+
+let nilai=document.getElementById("nilai").value;
+
+
+document.getElementById("simBar").style.width=
+nilai+"%";
+
+
+document.getElementById("simBar").innerHTML=
+"Data = "+nilai;
+
+
+document.getElementById("hasilSim").innerHTML=
+"Nilai kategori A = "+nilai;
+
+}
+
+
+
+
+
+function cek(){
+
+let jawaban=document.querySelector(
+'input[name="jawaban"]:checked'
+);
+
+
+let hasil=document.getElementById("hasil");
+
+
+if(!jawaban){
+
+hasil.innerHTML="⚠️ Pilih jawaban";
+
+}
+
+else if(jawaban.value=="benar"){
+
+hasil.innerHTML="🎉 Benar! Diagram garis menunjukkan perubahan dari waktu ke waktu.";
+
+hasil.style.color="green";
+
+}
+
+else{
+
+hasil.innerHTML="❌ Perhatikan fungsi setiap diagram.";
+
+hasil.style.color="red";
+
+}
+
+
+}
+
+
+ubah();
+
+
+</script>
+
+
+</body>
+
+</html>
