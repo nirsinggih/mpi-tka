@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MPI Hubungan Objek Geometri</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Poppins,sans-serif;
+background:linear-gradient(135deg,#2193b0,#6dd5ed);
+}
+
+.container{
+max-width:500px;
+margin:auto;
+padding:15px;
+}
+
+
+.header{
+text-align:center;
+color:white;
+padding:20px;
+}
+
+.header h1{
+font-size:24px;
+}
+
+
+.tabs{
+display:flex;
+gap:5px;
+margin-bottom:15px;
+}
+
+.tabs button{
+
+flex:1;
+padding:10px;
+border:none;
+border-radius:15px;
+background:white;
+color:#0077b6;
+font-weight:bold;
+
+}
+
+
+.content{
+display:none;
+}
+
+.active{
+display:block;
+}
+
+
+.card{
+
+background:white;
+padding:20px;
+border-radius:20px;
+margin-bottom:15px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+
+h2{
+color:#0077b6;
+}
+
+h3{
+color:#ff7043;
+}
+
+
+.box{
+
+background:#e3f7ff;
+border-left:5px solid #0096c7;
+padding:12px;
+border-radius:10px;
+margin:10px 0;
+
+}
+
+
+
+.shape{
+
+font-size:60px;
+text-align:center;
+padding:15px;
+
+}
+
+
+
+.simulator{
+
+background:#f1f8e9;
+padding:15px;
+border-radius:15px;
+text-align:center;
+
+}
+
+
+
+.cube{
+
+font-size:70px;
+cursor:pointer;
+transition:.5s;
+
+}
+
+
+.cube:hover{
+
+transform:rotateY(180deg);
+
+}
+
+
+
+.option{
+
+padding:12px;
+background:#fafafa;
+border:2px solid #ddd;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+button.action{
+
+width:100%;
+padding:12px;
+border:none;
+border-radius:25px;
+background:linear-gradient(90deg,#ff512f,#dd2476);
+color:white;
+font-weight:bold;
+
+}
+
+
+#hasil{
+
+text-align:center;
+font-weight:bold;
+margin-top:15px;
+
+}
+
+
+footer{
+
+text-align:center;
+color:white;
+font-size:11px;
+padding:15px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="header">
+
+<h1>📐 MPI GEOMETRI</h1>
+
+<p>
+Hubungan Objek Geometri Bangun Datar & Bangun Ruang
+</p>
+
+</div>
+
+
+
+<div class="tabs">
+
+<button onclick="buka('materi')">
+📚 Materi
+</button>
+
+<button onclick="buka('simulasi')">
+🎮 Simulasi
+</button>
+
+<button onclick="buka('latihan')">
+🧠 Latihan
+</button>
+
+<button onclick="buka('ringkasan')">
+⭐ Ringkasan
+</button>
+
+</div>
+
+
+
+
+
+<!-- MATERI -->
+
+<div id="materi" class="content active">
+
+
+<div class="card">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+<p>
+Memahami hubungan antar objek geometri pada bangun datar dan bangun ruang serta menerapkannya dalam pemecahan masalah.
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>📍 Objek Dasar Geometri</h2>
+
+
+<div class="box">
+
+<b>Titik</b>
+
+<br>
+
+Objek tanpa ukuran yang menunjukkan posisi.
+
+</div>
+
+
+<div class="box">
+
+<b>Garis</b>
+
+<br>
+
+Kumpulan titik yang memanjang tanpa batas.
+
+</div>
+
+
+<div class="box">
+
+<b>Bidang</b>
+
+<br>
+
+Permukaan datar yang memiliki panjang dan lebar.
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>🔷 Bangun Datar</h2>
+
+
+<div class="shape">
+
+⬛
+
+</div>
+
+
+<p>
+
+Hubungan objek:
+
+</p>
+
+
+<ul>
+
+<li>Titik sudut merupakan pertemuan dua garis.</li>
+
+<li>Sisi adalah ruas garis pembentuk bangun.</li>
+
+<li>Diagonal menghubungkan dua titik sudut yang tidak berdekatan.</li>
+
+</ul>
+
+
+<div class="box">
+
+Contoh:
+
+<br>
+
+Persegi memiliki:
+
+<br>
+
+4 titik sudut
+
+<br>
+
+4 sisi
+
+<br>
+
+2 diagonal
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🧊 Bangun Ruang</h2>
+
+
+<div class="shape">
+
+🧊
+
+</div>
+
+
+<p>
+
+Objek yang memiliki panjang, lebar, dan tinggi.
+
+</p>
+
+
+<div class="box">
+
+Pada kubus:
+
+<br>
+
+✔ Titik sudut = 8
+
+<br>
+
+✔ Rusuk = 12
+
+<br>
+
+✔ Sisi = 6
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>🔗 Hubungan Antar Objek</h2>
+
+
+<div class="box">
+
+<b>Titik dan Garis</b>
+
+<br>
+
+Titik dapat berada pada sebuah garis.
+
+</div>
+
+
+<div class="box">
+
+<b>Garis dan Bidang</b>
+
+<br>
+
+Garis dapat sejajar atau tegak lurus terhadap bidang.
+
+</div>
+
+
+<div class="box">
+
+<b>Bidang dan Bidang</b>
+
+<br>
+
+Dapat sejajar atau berpotongan.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- SIMULASI -->
+
+
+<div id="simulasi" class="content">
+
+
+<div class="card">
+
+
+<h2>🎮 Simulasi Objek Geometri</h2>
+
+
+<div class="simulator">
+
+
+<h3>Kubus Interaktif</h3>
+
+
+<div class="cube" onclick="putar()">
+
+🧊
+
+</div>
+
+
+<p id="info">
+
+Klik kubus untuk melihat perubahan posisi.
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>🔍 Eksplorasi</h2>
+
+
+<p>
+Pada kubus terdapat:
+</p>
+
+
+<div class="box">
+
+8 titik sudut
+
+<br>
+
+12 rusuk
+
+<br>
+
+6 bidang sisi
+
+<br>
+
+Diagonal ruang
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- LATIHAN -->
+
+
+<div id="latihan" class="content">
+
+
+<div class="card">
+
+
+<h2>🧠 Latihan TKA</h2>
+
+
+<p>
+
+Jumlah rusuk pada kubus adalah...
+
+</p>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+8
+
+</div>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="benar">
+
+12
+
+</div>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+6
+
+</div>
+
+
+
+<button class="action" onclick="cek()">
+
+Periksa Jawaban
+
+</button>
+
+
+<div id="hasil"></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- RINGKASAN -->
+
+
+<div id="ringkasan" class="content">
+
+
+<div class="card">
+
+
+<h2>⭐ Ringkasan Materi</h2>
+
+
+<div class="box">
+
+✔ Titik menentukan posisi.
+
+<br>
+
+✔ Garis tersusun dari titik.
+
+<br>
+
+✔ Bidang memiliki panjang dan lebar.
+
+<br>
+
+✔ Bangun datar memiliki sisi dan titik sudut.
+
+<br>
+
+✔ Bangun ruang memiliki sisi, rusuk, dan titik sudut.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<footer>
+
+Rangkuman Materi Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+function buka(id){
+
+let semua=document.querySelectorAll('.content');
+
+semua.forEach(function(x){
+
+x.classList.remove('active');
+
+});
+
+
+document.getElementById(id).classList.add('active');
+
+}
+
+
+
+
+function putar(){
+
+document.querySelector('.cube').style.transform="rotateY(180deg)";
+
+document.getElementById('info').innerHTML=
+"Kubus memiliki hubungan antar sisi, rusuk, dan titik sudut.";
+
+}
+
+
+
+
+function cek(){
+
+let jawaban=document.querySelector(
+'input[name="jawaban"]:checked'
+);
+
+let hasil=document.getElementById("hasil");
+
+
+if(!jawaban){
+
+hasil.innerHTML="⚠️ Pilih jawaban";
+
+}
+
+else if(jawaban.value=="benar"){
+
+hasil.innerHTML="🎉 Benar! Kubus memiliki 12 rusuk.";
+
+hasil.style.color="green";
+
+}
+
+else{
+
+hasil.innerHTML="❌ Coba perhatikan kembali unsur bangun ruang.";
+
+hasil.style.color="red";
+
+}
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
