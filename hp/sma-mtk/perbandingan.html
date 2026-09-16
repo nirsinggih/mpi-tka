@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MPI Perbandingan Trigonometri SMA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+
+margin:0;
+font-family:Poppins,sans-serif;
+background:linear-gradient(135deg,#667eea,#764ba2);
+
+}
+
+
+.container{
+
+max-width:500px;
+margin:auto;
+padding:15px;
+
+}
+
+
+
+.header{
+
+text-align:center;
+color:white;
+padding:25px 10px;
+
+}
+
+
+.header h1{
+
+font-size:24px;
+
+}
+
+
+
+.tabs{
+
+display:flex;
+gap:5px;
+margin-bottom:15px;
+
+}
+
+
+
+.tabs button{
+
+flex:1;
+padding:10px 4px;
+border:none;
+border-radius:15px;
+background:white;
+color:#512da8;
+font-weight:bold;
+
+}
+
+
+
+.content{
+
+display:none;
+
+}
+
+
+.active{
+
+display:block;
+
+}
+
+
+
+.card{
+
+background:white;
+padding:20px;
+border-radius:22px;
+margin-bottom:15px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+
+
+h2{
+
+color:#512da8;
+
+}
+
+
+h3{
+
+color:#ff7043;
+
+}
+
+
+
+.box{
+
+background:#ede7f6;
+border-left:5px solid #673ab7;
+padding:12px;
+border-radius:10px;
+margin:10px 0;
+
+}
+
+
+
+.formula{
+
+text-align:center;
+font-size:18px;
+font-weight:bold;
+background:#fff8e1;
+border-left-color:#ffc107;
+
+}
+
+
+
+.triangle{
+
+width:0;
+height:0;
+border-left:120px solid transparent;
+border-bottom:150px solid #42a5f5;
+margin:20px auto;
+
+}
+
+
+
+.simulator{
+
+background:#e8eaf6;
+padding:15px;
+border-radius:15px;
+
+}
+
+
+
+input{
+
+width:100%;
+
+}
+
+
+
+.result{
+
+background:white;
+padding:12px;
+border-radius:10px;
+text-align:center;
+font-weight:bold;
+
+}
+
+
+
+.option{
+
+padding:12px;
+border:2px solid #ddd;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+button.action{
+
+width:100%;
+padding:13px;
+border:none;
+border-radius:30px;
+background:linear-gradient(90deg,#ff512f,#dd2476);
+color:white;
+font-weight:bold;
+
+}
+
+
+
+#hasil{
+
+text-align:center;
+font-weight:bold;
+margin-top:15px;
+
+}
+
+
+
+footer{
+
+text-align:center;
+font-size:11px;
+color:white;
+padding:15px;
+
+}
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+<div class="container">
+
+
+
+<div class="header">
+
+<h1>📐 MPI TRIGONOMETRI</h1>
+
+<p>
+Perbandingan Sinus, Kosinus, Tangen dan Turunannya
+</p>
+
+</div>
+
+
+
+
+
+<div class="tabs">
+
+<button onclick="buka('materi')">
+📚 Materi
+</button>
+
+<button onclick="buka('simulasi')">
+🎮 Simulasi
+</button>
+
+<button onclick="buka('latihan')">
+🧠 Latihan
+</button>
+
+<button onclick="buka('ringkasan')">
+⭐ Ringkasan
+</button>
+
+</div>
+
+
+
+
+
+
+
+
+<div id="materi" class="content active">
+
+
+<div class="card">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+
+<p>
+Peserta didik mampu menentukan nilai perbandingan trigonometri pada segitiga siku-siku dan menerapkannya dalam penyelesaian masalah.
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📐 Konsep Dasar</h2>
+
+
+<p>
+Trigonometri mempelajari hubungan antara sudut dan panjang sisi dalam segitiga.
+</p>
+
+
+<div class="triangle"></div>
+
+
+<div class="box">
+
+Pada segitiga siku-siku:
+
+<br><br>
+
+Sisi miring = sisi terpanjang
+
+<br>
+
+Sisi depan = berhadapan dengan sudut
+
+<br>
+
+Sisi samping = dekat dengan sudut
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🔺 Sinus</h2>
+
+
+<div class="box formula">
+
+sin θ = depan / miring
+
+</div>
+
+
+<p>
+
+Sinus membandingkan sisi depan sudut dengan sisi miring.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🔺 Kosinus</h2>
+
+
+<div class="box formula">
+
+cos θ = samping / miring
+
+</div>
+
+
+<p>
+
+Kosinus membandingkan sisi samping dengan sisi miring.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🔺 Tangen</h2>
+
+
+<div class="box formula">
+
+tan θ = depan / samping
+
+</div>
+
+
+<p>
+
+Tangen membandingkan sisi depan dengan sisi samping.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🔄 Kebalikan Trigonometri</h2>
+
+
+<div class="box">
+
+Kotangen:
+
+<br>
+
+cot θ = 1/tan θ
+
+<br><br>
+
+Sekan:
+
+<br>
+
+sec θ = 1/cos θ
+
+<br><br>
+
+Kosekan:
+
+<br>
+
+csc θ = 1/sin θ
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🧠 Mnemonik Cepat</h2>
+
+
+<div class="box formula">
+
+SOH - CAH - TOA
+
+</div>
+
+
+<p>
+
+SOH:
+
+<br>
+
+Sin = Opposite / Hypotenuse
+
+<br><br>
+
+CAH:
+
+<br>
+
+Cos = Adjacent / Hypotenuse
+
+<br><br>
+
+TOA:
+
+<br>
+
+Tan = Opposite / Adjacent
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="simulasi" class="content">
+
+
+<div class="card">
+
+
+<h2>🎮 Simulasi Segitiga</h2>
+
+
+<div class="simulator">
+
+
+<p>
+
+Atur sisi depan:
+
+</p>
+
+
+<input type="range" min="1" max="20" value="3" id="depan" oninput="hitung()">
+
+
+
+<p>
+
+Atur sisi samping:
+
+</p>
+
+
+<input type="range" min="1" max="20" value="4" id="samping" oninput="hitung()">
+
+
+
+<div class="result" id="hasilSimulasi">
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="latihan" class="content">
+
+
+<div class="card">
+
+
+<h2>🧠 Latihan TKA</h2>
+
+
+<p>
+
+Sebuah segitiga siku-siku memiliki sisi depan 3 cm dan sisi miring 5 cm.
+
+Nilai sin θ adalah...
+
+</p>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="benar">
+
+3/5
+
+</div>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+4/5
+
+</div>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+5/3
+
+</div>
+
+
+
+<button class="action" onclick="cek()">
+
+Periksa Jawaban
+
+</button>
+
+
+<div id="hasil"></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="ringkasan" class="content">
+
+
+<div class="card">
+
+
+<h2>⭐ Ringkasan</h2>
+
+
+<div class="box">
+
+✔ sin θ = depan/miring
+
+<br>
+
+✔ cos θ = samping/miring
+
+<br>
+
+✔ tan θ = depan/samping
+
+<br>
+
+✔ cot θ = 1/tan
+
+<br>
+
+✔ sec θ = 1/cos
+
+<br>
+
+✔ csc θ = 1/sin
+
+<br>
+
+✔ Gunakan SOH-CAH-TOA
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<footer>
+
+Rangkuman Materi Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<script>
+
+
+function buka(id){
+
+document.querySelectorAll('.content')
+.forEach(function(x){
+
+x.classList.remove('active');
+
+});
+
+
+document.getElementById(id)
+.classList.add('active');
+
+}
+
+
+
+
+
+function hitung(){
+
+let depan=
+Number(document.getElementById("depan").value);
+
+
+let samping=
+Number(document.getElementById("samping").value);
+
+
+
+let miring=Math.sqrt(
+(depan*depan)+(samping*samping)
+);
+
+
+
+let sin=(depan/miring).toFixed(2);
+
+let cos=(samping/miring).toFixed(2);
+
+let tan=(depan/samping).toFixed(2);
+
+
+
+document.getElementById("hasilSimulasi").innerHTML=
+
+"Miring = "+miring.toFixed(2)+"<br><br>"+
+"sin θ = "+sin+
+"<br>cos θ = "+cos+
+"<br>tan θ = "+tan;
+
+
+}
+
+
+hitung();
+
+
+
+
+
+function cek(){
+
+
+let jawaban=document.querySelector(
+'input[name="jawaban"]:checked'
+);
+
+
+let hasil=document.getElementById("hasil");
+
+
+
+if(!jawaban){
+
+hasil.innerHTML="⚠️ Pilih jawaban";
+
+}
+
+
+else if(jawaban.value=="benar"){
+
+
+hasil.innerHTML="🎉 Benar! sin θ = depan/miring = 3/5.";
+
+hasil.style.color="green";
+
+
+}
+
+else{
+
+
+hasil.innerHTML="❌ Gunakan konsep SOH.";
+
+hasil.style.color="red";
+
+
+}
+
+
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>
