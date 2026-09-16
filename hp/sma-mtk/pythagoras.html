@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MPI Teorema Pythagoras SMA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#56ab2f,#a8e063);
+
+}
+
+
+.container{
+
+max-width:500px;
+margin:auto;
+padding:15px;
+
+}
+
+
+
+.header{
+
+text-align:center;
+color:white;
+padding:25px 10px;
+
+}
+
+
+
+.header h1{
+
+font-size:25px;
+
+}
+
+
+
+.tabs{
+
+display:flex;
+gap:5px;
+margin-bottom:15px;
+
+}
+
+
+
+.tabs button{
+
+flex:1;
+padding:10px 5px;
+border:none;
+border-radius:15px;
+background:white;
+color:#2e7d32;
+font-weight:bold;
+
+}
+
+
+
+.content{
+
+display:none;
+
+}
+
+
+.active{
+
+display:block;
+
+}
+
+
+
+.card{
+
+background:white;
+padding:20px;
+border-radius:22px;
+margin-bottom:15px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+
+
+h2{
+
+color:#2e7d32;
+
+}
+
+
+h3{
+
+color:#ff7043;
+
+}
+
+
+
+.box{
+
+background:#f1f8e9;
+border-left:5px solid #43a047;
+padding:12px;
+border-radius:10px;
+margin:10px 0;
+
+}
+
+
+
+.formula{
+
+text-align:center;
+font-size:22px;
+font-weight:bold;
+background:#fff8e1;
+border-left-color:#ffc107;
+
+}
+
+
+
+.triangle{
+
+width:0;
+height:0;
+border-left:80px solid transparent;
+border-bottom:140px solid #66bb6a;
+margin:20px auto;
+position:relative;
+
+}
+
+
+
+.label{
+
+text-align:center;
+font-weight:bold;
+
+}
+
+
+
+.simulator{
+
+background:#e8f5e9;
+padding:15px;
+border-radius:15px;
+
+}
+
+
+input[type=range]{
+
+width:100%;
+
+}
+
+
+
+.result{
+
+background:white;
+padding:12px;
+border-radius:10px;
+text-align:center;
+font-weight:bold;
+
+}
+
+
+
+.option{
+
+padding:12px;
+border:2px solid #ddd;
+background:#fafafa;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+button.action{
+
+width:100%;
+padding:13px;
+border:none;
+border-radius:30px;
+background:linear-gradient(90deg,#ff512f,#dd2476);
+color:white;
+font-weight:bold;
+
+}
+
+
+
+#hasil{
+
+text-align:center;
+font-weight:bold;
+margin-top:15px;
+
+}
+
+
+
+footer{
+
+text-align:center;
+font-size:11px;
+color:white;
+padding:15px;
+
+}
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="header">
+
+<h1>📐 MPI TEOREMA PYTHAGORAS</h1>
+
+<p>
+Hubungan Sisi Segitiga Siku-Siku
+</p>
+
+</div>
+
+
+
+
+
+<div class="tabs">
+
+<button onclick="buka('materi')">
+📚 Materi
+</button>
+
+<button onclick="buka('simulasi')">
+🎮 Simulasi
+</button>
+
+<button onclick="buka('latihan')">
+🧠 Latihan
+</button>
+
+<button onclick="buka('ringkasan')">
+⭐ Ringkasan
+</button>
+
+</div>
+
+
+
+
+
+
+
+
+<div id="materi" class="content active">
+
+
+<div class="card">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+<p>
+Peserta didik mampu memahami hubungan panjang sisi segitiga siku-siku dan menerapkan Teorema Pythagoras dalam berbagai masalah.
+</p>
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📐 Konsep Dasar</h2>
+
+
+<p>
+Teorema Pythagoras berlaku pada segitiga siku-siku, yaitu segitiga yang memiliki satu sudut 90°.
+</p>
+
+
+<div class="triangle"></div>
+
+
+<div class="box">
+
+Sisi terpanjang disebut:
+
+<br>
+
+<strong>Hipotenusa (sisi miring)</strong>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📌 Rumus Pythagoras</h2>
+
+
+<div class="box formula">
+
+a² + b² = c²
+
+</div>
+
+
+<p>
+
+Keterangan:
+
+</p>
+
+
+<ul>
+
+<li>a dan b = sisi siku-siku</li>
+
+<li>c = sisi miring (hipotenusa)</li>
+
+</ul>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>✏️ Contoh Perhitungan</h2>
+
+
+<p>
+
+Sebuah segitiga memiliki sisi siku-siku 6 cm dan 8 cm.
+
+Tentukan sisi miringnya.
+
+</p>
+
+
+<div class="box">
+
+c² = 6² + 8²
+
+<br>
+
+c² = 36 + 64
+
+<br>
+
+c² = 100
+
+<br><br>
+
+c = 10 cm
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🌎 Penerapan</h2>
+
+
+<div class="box">
+
+Contoh:
+
+<br><br>
+
+✔ Mengukur panjang tangga.
+
+<br>
+
+✔ Menghitung jarak diagonal.
+
+<br>
+
+✔ Menentukan jarak dua titik.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="simulasi" class="content">
+
+
+<div class="card">
+
+
+<h2>🎮 Simulasi Pythagoras</h2>
+
+
+<div class="simulator">
+
+
+<label>
+
+Sisi a:
+
+</label>
+
+
+<input type="range" min="1" max="20" value="6" id="a" oninput="hitung()">
+
+
+
+<label>
+
+Sisi b:
+
+</label>
+
+
+<input type="range" min="1" max="20" value="8" id="b" oninput="hitung()">
+
+
+
+<div class="result" id="hasilSimulasi">
+
+a² + b² = c²
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<div class="card">
+
+<h2>🔎 Pengamatan</h2>
+
+
+<div class="box">
+
+Jika nilai a dan b berubah, maka nilai c juga berubah.
+
+<br><br>
+
+Hubungan tetap:
+
+<br>
+
+a² + b² = c²
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="latihan" class="content">
+
+
+<div class="card">
+
+
+<h2>🧠 Latihan TKA</h2>
+
+
+<p>
+
+Sebuah segitiga siku-siku memiliki sisi 9 cm dan 12 cm.
+
+Panjang sisi miring adalah...
+
+</p>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+13 cm
+
+</div>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="benar">
+
+15 cm
+
+</div>
+
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+18 cm
+
+</div>
+
+
+
+<button class="action" onclick="cek()">
+
+Periksa Jawaban
+
+</button>
+
+
+<div id="hasil"></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="ringkasan" class="content">
+
+
+<div class="card">
+
+<h2>⭐ Ringkasan</h2>
+
+
+<div class="box">
+
+✔ Berlaku untuk segitiga siku-siku.
+
+<br>
+
+✔ Sisi miring adalah sisi terpanjang.
+
+<br>
+
+✔ Rumus utama:
+
+<br>
+
+a²+b²=c²
+
+<br>
+
+✔ Dapat digunakan mencari panjang sisi dan jarak.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<footer>
+
+Rangkuman Materi Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+</div>
+
+
+
+
+
+
+<script>
+
+
+function buka(id){
+
+document.querySelectorAll('.content')
+.forEach(function(x){
+
+x.classList.remove('active');
+
+});
+
+
+document.getElementById(id)
+.classList.add('active');
+
+}
+
+
+
+
+function hitung(){
+
+let a=document.getElementById("a").value;
+
+let b=document.getElementById("b").value;
+
+
+let c=Math.sqrt(
+(a*a)+(b*b)
+).toFixed(2);
+
+
+document.getElementById("hasilSimulasi")
+.innerHTML=
+
+a+"² + "+b+"² = c²<br><br>c = "+c;
+
+}
+
+
+
+
+function cek(){
+
+let jawaban=document.querySelector(
+'input[name="jawaban"]:checked'
+);
+
+
+let hasil=document.getElementById("hasil");
+
+
+if(!jawaban){
+
+hasil.innerHTML="⚠️ Pilih jawaban";
+
+}
+
+else if(jawaban.value=="benar"){
+
+hasil.innerHTML="🎉 Benar! √(9²+12²)=15 cm.";
+
+hasil.style.color="green";
+
+}
+
+else{
+
+hasil.innerHTML="❌ Gunakan rumus a²+b²=c².";
+
+hasil.style.color="red";
+
+}
+
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>
