@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MPI Transformasi Geometri SMA</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+
+body{
+
+margin:0;
+font-family:Poppins,sans-serif;
+background:linear-gradient(135deg,#8360c3,#2ebf91);
+
+}
+
+
+.container{
+
+max-width:500px;
+margin:auto;
+padding:15px;
+
+}
+
+
+
+.header{
+
+text-align:center;
+color:white;
+padding:25px 10px;
+
+}
+
+
+.header h1{
+
+font-size:24px;
+
+}
+
+
+
+.tabs{
+
+display:flex;
+gap:5px;
+margin-bottom:15px;
+
+}
+
+
+
+.tabs button{
+
+flex:1;
+padding:10px 5px;
+border:none;
+border-radius:15px;
+background:white;
+color:#6a1b9a;
+font-weight:bold;
+
+}
+
+
+
+.content{
+
+display:none;
+
+}
+
+
+.active{
+
+display:block;
+
+}
+
+
+
+.card{
+
+background:white;
+padding:20px;
+border-radius:22px;
+margin-bottom:15px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+
+
+h2{
+
+color:#6a1b9a;
+
+}
+
+
+h3{
+
+color:#ff7043;
+
+}
+
+
+
+.box{
+
+background:#f3e5f5;
+border-left:5px solid #8e24aa;
+padding:12px;
+border-radius:10px;
+margin:10px 0;
+
+}
+
+
+
+.formula{
+
+text-align:center;
+font-size:18px;
+font-weight:bold;
+background:#fff8e1;
+border-left-color:#ffc107;
+
+}
+
+
+
+.coordinate{
+
+height:250px;
+background:#fafafa;
+border-radius:15px;
+position:relative;
+border:2px solid #ddd;
+overflow:hidden;
+
+}
+
+
+
+.axis-x{
+
+position:absolute;
+width:100%;
+height:2px;
+background:#555;
+top:50%;
+
+}
+
+
+.axis-y{
+
+position:absolute;
+height:100%;
+width:2px;
+background:#555;
+left:50%;
+
+}
+
+
+
+.point{
+
+width:18px;
+height:18px;
+background:#e91e63;
+border-radius:50%;
+position:absolute;
+}
+
+
+
+.result{
+
+text-align:center;
+font-weight:bold;
+padding:10px;
+
+}
+
+
+
+.option{
+
+padding:12px;
+border:2px solid #ddd;
+background:#fafafa;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+button.action{
+
+width:100%;
+padding:13px;
+border:none;
+border-radius:30px;
+background:linear-gradient(90deg,#ff512f,#dd2476);
+color:white;
+font-weight:bold;
+
+}
+
+
+
+#hasil{
+
+text-align:center;
+font-weight:bold;
+margin-top:15px;
+
+}
+
+
+
+footer{
+
+text-align:center;
+font-size:11px;
+color:white;
+padding:15px;
+
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+
+<div class="header">
+
+<h1>🔄 MPI TRANSFORMASI GEOMETRI</h1>
+
+<p>
+Translasi, Refleksi, Rotasi, Dilatasi & Komposisi
+</p>
+
+</div>
+
+
+
+
+
+<div class="tabs">
+
+<button onclick="buka('materi')">
+📚 Materi
+</button>
+
+<button onclick="buka('simulasi')">
+🎮 Simulasi
+</button>
+
+<button onclick="buka('latihan')">
+🧠 Latihan
+</button>
+
+<button onclick="buka('ringkasan')">
+⭐ Ringkasan
+</button>
+
+</div>
+
+
+
+
+
+
+
+
+<div id="materi" class="content active">
+
+
+<div class="card">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+<p>
+Peserta didik mampu memahami perubahan posisi titik akibat transformasi geometri serta menentukan koordinat hasil transformasi.
+</p>
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>➡️ Translasi</h2>
+
+
+<p>
+Translasi adalah pergeseran titik tanpa mengubah bentuk dan ukuran.
+</p>
+
+
+<div class="box formula">
+
+(x,y) → (x+a , y+b)
+
+</div>
+
+
+<div class="box">
+
+Contoh:
+
+<br>
+
+A(2,3) ditranslasi oleh (4,1)
+
+<br><br>
+
+A'(6,4)
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🪞 Refleksi</h2>
+
+
+<p>
+Refleksi adalah pencerminan terhadap garis tertentu.
+</p>
+
+
+<div class="box">
+
+Terhadap sumbu-X:
+
+<br>
+
+(x,y) → (x,-y)
+
+<br><br>
+
+Terhadap sumbu-Y:
+
+<br>
+
+(x,y) → (-x,y)
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🔄 Rotasi</h2>
+
+
+<p>
+Rotasi adalah perputaran titik terhadap pusat tertentu.
+</p>
+
+
+<div class="box">
+
+Rotasi 90° berlawanan arah jarum jam:
+
+<br>
+
+(x,y) → (-y,x)
+
+</div>
+
+
+<div class="box">
+
+Rotasi 180°:
+
+<br>
+
+(x,y) → (-x,-y)
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📏 Dilatasi</h2>
+
+
+<p>
+Dilatasi adalah perubahan ukuran dengan pusat dan faktor skala tertentu.
+</p>
+
+
+<div class="box formula">
+
+(x,y) → (kx,ky)
+
+</div>
+
+
+<p>
+
+k = faktor skala
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🔗 Komposisi Transformasi</h2>
+
+
+<p>
+Komposisi transformasi adalah gabungan beberapa transformasi yang dilakukan berurutan.
+</p>
+
+
+<div class="box">
+
+Contoh:
+
+<br>
+
+Translasi → Refleksi
+
+<br>
+
+Hasil akhir bergantung pada urutan.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="simulasi" class="content">
+
+
+<div class="card">
+
+<h2>🎮 Simulasi Titik</h2>
+
+
+<div class="coordinate">
+
+
+<div class="axis-x"></div>
+
+<div class="axis-y"></div>
+
+<div class="point" id="titik"></div>
+
+
+</div>
+
+
+<br>
+
+
+<button class="action" onclick="translasi()">
+
+Translasi +2,+2
+
+</button>
+
+
+<button class="action" onclick="refleksi()">
+
+Refleksi Sumbu-Y
+
+</button>
+
+
+<button class="action" onclick="rotasi()">
+
+Rotasi 90°
+
+</button>
+
+
+<p class="result" id="info">
+
+Titik awal A(2,2)
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="latihan" class="content">
+
+
+<div class="card">
+
+
+<h2>🧠 Latihan TKA</h2>
+
+
+<p>
+
+Titik A(3,4) ditranslasi oleh (2,3).
+
+Koordinat A' adalah...
+
+</p>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="benar">
+
+(5,7)
+
+</div>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+(1,1)
+
+</div>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+(6,12)
+
+</div>
+
+
+
+<button class="action" onclick="cek()">
+
+Periksa Jawaban
+
+</button>
+
+
+<div id="hasil"></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="ringkasan" class="content">
+
+
+<div class="card">
+
+
+<h2>⭐ Ringkasan</h2>
+
+
+<div class="box">
+
+✔ Translasi = geser posisi.
+
+<br>
+
+✔ Refleksi = pencerminan.
+
+<br>
+
+✔ Rotasi = perputaran.
+
+<br>
+
+✔ Dilatasi = perubahan ukuran.
+
+<br>
+
+✔ Komposisi = gabungan beberapa transformasi.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<footer>
+
+Rangkuman Materi Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+</div>
+
+
+
+
+
+
+<script>
+
+
+let x=2;
+let y=2;
+
+
+
+function buka(id){
+
+document.querySelectorAll('.content')
+.forEach(function(e){
+
+e.classList.remove('active');
+
+});
+
+
+document.getElementById(id)
+.classList.add('active');
+
+}
+
+
+
+
+
+function gambar(){
+
+let titik=document.getElementById("titik");
+
+titik.style.left=(50+x*10)+"%";
+
+titik.style.top=(50-y*10)+"%";
+
+
+
+document.getElementById("info").innerHTML=
+
+"Titik A("+x+","+y+")";
+
+}
+
+
+
+function translasi(){
+
+x+=2;
+y+=2;
+
+gambar();
+
+}
+
+
+
+function refleksi(){
+
+x=-x;
+
+gambar();
+
+}
+
+
+
+function rotasi(){
+
+let temp=x;
+
+x=-y;
+
+y=temp;
+
+gambar();
+
+}
+
+
+
+function cek(){
+
+let jawaban=document.querySelector(
+'input[name="jawaban"]:checked'
+);
+
+
+let hasil=document.getElementById("hasil");
+
+
+if(!jawaban){
+
+hasil.innerHTML="⚠️ Pilih jawaban";
+
+}
+
+else if(jawaban.value=="benar"){
+
+hasil.innerHTML="🎉 Benar! (3+2,4+3)=(5,7).";
+
+hasil.style.color="green";
+
+}
+
+else{
+
+hasil.innerHTML="❌ Gunakan aturan translasi.";
+
+hasil.style.color="red";
+
+}
+
+
+}
+
+
+
+gambar();
+
+
+</script>
+
+
+</body>
+
+</html>
