@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MPI Keliling dan Luas Bangun Datar</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#ff9966,#ff5e62);
+
+}
+
+
+.container{
+
+max-width:500px;
+margin:auto;
+padding:15px;
+
+}
+
+
+.header{
+
+text-align:center;
+color:white;
+padding:25px 10px;
+
+}
+
+
+.header h1{
+
+font-size:24px;
+
+}
+
+
+
+.tabs{
+
+display:flex;
+gap:5px;
+margin-bottom:15px;
+
+}
+
+
+.tabs button{
+
+flex:1;
+padding:10px 5px;
+border:none;
+border-radius:15px;
+background:white;
+color:#e64a19;
+font-weight:bold;
+
+}
+
+
+.content{
+
+display:none;
+
+}
+
+
+.active{
+
+display:block;
+
+}
+
+
+
+.card{
+
+background:white;
+padding:20px;
+border-radius:22px;
+margin-bottom:15px;
+box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+
+
+h2{
+
+color:#e64a19;
+
+}
+
+
+h3{
+
+color:#1565c0;
+
+}
+
+
+
+.box{
+
+background:#fff3e0;
+border-left:5px solid #ff9800;
+padding:12px;
+border-radius:10px;
+margin:10px 0;
+
+}
+
+
+
+.shape{
+
+margin:20px auto;
+background:#42a5f5;
+
+}
+
+
+
+.square{
+
+width:100px;
+height:100px;
+
+}
+
+
+
+.rectangle{
+
+width:140px;
+height:80px;
+
+}
+
+
+
+.circle{
+
+width:100px;
+height:100px;
+border-radius:50%;
+
+}
+
+
+
+.simulator{
+
+background:#e3f2fd;
+padding:15px;
+border-radius:15px;
+text-align:center;
+
+}
+
+
+
+input{
+
+width:100%;
+
+}
+
+
+
+.result{
+
+background:white;
+padding:12px;
+border-radius:10px;
+font-weight:bold;
+
+}
+
+
+
+.option{
+
+padding:12px;
+background:#fafafa;
+border:2px solid #ddd;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+button.action{
+
+width:100%;
+padding:13px;
+border:none;
+border-radius:30px;
+background:linear-gradient(90deg,#667eea,#764ba2);
+color:white;
+font-weight:bold;
+
+}
+
+
+
+#hasil{
+
+text-align:center;
+font-weight:bold;
+margin-top:15px;
+
+}
+
+
+
+footer{
+
+text-align:center;
+font-size:11px;
+color:white;
+padding:15px;
+
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="header">
+
+<h1>📐 MPI BANGUN DATAR</h1>
+
+<p>
+Keliling dan Luas Bangun Datar SMA
+</p>
+
+</div>
+
+
+
+
+
+<div class="tabs">
+
+<button onclick="buka('materi')">
+📚 Materi
+</button>
+
+
+<button onclick="buka('simulasi')">
+🎮 Simulasi
+</button>
+
+
+<button onclick="buka('latihan')">
+🧠 Latihan
+</button>
+
+
+<button onclick="buka('ringkasan')">
+⭐ Ringkasan
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="materi" class="content active">
+
+
+<div class="card">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+<p>
+Peserta didik mampu menentukan keliling dan luas berbagai bangun datar serta menerapkannya dalam masalah sehari-hari.
+</p>
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📌 Konsep Keliling</h2>
+
+
+<p>
+Keliling adalah jumlah panjang seluruh sisi yang membatasi suatu bangun datar.
+</p>
+
+
+<div class="box">
+
+Keliling = jumlah semua sisi
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📏 Persegi</h2>
+
+
+<div class="shape square"></div>
+
+
+<div class="box">
+
+Keliling:
+
+<br>
+
+K = 4 × sisi
+
+<br><br>
+
+Luas:
+
+<br>
+
+L = sisi × sisi
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>▭ Persegi Panjang</h2>
+
+
+<div class="shape rectangle"></div>
+
+
+<div class="box">
+
+Keliling:
+
+<br>
+
+K = 2(p+l)
+
+<br><br>
+
+Luas:
+
+<br>
+
+L = p × l
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>⭕ Lingkaran</h2>
+
+
+<div class="shape circle"></div>
+
+
+<div class="box">
+
+Keliling:
+
+<br>
+
+K = 2πr
+
+<br><br>
+
+Luas:
+
+<br>
+
+L = πr²
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🔺 Segitiga</h2>
+
+
+<div class="box">
+
+Keliling:
+
+<br>
+
+K = a+b+c
+
+<br><br>
+
+Luas:
+
+<br>
+
+L = ½ × alas × tinggi
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🌎 Penerapan</h2>
+
+
+<div class="box">
+
+Contoh:
+
+<br><br>
+
+Menghitung luas taman,
+
+panjang pagar,
+
+atau luas lantai.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="simulasi" class="content">
+
+
+<div class="card">
+
+
+<h2>🎮 Simulasi Persegi</h2>
+
+
+<div class="simulator">
+
+
+<p>
+
+Atur panjang sisi:
+
+</p>
+
+
+<input type="range" min="1" max="20" value="5" id="sisi" oninput="hitung()">
+
+
+
+<div class="shape square" id="kotak"></div>
+
+
+
+<div class="result" id="hasilSimulasi">
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="latihan" class="content">
+
+
+<div class="card">
+
+
+<h2>🧠 Latihan TKA</h2>
+
+
+<p>
+
+Sebuah persegi memiliki panjang sisi 8 cm.
+
+Luas persegi adalah...
+
+</p>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+16 cm²
+
+</div>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="benar">
+
+64 cm²
+
+</div>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+32 cm²
+
+</div>
+
+
+
+<button class="action" onclick="cek()">
+
+Periksa Jawaban
+
+</button>
+
+
+<div id="hasil"></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="ringkasan" class="content">
+
+
+<div class="card">
+
+
+<h2>⭐ Ringkasan</h2>
+
+
+<div class="box">
+
+✔ Keliling = panjang batas bangun.
+
+<br>
+
+✔ Luas = ukuran daerah di dalam bangun.
+
+<br>
+
+✔ Persegi: L=s².
+
+<br>
+
+✔ Persegi panjang: L=p×l.
+
+<br>
+
+✔ Segitiga: L=½at.
+
+<br>
+
+✔ Lingkaran: L=πr².
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<footer>
+
+Rangkuman Materi Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+</div>
+
+
+
+
+
+
+
+<script>
+
+
+function buka(id){
+
+document.querySelectorAll('.content')
+.forEach(function(x){
+
+x.classList.remove('active');
+
+});
+
+
+document.getElementById(id)
+.classList.add('active');
+
+}
+
+
+
+
+function hitung(){
+
+let s=document.getElementById("sisi").value;
+
+
+let luas=s*s;
+
+let keliling=4*s;
+
+
+document.getElementById("kotak").style.width=
+(s*10)+"px";
+
+
+document.getElementById("kotak").style.height=
+(s*10)+"px";
+
+
+document.getElementById("hasilSimulasi").innerHTML=
+
+"Sisi = "+s+" cm<br><br>"+
+"Keliling = "+keliling+" cm<br>"+
+"Luas = "+luas+" cm²";
+
+
+}
+
+
+hitung();
+
+
+
+
+function cek(){
+
+let jawaban=document.querySelector(
+'input[name="jawaban"]:checked'
+);
+
+
+let hasil=document.getElementById("hasil");
+
+
+if(!jawaban){
+
+hasil.innerHTML="⚠️ Pilih jawaban";
+
+}
+
+else if(jawaban.value=="benar"){
+
+hasil.innerHTML="🎉 Benar! 8 × 8 = 64 cm².";
+
+hasil.style.color="green";
+
+}
+
+else{
+
+hasil.innerHTML="❌ Gunakan rumus luas persegi.";
+
+hasil.style.color="red";
+
+}
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
