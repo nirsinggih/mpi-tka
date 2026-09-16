@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MPI Jarak Dua Objek Geometri</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+
+margin:0;
+font-family:Poppins,sans-serif;
+background:linear-gradient(135deg,#614385,#516395);
+
+}
+
+
+.container{
+
+max-width:500px;
+margin:auto;
+padding:15px;
+
+}
+
+
+
+.header{
+
+text-align:center;
+color:white;
+padding:25px 10px;
+
+}
+
+
+.header h1{
+
+font-size:24px;
+
+}
+
+
+
+.tabs{
+
+display:flex;
+gap:5px;
+margin-bottom:15px;
+
+}
+
+
+
+.tabs button{
+
+flex:1;
+padding:10px 5px;
+border:none;
+border-radius:15px;
+background:white;
+color:#512da8;
+font-weight:bold;
+
+}
+
+
+
+.content{
+
+display:none;
+
+}
+
+
+.active{
+
+display:block;
+
+}
+
+
+
+.card{
+
+background:white;
+padding:20px;
+border-radius:22px;
+margin-bottom:15px;
+box-shadow:0 8px20px rgba(0,0,0,.15);
+
+}
+
+
+
+h2{
+
+color:#512da8;
+
+}
+
+
+h3{
+
+color:#ff7043;
+
+}
+
+
+
+.box{
+
+background:#ede7f6;
+border-left:5px solid #673ab7;
+padding:12px;
+border-radius:10px;
+margin:10px 0;
+
+}
+
+
+
+.formula{
+
+text-align:center;
+font-weight:bold;
+font-size:18px;
+background:#fff8e1;
+border-left-color:#ffc107;
+
+}
+
+
+
+.coordinate{
+
+height:230px;
+background:#fafafa;
+border:2px solid #ddd;
+position:relative;
+border-radius:15px;
+
+}
+
+
+.axisx{
+
+position:absolute;
+height:2px;
+background:#555;
+width:100%;
+top:50%;
+
+}
+
+
+.axisy{
+
+position:absolute;
+width:2px;
+background:#555;
+height:100%;
+left:50%;
+
+}
+
+
+
+.point{
+
+width:18px;
+height:18px;
+border-radius:50%;
+background:#e91e63;
+position:absolute;
+
+}
+
+
+
+.line{
+
+height:4px;
+background:#2196f3;
+position:absolute;
+
+}
+
+
+
+.simulator{
+
+background:#e8eaf6;
+padding:15px;
+border-radius:15px;
+
+}
+
+
+input{
+
+width:100%;
+
+}
+
+
+
+.result{
+
+background:white;
+padding:12px;
+border-radius:10px;
+font-weight:bold;
+text-align:center;
+
+}
+
+
+
+.option{
+
+padding:12px;
+background:#fafafa;
+border:2px solid #ddd;
+border-radius:10px;
+margin:8px 0;
+
+}
+
+
+
+button.action{
+
+width:100%;
+padding:13px;
+border:none;
+border-radius:30px;
+background:linear-gradient(90deg,#ff512f,#dd2476);
+color:white;
+font-weight:bold;
+
+}
+
+
+
+#hasil{
+
+text-align:center;
+font-weight:bold;
+margin-top:15px;
+
+}
+
+
+
+footer{
+
+text-align:center;
+font-size:11px;
+color:white;
+padding:15px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="header">
+
+<h1>📏 MPI JARAK GEOMETRI</h1>
+
+<p>
+Jarak Dua Objek Geometri
+</p>
+
+</div>
+
+
+
+
+
+<div class="tabs">
+
+<button onclick="buka('materi')">
+📚 Materi
+</button>
+
+<button onclick="buka('simulasi')">
+🎮 Simulasi
+</button>
+
+<button onclick="buka('latihan')">
+🧠 Latihan
+</button>
+
+<button onclick="buka('ringkasan')">
+⭐ Ringkasan
+</button>
+
+</div>
+
+
+
+
+
+
+
+
+<div id="materi" class="content active">
+
+
+<div class="card">
+
+<h2>🎯 Tujuan Pembelajaran</h2>
+
+<p>
+Peserta didik mampu menentukan jarak antara dua objek geometri menggunakan konsep koordinat dan hubungan ruang.
+</p>
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📍 Jarak Dua Titik</h2>
+
+
+<p>
+Jarak antara dua titik dapat dihitung menggunakan Teorema Pythagoras pada bidang koordinat.
+</p>
+
+
+<div class="box formula">
+
+AB = √((x₂-x₁)²+(y₂-y₁)²)
+
+</div>
+
+
+<div class="box">
+
+Contoh:
+
+<br>
+
+A(2,3), B(6,6)
+
+<br><br>
+
+AB = √(4²+3²)
+
+<br>
+
+AB = 5
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📌 Jarak Titik ke Garis</h2>
+
+
+<p>
+Jarak titik ke garis adalah panjang garis terpendek yang tegak lurus dari titik menuju garis.
+</p>
+
+
+<div class="box">
+
+Ciri:
+
+<br>
+
+Garis penghubung harus membentuk sudut 90°.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>📐 Jarak Dua Garis</h2>
+
+
+<p>
+Jarak dua garis ditentukan oleh panjang ruas garis yang tegak lurus terhadap kedua garis.
+</p>
+
+
+<div class="box">
+
+Jika dua garis sejajar:
+
+<br>
+
+Jarak = panjang garis tegak lurus antar garis.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+<h2>🧊 Jarak dalam Bangun Ruang</h2>
+
+
+<p>
+Pada bangun ruang, jarak dapat berupa:
+</p>
+
+
+<div class="box">
+
+✔ Jarak titik ke titik
+
+<br>
+
+✔ Jarak titik ke garis
+
+<br>
+
+✔ Jarak titik ke bidang
+
+<br>
+
+✔ Jarak dua bidang
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="simulasi" class="content">
+
+
+<div class="card">
+
+<h2>🎮 Simulasi Jarak Titik</h2>
+
+
+<div class="coordinate">
+
+<div class="axisx"></div>
+
+<div class="axisy"></div>
+
+
+<div class="point" id="p1"></div>
+
+
+<div class="point" id="p2" style="background:#4caf50"></div>
+
+
+</div>
+
+
+<br>
+
+
+<div class="simulator">
+
+
+<label>
+
+Geser titik B:
+
+</label>
+
+
+<input type="range" min="1" max="10" value="6" id="posisi" oninput="hitung()">
+
+
+<div class="result" id="hasilSimulasi">
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div id="latihan" class="content">
+
+
+<div class="card">
+
+
+<h2>🧠 Latihan TKA</h2>
+
+
+<p>
+
+Jarak titik A(0,0) ke B(3,4) adalah...
+
+</p>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+4
+
+</div>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="benar">
+
+5
+
+</div>
+
+
+<div class="option">
+
+<input type="radio" name="jawaban" value="salah">
+
+7
+
+</div>
+
+
+
+<button class="action" onclick="cek()">
+
+Periksa Jawaban
+
+</button>
+
+
+<div id="hasil"></div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div id="ringkasan" class="content">
+
+
+<div class="card">
+
+
+<h2>⭐ Ringkasan</h2>
+
+
+<div class="box">
+
+✔ Jarak adalah panjang terpendek antar objek.
+
+<br>
+
+✔ Jarak titik menggunakan rumus koordinat.
+
+<br>
+
+✔ Garis tegak lurus menentukan jarak terpendek.
+
+<br>
+
+✔ Konsep Pythagoras banyak digunakan.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<footer>
+
+Rangkuman Materi Tes Kemampuan Akademik (TKA)
+
+</footer>
+
+
+
+</div>
+
+
+
+
+
+
+
+<script>
+
+
+function buka(id){
+
+document.querySelectorAll('.content')
+.forEach(function(x){
+
+x.classList.remove('active');
+
+});
+
+
+document.getElementById(id)
+.classList.add('active');
+
+}
+
+
+
+
+function hitung(){
+
+let x2=document.getElementById("posisi").value;
+
+let y2=4;
+
+
+let jarak=Math.sqrt(
+(x2*x2)+(y2*y2)
+).toFixed(2);
+
+
+
+document.getElementById("p1").style.left="50%";
+
+document.getElementById("p1").style.top="50%";
+
+
+document.getElementById("p2").style.left=
+(50+x2*4)+"%";
+
+
+document.getElementById("p2").style.top=
+(50-y2*4)+"%";
+
+
+
+document.getElementById("hasilSimulasi").innerHTML=
+
+"Jarak A ke B = "+jarak;
+
+}
+
+
+hitung();
+
+
+
+
+
+function cek(){
+
+let jawaban=document.querySelector(
+'input[name="jawaban"]:checked'
+);
+
+
+let hasil=document.getElementById("hasil");
+
+
+if(!jawaban){
+
+hasil.innerHTML="⚠️ Pilih jawaban";
+
+}
+
+else if(jawaban.value=="benar"){
+
+hasil.innerHTML="🎉 Benar! √(3²+4²)=5.";
+
+hasil.style.color="green";
+
+}
+
+else{
+
+hasil.innerHTML="❌ Gunakan rumus jarak dua titik.";
+
+hasil.style.color="red";
+
+}
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
