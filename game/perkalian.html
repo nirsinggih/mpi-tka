@@ -474,6 +474,8 @@
         let lockOption = false;
         let lastTickSecond = -1;
 
+        const GAME_URL = 'https://nirsinggih.github.io/mpi-tka/game/perkalian.html';
+
         // DOM elements
         const inputSection = document.getElementById('inputSection');
         const gameSection = document.getElementById('gameSection');
@@ -798,7 +800,8 @@
                          `📅 Tanggal: ${dateStr}\n` +
                          `⏰ Waktu: ${timeStr}\n\n` +
                          `Saya berhasil menyelesaikan game Hafalan Cepat Perkalian & Pembagian! 💪\n` +
-                         `Ayo coba juga dan tunjukkan kemampuanmu! 🧮`;
+                         `Ayo coba juga dan tunjukkan kemampuanmu! 🧮\n\n` +
+                         `🔗 Mainkan di sini:\n${GAME_URL}`;
 
             const url = `https://wa.me/?text=${encodeURIComponent(teks)}`;
             window.open(url, '_blank');
