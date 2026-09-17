@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hafalan Perkalian & Pembagian</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(145deg, #0b2b44 0%, #1b4f6e 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+        }
+        .game-container {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 36px;
+            padding: 20px 18px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.2s;
+        }
+        h1 {
+            font-size: 1.5rem;
+            text-align: center;
+            margin: 0 0 8px 0;
+            color: #ffe484;
+            text-shadow: 0 2px 4px #00000055;
+            letter-spacing: 1px;
+        }
+        .subhead {
+            text-align: center;
+            color: #c2e5ff;
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            font-weight: 300;
+        }
+        /* layar input */
+        .input-card {
+            background: #ffffffdd;
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 20px 18px;
+            margin: 8px 0 8px 0;
+            box-shadow: 0 8px 18px #00000033;
+        }
+        .input-card label {
+            font-weight: 600;
+            color: #0a2c3b;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .input-card input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 1rem;
+            border-radius: 40px;
+            border: 1px solid #aacfdf;
+            background: #f4fbff;
+            outline: none;
+            margin-bottom: 16px;
+            transition: 0.2s;
+            font-weight: 500;
+        }
+        .input-card input:focus {
+            border-color: #0077be;
+            box-shadow: 0 0 0 3px #0077be44;
+        }
+        .btn-primary {
+            background: #ffb347;
+            background: linear-gradient(135deg, #ffb347, #ff8c00);
+            border: none;
+            color: #1e2f3d;
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding: 16px;
+            border-radius: 50px;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #b35e00, 0 10px 15px #00000033;
+            transition: all 0.1s ease;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .btn-primary:active {
+            transform: translateY(5px);
+            box-shadow: 0 3px 0 #b35e00, 0 8px 12px #00000033;
+        }
+        /* area game */
+        .game-area {
+            display: none;
+            flex-direction: column;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1d3f55aa;
+            border-radius: 60px;
+            padding: 8px 16px;
+            color: white;
+            font-weight: 600;
+            backdrop-filter: blur(6px);
+            margin-bottom: 12px;
+            border: 1px solid #ffffff33;
+        }
+        .timer-box, .score-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 1.2rem;
+            background: #00000033;
+            padding: 6px 14px;
+            border-radius: 40px;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .timer-box span, .score-box span {
+            color: #ffe484;
+            font-weight: 700;
+            min-width: 45px;
+            text-align: center;
+        }
+        .timer-box.urgent {
+            background: #c0392b;
+            animation: pulseUrgent 1s infinite;
+        }
+        .timer-box.urgent span {
+            color: #fff;
+        }
+        @keyframes pulseUrgent {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+        .streak-badge {
+            background: #ffb347;
+            color: #222;
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .question-box {
+            background: #ffffff;
+            border-radius: 60px;
+            padding: 24px 12px;
+            margin: 12px 0;
+            font-size: 2.6rem;
+            font-weight: 800;
+            text-align: center;
+            color: #1d3f55;
+            box-shadow: inset 0 -6px 0 #b0c9d6, 0 12px 18px #00000033;
+            letter-spacing: 2px;
+            word-break: break-word;
+            line-height: 1.2;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 8px 0 12px;
+        }
+        .option-btn {
+            background: #e9f2f9;
+            border: none;
+            border-radius: 40px;
+            padding: 18px 8px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0c3347;
+            box-shadow: 0 6px 0 #7e9aad, 0 6px 12px #00000033;
+            transition: all 0.08s linear;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ffffffaa;
+        }
+        .option-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #7e9aad, 0 6px 12px #00000033;
+        }
+        .option-btn.correct-flash {
+            background: #7ed9a2;
+            box-shadow: 0 4px 0 #2b7a4b;
+            transform: translateY(4px);
+        }
+        .option-btn.wrong-flash {
+            background: #f28b82;
+            box-shadow: 0 4px 0 #a13d3d;
+            transform: translateY(4px);
+        }
+        .feedback {
+            text-align: center;
+            font-weight: 600;
+            min-height: 26px;
+            color: #fff3c9;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        /* sertifikat */
+        .certificate {
+            display: none;
+            background: #fcf9f0;
+            border-radius: 28px;
+            padding: 18px 16px 20px;
+            margin-top: 12px;
+            box-shadow: 0 0 0 2px #e6d8b5, 0 20px 30px #00000055;
+            border: 2px dashed #d4b27a;
+            text-align: center;
+            color: #1f3b4a;
+        }
+        .cert-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #b47d2e;
+            text-shadow: 1px 1px 0 #fff3d1;
+            margin: 4px 0 10px;
+            letter-spacing: 2px;
+        }
+        .cert-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 8px 0 2px;
+            color: #0d2f42;
+        }
+        .cert-school {
+            font-size: 1rem;
+            color: #3f5e72;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+        .cert-score {
+            font-size: 2.3rem;
+            font-weight: 900;
+            color: #2a6b4e;
+            background: #d9f0e3;
+            display: inline-block;
+            padding: 8px 30px;
+            border-radius: 60px;
+            margin: 12px 0;
+            box-shadow: inset 0 -4px 0 #a3c7b4;
+            letter-spacing: 2px;
+        }
+        .cert-detail {
+            font-size: 0.8rem;
+            background: #e9e2d3;
+            padding: 8px 12px;
+            border-radius: 30px;
+            margin: 14px 0 12px;
+            color: #3d3229;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-weight: 500;
+        }
+        .btn-download {
+            background: #2e7d5e;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 14px;
+            border-radius: 50px;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #164b36;
+            transition: all 0.1s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 6px;
+        }
+        .btn-download:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #164b36;
+        }
+        /* Tombol WhatsApp */
+        .btn-whatsapp {
+            background: #25D366;
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding: 14px;
+            border-radius: 50px;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #128C7E;
+            transition: all 0.1s;
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-whatsapp:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #128C7E;
+        }
+        .btn-whatsapp svg {
+            width: 22px;
+            height: 22px;
+            fill: white;
+        }
+        .btn-secondary {
+            background: #6f8fa0;
+            box-shadow: 0 6px 0 #405b6b;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            padding: 12px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="game-container" id="gameContainer">
+    <h1>🧮 HAFALAN CEPAT</h1>
+    <div class="subhead">perkalian & pembagian</div>
+
+    <!-- INPUT FORM -->
+    <div id="inputSection" class="input-card">
+        <label>👤 Nama Lengkap</label>
+        <input type="text" id="playerName" placeholder="contoh: Budi Santoso" maxlength="30" autocomplete="off">
+        <label>🏫 Asal Sekolah</label>
+        <input type="text" id="playerSchool" placeholder="contoh: SDN 1 Jakarta" maxlength="30" autocomplete="off">
+        <button class="btn-primary" id="startBtn">MULAI BERMAIN</button>
+    </div>
+
+    <!-- GAME SECTION -->
+    <div id="gameSection" class="game-area">
+        <div class="stats">
+            <div class="timer-box" id="timerBox">⏳ <span id="timerDisplay">45</span>s</div>
+            <div class="streak-badge" id="streakBadge">🔥 0</div>
+            <div class="score-box">🏆 <span id="scoreDisplay">0</span></div>
+        </div>
+        <div class="question-box" id="questionText">12 x 4</div>
+        <div class="options-grid" id="optionsGrid">
+            <button class="option-btn" data-index="0">48</button>
+            <button class="option-btn" data-index="1">42</button>
+            <button class="option-btn" data-index="2">36</button>
+            <button class="option-btn" data-index="3">54</button>
+        </div>
+        <div class="feedback" id="feedbackMsg"></div>
+    </div>
+
+    <!-- SERTIFIKAT SECTION -->
+    <div id="certSection" class="certificate">
+        <div class="cert-title">SERTIFIKAT</div>
+        <div>diberikan kepada</div>
+        <div class="cert-name" id="certName">-</div>
+        <div class="cert-school" id="certSchool">-</div>
+        <div>dengan total nilai</div>
+        <div class="cert-score" id="certScore">0</div>
+        <div class="cert-detail" id="certDetail">
+            <span id="certDate">-</span>
+            <span id="certTime">-</span>
+        </div>
+        <button class="btn-download" id="downloadCertBtn">📥 SIMPAN SEBAGAI JPG</button>
+        <button class="btn-whatsapp" id="shareWaBtn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            SHARE KE WHATSAPP
+        </button>
+        <button class="btn-primary btn-secondary" id="playAgainBtn">🔄 MAIN LAGI</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- SOUND (Web Audio) ----------
+        let audioCtx = null;
+        function initAudio() {
+            if (!audioCtx) {
+                try {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                } catch (e) {
+                    console.warn("AudioContext tidak didukung");
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playSound(type) {
+            if (!audioCtx) return;
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'correct') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(880, now);
+                osc.frequency.setValueAtTime(1100, now + 0.08);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+                osc.start(now);
+                osc.stop(now + 0.2);
+            } else if (type === 'wrong') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(250, now);
+                osc.frequency.setValueAtTime(180, now + 0.1);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            } else if (type === 'bonus') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(660, now);
+                osc.frequency.setValueAtTime(880, now + 0.06);
+                osc.frequency.setValueAtTime(1320, now + 0.12);
+                gain.gain.setValueAtTime(0.18, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            } else if (type === 'timeout') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(300, now);
+                osc.frequency.setValueAtTime(200, now + 0.15);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                osc.start(now);
+                osc.stop(now + 0.35);
+            } else if (type === 'tick') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(1200, now);
+                gain.gain.setValueAtTime(0.12, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+                osc.start(now);
+                osc.stop(now + 0.08);
+            } else if (type === 'tick-urgent') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(1600, now);
+                osc.frequency.setValueAtTime(1400, now + 0.05);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+                osc.start(now);
+                osc.stop(now + 0.12);
+            }
+        }
+
+        // ---------- GAME STATE ----------
+        let playerName = '';
+        let playerSchool = '';
+        let score = 0;
+        let timeLeft = 45;
+        let timerInterval = null;
+        let currentAnswer = 0;
+        let currentQuestion = '';
+        let streak = 0;
+        let isGameActive = false;
+        let lockOption = false;
+        let lastTickSecond = -1;
+
+        // DOM elements
+        const inputSection = document.getElementById('inputSection');
+        const gameSection = document.getElementById('gameSection');
+        const certSection = document.getElementById('certSection');
+        const playerNameInput = document.getElementById('playerName');
+        const playerSchoolInput = document.getElementById('playerSchool');
+        const startBtn = document.getElementById('startBtn');
+        const timerBox = document.getElementById('timerBox');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const streakBadge = document.getElementById('streakBadge');
+        const questionText = document.getElementById('questionText');
+        const optionsGrid = document.getElementById('optionsGrid');
+        const feedbackMsg = document.getElementById('feedbackMsg');
+        const certName = document.getElementById('certName');
+        const certSchool = document.getElementById('certSchool');
+        const certScore = document.getElementById('certScore');
+        const certDate = document.getElementById('certDate');
+        const certTime = document.getElementById('certTime');
+        const downloadCertBtn = document.getElementById('downloadCertBtn');
+        const shareWaBtn = document.getElementById('shareWaBtn');
+        const playAgainBtn = document.getElementById('playAgainBtn');
+        const optionBtns = document.querySelectorAll('.option-btn');
+
+        // ---------- SOAL GENERATOR ----------
+        function generateQuestion() {
+            const isMultiplication = Math.random() < 0.5;
+            if (isMultiplication) {
+                const a = Math.floor(Math.random() * 10) + 1;
+                const b = Math.floor(Math.random() * 10) + 1;
+                currentAnswer = a * b;
+                currentQuestion = `${a} × ${b}`;
+            } else {
+                const b = Math.floor(Math.random() * 10) + 1;
+                const result = Math.floor(Math.random() * 10) + 1;
+                const a = b * result;
+                currentAnswer = result;
+                currentQuestion = `${a} ÷ ${b}`;
+            }
+            questionText.textContent = currentQuestion;
+
+            let options = [currentAnswer];
+            while (options.length < 4) {
+                let offset = Math.floor(Math.random() * 7) - 3;
+                if (offset === 0) offset = 4;
+                let wrong = currentAnswer + offset;
+                if (wrong < 1) wrong = currentAnswer + Math.abs(offset) + 2;
+                if (wrong !== currentAnswer && !options.includes(wrong) && wrong > 0) {
+                    options.push(wrong);
+                }
+            }
+            for (let i = options.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [options[i], options[j]] = [options[j], options[i]];
+            }
+            optionBtns.forEach((btn, idx) => {
+                btn.textContent = options[idx];
+                btn.dataset.value = options[idx];
+            });
+            lockOption = false;
+        }
+
+        // ---------- UPDATE TAMPILAN ----------
+        function updateTimerDisplay() {
+            timerDisplay.textContent = timeLeft;
+            if (timeLeft <= 10 && timeLeft > 0) {
+                timerBox.classList.add('urgent');
+            } else {
+                timerBox.classList.remove('urgent');
+            }
+        }
+
+        function updateScoreAndStreak() {
+            scoreDisplay.textContent = score;
+            streakBadge.innerHTML = `🔥 ${streak}`;
+        }
+
+        // ---------- TIMER ----------
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            lastTickSecond = -1;
+            timerInterval = setInterval(() => {
+                if (!isGameActive) return;
+                timeLeft -= 1;
+                updateTimerDisplay();
+
+                if (timeLeft <= 10 && timeLeft > 0 && timeLeft !== lastTickSecond) {
+                    lastTickSecond = timeLeft;
+                    if (timeLeft <= 3) {
+                        playSound('tick-urgent');
+                    } else {
+                        playSound('tick');
+                    }
+                }
+
+                if (timeLeft <= 0) {
+                    timeLeft = 0;
+                    updateTimerDisplay();
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        // ---------- END GAME ----------
+        function endGame() {
+            if (!isGameActive) return;
+            isGameActive = false;
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            playSound('timeout');
+
+            gameSection.style.display = 'none';
+            certSection.style.display = 'block';
+
+            certName.textContent = playerName || 'Tanpa Nama';
+            certSchool.textContent = playerSchool || '-';
+            certScore.textContent = score;
+
+            const now = new Date();
+            const tanggal = now.toLocaleDateString('id-ID', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            });
+            const waktu = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            certDate.textContent = `📅 ${tanggal}`;
+            certTime.textContent = `⏰ ${waktu}`;
+        }
+
+        // ---------- HANDLE JAWABAN ----------
+        function handleOptionClick(e) {
+            if (!isGameActive || lockOption) return;
+            const btn = e.currentTarget;
+            const selectedValue = parseInt(btn.dataset.value, 10);
+            if (isNaN(selectedValue)) return;
+
+            lockOption = true;
+
+            if (selectedValue === currentAnswer) {
+                playSound('correct');
+                score += 10;
+                streak += 1;
+                feedbackMsg.textContent = '✅ Benar! +10';
+                btn.classList.add('correct-flash');
+                setTimeout(() => btn.classList.remove('correct-flash'), 200);
+
+                if (streak > 0 && streak % 3 === 0) {
+                    timeLeft += 5;
+                    if (timeLeft > 999) timeLeft = 999;
+                    updateTimerDisplay();
+                    lastTickSecond = -1;
+                    playSound('bonus');
+                    feedbackMsg.textContent = '🔥 Streak 3! +5 detik!';
+                }
+
+                updateScoreAndStreak();
+
+                setTimeout(() => {
+                    if (isGameActive) {
+                        generateQuestion();
+                        feedbackMsg.textContent = '';
+                        lockOption = false;
+                    }
+                }, 300);
+
+            } else {
+                playSound('wrong');
+                streak = 0;
+                updateScoreAndStreak();
+                feedbackMsg.textContent = `❌ Salah, jawaban: ${currentAnswer}`;
+                btn.classList.add('wrong-flash');
+                setTimeout(() => btn.classList.remove('wrong-flash'), 250);
+
+                setTimeout(() => {
+                    if (isGameActive) {
+                        generateQuestion();
+                        feedbackMsg.textContent = '';
+                        lockOption = false;
+                    }
+                }, 500);
+            }
+        }
+
+        // ---------- START GAME ----------
+        function startGame() {
+            initAudio();
+
+            playerName = playerNameInput.value.trim() || 'Tanpa Nama';
+            playerSchool = playerSchoolInput.value.trim() || '-';
+
+            score = 0;
+            streak = 0;
+            timeLeft = 45;
+            isGameActive = true;
+            lockOption = false;
+            lastTickSecond = -1;
+
+            updateTimerDisplay();
+            updateScoreAndStreak();
+            feedbackMsg.textContent = '';
+            timerBox.classList.remove('urgent');
+
+            generateQuestion();
+
+            inputSection.style.display = 'none';
+            gameSection.style.display = 'flex';
+            certSection.style.display = 'none';
+
+            if (timerInterval) clearInterval(timerInterval);
+            startTimer();
+        }
+
+        // ---------- RESET & MAIN LAGI ----------
+        function resetAndPlayAgain() {
+            playerNameInput.value = playerName;
+            playerSchoolInput.value = playerSchool;
+
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            isGameActive = false;
+
+            inputSection.style.display = 'block';
+            gameSection.style.display = 'none';
+            certSection.style.display = 'none';
+
+            timeLeft = 45;
+            score = 0;
+            streak = 0;
+            lastTickSecond = -1;
+            updateTimerDisplay();
+            updateScoreAndStreak();
+            feedbackMsg.textContent = '';
+            lockOption = false;
+            timerBox.classList.remove('urgent');
+        }
+
+        // ---------- DOWNLOAD CERTIFICATE AS JPG ----------
+        function downloadCertificate() {
+            const name = certName.textContent;
+            const school = certSchool.textContent;
+            const scoreVal = certScore.textContent;
+            const dateStr = certDate.textContent;
+            const timeStr = certTime.textContent;
+
+            const canvas = document.createElement('canvas');
+            canvas.width = 600;
+            canvas.height = 800;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#fcf9f0';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.strokeStyle = '#d4b27a';
+            ctx.lineWidth = 12;
+            ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+            ctx.strokeStyle = '#b47d2e';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(36, 36, canvas.width - 72, canvas.height - 72);
+
+            ctx.fillStyle = '#b47d2e';
+            ctx.font = 'bold 42px "Segoe UI", Roboto, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('SERTIFIKAT', canvas.width / 2, 170);
+
+            ctx.font = '20px "Segoe UI", Roboto, sans-serif';
+            ctx.fillStyle = '#4b3e2e';
+            ctx.fillText('diberikan kepada', canvas.width / 2, 250);
+
+            ctx.font = 'bold 36px "Segoe UI", Roboto, sans-serif';
+            ctx.fillStyle = '#0d2f42';
+            ctx.fillText(name, canvas.width / 2, 320);
+
+            ctx.font = 'italic 22px "Segoe UI", Roboto, sans-serif';
+            ctx.fillStyle = '#3f5e72';
+            ctx.fillText(school, canvas.width / 2, 380);
+
+            ctx.font = '22px "Segoe UI", Roboto, sans-serif';
+            ctx.fillStyle = '#2a4b3a';
+            ctx.fillText('dengan total nilai', canvas.width / 2, 460);
+
+            ctx.fillStyle = '#d9f0e3';
+            ctx.beginPath();
+            ctx.ellipse(canvas.width / 2, 540, 120, 65, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#a3c7b4';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            ctx.font = 'bold 68px "Segoe UI", Roboto, sans-serif';
+            ctx.fillStyle = '#2a6b4e';
+            ctx.fillText(scoreVal, canvas.width / 2, 570);
+
+            ctx.font = '18px "Segoe UI", Roboto, sans-serif';
+            ctx.fillStyle = '#3d3229';
+            ctx.fillText(dateStr, canvas.width / 2, 670);
+            ctx.fillText(timeStr, canvas.width / 2, 710);
+
+            ctx.font = '14px "Segoe UI", Roboto, sans-serif';
+            ctx.fillStyle = '#7a6a58';
+            ctx.fillText('Hafalan Cepat - Perkalian & Pembagian', canvas.width / 2, 770);
+
+            const link = document.createElement('a');
+            link.download = `sertifikat_${name.replace(/\s+/g, '_')}.jpg`;
+            link.href = canvas.toDataURL('image/jpeg', 0.95);
+            link.click();
+        }
+
+        // ---------- SHARE TO WHATSAPP ----------
+        function shareToWhatsApp() {
+            const name = certName.textContent;
+            const school = certSchool.textContent;
+            const scoreVal = certScore.textContent;
+            const dateStr = certDate.textContent.replace('📅 ', '');
+            const timeStr = certTime.textContent.replace('⏰ ', '');
+
+            const teks = `🏆 *SERTIFIKAT HAFALAN CEPAT* 🏆\n\n` +
+                         `👤 Nama: ${name}\n` +
+                         `🏫 Sekolah: ${school}\n` +
+                         `🎯 Total Nilai: *${scoreVal}*\n` +
+                         `📅 Tanggal: ${dateStr}\n` +
+                         `⏰ Waktu: ${timeStr}\n\n` +
+                         `Saya berhasil menyelesaikan game Hafalan Cepat Perkalian & Pembagian! 💪\n` +
+                         `Ayo coba juga dan tunjukkan kemampuanmu! 🧮`;
+
+            const url = `https://wa.me/?text=${encodeURIComponent(teks)}`;
+            window.open(url, '_blank');
+        }
+
+        // ---------- EVENT LISTENERS ----------
+        startBtn.addEventListener('click', () => {
+            if (!playerNameInput.value.trim()) {
+                alert('Mohon isi nama terlebih dahulu.');
+                return;
+            }
+            if (!playerSchoolInput.value.trim()) {
+                alert('Mohon isi asal sekolah.');
+                return;
+            }
+            startGame();
+        });
+
+        optionBtns.forEach(btn => {
+            btn.addEventListener('click', handleOptionClick);
+        });
+
+        playAgainBtn.addEventListener('click', resetAndPlayAgain);
+        downloadCertBtn.addEventListener('click', downloadCertificate);
+        shareWaBtn.addEventListener('click', shareToWhatsApp);
+
+        document.addEventListener('dblclick', (e) => e.preventDefault(), { passive: false });
+
+        gameSection.style.display = 'none';
+        certSection.style.display = 'none';
+    })();
+</script>
+</body>
+</html>
