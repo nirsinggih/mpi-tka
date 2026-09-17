@@ -84,7 +84,6 @@
     font-size: 13px;
   }
 
-  /* NISN input */
   .nisn-input {
     width: 100%;
     padding: 12px 15px;
@@ -108,7 +107,6 @@
   .nisn-hint.error { color: #e53935; font-weight: 600; }
   .nisn-hint.ok { color: #43a047; font-weight: 600; }
 
-  /* Canvas */
   .canvas-wrapper {
     display: flex;
     justify-content: center;
@@ -116,9 +114,7 @@
     flex-wrap: wrap;
     margin-bottom: 20px;
   }
-  .preview-box {
-    text-align: center;
-  }
+  .preview-box { text-align: center; }
   .preview-box h3 {
     font-size: 14px;
     color: #555;
@@ -127,18 +123,18 @@
   canvas {
     border-radius: 10px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-    max-width: 280px;
-    max-height: 380px;
     background: #f0f0f0;
   }
+  #originalCanvas {
+    max-width: 280px;
+    max-height: 380px;
+  }
   #resultCanvas {
-    /* preview 3x4 - rasio 3:4 */
     width: 240px !important;
     height: 320px !important;
     object-fit: cover;
   }
 
-  /* Crop controls */
   .crop-controls {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -162,7 +158,6 @@
     font-weight: 600;
   }
 
-  /* Buttons */
   .controls {
     display: flex;
     flex-wrap: wrap;
@@ -188,7 +183,6 @@
   .btn-reset { background: #fb8c00; }
   .btn-apply { background: #2a5298; }
 
-  /* Color picker */
   .color-picker {
     display: flex;
     gap: 10px;
@@ -208,7 +202,6 @@
   .color-swatch:hover { transform: scale(1.1); }
   .color-swatch.active { border-color: #333; transform: scale(1.15); }
 
-  /* Status */
   .status {
     text-align: center;
     margin-top: 15px;
@@ -239,7 +232,6 @@
     transition: width 0.3s;
   }
 
-  /* Info box */
   .info-box {
     background: #e8f5e9;
     border-left: 4px solid #43a047;
@@ -254,6 +246,21 @@
     border-left-color: #fb8c00;
     color: #e65100;
   }
+  .info-box.err {
+    background: #ffebee;
+    border-left-color: #e53935;
+    color: #b71c1c;
+  }
+
+  .debug-info {
+    font-size: 11px;
+    color: #999;
+    margin-top: 8px;
+    font-family: 'Courier New', monospace;
+    word-break: break-all;
+    display: none;
+  }
+  .debug-info.show { display: block; }
 
   @media (max-width: 600px) {
     .container { padding: 20px; }
@@ -271,8 +278,8 @@
   <div class="upload-area" id="uploadArea">
     <div class="upload-icon">🖼️</div>
     <div class="upload-text">Klik atau seret foto ke sini</div>
-    <div class="upload-hint">Format: JPG, PNG (maks. 10MB)</div>
-    <input type="file" id="fileInput" accept="image/*">
+    <div class="upload-hint">Format: JPG, PNG, WebP (maks. 10MB)</div>
+    <input type="file" id="fileInput" accept="image/jpeg,image/jpg,image/png,image/webp">
   </div>
 
   <div class="workspace" id="workspace">
@@ -341,6 +348,8 @@
     <div class="info-box warn" id="downloadInfo" style="display:none;">
       ⚠️ Isi NISN terlebih dahulu untuk mengaktifkan tombol download
     </div>
+    <div class="info-box err" id="errorInfo" style="display:none;"></div>
+    <div class="debug-info" id="debugInfo"></div>
   </div>
 
   <div class="status" id="status"></div>
@@ -365,6 +374,8 @@ const resetBtn = document.getElementById('resetBtn');
 const nisnInput = document.getElementById('nisnInput');
 const nisnHint = document.getElementById('nisnHint');
 const downloadInfo = document.getElementById('downloadInfo');
+const errorInfo = document.getElementById('errorInfo');
+const debugInfo = document.getElementById('debugInfo');
 const zoomSlider = document.getElementById('zoomSlider');
 const xSlider = document.getElementById('xSlider');
 const ySlider = document.getElementById('ySlider');
@@ -373,22 +384,26 @@ const xVal = document.getElementById('xVal');
 const yVal = document.getElementById('yVal');
 const resetCropBtn = document.getElementById('resetCropBtn');
 
-// Rasio 3x4 → output 300x400 pixel (standar cetak)
 const OUTPUT_W = 300;
 const OUTPUT_H = 400;
 
+// Format yang didukung oleh library
+const SUPPORTED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+// Ukuran maksimal untuk library (dalam byte) - sekitar 12MB
+const MAX_LIBRARY_SIZE = 12 * 1024 * 1024;
+// Ukuran maksimal umum
+const MAX_SIZE = 10 * 1024 * 1024;
+
 let originalImage = null;
-let cutoutImg = null;      // HTMLImageElement dari hasil hapus background
+let cutoutImg = null;
 let currentBgColor = '#e53935';
 let nisnValid = false;
-
-// ===== Cek apakah DOM sudah siap =====
-console.log('App initialized');
 
 // ===== Event: pilih file =====
 uploadArea.addEventListener('click', () => fileInput.click());
 fileInput.addEventListener('change', (e) => {
   if (e.target.files[0]) handleFile(e.target.files[0]);
+  fileInput.value = ''; // reset agar bisa upload file yang sama
 });
 
 uploadArea.addEventListener('dragover', (e) => {
@@ -414,7 +429,6 @@ document.querySelectorAll('.color-swatch').forEach(sw => {
 
 // ===== Validasi NISN =====
 nisnInput.addEventListener('input', (e) => {
-  // Hanya angka
   e.target.value = e.target.value.replace(/\D/g, '');
   validateNISN();
 });
@@ -478,6 +492,7 @@ resetBtn.addEventListener('click', () => {
   validateNISN();
   resetCropBtn.click();
   hideStatus();
+  hideError();
 });
 
 // ===== Download =====
@@ -491,33 +506,113 @@ downloadBtn.addEventListener('click', () => {
   setTimeout(hideStatus, 3000);
 });
 
-// ===== Proses file =====
+// ===== Fungsi utama: proses file =====
 async function handleFile(file) {
-  if (!file.type.startsWith('image/')) {
-    showStatus('File harus berupa gambar!', 'error');
+  console.log('File diterima:', {
+    name: file.name,
+    type: file.type,
+    size: file.size + ' bytes (' + (file.size / 1024 / 1024).toFixed(2) + ' MB)'
+  });
+
+  hideError();
+  hideStatus();
+  hideDebug();
+
+  // Validasi 1: format file
+  if (!SUPPORTED_TYPES.includes(file.type)) {
+    const msg = `Format "${file.type || 'tidak diketahui'}" tidak didukung. ` +
+                `Silakan gunakan JPG, PNG, atau WebP.`;
+    showError(msg);
+    showDebug(`Nama file: ${file.name}\nTipe: ${file.type}\nUkuran: ${file.size} bytes`);
     return;
   }
-  if (file.size > 10 * 1024 * 1024) {
-    showStatus('Ukuran file maksimal 10MB!', 'error');
+
+  // Validasi 2: ukuran file
+  if (file.size > MAX_SIZE) {
+    const sizeMB = (file.size / 1024 / 1024).toFixed(2);
+    const msg = `Ukuran file terlalu besar: ${sizeMB} MB. Maksimal 10 MB. ` +
+                `Silakan kompres foto Anda terlebih dahulu.`;
+    showError(msg);
     return;
   }
 
   showStatus('Memuat gambar...', 'loading');
   showProgress(true, 5);
 
-  const reader = new FileReader();
-  reader.onload = (e) => {
+  // Validasi 3: baca file sebagai data URL
+  let dataUrl;
+  try {
+    dataUrl = await readFileAsDataURL(file);
+  } catch (err) {
+    showProgress(false);
+    showError('Gagal membaca file: ' + err.message);
+    return;
+  }
+
+  // Validasi 4: decode gambar
+  let img;
+  try {
+    img = await loadImage(dataUrl);
+  } catch (err) {
+    showProgress(false);
+    showError(
+      'File gambar tidak bisa dibuka. Kemungkinan:\n' +
+      '• File rusak atau tidak lengkap\n' +
+      '• Format file tidak sesuai ekstensi (misal: file HEIC yang di-rename jadi .jpg)\n' +
+      '• File tidak benar-benar gambar\n\n' +
+      'Solusi: buka file di aplikasi lain, lalu screenshot ulang atau konversi ke JPG.'
+    );
+    showDebug(`File: ${file.name}\nTipe: ${file.type}\nUkuran: ${file.size} bytes\nError: ${err.message || 'unknown'}`);
+    return;
+  }
+
+  console.log('Gambar berhasil dimuat:', img.width + 'x' + img.height);
+  showDebug(`✅ Gambar dimuat: ${img.width}×${img.height} px`, true);
+
+  originalImage = img;
+  drawOriginal(img);
+  uploadArea.style.display = 'none';
+  workspace.classList.add('active');
+
+  // ===== Validasi 5: cek apakah file terlalu besar untuk library =====
+  if (file.size > MAX_LIBRARY_SIZE) {
+    showProgress(false);
+    showError(
+      `File terlalu besar untuk diproses AI (${(file.size/1024/1024).toFixed(2)} MB). ` +
+      `Silakan kompres foto hingga di bawah 10 MB, lalu coba lagi.`
+    );
+    return;
+  }
+
+  // Proses hapus background
+  await processRemoveBackground(file);
+}
+
+// ===== Baca file sebagai data URL =====
+function readFileAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => resolve(e.target.result);
+    reader.onerror = () => reject(new Error('FileReader gagal membaca file'));
+    reader.readAsDataURL(file);
+  });
+}
+
+// ===== Load gambar dari data URL =====
+function loadImage(dataUrl) {
+  return new Promise((resolve, reject) => {
     const img = new Image();
-    img.onload = async () => {
-      originalImage = img;
-      drawOriginal(img);
-      uploadArea.style.display = 'none';
-      workspace.classList.add('active');
-      await processRemoveBackground(file);
+    img.onload = () => {
+      // Cek dimensi minimal
+      if (img.width < 10 || img.height < 10) {
+        reject(new Error('Gambar terlalu kecil (< 10 pixel)'));
+        return;
+      }
+      resolve(img);
     };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
+    img.onerror = () => reject(new Error('Browser tidak bisa decode gambar'));
+    img.src = dataUrl;
+  });
 }
 
 // ===== Hapus background =====
@@ -542,12 +637,35 @@ async function processRemoveBackground(file) {
       updateDownloadButton();
       showProgress(false);
       showStatus('✅ Background berhasil dihapus! Atur crop & klik download.', 'success');
+      showDebug(`✅ Hasil AI: ${img.width}×${img.height} px`);
+    };
+    img.onerror = () => {
+      showProgress(false);
+      showError('Hasil AI gagal dimuat. Coba file lain.');
     };
     img.src = url;
   } catch (err) {
-    console.error(err);
+    console.error('Error saat remove background:', err);
     showProgress(false);
-    showStatus('❌ Gagal memproses gambar: ' + err.message, 'error');
+
+    let msg = '❌ Gagal memproses gambar: ' + (err.message || 'unknown error');
+    let tips = '';
+
+    if (err.message && err.message.includes('decode')) {
+      tips = '\n\nKemungkinan penyebab:\n' +
+             '• Format file tidak didukung (misal HEIC dari iPhone)\n' +
+             '• File rusak atau tidak lengkap\n' +
+             '• Browser tidak mendukung format tersebut\n\n' +
+             'Coba: konversi ke JPG menggunakan tool online, atau screenshot ulang foto Anda.';
+    } else if (err.message && err.message.includes('fetch')) {
+      tips = '\n\nKoneksi internet diperlukan untuk mengunduh model AI pertama kali. ' +
+             'Pastikan internet stabil, lalu coba lagi.';
+    } else if (err.message && err.message.includes('memory')) {
+      tips = '\n\nFile terlalu besar atau browser kehabisan memori. ' +
+             'Coba kompres foto atau gunakan browser lain.';
+    }
+
+    showError(msg + tips);
   }
 }
 
@@ -566,64 +684,54 @@ function drawOriginal(img) {
   ctx.drawImage(img, 0, 0, w, h);
 }
 
-// ===== Gambar hasil crop 3x4 dengan background =====
+// ===== Gambar hasil crop 3x4 =====
 function drawResult() {
   if (!cutoutImg) return;
 
-  // Output 300x400 (rasio 3:4)
   resultCanvas.width = OUTPUT_W;
   resultCanvas.height = OUTPUT_H;
   const ctx = resultCanvas.getContext('2d');
 
-  // Isi background warna
   ctx.fillStyle = currentBgColor;
   ctx.fillRect(0, 0, OUTPUT_W, OUTPUT_H);
 
-  // Hitung dimensi gambar agar menutupi frame 3:4 (cover)
   const imgW = cutoutImg.width;
   const imgH = cutoutImg.height;
-  const frameRatio = OUTPUT_W / OUTPUT_H; // 0.75
+  const frameRatio = OUTPUT_W / OUTPUT_H;
   const imgRatio = imgW / imgH;
 
   let baseW, baseH;
   if (imgRatio > frameRatio) {
-    // Gambar lebih lebar → tinggi yang pas
     baseH = OUTPUT_H;
     baseW = baseH * imgRatio;
   } else {
-    // Gambar lebih tinggi → lebar yang pas
     baseW = OUTPUT_W;
     baseH = baseW / imgRatio;
   }
 
-  // Terapkan zoom
   const zoom = parseInt(zoomSlider.value) / 100;
   const drawW = baseW * zoom;
   const drawH = baseH * zoom;
 
-  // Posisi tengah + offset slider
   const offsetX = (parseInt(xSlider.value) / 100) * (drawW - OUTPUT_W) / 2;
   const offsetY = (parseInt(ySlider.value) / 100) * (drawH - OUTPUT_H) / 2;
 
   const x = (OUTPUT_W - drawW) / 2 + offsetX;
   const y = (OUTPUT_H - drawH) / 2 + offsetY;
 
-  // Clip ke frame 3x4
   ctx.save();
   ctx.beginPath();
   ctx.rect(0, 0, OUTPUT_W, OUTPUT_H);
   ctx.clip();
-
   ctx.drawImage(cutoutImg, x, y, drawW, drawH);
   ctx.restore();
 
-  // Border tipis putih (opsional, untuk preview)
   ctx.strokeStyle = 'rgba(0,0,0,0.1)';
   ctx.lineWidth = 1;
   ctx.strokeRect(0, 0, OUTPUT_W, OUTPUT_H);
 }
 
-// ===== Status & Progress =====
+// ===== Status, error, debug =====
 function showStatus(msg, type) {
   statusEl.textContent = msg;
   statusEl.className = 'status show ' + type;
@@ -635,6 +743,25 @@ function showProgress(show, percent = 0) {
   progressBar.classList.toggle('show', show);
   progressFill.style.width = percent + '%';
 }
+function showError(msg) {
+  errorInfo.textContent = msg;
+  errorInfo.style.display = 'block';
+  errorInfo.style.whiteSpace = 'pre-line';
+}
+function hideError() {
+  errorInfo.style.display = 'none';
+  errorInfo.textContent = '';
+}
+function showDebug(msg, ok = false) {
+  debugInfo.textContent = msg;
+  debugInfo.style.display = 'block';
+  debugInfo.style.color = ok ? '#43a047' : '#999';
+  debugInfo.style.whiteSpace = 'pre-line';
+}
+function hideDebug() {
+  debugInfo.style.display = 'none';
+  debugInfo.textContent = '';
+}
 </script>
 </body>
-  </html>
+     </html>
