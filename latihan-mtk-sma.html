@@ -118,7 +118,7 @@
         <h2><i class="fa-solid fa-triangle-exclamation"></i> PERINGATAN!</h2>
         <p class="fs-5 mt-3">Anda terdeteksi keluar dari halaman quiz.</p>
         <p>Halaman akan dikembalikan ke awal dalam</p>
-        <div class="countdown" id="countdownDetik">5</div>
+        <div class="countdown" id="countdownDetik">10</div>
         <p class="text-muted small">Jangan tinggalkan halaman ini sebelum quiz selesai.</p>
     </div>
 </div>
@@ -217,7 +217,7 @@
 
 <script>
 /* =========================================================
-   DATA QUIZ - MATERI SMA (Sama seperti sebelumnya)
+   DATA QUIZ - MATERI SMA
    ========================================================= */
 const DATA_QUIZ = {
     judul: "Quiz TKA Matematika SMA",
@@ -292,14 +292,12 @@ let dataSiswa = {};
 let quizSelesai = false;
 let warningAktif = false;
 let countdownInterval = null;
-let audioLoopInterval = null; // Interval untuk looping suara peringatan
+let audioLoopInterval = null;
 
 /* =========================================================
-   FUNGSI SUARA
+   FUNGSI SUARA PERINGATAN
    ========================================================= */
-
-// Suara "tit" tunggal (nada pendek)
-function buatTit(freq = 880, durasi = 0.15) {
+function buatTit(freq = 1200, durasi = 0.18) {
     try {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         if (!AudioContext) return;
@@ -318,28 +316,18 @@ function buatTit(freq = 880, durasi = 0.15) {
     } catch (e) {}
 }
 
-// Suara "tit-tit-tit" (3 nada berurutan) - untuk navigasi
-function bunyiTit() {
-    buatTit(880, 0.12);
-    setTimeout(() => buatTit(880, 0.12), 160);
-    setTimeout(() => buatTit(880, 0.12), 320);
-}
-
-// Suara peringatan (lebih keras, nada lebih tinggi, diulang)
 function bunyiPeringatan() {
     buatTit(1200, 0.18);
     setTimeout(() => buatTit(1200, 0.18), 220);
     setTimeout(() => buatTit(1200, 0.18), 440);
 }
 
-// Mulai looping suara peringatan (setiap 1 detik)
 function mulaiLoopPeringatan() {
     if (audioLoopInterval) clearInterval(audioLoopInterval);
     bunyiPeringatan();
     audioLoopInterval = setInterval(bunyiPeringatan, 1000);
 }
 
-// Hentikan looping suara peringatan
 function hentikanLoopPeringatan() {
     if (audioLoopInterval) {
         clearInterval(audioLoopInterval);
@@ -372,18 +360,14 @@ function escapeHTML(text) {
 /* =========================================================
    DETEKSI KELUAR HALAMAN (DENGAN SUARA)
    ========================================================= */
-
-// Pindah tab / minimize browser
 document.addEventListener('visibilitychange', function() {
     if (document.hidden && !quizSelesai && !warningAktif) {
         tampilkanPeringatan();
     }
 });
 
-// Menutup / refresh tab
 window.addEventListener('beforeunload', function(e) {
     if (!quizSelesai) {
-        // Bunyikan suara peringatan saat mencoba keluar
         bunyiPeringatan();
         e.preventDefault();
         e.returnValue = 'Apakah Anda yakin ingin keluar? Quiz akan direset.';
@@ -391,7 +375,6 @@ window.addEventListener('beforeunload', function(e) {
     }
 });
 
-// Menangkap klik link yang membuka tab baru
 document.addEventListener('click', function(e) {
     const link = e.target.closest('a');
     if (link && link.target === '_blank' && !quizSelesai && !warningAktif) {
@@ -401,7 +384,7 @@ document.addEventListener('click', function(e) {
 });
 
 /* =========================================================
-   TAMPILKAN PERINGATAN
+   TAMPILKAN PERINGATAN (COUNTDOWN 10 DETIK)
    ========================================================= */
 function tampilkanPeringatan() {
     if (warningAktif || quizSelesai) return;
@@ -410,13 +393,11 @@ function tampilkanPeringatan() {
     const overlay = document.getElementById('warningOverlay');
     overlay.classList.remove('hidden');
 
-    let detik = 5;
+    let detik = 10; // ← DIUBAH DARI 5 KE 10
     document.getElementById('countdownDetik').textContent = detik;
 
-    // Mulai suara peringatan berulang
     mulaiLoopPeringatan();
 
-    // Countdown
     countdownInterval = setInterval(() => {
         detik--;
         document.getElementById('countdownDetik').textContent = detik;
@@ -434,9 +415,7 @@ function tampilkanPeringatan() {
    RESET KE AWAL
    ========================================================= */
 function resetKeAwal() {
-    // Hentikan semua suara
     hentikanLoopPeringatan();
-
     warningAktif = false;
     document.getElementById('warningOverlay').classList.add('hidden');
     if (countdownInterval) {
@@ -444,14 +423,12 @@ function resetKeAwal() {
         countdownInterval = null;
     }
 
-    // Reset state
     nomorSoalSekarang = 0;
     jawabanSiswa = [];
     daftarSoal = [];
     dataSiswa = {};
     quizSelesai = false;
 
-    // Tampilkan halaman identitas
     document.getElementById('halamanQuiz').classList.add('hidden');
     document.getElementById('halamanHasil').classList.add('hidden');
     document.getElementById('halamanIdentitas').classList.remove('hidden');
@@ -478,7 +455,7 @@ document.getElementById("formIdentitas").addEventListener("submit", function(eve
 });
 
 /* =========================================================
-   MULAI QUIZ
+   MULAI QUIZ (TANPA SUARA)
    ========================================================= */
 function mulaiQuiz() {
     daftarSoal = DATA_QUIZ.soal.map(function(soal) {
@@ -508,12 +485,11 @@ function mulaiQuiz() {
     document.getElementById("halamanQuiz").classList.remove("hidden");
 
     quizSelesai = false;
-    bunyiTit();
     tampilkanSoal();
 }
 
 /* =========================================================
-   TAMPILKAN SOAL
+   TAMPILKAN SOAL (TANPA SUARA)
    ========================================================= */
 function tampilkanSoal() {
     const soal = daftarSoal[nomorSoalSekarang];
@@ -534,7 +510,6 @@ function tampilkanSoal() {
     const container = document.getElementById("containerJawaban");
     container.innerHTML = "";
 
-    // PILIHAN GANDA
     if (soal.tipe === "pilihan_ganda") {
         soal.opsi.forEach(function(opsi, index) {
             const id = "opsi_" + nomorSoalSekarang + "_" + index;
@@ -554,7 +529,6 @@ function tampilkanSoal() {
             });
         });
     }
-    // PILIHAN GANDA KOMPLEKS
     else if (soal.tipe === "pilihan_ganda_kompleks") {
         const jawabanSebelumnya = Array.isArray(jawabanSiswa[nomorSoalSekarang]) ? jawabanSiswa[nomorSoalSekarang] : [];
         soal.opsi.forEach(function(opsi, index) {
@@ -577,7 +551,6 @@ function tampilkanSoal() {
             });
         });
     }
-    // BENAR SALAH KOMPLEKS
     else if (soal.tipe === "benar_salah_kompleks") {
         const jawabanSebelumnya = Array.isArray(jawabanSiswa[nomorSoalSekarang]) ? jawabanSiswa[nomorSoalSekarang] : [];
         soal.pernyataan.forEach(function(item, index) {
@@ -615,7 +588,7 @@ function tampilkanSoal() {
 }
 
 /* =========================================================
-   NAVIGASI
+   NAVIGASI (TANPA SUARA)
    ========================================================= */
 function updateNavigasi() {
     const sebelumnya = document.getElementById("btnSebelumnya");
@@ -636,7 +609,6 @@ function updateNavigasi() {
 document.getElementById("btnSebelumnya").addEventListener("click", function() {
     if (nomorSoalSekarang > 0) {
         nomorSoalSekarang--;
-        bunyiTit();
         tampilkanSoal();
         window.scrollTo(0, 0);
     }
@@ -645,7 +617,6 @@ document.getElementById("btnSebelumnya").addEventListener("click", function() {
 document.getElementById("btnBerikutnya").addEventListener("click", function() {
     if (nomorSoalSekarang < daftarSoal.length - 1) {
         nomorSoalSekarang++;
-        bunyiTit();
         tampilkanSoal();
         window.scrollTo(0, 0);
     }
@@ -657,7 +628,7 @@ document.getElementById("btnSelesai").addEventListener("click", function() {
 });
 
 /* =========================================================
-   HITUNG NILAI
+   HITUNG NILAI (TANPA SUARA)
    ========================================================= */
 function hitungNilai() {
     let totalSkor = 0;
@@ -700,7 +671,6 @@ function hitungNilai() {
     document.getElementById("halamanHasil").classList.remove("hidden");
 
     quizSelesai = true;
-    bunyiTit();
     window.scrollTo(0, 0);
 }
 
