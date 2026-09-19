@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz TKA Bahasa Inggris SMA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #eef5ff, #fff8e6);
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .quiz-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+            margin-bottom: 25px;
+        }
+        .logo-box {
+            width: 90px;
+            height: 90px;
+            margin: auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .answer-option {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .answer-option:hover {
+            border-color: #0d6efd;
+            background: #f0f7ff;
+        }
+        .answer-option:has(input:checked) {
+            border-color: #0d6efd;
+            background: #eaf3ff;
+        }
+        .answer-option label { cursor: pointer; }
+        .question-box {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 22px;
+            border-left: 5px solid #0d6efd;
+            white-space: pre-line;
+        }
+        .progress { height: 10px; border-radius: 20px; }
+        .result-score {
+            font-size: 70px;
+            font-weight: bold;
+            color: #0d6efd;
+        }
+        .hidden { display: none !important; }
+        .statement-box {
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #ffffff;
+        }
+        @media (max-width: 576px) {
+            .quiz-card { padding: 20px; border-radius: 15px; }
+            .result-score { font-size: 55px; }
+        }
+
+        #warningOverlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            animation: kedip 0.6s infinite alternate;
+        }
+        @keyframes kedip {
+            from { background: rgba(0, 0, 0, 0.9); }
+            to   { background: rgba(120, 0, 0, 0.95); }
+        }
+        #warningOverlay .box {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            border: 3px solid #ef4444;
+        }
+        #warningOverlay h2 { color: #f87171; }
+        #warningOverlay .countdown {
+            font-size: 80px;
+            font-weight: bold;
+            color: #fbbf24;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Overlay Peringatan -->
+<div id="warningOverlay" class="hidden">
+    <div class="box">
+        <h2><i class="fa-solid fa-triangle-exclamation"></i> WARNING!</h2>
+        <p class="fs-5 mt-3">You have left the quiz page.</p>
+        <p>The page will reset to the beginning in</p>
+        <div class="countdown" id="countdownDetik">10</div>
+        <p class="text-muted small">Do not leave this page until the quiz is finished.</p>
+    </div>
+</div>
+
+<div class="container py-4">
+    <!-- HALAMAN IDENTITAS -->
+    <div id="halamanIdentitas">
+        <div class="quiz-card">
+            <div class="text-center mb-4">
+                <div class="logo-box">
+                    <img src="assets/logo.png" alt="Logo Sekolah" onerror="this.style.display='none'">
+                </div>
+                <h1 class="fw-bold text-primary mt-3">
+                    <i class="fa-solid fa-language"></i> Quiz TKA Bahasa Inggris SMA
+                </h1>
+                <p class="text-muted">Tes Kemampuan Akademik – Bahasa Inggris Jenjang SMA</p>
+            </div>
+            <div class="alert alert-info">
+                <i class="fa-solid fa-circle-info"></i> Silakan isi identitas sebelum memulai quiz.
+            </div>
+            <form id="formIdentitas">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nama Siswa</label>
+                    <input type="text" id="nama" class="form-control form-control-lg" placeholder="Masukkan nama lengkap" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Asal Sekolah</label>
+                    <input type="text" id="sekolah" class="form-control form-control-lg" placeholder="Contoh: SMAN 1 Contoh" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Kelas</label>
+                    <input type="text" id="kelas" class="form-control form-control-lg" placeholder="Contoh: XII-IPS 2" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Nomor Peserta</label>
+                    <input type="text" id="nomor" class="form-control form-control-lg" placeholder="Opsional">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                    <i class="fa-solid fa-play"></i> Mulai Quiz
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HALAMAN QUIZ -->
+    <div id="halamanQuiz" class="hidden">
+        <div class="quiz-card">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <div>
+                    <h4 class="fw-bold text-primary mb-1">Quiz TKA Bahasa Inggris SMA</h4>
+                    <div class="text-muted"><i class="fa-solid fa-user"></i> <span id="namaTampil"></span></div>
+                </div>
+                <div class="badge bg-primary fs-6 p-2"><span id="nomorSoal">1</span></div>
+            </div>
+            <div class="progress mb-4"><div id="progressBar" class="progress-bar" style="width: 0%"></div></div>
+            <div id="petunjuk" class="alert alert-warning small"></div>
+            <div class="question-box mb-4"><h5 id="pertanyaan" class="fw-bold mb-0"></h5></div>
+            <div id="containerJawaban"></div>
+            <div class="d-flex justify-content-between mt-4 gap-2">
+                <button id="btnSebelumnya" type="button" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-arrow-left"></i> Sebelumnya
+                </button>
+                <button id="btnBerikutnya" type="button" class="btn btn-primary">
+                    Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button id="btnSelesai" type="button" class="btn btn-success hidden">
+                    <i class="fa-solid fa-check"></i> Selesai
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN HASIL -->
+    <div id="halamanHasil" class="hidden">
+        <div class="quiz-card text-center">
+            <div class="mb-3"><i class="fa-solid fa-circle-check text-success" style="font-size:70px"></i></div>
+            <h2 class="fw-bold">Quiz Selesai</h2>
+            <p class="text-muted">Berikut hasil pengerjaan:</p>
+            <div id="hasilNama" class="fw-bold fs-5"></div>
+            <div id="hasilSekolah" class="text-muted"></div>
+            <div id="hasilKelas" class="text-muted mb-3"></div>
+            <div class="result-score"><span id="nilaiAkhir">0</span></div>
+            <div id="statusHasil" class="badge fs-5 p-2 mb-4"></div>
+            <div class="row g-3 text-start mb-4">
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">Skor</div><strong id="skorHasil">0</strong></div></div>
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">Skor Maksimal</div><strong id="maksimalHasil">0</strong></div></div>
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">KKM</div><strong id="kkmHasil">70</strong></div></div>
+            </div>
+            <div class="d-grid gap-2">
+                <button id="btnUlangi" class="btn btn-primary btn-lg"><i class="fa-solid fa-rotate"></i> Ulangi Quiz</button>
+                <button id="btnBeranda" class="btn btn-outline-secondary"><i class="fa-solid fa-house"></i> Kembali</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+/* =========================================================
+   DATA QUIZ - BAHASA INGGRIS SMA
+   ========================================================= */
+const DATA_QUIZ = {
+    judul: "Quiz TKA Bahasa Inggris SMA",
+    mapel: "Bahasa Inggris",
+    jenjang: "SMA",
+    kkm: 70,
+    acak_soal: true,
+    acak_opsi: true,
+    soal: [
+        // ===== IDENTIFYING EXPLICIT INFORMATION =====
+        {
+            id: 1,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Read the text:\n" +
+                "\"Mount Bromo is one of the most famous tourist attractions in East Java. Every year, thousands of tourists visit this active volcano to enjoy the breathtaking sunrise. The best time to visit is between June and August.\"\n\n" +
+                "According to the text, when is the best time to visit Mount Bromo?",
+            opsi: ["January – March", "June – August", "September – December", "April – May"],
+            jawaban: "June – August"
+        },
+        {
+            id: 2,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Sarah has been working as a nurse at the Central Hospital for seven years. She specializes in pediatric care and often works night shifts.\"\n\n" +
+                "How long has Sarah been working as a nurse?",
+            opsi: ["Five years", "Six years", "Seven years", "Eight years"],
+            jawaban: "Seven years"
+        },
+        {
+            id: 3,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"The meeting will be held on Monday at 9 a.m. in the main conference room. All department heads are required to attend.\"\n\n" +
+                "Where will the meeting be held?",
+            opsi: ["Main hall", "Main conference room", "Director's office", "Cafeteria"],
+            jawaban: "Main conference room"
+        },
+
+        // ===== CLASSIFYING =====
+        {
+            id: 4,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"In the zoo, visitors can see lions, tigers, and elephants. There are also reptiles such as snakes and crocodiles, as well as birds like parrots and eagles.\"\n\n" +
+                "Which group do parrots and eagles belong to?",
+            opsi: ["Mammals", "Reptiles", "Birds", "Fish"],
+            jawaban: "Birds"
+        },
+        {
+            id: 5,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan:
+                "Text:\n" +
+                "\"The library provides novels, encyclopedias, magazines, and scientific journals. Students can borrow up to three books for one week.\"\n\n" +
+                "Which of the following are classified as reading materials mentioned in the text? (Choose all that apply)",
+            opsi: ["Novels", "Encyclopedias", "Scientific journals", "Bicycles"],
+            jawaban: ["Novels", "Encyclopedias", "Scientific journals"]
+        },
+
+        // ===== MAKING OUTLINE =====
+        {
+            id: 6,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Recycling has many benefits. First, it reduces waste in landfills. Second, it conserves natural resources. Third, it saves energy. Finally, it creates new job opportunities.\"\n\n" +
+                "What is the main topic of the text?",
+            opsi: [
+                "Benefits of recycling",
+                "Dangers of landfills",
+                "How to save energy",
+                "Job opportunities"
+            ],
+            jawaban: "Benefits of recycling"
+        },
+        {
+            id: 7,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"To make a cup of tea, first boil water. Then, put a tea bag into a cup. Next, pour the hot water into the cup. Finally, add sugar or honey as desired.\"\n\n" +
+                "Which is the correct outline of the text?",
+            opsi: [
+                "Boil water → Put tea bag → Pour water → Add sugar",
+                "Add sugar → Boil water → Put tea bag → Pour water",
+                "Put tea bag → Add sugar → Boil water → Pour water",
+                "Pour water → Boil water → Add sugar → Put tea bag"
+            ],
+            jawaban: "Boil water → Put tea bag → Pour water → Add sugar"
+        },
+
+        // ===== SUMMARIZING =====
+        {
+            id: 8,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Exercise is essential for maintaining good health. It helps control weight, strengthens muscles and bones, and improves mental health. People who exercise regularly tend to live longer and feel happier.\"\n\n" +
+                "Which sentence best summarizes the text?",
+            opsi: [
+                "Exercise has many physical and mental health benefits.",
+                "Exercise is only for athletes.",
+                "Exercise makes people tired.",
+                "Exercise is not important for health."
+            ],
+            jawaban: "Exercise has many physical and mental health benefits."
+        },
+        {
+            id: 9,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"The internet has changed the way people communicate, learn, and work. It allows instant messaging, online learning, and remote working. However, it also brings challenges such as cyberbullying and misinformation.\"\n\n" +
+                "Which is the best summary?",
+            opsi: [
+                "The internet has both positive impacts and challenges.",
+                "The internet is only useful for work.",
+                "The internet has no negative effects.",
+                "The internet is harmful to everyone."
+            ],
+            jawaban: "The internet has both positive impacts and challenges."
+        },
+
+        // ===== SYNTHESIZING =====
+        {
+            id: 10,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text A: \"Solar energy is clean and renewable.\"\n" +
+                "Text B: \"Solar panels require high initial investment but save money in the long run.\"\n\n" +
+                "What can be synthesized from both texts?",
+            opsi: [
+                "Solar energy is environmentally friendly but requires high initial cost.",
+                "Solar energy is expensive and polluting.",
+                "Solar energy is cheap and easy to install.",
+                "Solar energy is not renewable."
+            ],
+            jawaban: "Solar energy is environmentally friendly but requires high initial cost."
+        },
+        {
+            id: 11,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text A: \"Regular reading improves vocabulary.\"\n" +
+                "Text B: \"Reading also enhances critical thinking skills.\"\n\n" +
+                "What is the synthesized conclusion?",
+            opsi: [
+                "Reading improves both vocabulary and critical thinking.",
+                "Reading is only useful for vocabulary.",
+                "Reading has no effect on thinking.",
+                "Reading is boring and useless."
+            ],
+            jawaban: "Reading improves both vocabulary and critical thinking."
+        },
+
+        // ===== INFERRING SUPPORTING DETAILS =====
+        {
+            id: 12,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Many students struggle with online learning due to unstable internet connections.\"\n\n" +
+                "Which additional fact would make the text more informative?",
+            opsi: [
+                "Data showing the percentage of students with poor internet access.",
+                "The color of the students' laptops.",
+                "The favorite food of students.",
+                "The number of students who like music."
+            ],
+            jawaban: "Data showing the percentage of students with poor internet access."
+        },
+        {
+            id: 13,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Drinking enough water is important for health.\"\n\n" +
+                "Which supporting detail would make the text more persuasive?",
+            opsi: [
+                "Medical studies showing dehydration causes fatigue and headaches.",
+                "The price of bottled water.",
+                "The brand of the water bottle.",
+                "The color of the water."
+            ],
+            jawaban: "Medical studies showing dehydration causes fatigue and headaches."
+        },
+
+        // ===== INFERRING TOPIC / MAIN IDEA / PURPOSE =====
+        {
+            id: 14,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Every year, millions of tons of plastic end up in the ocean, harming marine life. Turtles mistake plastic bags for jellyfish, and fish ingest microplastics.\"\n\n" +
+                "What is the main idea of the text?",
+            opsi: [
+                "Plastic pollution seriously harms marine life.",
+                "Plastic is useful for marine animals.",
+                "Turtles like eating jellyfish.",
+                "The ocean is full of fish."
+            ],
+            jawaban: "Plastic pollution seriously harms marine life."
+        },
+        {
+            id: 15,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Have you ever wondered why the sky is blue? The answer lies in the way sunlight interacts with the atmosphere. Shorter blue wavelengths scatter more than longer red wavelengths.\"\n\n" +
+                "What is the writer's purpose?",
+            opsi: [
+                "To explain why the sky is blue",
+                "To persuade readers to look at the sky",
+                "To entertain readers with a story",
+                "To describe the color red"
+            ],
+            jawaban: "To explain why the sky is blue"
+        },
+        {
+            id: 16,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Once upon a time, a poor farmer found a golden goose. Every day, the goose laid a golden egg. The farmer became rich but grew greedy.\"\n\n" +
+                "What is the moral message of the story?",
+            opsi: [
+                "Greed can destroy what you have.",
+                "Being poor is better than being rich.",
+                "Geese are magical animals.",
+                "Farmers should not work hard."
+            ],
+            jawaban: "Greed can destroy what you have."
+        },
+
+        // ===== INFERRING SEQUENCE OF EVENTS =====
+        {
+            id: 17,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Rina woke up late. She rushed to the bathroom, skipped breakfast, and ran to the bus stop. Unfortunately, the bus had already left.\"\n\n" +
+                "What will most likely happen next?",
+            opsi: [
+                "Rina will be late for school.",
+                "Rina will go back to sleep.",
+                "Rina will cook breakfast.",
+                "Rina will take a vacation."
+            ],
+            jawaban: "Rina will be late for school."
+        },
+        {
+            id: 18,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Dark clouds gathered. The wind blew stronger. People started running to find shelter.\"\n\n" +
+                "What will most likely happen next?",
+            opsi: [
+                "A heavy rain will fall.",
+                "The sun will shine brightly.",
+                "The wind will stop immediately.",
+                "People will have a picnic."
+            ],
+            jawaban: "A heavy rain will fall."
+        },
+
+        // ===== INFERRING COMPARISON =====
+        {
+            id: 19,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Andi is tall and athletic, while Budi is short and prefers reading books. Both are top students in their class.\"\n\n" +
+                "What is the similarity between Andi and Budi?",
+            opsi: [
+                "Both are top students.",
+                "Both are athletic.",
+                "Both are short.",
+                "Both prefer reading."
+            ],
+            jawaban: "Both are top students."
+        },
+        {
+            id: 20,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan:
+                "Text:\n" +
+                "\"Life in the city is fast-paced and crowded, while life in the village is slow and peaceful. City dwellers have more job opportunities; villagers enjoy cleaner air and closer community ties.\"\n\n" +
+                "Choose all correct comparisons based on the text.",
+            opsi: [
+                "City life is fast-paced.",
+                "Village life is peaceful.",
+                "City dwellers have more job opportunities.",
+                "Villagers have more pollution."
+            ],
+            jawaban: [
+                "City life is fast-paced.",
+                "Village life is peaceful.",
+                "City dwellers have more job opportunities."
+            ]
+        },
+
+        // ===== INFERRING CAUSE-EFFECT =====
+        {
+            id: 21,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Because the factory dumped waste into the river, many fish died and residents lost their source of income.\"\n\n" +
+                "What is the cause of the fish dying?",
+            opsi: [
+                "Factory waste dumped into the river",
+                "Residents losing their income",
+                "The river drying up",
+                "Fish migrating upstream"
+            ],
+            jawaban: "Factory waste dumped into the river"
+        },
+        {
+            id: 22,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Since Tom studied hard every day, he passed the final exam with flying colors.\"\n\n" +
+                "What is the effect of Tom's hard work?",
+            opsi: [
+                "He passed the final exam.",
+                "He failed the exam.",
+                "He became lazy.",
+                "He stopped studying."
+            ],
+            jawaban: "He passed the final exam."
+        },
+
+        // ===== INFERRING CHARACTER TRAITS =====
+        {
+            id: 23,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Even though it was raining heavily, Mr. Rudi continued to help his neighbors clean up the flooded houses. He never complained.\"\n\n" +
+                "What can be inferred about Mr. Rudi's character?",
+            opsi: [
+                "He is caring and selfless.",
+                "He is selfish and lazy.",
+                "He is afraid of rain.",
+                "He is unfriendly."
+            ],
+            jawaban: "He is caring and selfless."
+        },
+        {
+            id: 24,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Lina always returns the money she finds on the street to its owner. She also refuses to cheat during exams.\"\n\n" +
+                "What character trait does Lina show?",
+            opsi: [
+                "Honesty",
+                "Greed",
+                "Laziness",
+                "Arrogance"
+            ],
+            jawaban: "Honesty"
+        },
+
+        // ===== PREDICTING OUTCOME =====
+        {
+            id: 25,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Doni found a wallet full of money on the street. There was an ID card inside showing the owner's address.\"\n\n" +
+                "What will Doni most likely do?",
+            opsi: [
+                "Return the wallet to its owner.",
+                "Keep the money for himself.",
+                "Throw the wallet away.",
+                "Sell the wallet."
+            ],
+            jawaban: "Return the wallet to its owner."
+        },
+        {
+            id: 26,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"The team practiced hard every day for three months. The coach believed in them.\"\n\n" +
+                "What is the most likely outcome?",
+            opsi: [
+                "The team will win the competition.",
+                "The team will lose easily.",
+                "The team will stop practicing.",
+                "The team will quit."
+            ],
+            jawaban: "The team will win the competition."
+        },
+
+        // ===== REALITY vs FANTASY =====
+        {
+            id: 27,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Which of the following events is most likely to happen in real life?",
+            opsi: [
+                "A student studies hard and passes the exam.",
+                "A dragon flies over the city.",
+                "A frog turns into a prince.",
+                "A magical wand grants wishes."
+            ],
+            jawaban: "A student studies hard and passes the exam."
+        },
+        {
+            id: 28,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan:
+                "Choose all events that belong to FANTASY (not realistic).",
+            opsi: [
+                "A wizard casts a spell.",
+                "A girl talks to animals.",
+                "A man goes to work by bus.",
+                "A superhero flies to the moon."
+            ],
+            jawaban: [
+                "A wizard casts a spell.",
+                "A girl talks to animals.",
+                "A superhero flies to the moon."
+            ]
+        },
+
+        // ===== FACT vs OPINION =====
+        {
+            id: 29,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Which sentence is a FACT?",
+            opsi: [
+                "Water boils at 100°C at sea level.",
+                "Chocolate is the most delicious food.",
+                "Everyone should love math.",
+                "Blue is the best color."
+            ],
+            jawaban: "Water boils at 100°C at sea level."
+        },
+        {
+            id: 30,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Which sentence is an OPINION?",
+            opsi: [
+                "I think online learning is more effective than face-to-face learning.",
+                "The Earth revolves around the Sun.",
+                "Indonesia has more than 17,000 islands.",
+                "Water freezes at 0°C."
+            ],
+            jawaban: "I think online learning is more effective than face-to-face learning."
+        },
+        {
+            id: 31,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan:
+                "Choose all sentences that are OPINIONS.",
+            opsi: [
+                "The movie was amazing and touching.",
+                "Reading is the best hobby.",
+                "The capital of Japan is Tokyo.",
+                "I believe English is easier than Mandarin."
+            ],
+            jawaban: [
+                "The movie was amazing and touching.",
+                "Reading is the best hobby.",
+                "I believe English is easier than Mandarin."
+            ]
+        },
+
+        // ===== VALIDITY OF INFORMATION =====
+        {
+            id: 32,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "A text claims: \"Drinking 10 cups of coffee a day is healthy.\" How can we check the validity of this information?",
+            opsi: [
+                "Compare it with scientific research from trusted sources.",
+                "Ask a friend who likes coffee.",
+                "Read a random blog post.",
+                "Watch a fictional movie."
+            ],
+            jawaban: "Compare it with scientific research from trusted sources."
+        },
+        {
+            id: 33,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Which information is the most valid?",
+            opsi: [
+                "Data from the World Health Organization.",
+                "An anonymous comment on social media.",
+                "A rumor spread by a friend.",
+                "A prediction without evidence."
+            ],
+            jawaban: "Data from the World Health Organization."
+        },
+
+        // ===== APPROPRIATENESS =====
+        {
+            id: 34,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"Sinta is a hardworking, honest, and humble student. She always helps her friends and never brags about her achievements.\"\n\n" +
+                "Which phrase best describes Sinta's main character?",
+            opsi: [
+                "Hardworking, honest, and humble",
+                "Lazy and arrogant",
+                "Rich and selfish",
+                "Quiet and unfriendly"
+            ],
+            jawaban: "Hardworking, honest, and humble"
+        },
+        {
+            id: 35,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Text:\n" +
+                "\"The old wooden house creaked with every step. Dust covered the furniture, and cobwebs hung from the ceiling.\"\n\n" +
+                "Which phrase best describes the setting of the text?",
+            opsi: [
+                "An old, abandoned, and eerie house",
+                "A modern and clean house",
+                "A bright and cheerful house",
+                "A small and crowded apartment"
+            ],
+            jawaban: "An old, abandoned, and eerie house"
+        },
+
+        // ===== RESPONDING TO THE TEXT =====
+        {
+            id: 36,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "After reading a story about a young boy who overcame poverty to become a doctor, most readers would feel ...",
+            opsi: [
+                "Inspired and motivated",
+                "Bored and uninterested",
+                "Angry and disappointed",
+                "Scared and anxious"
+            ],
+            jawaban: "Inspired and motivated"
+        },
+        {
+            id: 37,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "After reading a text about animal cruelty, most readers would feel ...",
+            opsi: [
+                "Sad and concerned",
+                "Happy and amused",
+                "Excited and joyful",
+                "Proud and amused"
+            ],
+            jawaban: "Sad and concerned"
+        },
+        {
+            id: 38,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan:
+                "Which reactions are appropriate when reading a very boring text? (Choose all that apply)",
+            opsi: [
+                "Feeling uninterested",
+                "Losing focus",
+                "Feeling delighted and thrilled",
+                "Wanting to stop reading"
+            ],
+            jawaban: [
+                "Feeling uninterested",
+                "Losing focus",
+                "Wanting to stop reading"
+            ]
+        },
+
+        // ===== BENAR SALAH KOMPLEKS =====
+        {
+            id: 39,
+            tipe: "benar_salah_kompleks",
+            pertanyaan: "Decide whether each statement is True or False based on reading strategies.",
+            pernyataan: [
+                {
+                    teks: "A fact is something that can be proven and verified.",
+                    jawaban: "Benar"
+                },
+                {
+                    teks: "An opinion is always based on scientific evidence.",
+                    jawaban: "Salah"
+                },
+                {
+                    teks: "Predicting means guessing what will happen next based on clues in the text.",
+                    jawaban: "Benar"
+                },
+                {
+                    teks: "A fantasy story describes events that could realistically happen in daily life.",
+                    jawaban: "Salah"
+                }
+            ]
+        }
+    ]
+};
+
+/* =========================================================
+   VARIABEL GLOBAL
+   ========================================================= */
+let daftarSoal = [];
+let jawabanSiswa = [];
+let nomorSoalSekarang = 0;
+let dataSiswa = {};
+let quizSelesai = false;
+let warningAktif = false;
+let countdownInterval = null;
+let audioLoopInterval = null;
+
+/* =========================================================
+   FUNGSI SUARA PERINGATAN
+   ========================================================= */
+function buatTit(freq = 1200, durasi = 0.18) {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.35, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + durasi);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + durasi);
+        setTimeout(() => ctx.close(), (durasi + 0.2) * 1000);
+    } catch (e) {}
+}
+
+function bunyiPeringatan() {
+    buatTit(1200, 0.18);
+    setTimeout(() => buatTit(1200, 0.18), 220);
+    setTimeout(() => buatTit(1200, 0.18), 440);
+}
+
+function mulaiLoopPeringatan() {
+    if (audioLoopInterval) clearInterval(audioLoopInterval);
+    bunyiPeringatan();
+    audioLoopInterval = setInterval(bunyiPeringatan, 1000);
+}
+
+function hentikanLoopPeringatan() {
+    if (audioLoopInterval) {
+        clearInterval(audioLoopInterval);
+        audioLoopInterval = null;
+    }
+}
+
+/* =========================================================
+   FUNGSI ACAK & ESCAPE
+   ========================================================= */
+function acakArray(array) {
+    const hasil = [...array];
+    for (let i = hasil.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [hasil[i], hasil[j]] = [hasil[j], hasil[i]];
+    }
+    return hasil;
+}
+
+function escapeHTML(text) {
+    if (text === null || text === undefined) return "";
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+/* =========================================================
+   DETEKSI KELUAR HALAMAN
+   ========================================================= */
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden && !quizSelesai && !warningAktif) {
+        tampilkanPeringatan();
+    }
+});
+
+window.addEventListener('beforeunload', function(e) {
+    if (!quizSelesai) {
+        bunyiPeringatan();
+        e.preventDefault();
+        e.returnValue = 'Apakah Anda yakin ingin keluar? Quiz akan direset.';
+        return e.returnValue;
+    }
+});
+
+document.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (link && link.target === '_blank' && !quizSelesai && !warningAktif) {
+        e.preventDefault();
+        tampilkanPeringatan();
+    }
+});
+
+/* =========================================================
+   TAMPILKAN PERINGATAN (10 DETIK)
+   ========================================================= */
+function tampilkanPeringatan() {
+    if (warningAktif || quizSelesai) return;
+    warningAktif = true;
+
+    const overlay = document.getElementById('warningOverlay');
+    overlay.classList.remove('hidden');
+
+    let detik = 10;
+    document.getElementById('countdownDetik').textContent = detik;
+
+    mulaiLoopPeringatan();
+
+    countdownInterval = setInterval(() => {
+        detik--;
+        document.getElementById('countdownDetik').textContent = detik;
+
+        if (detik <= 0) {
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+            hentikanLoopPeringatan();
+            resetKeAwal();
+        }
+    }, 1000);
+}
+
+/* =========================================================
+   RESET KE AWAL
+   ========================================================= */
+function resetKeAwal() {
+    hentikanLoopPeringatan();
+    warningAktif = false;
+    document.getElementById('warningOverlay').classList.add('hidden');
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+    }
+
+    nomorSoalSekarang = 0;
+    jawabanSiswa = [];
+    daftarSoal = [];
+    dataSiswa = {};
+    quizSelesai = false;
+
+    document.getElementById('halamanQuiz').classList.add('hidden');
+    document.getElementById('halamanHasil').classList.add('hidden');
+    document.getElementById('halamanIdentitas').classList.remove('hidden');
+
+    document.getElementById('formIdentitas').reset();
+    window.scrollTo(0, 0);
+}
+
+/* =========================================================
+   FORM IDENTITAS
+   ========================================================= */
+document.getElementById("formIdentitas").addEventListener("submit", function(event) {
+    event.preventDefault();
+    dataSiswa = {
+        nama: document.getElementById("nama").value.trim(),
+        sekolah: document.getElementById("sekolah").value.trim(),
+        kelas: document.getElementById("kelas").value.trim(),
+        nomor: document.getElementById("nomor").value.trim()
+    };
+    if (!dataSiswa.nama) { alert("Nama siswa wajib diisi."); return; }
+    if (!dataSiswa.sekolah) { alert("Asal sekolah wajib diisi."); return; }
+    if (!dataSiswa.kelas) { alert("Kelas wajib diisi."); return; }
+    mulaiQuiz();
+});
+
+/* =========================================================
+   MULAI QUIZ
+   ========================================================= */
+function mulaiQuiz() {
+    daftarSoal = DATA_QUIZ.soal.map(function(soal) {
+        const salinan = { ...soal };
+        if (Array.isArray(soal.opsi)) salinan.opsi = [...soal.opsi];
+        if (Array.isArray(soal.pernyataan)) salinan.pernyataan = soal.pernyataan.map(item => ({ ...item }));
+        return salinan;
+    });
+
+    if (DATA_QUIZ.acak_soal) daftarSoal = acakArray(daftarSoal);
+    if (DATA_QUIZ.acak_opsi) {
+        daftarSoal.forEach(function(soal) {
+            if (soal.tipe === "pilihan_ganda" || soal.tipe === "pilihan_ganda_kompleks") {
+                soal.opsi = acakArray(soal.opsi);
+            }
+        });
+    }
+
+    jawabanSiswa = daftarSoal.map(function(soal) {
+        if (soal.tipe === "pilihan_ganda_kompleks") return [];
+        if (soal.tipe === "benar_salah_kompleks") return [];
+        return null;
+    });
+
+    document.getElementById("namaTampil").textContent = dataSiswa.nama;
+    document.getElementById("halamanIdentitas").classList.add("hidden");
+    document.getElementById("halamanQuiz").classList.remove("hidden");
+
+    quizSelesai = false;
+    tampilkanSoal();
+}
+
+/* =========================================================
+   TAMPILKAN SOAL
+   ========================================================= */
+function tampilkanSoal() {
+    const soal = daftarSoal[nomorSoalSekarang];
+    if (!soal) return;
+
+    document.getElementById("nomorSoal").textContent = "Soal " + (nomorSoalSekarang + 1) + " / " + daftarSoal.length;
+    document.getElementById("pertanyaan").textContent = soal.pertanyaan;
+
+    const persen = ((nomorSoalSekarang + 1) / daftarSoal.length) * 100;
+    document.getElementById("progressBar").style.width = persen + "%";
+
+    let petunjuk = "";
+    if (soal.tipe === "pilihan_ganda") petunjuk = "Pilih satu jawaban yang paling tepat.";
+    else if (soal.tipe === "pilihan_ganda_kompleks") petunjuk = "Pilih semua jawaban yang benar.";
+    else if (soal.tipe === "benar_salah_kompleks") petunjuk = "Tentukan Benar atau Salah untuk setiap pernyataan.";
+    document.getElementById("petunjuk").textContent = petunjuk;
+
+    const container = document.getElementById("containerJawaban");
+    container.innerHTML = "";
+
+    if (soal.tipe === "pilihan_ganda") {
+        soal.opsi.forEach(function(opsi, index) {
+            const id = "opsi_" + nomorSoalSekarang + "_" + index;
+            const checked = jawabanSiswa[nomorSoalSekarang] === opsi ? "checked" : "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="form-check answer-option mb-3">
+                    <input class="form-check-input" type="radio" name="jawaban" id="${id}" value="${escapeHTML(opsi)}" ${checked}>
+                    <label class="form-check-label w-100" for="${id}">
+                        <strong>${String.fromCharCode(65 + index)}.</strong> ${escapeHTML(opsi)}
+                    </label>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[name="jawaban"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                jawabanSiswa[nomorSoalSekarang] = this.value;
+            });
+        });
+    }
+    else if (soal.tipe === "pilihan_ganda_kompleks") {
+        const jawabanSebelumnya = Array.isArray(jawabanSiswa[nomorSoalSekarang]) ? jawabanSiswa[nomorSoalSekarang] : [];
+        soal.opsi.forEach(function(opsi, index) {
+            const id = "kompleks_" + nomorSoalSekarang + "_" + index;
+            const checked = jawabanSebelumnya.includes(opsi) ? "checked" : "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="form-check answer-option mb-3">
+                    <input class="form-check-input" type="checkbox" name="jawabanKompleks" id="${id}" value="${escapeHTML(opsi)}" ${checked}>
+                    <label class="form-check-label w-100" for="${id}">
+                        <strong>${String.fromCharCode(65 + index)}.</strong> ${escapeHTML(opsi)}
+                    </label>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[name="jawabanKompleks"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                jawabanSiswa[nomorSoalSekarang] = Array.from(
+                    container.querySelectorAll('input[name="jawabanKompleks"]:checked')
+                ).map(item => item.value);
+            });
+        });
+    }
+    else if (soal.tipe === "benar_salah_kompleks") {
+        const jawabanSebelumnya = Array.isArray(jawabanSiswa[nomorSoalSekarang]) ? jawabanSiswa[nomorSoalSekarang] : [];
+        soal.pernyataan.forEach(function(item, index) {
+            const jawaban = jawabanSebelumnya[index] || "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="statement-box">
+                    <div class="fw-semibold mb-3">${index + 1}. ${escapeHTML(item.teks)}</div>
+                    <div class="d-flex gap-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="bs_${index}" id="benar_${index}" value="Benar" ${jawaban === "Benar" ? "checked" : ""}>
+                            <label class="form-check-label" for="benar_${index}">
+                                <i class="fa-solid fa-check text-success"></i> Benar
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="bs_${index}" id="salah_${index}" value="Salah" ${jawaban === "Salah" ? "checked" : ""}>
+                            <label class="form-check-label" for="salah_${index}">
+                                <i class="fa-solid fa-xmark text-danger"></i> Salah
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[type="radio"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                const bagian = this.name.split("_");
+                const index = parseInt(bagian[1]);
+                if (!Array.isArray(jawabanSiswa[nomorSoalSekarang])) jawabanSiswa[nomorSoalSekarang] = [];
+                jawabanSiswa[nomorSoalSekarang][index] = this.value;
+            });
+        });
+    }
+    updateNavigasi();
+}
+
+/* =========================================================
+   NAVIGASI
+   ========================================================= */
+function updateNavigasi() {
+    const sebelumnya = document.getElementById("btnSebelumnya");
+    const berikutnya = document.getElementById("btnBerikutnya");
+    const selesai = document.getElementById("btnSelesai");
+
+    sebelumnya.disabled = nomorSoalSekarang === 0;
+
+    if (nomorSoalSekarang === daftarSoal.length - 1) {
+        berikutnya.classList.add("hidden");
+        selesai.classList.remove("hidden");
+    } else {
+        berikutnya.classList.remove("hidden");
+        selesai.classList.add("hidden");
+    }
+}
+
+document.getElementById("btnSebelumnya").addEventListener("click", function() {
+    if (nomorSoalSekarang > 0) {
+        nomorSoalSekarang--;
+        tampilkanSoal();
+        window.scrollTo(0, 0);
+    }
+});
+
+document.getElementById("btnBerikutnya").addEventListener("click", function() {
+    if (nomorSoalSekarang < daftarSoal.length - 1) {
+        nomorSoalSekarang++;
+        tampilkanSoal();
+        window.scrollTo(0, 0);
+    }
+});
+
+document.getElementById("btnSelesai").addEventListener("click", function() {
+    if (!confirm("Apakah Anda yakin ingin menyelesaikan quiz?")) return;
+    hitungNilai();
+});
+
+/* =========================================================
+   HITUNG NILAI
+   ========================================================= */
+function hitungNilai() {
+    let totalSkor = 0;
+    let totalMaksimal = 0;
+
+    daftarSoal.forEach(function(soal, index) {
+        const jawaban = jawabanSiswa[index];
+        if (soal.tipe === "pilihan_ganda") {
+            totalMaksimal += 1;
+            if (jawaban === soal.jawaban) totalSkor += 1;
+        } else if (soal.tipe === "pilihan_ganda_kompleks") {
+            totalMaksimal += 1;
+            const benar = [...soal.jawaban].sort();
+            const dipilih = Array.isArray(jawaban) ? [...jawaban].sort() : [];
+            if (JSON.stringify(benar) === JSON.stringify(dipilih)) totalSkor += 1;
+        } else if (soal.tipe === "benar_salah_kompleks") {
+            totalMaksimal += soal.pernyataan.length;
+            soal.pernyataan.forEach(function(item, i) {
+                if (jawaban && jawaban[i] === item.jawaban) totalSkor += 1;
+            });
+        }
+    });
+
+    const nilai = totalMaksimal > 0 ? Math.round((totalSkor / totalMaksimal) * 100) : 0;
+    const tuntas = nilai >= DATA_QUIZ.kkm;
+
+    document.getElementById("nilaiAkhir").textContent = nilai;
+    document.getElementById("hasilNama").textContent = dataSiswa.nama;
+    document.getElementById("hasilSekolah").textContent = dataSiswa.sekolah;
+    document.getElementById("hasilKelas").textContent = "Kelas " + dataSiswa.kelas;
+    document.getElementById("skorHasil").textContent = totalSkor;
+    document.getElementById("maksimalHasil").textContent = totalMaksimal;
+    document.getElementById("kkmHasil").textContent = DATA_QUIZ.kkm;
+
+    const status = document.getElementById("statusHasil");
+    status.textContent = tuntas ? "TUNTAS" : "BELUM TUNTAS";
+    status.className = tuntas ? "badge bg-success fs-5 p-2 mb-4" : "badge bg-danger fs-5 p-2 mb-4";
+
+    document.getElementById("halamanQuiz").classList.add("hidden");
+    document.getElementById("halamanHasil").classList.remove("hidden");
+
+    quizSelesai = true;
+    window.scrollTo(0, 0);
+}
+
+/* =========================================================
+   ULANGI & KEMBALI
+   ========================================================= */
+document.getElementById("btnUlangi").addEventListener("click", function() {
+    nomorSoalSekarang = 0;
+    jawabanSiswa = [];
+    quizSelesai = false;
+    document.getElementById("halamanHasil").classList.add("hidden");
+    document.getElementById("halamanIdentitas").classList.remove("hidden");
+    document.getElementById("nama").value = dataSiswa.nama;
+    document.getElementById("sekolah").value = dataSiswa.sekolah;
+    document.getElementById("kelas").value = dataSiswa.kelas;
+    document.getElementById("nomor").value = dataSiswa.nomor;
+});
+
+document.getElementById("btnBeranda").addEventListener("click", function() {
+    quizSelesai = true;
+    hentikanLoopPeringatan();
+    location.reload();
+});
+</script>
+</body>
+</html>
