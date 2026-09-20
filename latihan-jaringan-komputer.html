@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz TKA Teknik Jaringan Komputer dan Telekomunikasi SMK</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #eef5ff, #fff8e6);
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .quiz-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+            margin-bottom: 25px;
+        }
+        .logo-box {
+            width: 90px;
+            height: 90px;
+            margin: auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .answer-option {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .answer-option:hover {
+            border-color: #0d6efd;
+            background: #f0f7ff;
+        }
+        .answer-option:has(input:checked) {
+            border-color: #0d6efd;
+            background: #eaf3ff;
+        }
+        .answer-option label { cursor: pointer; }
+        .question-box {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 22px;
+            border-left: 5px solid #0d6efd;
+            white-space: pre-line;
+        }
+        .progress { height: 10px; border-radius: 20px; }
+        .result-score {
+            font-size: 70px;
+            font-weight: bold;
+            color: #0d6efd;
+        }
+        .hidden { display: none !important; }
+        .statement-box {
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #ffffff;
+        }
+        @media (max-width: 576px) {
+            .quiz-card { padding: 20px; border-radius: 15px; }
+            .result-score { font-size: 55px; }
+        }
+
+        #warningOverlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            animation: kedip 0.6s infinite alternate;
+        }
+        @keyframes kedip {
+            from { background: rgba(0, 0, 0, 0.9); }
+            to   { background: rgba(120, 0, 0, 0.95); }
+        }
+        #warningOverlay .box {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            border: 3px solid #ef4444;
+        }
+        #warningOverlay h2 { color: #f87171; }
+        #warningOverlay .countdown {
+            font-size: 80px;
+            font-weight: bold;
+            color: #fbbf24;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Overlay Peringatan -->
+<div id="warningOverlay" class="hidden">
+    <div class="box">
+        <h2><i class="fa-solid fa-triangle-exclamation"></i> PERINGATAN!</h2>
+        <p class="fs-5 mt-3">Anda terdeteksi keluar dari halaman quiz.</p>
+        <p>Halaman akan dikembalikan ke awal dalam</p>
+        <div class="countdown" id="countdownDetik">10</div>
+        <p class="text-muted small">Jangan tinggalkan halaman ini sebelum quiz selesai.</p>
+    </div>
+</div>
+
+<div class="container py-4">
+    <!-- HALAMAN IDENTITAS -->
+    <div id="halamanIdentitas">
+        <div class="quiz-card">
+            <div class="text-center mb-4">
+                <div class="logo-box">
+                    <img src="assets/logo.png" alt="Logo Sekolah" onerror="this.style.display='none'">
+                </div>
+                <h1 class="fw-bold text-primary mt-3">
+                    <i class="fa-solid fa-network-wired"></i> Quiz TKA TJKT SMK
+                </h1>
+                <p class="text-muted">Teknik Jaringan Komputer dan Telekomunikasi – Jenjang SMK</p>
+            </div>
+            <div class="alert alert-info">
+                <i class="fa-solid fa-circle-info"></i> Silakan isi identitas sebelum memulai quiz.
+            </div>
+            <form id="formIdentitas">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nama Siswa</label>
+                    <input type="text" id="nama" class="form-control form-control-lg" placeholder="Masukkan nama lengkap" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Asal Sekolah</label>
+                    <input type="text" id="sekolah" class="form-control form-control-lg" placeholder="Contoh: SMKN 1 Contoh" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Kelas</label>
+                    <input type="text" id="kelas" class="form-control form-control-lg" placeholder="Contoh: XII-TJKT 1" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Nomor Peserta</label>
+                    <input type="text" id="nomor" class="form-control form-control-lg" placeholder="Opsional">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                    <i class="fa-solid fa-play"></i> Mulai Quiz
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HALAMAN QUIZ -->
+    <div id="halamanQuiz" class="hidden">
+        <div class="quiz-card">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <div>
+                    <h4 class="fw-bold text-primary mb-1">Quiz TKA TJKT SMK</h4>
+                    <div class="text-muted"><i class="fa-solid fa-user"></i> <span id="namaTampil"></span></div>
+                </div>
+                <div class="badge bg-primary fs-6 p-2"><span id="nomorSoal">1</span></div>
+            </div>
+            <div class="progress mb-4"><div id="progressBar" class="progress-bar" style="width: 0%"></div></div>
+            <div id="petunjuk" class="alert alert-warning small"></div>
+            <div class="question-box mb-4"><h5 id="pertanyaan" class="fw-bold mb-0"></h5></div>
+            <div id="containerJawaban"></div>
+            <div class="d-flex justify-content-between mt-4 gap-2">
+                <button id="btnSebelumnya" type="button" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-arrow-left"></i> Sebelumnya
+                </button>
+                <button id="btnBerikutnya" type="button" class="btn btn-primary">
+                    Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button id="btnSelesai" type="button" class="btn btn-success hidden">
+                    <i class="fa-solid fa-check"></i> Selesai
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN HASIL -->
+    <div id="halamanHasil" class="hidden">
+        <div class="quiz-card text-center">
+            <div class="mb-3"><i class="fa-solid fa-circle-check text-success" style="font-size:70px"></i></div>
+            <h2 class="fw-bold">Quiz Selesai</h2>
+            <p class="text-muted">Berikut hasil pengerjaan:</p>
+            <div id="hasilNama" class="fw-bold fs-5"></div>
+            <div id="hasilSekolah" class="text-muted"></div>
+            <div id="hasilKelas" class="text-muted mb-3"></div>
+            <div class="result-score"><span id="nilaiAkhir">0</span></div>
+            <div id="statusHasil" class="badge fs-5 p-2 mb-4"></div>
+            <div class="row g-3 text-start mb-4">
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">Skor</div><strong id="skorHasil">0</strong></div></div>
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">Skor Maksimal</div><strong id="maksimalHasil">0</strong></div></div>
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">KKM</div><strong id="kkmHasil">70</strong></div></div>
+            </div>
+            <div class="d-grid gap-2">
+                <button id="btnShareWA" class="btn btn-success btn-lg">
+                    <i class="fa-brands fa-whatsapp"></i> Share ke WhatsApp
+                </button>
+                <button id="btnUlangi" class="btn btn-primary btn-lg">
+                    <i class="fa-solid fa-rotate"></i> Ulangi Quiz
+                </button>
+                <button id="btnBeranda" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-house"></i> Kembali
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+/* =========================================================
+   DATA QUIZ - TEKNIK JARINGAN KOMPUTER DAN TELEKOMUNIKASI SMK
+   ========================================================= */
+const DATA_QUIZ = {
+    judul: "Quiz TKA TJKT SMK",
+    mapel: "Teknik Jaringan Komputer dan Telekomunikasi",
+    jenjang: "SMK",
+    kkm: 70,
+    acak_soal: true,
+    acak_opsi: true,
+    soal: [
+        // ===== PROFESI/JABATAN DI BIDANG TJKT =====
+        {
+            id: 1,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Profesi yang bertugas merancang, membangun, dan memelihara jaringan komputer di suatu perusahaan adalah ...",
+            opsi: [
+                "Network Engineer",
+                "Web Developer",
+                "Graphic Designer",
+                "Data Entry"
+            ],
+            jawaban: "Network Engineer"
+        },
+        {
+            id: 2,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Profesi yang bertugas menangani masalah teknis komputer pengguna disebut ...",
+            opsi: [
+                "IT Support",
+                "Programmer",
+                "Database Administrator",
+                "UI/UX Designer"
+            ],
+            jawaban: "IT Support"
+        },
+        {
+            id: 3,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Profesi yang bertugas mengelola dan mengamankan data perusahaan disebut ...",
+            opsi: [
+                "Database Administrator",
+                "Network Engineer",
+                "Graphic Designer",
+                "Content Creator"
+            ],
+            jawaban: "Database Administrator"
+        },
+        {
+            id: 4,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua profesi yang termasuk bidang TJKT.",
+            opsi: [
+                "Network Engineer",
+                "IT Support",
+                "Teknisi Fiber Optik",
+                "Chef"
+            ],
+            jawaban: [
+                "Network Engineer",
+                "IT Support",
+                "Teknisi Fiber Optik"
+            ]
+        },
+
+        // ===== PROSES BISNIS, BUDAYA KERJA =====
+        {
+            id: 5,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Alur kerja layanan jaringan yang benar dalam proses bisnis TJKT adalah ...",
+            opsi: [
+                "Perencanaan → Instalasi → Konfigurasi → Pengujian → Pemeliharaan",
+                "Instalasi → Perencanaan → Pemeliharaan → Pengujian",
+                "Pemeliharaan → Instalasi → Konfigurasi",
+                "Pengujian → Perencanaan → Instalasi"
+            ],
+            jawaban: "Perencanaan → Instalasi → Konfigurasi → Pengujian → Pemeliharaan"
+        },
+        {
+            id: 6,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Budaya kerja di industri TJKT yang harus dimiliki teknisi adalah ...",
+            opsi: [
+                "Disiplin, teliti, dan bertanggung jawab",
+                "Bekerja sesuka hati",
+                "Mengabaikan SOP",
+                "Menunda pekerjaan"
+            ],
+            jawaban: "Disiplin, teliti, dan bertanggung jawab"
+        },
+        {
+            id: 7,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Contoh etos kerja yang tinggi di bidang TJKT adalah ...",
+            opsi: [
+                "Menyelesaikan pekerjaan sesuai target dan standar",
+                "Menunda pekerjaan hingga besok",
+                "Bekerja tanpa persiapan",
+                "Mengabaikan permintaan klien"
+            ],
+            jawaban: "Menyelesaikan pekerjaan sesuai target dan standar"
+        },
+        {
+            id: 8,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Perkembangan industri TJKT saat ini didorong oleh ...",
+            opsi: [
+                "Kebutuhan konektivitas internet yang cepat dan stabil",
+                "Penurunan penggunaan internet",
+                "Berkurangnya pengguna smartphone",
+                "Melemahnya teknologi digital"
+            ],
+            jawaban: "Kebutuhan konektivitas internet yang cepat dan stabil"
+        },
+
+        // ===== PERANGKAT KERAS & SISTEM OPERASI JARINGAN =====
+        {
+            id: 9,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Perangkat jaringan yang berfungsi menghubungkan beberapa komputer dalam satu jaringan lokal adalah ...",
+            opsi: ["Switch", "Printer", "Monitor", "Keyboard"],
+            jawaban: "Switch"
+        },
+        {
+            id: 10,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Perangkat jaringan yang berfungsi meneruskan paket data antarjaringan berbeda adalah ...",
+            opsi: ["Router", "Hub", "Switch", "Repeater"],
+            jawaban: "Router"
+        },
+        {
+            id: 11,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sistem operasi yang paling banyak digunakan pada server jaringan adalah ...",
+            opsi: ["Linux Server", "Windows 10 Home", "macOS Mojave", "Android"],
+            jawaban: "Linux Server"
+        },
+        {
+            id: 12,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Layanan jaringan yang berfungsi memberikan alamat IP secara otomatis ke komputer client adalah ...",
+            opsi: ["DHCP", "DNS", "FTP", "SMTP"],
+            jawaban: "DHCP"
+        },
+        {
+            id: 13,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Layanan jaringan yang berfungsi menerjemahkan nama domain menjadi alamat IP adalah ...",
+            opsi: ["DNS", "DHCP", "HTTP", "SMTP"],
+            jawaban: "DNS"
+        },
+        {
+            id: 14,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua perangkat keras jaringan.",
+            opsi: [
+                "Router",
+                "Switch",
+                "Access Point",
+                "Speaker"
+            ],
+            jawaban: [
+                "Router",
+                "Switch",
+                "Access Point"
+            ]
+        },
+
+        // ===== K3LH & BUDAYA KERJA =====
+        {
+            id: 15,
+            tipe: "pilihan_ganda",
+            pertanyaan: "APD yang harus digunakan teknisi saat bekerja di ketinggian pemasangan jaringan adalah ...",
+            opsi: [
+                "Helm proyek, safety belt, dan sarung tangan",
+                "Topi biasa dan sandal",
+                "Kacamata renang",
+                "Jas hujan"
+            ],
+            jawaban: "Helm proyek, safety belt, dan sarung tangan"
+        },
+        {
+            id: 16,
+            tipe: "pilihan_ganda",
+            pertanyaan: "K3LH dalam bidang TJKT bertujuan untuk ...",
+            opsi: [
+                "Menjamin keselamatan, kesehatan, dan kelestarian lingkungan kerja",
+                "Meningkatkan risiko kerja",
+                "Mengurangi kualitas kerja",
+                "Memperlambat pekerjaan"
+            ],
+            jawaban: "Menjamin keselamatan, kesehatan, dan kelestarian lingkungan kerja"
+        },
+        {
+            id: 17,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Contoh manajemen waktu yang efisien dalam menyelesaikan pekerjaan TJKT adalah ...",
+            opsi: [
+                "Membuat jadwal kerja dan menyelesaikan tugas sesuai prioritas",
+                "Mengerjakan semuanya sekaligus tanpa rencana",
+                "Menunda pekerjaan sampai deadline",
+                "Bermain game saat jam kerja"
+            ],
+            jawaban: "Membuat jadwal kerja dan menyelesaikan tugas sesuai prioritas"
+        },
+        {
+            id: 18,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kepedulian terhadap lingkungan kerja di bidang TJKT diwujudkan dengan ...",
+            opsi: [
+                "Membuang limbah kabel dan komponen elektronik ke tempat daur ulang",
+                "Membuang kabel bekas ke sungai",
+                "Membakar komponen bekas sembarangan",
+                "Membuang sampah elektronik ke tempat sampah biasa"
+            ],
+            jawaban: "Membuang limbah kabel dan komponen elektronik ke tempat daur ulang"
+        },
+
+        // ===== MEDIA TRANSMISI =====
+        {
+            id: 19,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kabel UTP kategori 6 (Cat 6) mendukung kecepatan data hingga ...",
+            opsi: ["1 Gbps", "100 Mbps", "10 Mbps", "100 Gbps"],
+            jawaban: "1 Gbps"
+        },
+        {
+            id: 20,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kabel fiber optik memiliki kelebihan dibandingkan kabel tembaga karena ...",
+            opsi: [
+                "Kecepatan data lebih tinggi dan tahan terhadap gangguan elektromagnetik",
+                "Harganya lebih murah",
+                "Lebih mudah dipasang",
+                "Lebih lentur"
+            ],
+            jawaban: "Kecepatan data lebih tinggi dan tahan terhadap gangguan elektromagnetik"
+        },
+        {
+            id: 21,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kabel STP (Shielded Twisted Pair) berbeda dari UTP karena ...",
+            opsi: [
+                "Memiliki pelindung (shield) untuk mengurangi interferensi elektromagnetik",
+                "Tidak memiliki pelindung",
+                "Lebih murah dari UTP",
+                "Tidak dapat digunakan di jaringan"
+            ],
+            jawaban: "Memiliki pelindung (shield) untuk mengurangi interferensi elektromagnetik"
+        },
+        {
+            id: 22,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Konektor yang digunakan untuk kabel UTP pada jaringan komputer adalah ...",
+            opsi: ["RJ-45", "BNC", "ST", "SC"],
+            jawaban: "RJ-45"
+        },
+        {
+            id: 23,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua media transmisi yang digunakan dalam jaringan telekomunikasi.",
+            opsi: [
+                "Kabel UTP",
+                "Kabel Fiber Optik",
+                "Wireless (WiFi)",
+                "Kabel Listrik PLN"
+            ],
+            jawaban: [
+                "Kabel UTP",
+                "Kabel Fiber Optik",
+                "Wireless (WiFi)"
+            ]
+        },
+
+        // ===== TOPOLOGI & ARSITEKTUR JARINGAN =====
+        {
+            id: 24,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kelebihan topologi star adalah ...",
+            opsi: [
+                "Jika satu kabel rusak, hanya komputer tersebut yang terganggu",
+                "Jika satu kabel rusak, seluruh jaringan lumpuh",
+                "Tidak memerlukan switch",
+                "Lebih murah dari topologi lain"
+            ],
+            jawaban: "Jika satu kabel rusak, hanya komputer tersebut yang terganggu"
+        },
+        {
+            id: 25,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kekurangan topologi bus adalah ...",
+            opsi: [
+                "Jika kabel utama rusak, seluruh jaringan lumpuh",
+                "Tidak dapat digunakan di jaringan kecil",
+                "Membutuhkan banyak kabel",
+                "Membutuhkan switch mahal"
+            ],
+            jawaban: "Jika kabel utama rusak, seluruh jaringan lumpuh"
+        },
+        {
+            id: 26,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Topologi mesh memiliki kelebihan pada ...",
+            opsi: [
+                "Redundansi tinggi karena setiap node terhubung ke node lain",
+                "Biaya kabel paling murah",
+                "Kemudahan instalasi",
+                "Tidak memerlukan perangkat jaringan"
+            ],
+            jawaban: "Redundansi tinggi karena setiap node terhubung ke node lain"
+        },
+        {
+            id: 27,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Arsitektur jaringan client-server memiliki ciri ...",
+            opsi: [
+                "Ada server yang melayani permintaan client",
+                "Semua komputer memiliki peran sama",
+                "Tidak ada pengaturan data terpusat",
+                "Tidak memerlukan sistem operasi jaringan"
+            ],
+            jawaban: "Ada server yang melayani permintaan client"
+        },
+
+        // ===== MODEL OSI / TCP-IP =====
+        {
+            id: 28,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Model OSI terdiri atas ...",
+            opsi: ["7 layer", "4 layer", "5 layer", "3 layer"],
+            jawaban: "7 layer"
+        },
+        {
+            id: 29,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Model TCP/IP terdiri atas ...",
+            opsi: ["4 layer", "7 layer", "5 layer", "3 layer"],
+            jawaban: "4 layer"
+        },
+        {
+            id: 30,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Layer pada model OSI yang bertanggung jawab atas pengalamatan IP dan routing adalah ...",
+            opsi: ["Network layer", "Transport layer", "Session layer", "Application layer"],
+            jawaban: "Network layer"
+        },
+        {
+            id: 31,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Layer pada model OSI yang bertanggung jawab atas pengiriman data antarhost dan flow control adalah ...",
+            opsi: ["Transport layer", "Network layer", "Physical layer", "Data link layer"],
+            jawaban: "Transport layer"
+        },
+        {
+            id: 32,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua layer yang terdapat dalam model OSI.",
+            opsi: [
+                "Physical",
+                "Data Link",
+                "Network",
+                "Browser"
+            ],
+            jawaban: [
+                "Physical",
+                "Data Link",
+                "Network"
+            ]
+        },
+
+        // ===== ALAT UKUR JARINGAN =====
+        {
+            id: 33,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Alat ukur jaringan yang berfungsi menguji kabel UTP apakah sudah benar urutan pin-nya adalah ...",
+            opsi: ["LAN Tester", "Multimeter", "OTDR", "Spectrum Analyzer"],
+            jawaban: "LAN Tester"
+        },
+        {
+            id: 34,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Alat ukur yang digunakan untuk mengukur kualitas dan titik gangguan pada kabel fiber optik adalah ...",
+            opsi: ["OTDR", "LAN Tester", "Multimeter", "Crimping tool"],
+            jawaban: "OTDR"
+        },
+        {
+            id: 35,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Alat ukur yang berfungsi mengukur tegangan, arus, dan hambatan listrik adalah ...",
+            opsi: ["Multimeter", "LAN Tester", "OTDR", "Light meter"],
+            jawaban: "Multimeter"
+        },
+        {
+            id: 36,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Alat yang digunakan untuk mengukur kekuatan sinyal WiFi di suatu area adalah ...",
+            opsi: ["WiFi Analyzer", "OTDR", "LAN Tester", "Multimeter"],
+            jawaban: "WiFi Analyzer"
+        },
+        {
+            id: 37,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua alat ukur jaringan.",
+            opsi: [
+                "LAN Tester",
+                "OTDR",
+                "Multimeter",
+                "Palu"
+            ],
+            jawaban: [
+                "LAN Tester",
+                "OTDR",
+                "Multimeter"
+            ]
+        },
+
+        // ===== PEMELIHARAAN ALAT UKUR =====
+        {
+            id: 38,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Prosedur pemeliharaan alat ukur jaringan yang benar adalah ...",
+            opsi: [
+                "Membersihkan, menyimpan di tempat kering, dan mengkalibrasi secara berkala",
+                "Menyimpan alat di tempat lembab",
+                "Membiarkan alat kotor",
+                "Menjatuhkan alat dari ketinggian"
+            ],
+            jawaban: "Membersihkan, menyimpan di tempat kering, dan mengkalibrasi secara berkala"
+        },
+        {
+            id: 39,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Faktor lingkungan yang dapat mempengaruhi fungsionalitas alat ukur jaringan adalah ...",
+            opsi: [
+                "Suhu ekstrem, kelembapan tinggi, dan debu",
+                "Warna ruangan",
+                "Jumlah kursi di ruangan",
+                "Nama teknisi"
+            ],
+            jawaban: "Suhu ekstrem, kelembapan tinggi, dan debu"
+        },
+        {
+            id: 40,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Penyimpanan alat ukur jaringan yang benar dilakukan di ...",
+            opsi: [
+                "Tempat kering, bersih, dan jauh dari medan magnet",
+                "Tempat lembab dan berdebu",
+                "Dekat sumber panas",
+                "Di lantai bengkel"
+            ],
+            jawaban: "Tempat kering, bersih, dan jauh dari medan magnet"
+        },
+        {
+            id: 41,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kalibrasi alat ukur jaringan bertujuan untuk ...",
+            opsi: [
+                "Memastikan akurasi dan validitas hasil pengukuran",
+                "Mengubah fungsi alat",
+                "Mempercepat kerusakan alat",
+                "Mengurangi akurasi"
+            ],
+            jawaban: "Memastikan akurasi dan validitas hasil pengukuran"
+        },
+
+        // ===== BENAR SALAH KOMPLEKS =====
+        {
+            id: 42,
+            tipe: "benar_salah_kompleks",
+            pertanyaan: "Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+            pernyataan: [
+                {
+                    teks: "Kabel fiber optik lebih tahan terhadap gangguan elektromagnetik dibandingkan kabel UTP.",
+                    jawaban: "Benar"
+                },
+                {
+                    teks: "Model OSI terdiri atas 5 layer.",
+                    jawaban: "Salah"
+                },
+                {
+                    teks: "DHCP berfungsi memberikan alamat IP secara otomatis kepada client.",
+                    jawaban: "Benar"
+                },
+                {
+                    teks: "Alat ukur jaringan dapat disimpan di tempat lembab.",
+                    jawaban: "Salah"
+                }
+            ]
+        }
+    ]
+};
+
+/* =========================================================
+   VARIABEL GLOBAL
+   ========================================================= */
+let daftarSoal = [];
+let jawabanSiswa = [];
+let nomorSoalSekarang = 0;
+let dataSiswa = {};
+let quizSelesai = false;
+let warningAktif = false;
+let countdownInterval = null;
+let audioLoopInterval = null;
+
+/* =========================================================
+   FUNGSI SUARA PERINGATAN
+   ========================================================= */
+function buatTit(freq = 1200, durasi = 0.18) {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.35, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + durasi);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + durasi);
+        setTimeout(() => ctx.close(), (durasi + 0.2) * 1000);
+    } catch (e) {}
+}
+
+function bunyiPeringatan() {
+    buatTit(1200, 0.18);
+    setTimeout(() => buatTit(1200, 0.18), 220);
+    setTimeout(() => buatTit(1200, 0.18), 440);
+}
+
+function mulaiLoopPeringatan() {
+    if (audioLoopInterval) clearInterval(audioLoopInterval);
+    bunyiPeringatan();
+    audioLoopInterval = setInterval(bunyiPeringatan, 1000);
+}
+
+function hentikanLoopPeringatan() {
+    if (audioLoopInterval) {
+        clearInterval(audioLoopInterval);
+        audioLoopInterval = null;
+    }
+}
+
+/* =========================================================
+   FUNGSI ACAK & ESCAPE
+   ========================================================= */
+function acakArray(array) {
+    const hasil = [...array];
+    for (let i = hasil.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [hasil[i], hasil[j]] = [hasil[j], hasil[i]];
+    }
+    return hasil;
+}
+
+function escapeHTML(text) {
+    if (text === null || text === undefined) return "";
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+/* =========================================================
+   DETEKSI KELUAR HALAMAN
+   ========================================================= */
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden && !quizSelesai && !warningAktif) {
+        tampilkanPeringatan();
+    }
+});
+
+window.addEventListener('beforeunload', function(e) {
+    if (!quizSelesai) {
+        bunyiPeringatan();
+        e.preventDefault();
+        e.returnValue = 'Apakah Anda yakin ingin keluar? Quiz akan direset.';
+        return e.returnValue;
+    }
+});
+
+document.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (link && link.target === '_blank' && !quizSelesai && !warningAktif) {
+        e.preventDefault();
+        tampilkanPeringatan();
+    }
+});
+
+/* =========================================================
+   TAMPILKAN PERINGATAN (10 DETIK)
+   ========================================================= */
+function tampilkanPeringatan() {
+    if (warningAktif || quizSelesai) return;
+    warningAktif = true;
+
+    const overlay = document.getElementById('warningOverlay');
+    overlay.classList.remove('hidden');
+
+    let detik = 10;
+    document.getElementById('countdownDetik').textContent = detik;
+
+    mulaiLoopPeringatan();
+
+    countdownInterval = setInterval(() => {
+        detik--;
+        document.getElementById('countdownDetik').textContent = detik;
+
+        if (detik <= 0) {
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+            hentikanLoopPeringatan();
+            resetKeAwal();
+        }
+    }, 1000);
+}
+
+/* =========================================================
+   RESET KE AWAL
+   ========================================================= */
+function resetKeAwal() {
+    hentikanLoopPeringatan();
+    warningAktif = false;
+    document.getElementById('warningOverlay').classList.add('hidden');
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+    }
+
+    nomorSoalSekarang = 0;
+    jawabanSiswa = [];
+    daftarSoal = [];
+    dataSiswa = {};
+    quizSelesai = false;
+
+    document.getElementById('halamanQuiz').classList.add('hidden');
+    document.getElementById('halamanHasil').classList.add('hidden');
+    document.getElementById('halamanIdentitas').classList.remove('hidden');
+
+    document.getElementById('formIdentitas').reset();
+    window.scrollTo(0, 0);
+}
+
+/* =========================================================
+   FORM IDENTITAS
+   ========================================================= */
+document.getElementById("formIdentitas").addEventListener("submit", function(event) {
+    event.preventDefault();
+    dataSiswa = {
+        nama: document.getElementById("nama").value.trim(),
+        sekolah: document.getElementById("sekolah").value.trim(),
+        kelas: document.getElementById("kelas").value.trim(),
+        nomor: document.getElementById("nomor").value.trim()
+    };
+    if (!dataSiswa.nama) { alert("Nama siswa wajib diisi."); return; }
+    if (!dataSiswa.sekolah) { alert("Asal sekolah wajib diisi."); return; }
+    if (!dataSiswa.kelas) { alert("Kelas wajib diisi."); return; }
+    mulaiQuiz();
+});
+
+/* =========================================================
+   MULAI QUIZ
+   ========================================================= */
+function mulaiQuiz() {
+    daftarSoal = DATA_QUIZ.soal.map(function(soal) {
+        const salinan = { ...soal };
+        if (Array.isArray(soal.opsi)) salinan.opsi = [...soal.opsi];
+        if (Array.isArray(soal.pernyataan)) salinan.pernyataan = soal.pernyataan.map(item => ({ ...item }));
+        return salinan;
+    });
+
+    if (DATA_QUIZ.acak_soal) daftarSoal = acakArray(daftarSoal);
+    if (DATA_QUIZ.acak_opsi) {
+        daftarSoal.forEach(function(soal) {
+            if (soal.tipe === "pilihan_ganda" || soal.tipe === "pilihan_ganda_kompleks") {
+                soal.opsi = acakArray(soal.opsi);
+            }
+        });
+    }
+
+    jawabanSiswa = daftarSoal.map(function(soal) {
+        if (soal.tipe === "pilihan_ganda_kompleks") return [];
+        if (soal.tipe === "benar_salah_kompleks") return [];
+        return null;
+    });
+
+    document.getElementById("namaTampil").textContent = dataSiswa.nama;
+    document.getElementById("halamanIdentitas").classList.add("hidden");
+    document.getElementById("halamanQuiz").classList.remove("hidden");
+
+    quizSelesai = false;
+    tampilkanSoal();
+}
+
+/* =========================================================
+   TAMPILKAN SOAL
+   ========================================================= */
+function tampilkanSoal() {
+    const soal = daftarSoal[nomorSoalSekarang];
+    if (!soal) return;
+
+    document.getElementById("nomorSoal").textContent = "Soal " + (nomorSoalSekarang + 1) + " / " + daftarSoal.length;
+    document.getElementById("pertanyaan").textContent = soal.pertanyaan;
+
+    const persen = ((nomorSoalSekarang + 1) / daftarSoal.length) * 100;
+    document.getElementById("progressBar").style.width = persen + "%";
+
+    let petunjuk = "";
+    if (soal.tipe === "pilihan_ganda") petunjuk = "Pilih satu jawaban yang paling tepat.";
+    else if (soal.tipe === "pilihan_ganda_kompleks") petunjuk = "Pilih semua jawaban yang benar.";
+    else if (soal.tipe === "benar_salah_kompleks") petunjuk = "Tentukan Benar atau Salah untuk setiap pernyataan.";
+    document.getElementById("petunjuk").textContent = petunjuk;
+
+    const container = document.getElementById("containerJawaban");
+    container.innerHTML = "";
+
+    if (soal.tipe === "pilihan_ganda") {
+        soal.opsi.forEach(function(opsi, index) {
+            const id = "opsi_" + nomorSoalSekarang + "_" + index;
+            const checked = jawabanSiswa[nomorSoalSekarang] === opsi ? "checked" : "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="form-check answer-option mb-3">
+                    <input class="form-check-input" type="radio" name="jawaban" id="${id}" value="${escapeHTML(opsi)}" ${checked}>
+                    <label class="form-check-label w-100" for="${id}">
+                        <strong>${String.fromCharCode(65 + index)}.</strong> ${escapeHTML(opsi)}
+                    </label>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[name="jawaban"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                jawabanSiswa[nomorSoalSekarang] = this.value;
+            });
+        });
+    }
+    else if (soal.tipe === "pilihan_ganda_kompleks") {
+        const jawabanSebelumnya = Array.isArray(jawabanSiswa[nomorSoalSekarang]) ? jawabanSiswa[nomorSoalSekarang] : [];
+        soal.opsi.forEach(function(opsi, index) {
+            const id = "kompleks_" + nomorSoalSekarang + "_" + index;
+            const checked = jawabanSebelumnya.includes(opsi) ? "checked" : "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="form-check answer-option mb-3">
+                    <input class="form-check-input" type="checkbox" name="jawabanKompleks" id="${id}" value="${escapeHTML(opsi)}" ${checked}>
+                    <label class="form-check-label w-100" for="${id}">
+                        <strong>${String.fromCharCode(65 + index)}.</strong> ${escapeHTML(opsi)}
+                    </label>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[name="jawabanKompleks"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                jawabanSiswa[nomorSoalSekarang] = Array.from(
+                    container.querySelectorAll('input[name="jawabanKompleks"]:checked')
+                ).map(item => item.value);
+            });
+        });
+    }
+    else if (soal.tipe === "benar_salah_kompleks") {
+        const jawabanSebelumnya = Array.isArray(jawabanSiswa[nomorSoalSekarang]) ? jawabanSiswa[nomorSoalSekarang] : [];
+        soal.pernyataan.forEach(function(item, index) {
+            const jawaban = jawabanSebelumnya[index] || "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="statement-box">
+                    <div class="fw-semibold mb-3">${index + 1}. ${escapeHTML(item.teks)}</div>
+                    <div class="d-flex gap-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="bs_${index}" id="benar_${index}" value="Benar" ${jawaban === "Benar" ? "checked" : ""}>
+                            <label class="form-check-label" for="benar_${index}">
+                                <i class="fa-solid fa-check text-success"></i> Benar
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="bs_${index}" id="salah_${index}" value="Salah" ${jawaban === "Salah" ? "checked" : ""}>
+                            <label class="form-check-label" for="salah_${index}">
+                                <i class="fa-solid fa-xmark text-danger"></i> Salah
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[type="radio"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                const bagian = this.name.split("_");
+                const index = parseInt(bagian[1]);
+                if (!Array.isArray(jawabanSiswa[nomorSoalSekarang])) jawabanSiswa[nomorSoalSekarang] = [];
+                jawabanSiswa[nomorSoalSekarang][index] = this.value;
+            });
+        });
+    }
+    updateNavigasi();
+}
+
+/* =========================================================
+   NAVIGASI
+   ========================================================= */
+function updateNavigasi() {
+    const sebelumnya = document.getElementById("btnSebelumnya");
+    const berikutnya = document.getElementById("btnBerikutnya");
+    const selesai = document.getElementById("btnSelesai");
+
+    sebelumnya.disabled = nomorSoalSekarang === 0;
+
+    if (nomorSoalSekarang === daftarSoal.length - 1) {
+        berikutnya.classList.add("hidden");
+        selesai.classList.remove("hidden");
+    } else {
+        berikutnya.classList.remove("hidden");
+        selesai.classList.add("hidden");
+    }
+}
+
+document.getElementById("btnSebelumnya").addEventListener("click", function() {
+    if (nomorSoalSekarang > 0) {
+        nomorSoalSekarang--;
+        tampilkanSoal();
+        window.scrollTo(0, 0);
+    }
+});
+
+document.getElementById("btnBerikutnya").addEventListener("click", function() {
+    if (nomorSoalSekarang < daftarSoal.length - 1) {
+        nomorSoalSekarang++;
+        tampilkanSoal();
+        window.scrollTo(0, 0);
+    }
+});
+
+document.getElementById("btnSelesai").addEventListener("click", function() {
+    if (!confirm("Apakah Anda yakin ingin menyelesaikan quiz?")) return;
+    hitungNilai();
+});
+
+/* =========================================================
+   HITUNG NILAI
+   ========================================================= */
+function hitungNilai() {
+    let totalSkor = 0;
+    let totalMaksimal = 0;
+
+    daftarSoal.forEach(function(soal, index) {
+        const jawaban = jawabanSiswa[index];
+        if (soal.tipe === "pilihan_ganda") {
+            totalMaksimal += 1;
+            if (jawaban === soal.jawaban) totalSkor += 1;
+        } else if (soal.tipe === "pilihan_ganda_kompleks") {
+            totalMaksimal += 1;
+            const benar = [...soal.jawaban].sort();
+            const dipilih = Array.isArray(jawaban) ? [...jawaban].sort() : [];
+            if (JSON.stringify(benar) === JSON.stringify(dipilih)) totalSkor += 1;
+        } else if (soal.tipe === "benar_salah_kompleks") {
+            totalMaksimal += soal.pernyataan.length;
+            soal.pernyataan.forEach(function(item, i) {
+                if (jawaban && jawaban[i] === item.jawaban) totalSkor += 1;
+            });
+        }
+    });
+
+    const nilai = totalMaksimal > 0 ? Math.round((totalSkor / totalMaksimal) * 100) : 0;
+    const tuntas = nilai >= DATA_QUIZ.kkm;
+
+    document.getElementById("nilaiAkhir").textContent = nilai;
+    document.getElementById("hasilNama").textContent = dataSiswa.nama;
+    document.getElementById("hasilSekolah").textContent = dataSiswa.sekolah;
+    document.getElementById("hasilKelas").textContent = "Kelas " + dataSiswa.kelas;
+    document.getElementById("skorHasil").textContent = totalSkor;
+    document.getElementById("maksimalHasil").textContent = totalMaksimal;
+    document.getElementById("kkmHasil").textContent = DATA_QUIZ.kkm;
+
+    const status = document.getElementById("statusHasil");
+    status.textContent = tuntas ? "TUNTAS" : "BELUM TUNTAS";
+    status.className = tuntas ? "badge bg-success fs-5 p-2 mb-4" : "badge bg-danger fs-5 p-2 mb-4";
+
+    document.getElementById("halamanQuiz").classList.add("hidden");
+    document.getElementById("halamanHasil").classList.remove("hidden");
+
+    quizSelesai = true;
+    window.scrollTo(0, 0);
+}
+
+/* =========================================================
+   SHARE KE WHATSAPP (CHAT BARU - PILIH KONTAK SENDIRI)
+   ========================================================= */
+document.getElementById("btnShareWA").addEventListener("click", function() {
+    const nama = dataSiswa.nama || "-";
+    const sekolah = dataSiswa.sekolah || "-";
+    const kelas = dataSiswa.kelas || "-";
+    const nilai = document.getElementById("nilaiAkhir").textContent;
+    const status = document.getElementById("statusHasil").textContent;
+
+    const pesan =
+        "Selamat sore,\n" +
+        "Saya sudah menyelesaikan tugas mengikuti latihan/trayout TKA berikut ini scrensotnya\n\n" +
+        "━━━━━━━━━━━━━━━━━━\n" +
+        "📋 *HASIL TKA " + DATA_QUIZ.mapel.toUpperCase() + " " + DATA_QUIZ.jenjang + "*\n" +
+        "━━━━━━━━━━━━━━━━━━\n" +
+        "👤 Nama    : " + nama + "\n" +
+        "🏫 Sekolah : " + sekolah + "\n" +
+        "🎓 Kelas   : " + kelas + "\n" +
+        "📊 Nilai   : " + nilai + "\n" +
+        "✅ Status  : " + status + "\n" +
+        "━━━━━━━━━━━━━━━━━━\n\n" +
+        "📎 Screenshot hasil terlampir.";
+
+    const url = "https://wa.me/?text=" + encodeURIComponent(pesan);
+    window.open(url, "_blank");
+});
+
+/* =========================================================
+   ULANGI & KEMBALI
+   ========================================================= */
+document.getElementById("btnUlangi").addEventListener("click", function() {
+    nomorSoalSekarang = 0;
+    jawabanSiswa = [];
+    quizSelesai = false;
+    document.getElementById("halamanHasil").classList.add("hidden");
+    document.getElementById("halamanIdentitas").classList.remove("hidden");
+    document.getElementById("nama").value = dataSiswa.nama;
+    document.getElementById("sekolah").value = dataSiswa.sekolah;
+    document.getElementById("kelas").value = dataSiswa.kelas;
+    document.getElementById("nomor").value = dataSiswa.nomor;
+});
+
+document.getElementById("btnBeranda").addEventListener("click", function() {
+    quizSelesai = true;
+    hentikanLoopPeringatan();
+    location.reload();
+});
+</script>
+</body>
+</html>
