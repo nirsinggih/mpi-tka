@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz TKA Bahasa Arab SMA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #eef5ff, #fff8e6);
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .quiz-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+            margin-bottom: 25px;
+        }
+        .logo-box {
+            width: 90px;
+            height: 90px;
+            margin: auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .answer-option {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .answer-option:hover {
+            border-color: #0d6efd;
+            background: #f0f7ff;
+        }
+        .answer-option:has(input:checked) {
+            border-color: #0d6efd;
+            background: #eaf3ff;
+        }
+        .answer-option label { cursor: pointer; }
+        .question-box {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 22px;
+            border-left: 5px solid #0d6efd;
+            white-space: pre-line;
+        }
+        .progress { height: 10px; border-radius: 20px; }
+        .result-score {
+            font-size: 70px;
+            font-weight: bold;
+            color: #0d6efd;
+        }
+        .hidden { display: none !important; }
+        .statement-box {
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #ffffff;
+        }
+        @media (max-width: 576px) {
+            .quiz-card { padding: 20px; border-radius: 15px; }
+            .result-score { font-size: 55px; }
+        }
+
+        #warningOverlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            animation: kedip 0.6s infinite alternate;
+        }
+        @keyframes kedip {
+            from { background: rgba(0, 0, 0, 0.9); }
+            to   { background: rgba(120, 0, 0, 0.95); }
+        }
+        #warningOverlay .box {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            border: 3px solid #ef4444;
+        }
+        #warningOverlay h2 { color: #f87171; }
+        #warningOverlay .countdown {
+            font-size: 80px;
+            font-weight: bold;
+            color: #fbbf24;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Overlay Peringatan -->
+<div id="warningOverlay" class="hidden">
+    <div class="box">
+        <h2><i class="fa-solid fa-triangle-exclamation"></i> PERINGATAN!</h2>
+        <p class="fs-5 mt-3">Anda terdeteksi keluar dari halaman quiz.</p>
+        <p>Halaman akan dikembalikan ke awal dalam</p>
+        <div class="countdown" id="countdownDetik">10</div>
+        <p class="text-muted small">Jangan tinggalkan halaman ini sebelum quiz selesai.</p>
+    </div>
+</div>
+
+<div class="container py-4">
+    <!-- HALAMAN IDENTITAS -->
+    <div id="halamanIdentitas">
+        <div class="quiz-card">
+            <div class="text-center mb-4">
+                <div class="logo-box">
+                    <img src="assets/logo.png" alt="Logo Sekolah" onerror="this.style.display='none'">
+                </div>
+                <h1 class="fw-bold text-primary mt-3">
+                    <i class="fa-solid fa-book-quran"></i> Quiz TKA Bahasa Arab SMA
+                </h1>
+                <p class="text-muted">Tes Kemampuan Akademik – Bahasa Arab Jenjang SMA</p>
+            </div>
+            <div class="alert alert-info">
+                <i class="fa-solid fa-circle-info"></i> Silakan isi identitas sebelum memulai quiz.
+            </div>
+            <form id="formIdentitas">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nama Siswa</label>
+                    <input type="text" id="nama" class="form-control form-control-lg" placeholder="Masukkan nama lengkap" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Asal Sekolah</label>
+                    <input type="text" id="sekolah" class="form-control form-control-lg" placeholder="Contoh: SMAN 1 Contoh" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Kelas</label>
+                    <input type="text" id="kelas" class="form-control form-control-lg" placeholder="Contoh: XII-MIPA 1" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Nomor Peserta</label>
+                    <input type="text" id="nomor" class="form-control form-control-lg" placeholder="Opsional">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                    <i class="fa-solid fa-play"></i> Mulai Quiz
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HALAMAN QUIZ -->
+    <div id="halamanQuiz" class="hidden">
+        <div class="quiz-card">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <div>
+                    <h4 class="fw-bold text-primary mb-1">Quiz TKA Bahasa Arab SMA</h4>
+                    <div class="text-muted"><i class="fa-solid fa-user"></i> <span id="namaTampil"></span></div>
+                </div>
+                <div class="badge bg-primary fs-6 p-2"><span id="nomorSoal">1</span></div>
+            </div>
+            <div class="progress mb-4"><div id="progressBar" class="progress-bar" style="width: 0%"></div></div>
+            <div id="petunjuk" class="alert alert-warning small"></div>
+            <div class="question-box mb-4"><h5 id="pertanyaan" class="fw-bold mb-0"></h5></div>
+            <div id="containerJawaban"></div>
+            <div class="d-flex justify-content-between mt-4 gap-2">
+                <button id="btnSebelumnya" type="button" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-arrow-left"></i> Sebelumnya
+                </button>
+                <button id="btnBerikutnya" type="button" class="btn btn-primary">
+                    Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button id="btnSelesai" type="button" class="btn btn-success hidden">
+                    <i class="fa-solid fa-check"></i> Selesai
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN HASIL -->
+    <div id="halamanHasil" class="hidden">
+        <div class="quiz-card text-center">
+            <div class="mb-3"><i class="fa-solid fa-circle-check text-success" style="font-size:70px"></i></div>
+            <h2 class="fw-bold">Quiz Selesai</h2>
+            <p class="text-muted">Berikut hasil pengerjaan:</p>
+            <div id="hasilNama" class="fw-bold fs-5"></div>
+            <div id="hasilSekolah" class="text-muted"></div>
+            <div id="hasilKelas" class="text-muted mb-3"></div>
+            <div class="result-score"><span id="nilaiAkhir">0</span></div>
+            <div id="statusHasil" class="badge fs-5 p-2 mb-4"></div>
+            <div class="row g-3 text-start mb-4">
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">Skor</div><strong id="skorHasil">0</strong></div></div>
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">Skor Maksimal</div><strong id="maksimalHasil">0</strong></div></div>
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">KKM</div><strong id="kkmHasil">70</strong></div></div>
+            </div>
+            <div class="d-grid gap-2">
+                <button id="btnShareWA" class="btn btn-success btn-lg">
+                    <i class="fa-brands fa-whatsapp"></i> Share ke WhatsApp
+                </button>
+                <button id="btnUlangi" class="btn btn-primary btn-lg">
+                    <i class="fa-solid fa-rotate"></i> Ulangi Quiz
+                </button>
+                <button id="btnBeranda" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-house"></i> Kembali
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+/* =========================================================
+   DATA QUIZ - BAHASA ARAB SMA
+   ========================================================= */
+const DATA_QUIZ = {
+    judul: "Quiz TKA Bahasa Arab SMA",
+    mapel: "Bahasa Arab",
+    jenjang: "SMA",
+    kkm: 70,
+    acak_soal: true,
+    acak_opsi: true,
+    soal: [
+        // ===== INFORMASI TERSURAT DALAM TEKS =====
+        {
+            id: 1,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Bacalah teks berikut:\n" +
+                "أَنَا طَالِبٌ فِي الْمَدْرَسَةِ الثَّانَوِيَّةِ. أَدْرُسُ اللُّغَةَ الْعَرَبِيَّةَ وَاللُّغَةَ الْإِنْجِلِيْزِيَّةَ.\n" +
+                "(Anā ṭālibun fī al-madrasah al-tsānawiyyah. Adrusu al-lughah al-'Arabiyyah wa al-lughah al-Injilīziyyah.)\n\n" +
+                "Apa yang dipelajari penulis menurut teks?",
+            opsi: [
+                "Bahasa Arab dan Bahasa Inggris",
+                "Bahasa Arab dan Bahasa Mandarin",
+                "Bahasa Inggris dan Bahasa Prancis",
+                "Bahasa Arab saja"
+            ],
+            jawaban: "Bahasa Arab dan Bahasa Inggris"
+        },
+        {
+            id: 2,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Bacalah teks berikut:\n" +
+                "أُسْرَتِي مُكَوَّنَةٌ مِنْ أَبِي وَأُمِّي وَأَخِي. أَبِي مُدَرِّسٌ وَأُمِّي طَبِيْبَةٌ.\n" +
+                "(Usratī mukawwanah min abī wa ummī wa akhī. Abī mudarrisun wa ummī ṭabībah.)\n\n" +
+                "Apa pekerjaan ayah penulis?",
+            opsi: ["Guru", "Dokter", "Polisi", "Insinyur"],
+            jawaban: "Guru"
+        },
+        {
+            id: 3,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Bacalah teks berikut:\n" +
+                "الْمَكْتَبَةُ فِي الْمَدْرَسَةِ كَبِيْرَةٌ وَفِيْهَا كُتُبٌ كَثِيْرَةٌ.\n" +
+                "(Al-maktabah fī al-madrasah kabīrah wa fīhā kutubun katsīrah.)\n\n" +
+                "Bagaimana kondisi perpustakaan menurut teks?",
+            opsi: [
+                "Besar dan banyak buku",
+                "Kecil dan sedikit buku",
+                "Besar tetapi kosong",
+                "Kecil tetapi rapi"
+            ],
+            jawaban: "Besar dan banyak buku"
+        },
+
+        // ===== SINONIM & ANTONIM =====
+        {
+            id: 4,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sinonim (الْمُرَادِف) dari كَبِيْرٌ adalah ...",
+            opsi: ["عَظِيْمٌ", "صَغِيْرٌ", "قَلِيْلٌ", "جَدِيْدٌ"],
+            jawaban: "عَظِيْمٌ"
+        },
+        {
+            id: 5,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Antonim (الْمُضَادّ) dari كَبِيْرٌ adalah ...",
+            opsi: ["صَغِيْرٌ", "عَظِيْمٌ", "جَمِيْلٌ", "طَوِيْلٌ"],
+            jawaban: "صَغِيْرٌ"
+        },
+        {
+            id: 6,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sinonim dari جَمِيْلٌ adalah ...",
+            opsi: ["حَسَنٌ", "قَبِيْحٌ", "سَيِّئٌ", "كَبِيْرٌ"],
+            jawaban: "حَسَنٌ"
+        },
+        {
+            id: 7,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Antonim dari طَوِيْلٌ adalah ...",
+            opsi: ["قَصِيْرٌ", "كَبِيْرٌ", "عَرِيْضٌ", "صَغِيْرٌ"],
+            jawaban: "قَصِيْرٌ"
+        },
+        {
+            id: 8,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Antonim dari جَدِيْدٌ adalah ...",
+            opsi: ["قَدِيْمٌ", "كَبِيْرٌ", "صَغِيْرٌ", "جَمِيْلٌ"],
+            jawaban: "قَدِيْمٌ"
+        },
+        {
+            id: 9,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua pasangan sinonim yang benar dalam bahasa Arab.",
+            opsi: [
+                "كَبِيْرٌ = عَظِيْمٌ",
+                "جَمِيْلٌ = حَسَنٌ",
+                "سَعِيْدٌ = فَرْحَانٌ",
+                "كَبِيْرٌ = صَغِيْرٌ"
+            ],
+            jawaban: [
+                "كَبِيْرٌ = عَظِيْمٌ",
+                "جَمِيْلٌ = حَسَنٌ",
+                "سَعِيْدٌ = فَرْحَانٌ"
+            ]
+        },
+
+        // ===== ARTI KOSAKATA (MUFRADAT) =====
+        {
+            id: 10,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Arti dari kata كِتَابٌ adalah ...",
+            opsi: ["Buku", "Pulpen", "Meja", "Kursi"],
+            jawaban: "Buku"
+        },
+        {
+            id: 11,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Arti dari kata مَدْرَسَةٌ adalah ...",
+            opsi: ["Sekolah", "Masjid", "Rumah sakit", "Pasar"],
+            jawaban: "Sekolah"
+        },
+        {
+            id: 12,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Arti dari kata مُدَرِّسٌ adalah ...",
+            opsi: ["Guru", "Murid", "Dokter", "Kepala sekolah"],
+            jawaban: "Guru"
+        },
+        {
+            id: 13,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Arti dari kata طَالِبٌ adalah ...",
+            opsi: ["Murid/siswa", "Guru", "Pegawai", "Polisi"],
+            jawaban: "Murid/siswa"
+        },
+        {
+            id: 14,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Arti dari kata مَسْجِدٌ adalah ...",
+            opsi: ["Masjid", "Sekolah", "Pasar", "Rumah"],
+            jawaban: "Masjid"
+        },
+        {
+            id: 15,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Arti dari kalimat أَنَا طَالِبٌ adalah ...",
+            opsi: ["Saya adalah murid", "Saya adalah guru", "Kamu adalah murid", "Dia adalah murid"],
+            jawaban: "Saya adalah murid"
+        },
+        {
+            id: 16,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Arti dari kalimat هُوَ مُدَرِّسٌ adalah ...",
+            opsi: ["Dia (lk) adalah guru", "Dia (pr) adalah guru", "Saya adalah guru", "Kamu adalah guru"],
+            jawaban: "Dia (lk) adalah guru"
+        },
+
+        // ===== MENYUSUN KOSAKATA MENJADI KALIMAT =====
+        {
+            id: 17,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Susun kata berikut menjadi kalimat yang tepat:\nأَنَا / طَالِبٌ / فِي / الْمَدْرَسَةِ",
+            opsi: [
+                "أَنَا طَالِبٌ فِي الْمَدْرَسَةِ",
+                "طَالِبٌ أَنَا فِي الْمَدْرَسَةِ",
+                "فِي الْمَدْرَسَةِ أَنَا طَالِبٌ",
+                "الْمَدْرَسَةِ فِي أَنَا طَالِبٌ"
+            ],
+            jawaban: "أَنَا طَالِبٌ فِي الْمَدْرَسَةِ"
+        },
+        {
+            id: 18,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Susun kata berikut menjadi kalimat yang tepat:\nهُوَ / يَقْرَأُ / الْكِتَابَ",
+            opsi: [
+                "هُوَ يَقْرَأُ الْكِتَابَ",
+                "يَقْرَأُ هُوَ الْكِتَابَ",
+                "الْكِتَابَ هُوَ يَقْرَأُ",
+                "الْكِتَابَ يَقْرَأُ هُوَ"
+            ],
+            jawaban: "هُوَ يَقْرَأُ الْكِتَابَ"
+        },
+        {
+            id: 19,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Susun kata berikut menjadi kalimat yang tepat:\nأُمِّي / فِي / تَعْمَلُ / الْمُسْتَشْفَى",
+            opsi: [
+                "أُمِّي تَعْمَلُ فِي الْمُسْتَشْفَى",
+                "تَعْمَلُ أُمِّي فِي الْمُسْتَشْفَى",
+                "فِي الْمُسْتَشْفَى أُمِّي تَعْمَلُ",
+                "الْمُسْتَشْفَى فِي أُمِّي تَعْمَلُ"
+            ],
+            jawaban: "أُمِّي تَعْمَلُ فِي الْمُسْتَشْفَى"
+        },
+        {
+            id: 20,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Susun kata berikut menjadi kalimat yang tepat:\nنَحْنُ / نَتَعَلَّمُ / اللُّغَةَ / الْعَرَبِيَّةَ",
+            opsi: [
+                "نَحْنُ نَتَعَلَّمُ اللُّغَةَ الْعَرَبِيَّةَ",
+                "نَتَعَلَّمُ نَحْنُ اللُّغَةَ الْعَرَبِيَّةَ",
+                "اللُّغَةَ الْعَرَبِيَّةَ نَحْنُ نَتَعَلَّمُ",
+                "الْعَرَبِيَّةَ اللُّغَةَ نَحْنُ نَتَعَلَّمُ"
+            ],
+            jawaban: "نَحْنُ نَتَعَلَّمُ اللُّغَةَ الْعَرَبِيَّةَ"
+        },
+
+        // ===== MENGURUTKAN KALIMAT ACAK =====
+        {
+            id: 21,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Urutkan kalimat acak berikut menjadi paragraf yang runtut:\n" +
+                "1. أُحِبُّ اللُّغَةَ الْعَرَبِيَّةَ.\n" +
+                "2. أَنَا طَالِبٌ فِي الْمَدْرَسَةِ الثَّانَوِيَّةِ.\n" +
+                "3. أَدْرُسُهَا كُلَّ يَوْمٍ.\n" +
+                "4. لِأَنَّهَا لُغَةُ الْقُرْآنِ.",
+            opsi: [
+                "2 - 1 - 4 - 3",
+                "1 - 2 - 3 - 4",
+                "3 - 4 - 1 - 2",
+                "4 - 3 - 2 - 1"
+            ],
+            jawaban: "2 - 1 - 4 - 3"
+        },
+        {
+            id: 22,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Urutkan kalimat acak berikut menjadi paragraf yang runtut:\n" +
+                "1. ثُمَّ أَذْهَبُ إِلَى الْمَدْرَسَةِ.\n" +
+                "2. أَسْتَيْقِظُ فِي الصَّبَاحِ الْبَاكِرِ.\n" +
+                "3. أُصَلِّي الصُّبْحَ وَأَفْطَرُ.\n" +
+                "4. وَأَدْرُسُ الدُّرُوْسَ بِجِدٍّ.",
+            opsi: [
+                "2 - 3 - 1 - 4",
+                "1 - 2 - 3 - 4",
+                "3 - 4 - 1 - 2",
+                "4 - 3 - 2 - 1"
+            ],
+            jawaban: "2 - 3 - 1 - 4"
+        },
+
+        // ===== MENYIMPULKAN INFORMASI TERSIRAT =====
+        {
+            id: 23,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Bacalah teks berikut:\n" +
+                "أَحْمَدُ يَسْتَيْقِظُ فِي السَّاعَةِ الرَّابِعَةِ صَبَاحًا، يُصَلِّي وَيَقْرَأُ الْقُرْآنَ، ثُمَّ يُرَاجِعُ دُرُوْسَهُ.\n" +
+                "(Aḥmad yastayqiẓu fī al-sā'ah al-rābi'ah ṣabāḥan, yuṣallī wa yaqra'u al-Qur'ān, tsumma yurāji'u durūsahu.)\n\n" +
+                "Apa yang dapat disimpulkan tentang Ahmad?",
+            opsi: [
+                "Ahmad adalah orang yang rajin dan disiplin.",
+                "Ahmad suka tidur larut.",
+                "Ahmad tidak suka belajar.",
+                "Ahmad malas beribadah."
+            ],
+            jawaban: "Ahmad adalah orang yang rajin dan disiplin."
+        },
+        {
+            id: 24,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Bacalah teks berikut:\n" +
+                "فَاطِمَةُ تَعْمَلُ فِي الْمُسْتَشْفَى. تَسَاعِدُ الْمَرْضَى وَتُعَالِجُهُمْ.\n" +
+                "(Fāṭimah ta'malu fī al-mustasyfā. Tusā'idu al-marḍā wa tu'ālijuhum.)\n\n" +
+                "Apa profesi Fathimah?",
+            opsi: [
+                "Dokter atau perawat",
+                "Guru",
+                "Insinyur",
+                "Polisi"
+            ],
+            jawaban: "Dokter atau perawat"
+        },
+        {
+            id: 25,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Bacalah teks berikut:\n" +
+                "الْيَوْمَ الْجَوُّ حَارٌّ جِدًّا، النَّاسُ يَشْرَبُوْنَ الْمَاءَ الْبَارِدَ.\n" +
+                "(Al-yauma al-jawwu ḥārrun jiddan, al-nāsu yasyrabūna al-mā'a al-bārid.)\n\n" +
+                "Apa musim yang mungkin sedang berlangsung?",
+            opsi: ["Musim panas", "Musim dingin", "Musim gugur", "Musim semi"],
+            jawaban: "Musim panas"
+        },
+
+        // ===== TOPIK / IDE POKOK =====
+        {
+            id: 26,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Bacalah teks berikut:\n" +
+                "اللُّغَةُ الْعَرَبِيَّةُ لُغَةٌ عَالَمِيَّةٌ. يَتَكَلَّمُ بِهَا أَكْثَرُ مِنْ ثَلَاثِمِائَةِ مِلْيُوْنِ إِنْسَانٍ. هِيَ لُغَةُ الْقُرْآنِ الْكَرِيْمِ.\n" +
+                "(Al-lughah al-'Arabiyyah lughah 'ālamiyyah. Yatakallamu bihā aktsaru min tsalātsimā'ati milyūni insān. Hiya lughah al-Qur'ān al-Karīm.)\n\n" +
+                "Apa topik utama teks tersebut?",
+            opsi: [
+                "Keistimewaan bahasa Arab",
+                "Sejarah bahasa Arab",
+                "Tata bahasa Arab",
+                "Sastra Arab"
+            ],
+            jawaban: "Keistimewaan bahasa Arab"
+        },
+        {
+            id: 27,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Bacalah teks berikut:\n" +
+                "الْمَدْرَسَةُ بَيْتٌ ثَانٍ لِلطَّالِبِ. فِيْهَا يَتَعَلَّمُ الطَّالِبُ الْعُلُوْمَ وَالْأَخْلَاقَ.\n" +
+                "(Al-madrasah baitu thānin lil-ṭālib. Fīhā yata'allamu al-ṭālibu al-'ulūma wa al-akhlāq.)\n\n" +
+                "Apa ide pokok teks tersebut?",
+            opsi: [
+                "Sekolah adalah rumah kedua bagi siswa",
+                "Sekolah adalah tempat bermain",
+                "Sekolah hanya untuk belajar ilmu",
+                "Sekolah membosankan bagi siswa"
+            ],
+            jawaban: "Sekolah adalah rumah kedua bagi siswa"
+        },
+        {
+            id: 28,
+            tipe: "pilihan_ganda",
+            pertanyaan:
+                "Bacalah teks berikut:\n" +
+                "الصِّحَّةُ نِعْمَةٌ عَظِيْمَةٌ مِنَ اللهِ. مَنْ كَانَ صَحِيْحًا فَلْيَشْكُرِ اللهَ.\n" +
+                "(Al-ṣiḥḥah ni'matun 'aẓīmah min Allāh. Man kāna ṣaḥīḥan fal yasykur Allāh.)\n\n" +
+                "Apa pesan utama teks tersebut?",
+            opsi: [
+                "Kesehatan adalah nikmat yang harus disyukuri",
+                "Kesehatan tidak penting",
+                "Sakit adalah nikmat",
+                "Kesehatan dapat dibeli"
+            ],
+            jawaban: "Kesehatan adalah nikmat yang harus disyukuri"
+        },
+
+        // ===== GRAMATIKA (NAHWU & SHARAF) =====
+        {
+            id: 29,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kalimat الْكِتَابُ جَدِيْدٌ (al-kitābu jadīdun) termasuk susunan ...",
+            opsi: [
+                "Jumlah ismiyyah (kalimat nominal)",
+                "Jumlah fi'liyyah (kalimat verbal)",
+                "Jumlah syartiyyah",
+                "Jumlah istifhāmiyyah"
+            ],
+            jawaban: "Jumlah ismiyyah (kalimat nominal)"
+        },
+        {
+            id: 30,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kalimat يَقْرَأُ الطَّالِبُ الْكِتَابَ (yaqra'u al-ṭālibu al-kitāba) termasuk susunan ...",
+            opsi: [
+                "Jumlah fi'liyyah (kalimat verbal)",
+                "Jumlah ismiyyah (kalimat nominal)",
+                "Jumlah istifhāmiyyah",
+                "Jumlah nafiyah"
+            ],
+            jawaban: "Jumlah fi'liyyah (kalimat verbal)"
+        },
+        {
+            id: 31,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Dalam kalimat الْكِتَابُ جَدِيْدٌ, kata الْكِتَابُ berfungsi sebagai ...",
+            opsi: ["Mubtada' (subjek)", "Khabar (predikat)", "Maf'ul (objek)", "Fi'l (kata kerja)"],
+            jawaban: "Mubtada' (subjek)"
+        },
+        {
+            id: 32,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Dalam kalimat الْكِتَابُ جَدِيْدٌ, kata جَدِيْدٌ berfungsi sebagai ...",
+            opsi: ["Khabar (predikat)", "Mubtada' (subjek)", "Maf'ul (objek)", "Fi'l (kata kerja)"],
+            jawaban: "Khabar (predikat)"
+        },
+        {
+            id: 33,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Ilmu sharaf dalam bahasa Arab membahas tentang ...",
+            opsi: [
+                "Bentuk dan perubahan kata (morfologi)",
+                "Kedudukan kata dalam kalimat (sintaksis)",
+                "Makna kata secara kontekstual",
+                "Pelafalan dan pengucapan kata"
+            ],
+            jawaban: "Bentuk dan perubahan kata (morfologi)"
+        },
+        {
+            id: 34,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Ilmu nahwu dalam bahasa Arab membahas tentang ...",
+            opsi: [
+                "Kedudukan kata dalam kalimat (sintaksis)",
+                "Bentuk dan perubahan kata",
+                "Makna kontekstual kata",
+                "Ejaan dan tulisan"
+            ],
+            jawaban: "Kedudukan kata dalam kalimat (sintaksis)"
+        },
+        {
+            id: 35,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kata مُدَرِّسٌ (mudarrisun) merupakan ism fā'il dari kata dasar ...",
+            opsi: ["دَرَسَ", "يَدْرُسُ", "دِرَاسَةٌ", "مَدْرَسَةٌ"],
+            jawaban: "دَرَسَ"
+        },
+        {
+            id: 36,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kata مَكْتُوْبٌ (maktūbun) merupakan ism maf'ūl dari kata dasar ...",
+            opsi: ["كَتَبَ", "يَكْتُبُ", "كِتَابَةٌ", "كَاتِبٌ"],
+            jawaban: "كَتَبَ"
+        },
+        {
+            id: 37,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua ciri jumlah ismiyyah (kalimat nominal).",
+            opsi: [
+                "Dimulai dengan kata benda",
+                "Terdiri dari mubtada' dan khabar",
+                "Dimulai dengan kata kerja",
+                "Tidak memiliki predikat"
+            ],
+            jawaban: [
+                "Dimulai dengan kata benda",
+                "Terdiri dari mubtada' dan khabar"
+            ]
+        },
+
+        // ===== KOSAKATA TAMBAHAN =====
+        {
+            id: 38,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Arti dari kata بَيْتٌ adalah ...",
+            opsi: ["Rumah", "Sekolah", "Pasar", "Masjid"],
+            jawaban: "Rumah"
+        },
+        {
+            id: 39,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Arti dari kata صَدِيْقٌ adalah ...",
+            opsi: ["Teman", "Musuh", "Guru", "Murid"],
+            jawaban: "Teman"
+        },
+        {
+            id: 40,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Arti dari angka ثَلَاثَةٌ adalah ...",
+            opsi: ["3", "2", "4", "5"],
+            jawaban: "3"
+        },
+        {
+            id: 41,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Arti dari angka عَشَرَةٌ adalah ...",
+            opsi: ["10", "5", "20", "100"],
+            jawaban: "10"
+        },
+
+        // ===== BENAR SALAH KOMPLEKS =====
+        {
+            id: 42,
+            tipe: "benar_salah_kompleks",
+            pertanyaan: "Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+            pernyataan: [
+                {
+                    teks: "Sinonim dari كَبِيْرٌ adalah عَظِيْمٌ.",
+                    jawaban: "Benar"
+                },
+                {
+                    teks: "Antonim dari طَوِيْلٌ adalah كَبِيْرٌ.",
+                    jawaban: "Salah"
+                },
+                {
+                    teks: "Jumlah ismiyyah dimulai dengan kata benda.",
+                    jawaban: "Benar"
+                },
+                {
+                    teks: "Ilmu nahwu membahas tentang bentuk dan perubahan kata.",
+                    jawaban: "Salah"
+                }
+            ]
+        }
+    ]
+};
+
+/* =========================================================
+   VARIABEL GLOBAL
+   ========================================================= */
+let daftarSoal = [];
+let jawabanSiswa = [];
+let nomorSoalSekarang = 0;
+let dataSiswa = {};
+let quizSelesai = false;
+let warningAktif = false;
+let countdownInterval = null;
+let audioLoopInterval = null;
+
+/* =========================================================
+   FUNGSI SUARA PERINGATAN
+   ========================================================= */
+function buatTit(freq = 1200, durasi = 0.18) {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.35, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + durasi);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + durasi);
+        setTimeout(() => ctx.close(), (durasi + 0.2) * 1000);
+    } catch (e) {}
+}
+
+function bunyiPeringatan() {
+    buatTit(1200, 0.18);
+    setTimeout(() => buatTit(1200, 0.18), 220);
+    setTimeout(() => buatTit(1200, 0.18), 440);
+}
+
+function mulaiLoopPeringatan() {
+    if (audioLoopInterval) clearInterval(audioLoopInterval);
+    bunyiPeringatan();
+    audioLoopInterval = setInterval(bunyiPeringatan, 1000);
+}
+
+function hentikanLoopPeringatan() {
+    if (audioLoopInterval) {
+        clearInterval(audioLoopInterval);
+        audioLoopInterval = null;
+    }
+}
+
+/* =========================================================
+   FUNGSI ACAK & ESCAPE
+   ========================================================= */
+function acakArray(array) {
+    const hasil = [...array];
+    for (let i = hasil.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [hasil[i], hasil[j]] = [hasil[j], hasil[i]];
+    }
+    return hasil;
+}
+
+function escapeHTML(text) {
+    if (text === null || text === undefined) return "";
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+/* =========================================================
+   DETEKSI KELUAR HALAMAN
+   ========================================================= */
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden && !quizSelesai && !warningAktif) {
+        tampilkanPeringatan();
+    }
+});
+
+window.addEventListener('beforeunload', function(e) {
+    if (!quizSelesai) {
+        bunyiPeringatan();
+        e.preventDefault();
+        e.returnValue = 'Apakah Anda yakin ingin keluar? Quiz akan direset.';
+        return e.returnValue;
+    }
+});
+
+document.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (link && link.target === '_blank' && !quizSelesai && !warningAktif) {
+        e.preventDefault();
+        tampilkanPeringatan();
+    }
+});
+
+/* =========================================================
+   TAMPILKAN PERINGATAN (10 DETIK)
+   ========================================================= */
+function tampilkanPeringatan() {
+    if (warningAktif || quizSelesai) return;
+    warningAktif = true;
+
+    const overlay = document.getElementById('warningOverlay');
+    overlay.classList.remove('hidden');
+
+    let detik = 10;
+    document.getElementById('countdownDetik').textContent = detik;
+
+    mulaiLoopPeringatan();
+
+    countdownInterval = setInterval(() => {
+        detik--;
+        document.getElementById('countdownDetik').textContent = detik;
+
+        if (detik <= 0) {
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+            hentikanLoopPeringatan();
+            resetKeAwal();
+        }
+    }, 1000);
+}
+
+/* =========================================================
+   RESET KE AWAL
+   ========================================================= */
+function resetKeAwal() {
+    hentikanLoopPeringatan();
+    warningAktif = false;
+    document.getElementById('warningOverlay').classList.add('hidden');
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+    }
+
+    nomorSoalSekarang = 0;
+    jawabanSiswa = [];
+    daftarSoal = [];
+    dataSiswa = {};
+    quizSelesai = false;
+
+    document.getElementById('halamanQuiz').classList.add('hidden');
+    document.getElementById('halamanHasil').classList.add('hidden');
+    document.getElementById('halamanIdentitas').classList.remove('hidden');
+
+    document.getElementById('formIdentitas').reset();
+    window.scrollTo(0, 0);
+}
+
+/* =========================================================
+   FORM IDENTITAS
+   ========================================================= */
+document.getElementById("formIdentitas").addEventListener("submit", function(event) {
+    event.preventDefault();
+    dataSiswa = {
+        nama: document.getElementById("nama").value.trim(),
+        sekolah: document.getElementById("sekolah").value.trim(),
+        kelas: document.getElementById("kelas").value.trim(),
+        nomor: document.getElementById("nomor").value.trim()
+    };
+    if (!dataSiswa.nama) { alert("Nama siswa wajib diisi."); return; }
+    if (!dataSiswa.sekolah) { alert("Asal sekolah wajib diisi."); return; }
+    if (!dataSiswa.kelas) { alert("Kelas wajib diisi."); return; }
+    mulaiQuiz();
+});
+
+/* =========================================================
+   MULAI QUIZ
+   ========================================================= */
+function mulaiQuiz() {
+    daftarSoal = DATA_QUIZ.soal.map(function(soal) {
+        const salinan = { ...soal };
+        if (Array.isArray(soal.opsi)) salinan.opsi = [...soal.opsi];
+        if (Array.isArray(soal.pernyataan)) salinan.pernyataan = soal.pernyataan.map(item => ({ ...item }));
+        return salinan;
+    });
+
+    if (DATA_QUIZ.acak_soal) daftarSoal = acakArray(daftarSoal);
+    if (DATA_QUIZ.acak_opsi) {
+        daftarSoal.forEach(function(soal) {
+            if (soal.tipe === "pilihan_ganda" || soal.tipe === "pilihan_ganda_kompleks") {
+                soal.opsi = acakArray(soal.opsi);
+            }
+        });
+    }
+
+    jawabanSiswa = daftarSoal.map(function(soal) {
+        if (soal.tipe === "pilihan_ganda_kompleks") return [];
+        if (soal.tipe === "benar_salah_kompleks") return [];
+        return null;
+    });
+
+    document.getElementById("namaTampil").textContent = dataSiswa.nama;
+    document.getElementById("halamanIdentitas").classList.add("hidden");
+    document.getElementById("halamanQuiz").classList.remove("hidden");
+
+    quizSelesai = false;
+    tampilkanSoal();
+}
+
+/* =========================================================
+   TAMPILKAN SOAL
+   ========================================================= */
+function tampilkanSoal() {
+    const soal = daftarSoal[nomorSoalSekarang];
+    if (!soal) return;
+
+    document.getElementById("nomorSoal").textContent = "Soal " + (nomorSoalSekarang + 1) + " / " + daftarSoal.length;
+    document.getElementById("pertanyaan").textContent = soal.pertanyaan;
+
+    const persen = ((nomorSoalSekarang + 1) / daftarSoal.length) * 100;
+    document.getElementById("progressBar").style.width = persen + "%";
+
+    let petunjuk = "";
+    if (soal.tipe === "pilihan_ganda") petunjuk = "Pilih satu jawaban yang paling tepat.";
+    else if (soal.tipe === "pilihan_ganda_kompleks") petunjuk = "Pilih semua jawaban yang benar.";
+    else if (soal.tipe === "benar_salah_kompleks") petunjuk = "Tentukan Benar atau Salah untuk setiap pernyataan.";
+    document.getElementById("petunjuk").textContent = petunjuk;
+
+    const container = document.getElementById("containerJawaban");
+    container.innerHTML = "";
+
+    if (soal.tipe === "pilihan_ganda") {
+        soal.opsi.forEach(function(opsi, index) {
+            const id = "opsi_" + nomorSoalSekarang + "_" + index;
+            const checked = jawabanSiswa[nomorSoalSekarang] === opsi ? "checked" : "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="form-check answer-option mb-3">
+                    <input class="form-check-input" type="radio" name="jawaban" id="${id}" value="${escapeHTML(opsi)}" ${checked}>
+                    <label class="form-check-label w-100" for="${id}">
+                        <strong>${String.fromCharCode(65 + index)}.</strong> ${escapeHTML(opsi)}
+                    </label>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[name="jawaban"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                jawabanSiswa[nomorSoalSekarang] = this.value;
+            });
+        });
+    }
+    else if (soal.tipe === "pilihan_ganda_kompleks") {
+        const jawabanSebelumnya = Array.isArray(jawabanSiswa[nomorSoalSekarang]) ? jawabanSiswa[nomorSoalSekarang] : [];
+        soal.opsi.forEach(function(opsi, index) {
+            const id = "kompleks_" + nomorSoalSekarang + "_" + index;
+            const checked = jawabanSebelumnya.includes(opsi) ? "checked" : "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="form-check answer-option mb-3">
+                    <input class="form-check-input" type="checkbox" name="jawabanKompleks" id="${id}" value="${escapeHTML(opsi)}" ${checked}>
+                    <label class="form-check-label w-100" for="${id}">
+                        <strong>${String.fromCharCode(65 + index)}.</strong> ${escapeHTML(opsi)}
+                    </label>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[name="jawabanKompleks"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                jawabanSiswa[nomorSoalSekarang] = Array.from(
+                    container.querySelectorAll('input[name="jawabanKompleks"]:checked')
+                ).map(item => item.value);
+            });
+        });
+    }
+    else if (soal.tipe === "benar_salah_kompleks") {
+        const jawabanSebelumnya = Array.isArray(jawabanSiswa[nomorSoalSekarang]) ? jawabanSiswa[nomorSoalSekarang] : [];
+        soal.pernyataan.forEach(function(item, index) {
+            const jawaban = jawabanSebelumnya[index] || "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="statement-box">
+                    <div class="fw-semibold mb-3">${index + 1}. ${escapeHTML(item.teks)}</div>
+                    <div class="d-flex gap-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="bs_${index}" id="benar_${index}" value="Benar" ${jawaban === "Benar" ? "checked" : ""}>
+                            <label class="form-check-label" for="benar_${index}">
+                                <i class="fa-solid fa-check text-success"></i> Benar
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="bs_${index}" id="salah_${index}" value="Salah" ${jawaban === "Salah" ? "checked" : ""}>
+                            <label class="form-check-label" for="salah_${index}">
+                                <i class="fa-solid fa-xmark text-danger"></i> Salah
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[type="radio"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                const bagian = this.name.split("_");
+                const index = parseInt(bagian[1]);
+                if (!Array.isArray(jawabanSiswa[nomorSoalSekarang])) jawabanSiswa[nomorSoalSekarang] = [];
+                jawabanSiswa[nomorSoalSekarang][index] = this.value;
+            });
+        });
+    }
+    updateNavigasi();
+}
+
+/* =========================================================
+   NAVIGASI
+   ========================================================= */
+function updateNavigasi() {
+    const sebelumnya = document.getElementById("btnSebelumnya");
+    const berikutnya = document.getElementById("btnBerikutnya");
+    const selesai = document.getElementById("btnSelesai");
+
+    sebelumnya.disabled = nomorSoalSekarang === 0;
+
+    if (nomorSoalSekarang === daftarSoal.length - 1) {
+        berikutnya.classList.add("hidden");
+        selesai.classList.remove("hidden");
+    } else {
+        berikutnya.classList.remove("hidden");
+        selesai.classList.add("hidden");
+    }
+}
+
+document.getElementById("btnSebelumnya").addEventListener("click", function() {
+    if (nomorSoalSekarang > 0) {
+        nomorSoalSekarang--;
+        tampilkanSoal();
+        window.scrollTo(0, 0);
+    }
+});
+
+document.getElementById("btnBerikutnya").addEventListener("click", function() {
+    if (nomorSoalSekarang < daftarSoal.length - 1) {
+        nomorSoalSekarang++;
+        tampilkanSoal();
+        window.scrollTo(0, 0);
+    }
+});
+
+document.getElementById("btnSelesai").addEventListener("click", function() {
+    if (!confirm("Apakah Anda yakin ingin menyelesaikan quiz?")) return;
+    hitungNilai();
+});
+
+/* =========================================================
+   HITUNG NILAI
+   ========================================================= */
+function hitungNilai() {
+    let totalSkor = 0;
+    let totalMaksimal = 0;
+
+    daftarSoal.forEach(function(soal, index) {
+        const jawaban = jawabanSiswa[index];
+        if (soal.tipe === "pilihan_ganda") {
+            totalMaksimal += 1;
+            if (jawaban === soal.jawaban) totalSkor += 1;
+        } else if (soal.tipe === "pilihan_ganda_kompleks") {
+            totalMaksimal += 1;
+            const benar = [...soal.jawaban].sort();
+            const dipilih = Array.isArray(jawaban) ? [...jawaban].sort() : [];
+            if (JSON.stringify(benar) === JSON.stringify(dipilih)) totalSkor += 1;
+        } else if (soal.tipe === "benar_salah_kompleks") {
+            totalMaksimal += soal.pernyataan.length;
+            soal.pernyataan.forEach(function(item, i) {
+                if (jawaban && jawaban[i] === item.jawaban) totalSkor += 1;
+            });
+        }
+    });
+
+    const nilai = totalMaksimal > 0 ? Math.round((totalSkor / totalMaksimal) * 100) : 0;
+    const tuntas = nilai >= DATA_QUIZ.kkm;
+
+    document.getElementById("nilaiAkhir").textContent = nilai;
+    document.getElementById("hasilNama").textContent = dataSiswa.nama;
+    document.getElementById("hasilSekolah").textContent = dataSiswa.sekolah;
+    document.getElementById("hasilKelas").textContent = "Kelas " + dataSiswa.kelas;
+    document.getElementById("skorHasil").textContent = totalSkor;
+    document.getElementById("maksimalHasil").textContent = totalMaksimal;
+    document.getElementById("kkmHasil").textContent = DATA_QUIZ.kkm;
+
+    const status = document.getElementById("statusHasil");
+    status.textContent = tuntas ? "TUNTAS" : "BELUM TUNTAS";
+    status.className = tuntas ? "badge bg-success fs-5 p-2 mb-4" : "badge bg-danger fs-5 p-2 mb-4";
+
+    document.getElementById("halamanQuiz").classList.add("hidden");
+    document.getElementById("halamanHasil").classList.remove("hidden");
+
+    quizSelesai = true;
+    window.scrollTo(0, 0);
+}
+
+/* =========================================================
+   SHARE KE WHATSAPP (CHAT BARU - PILIH KONTAK SENDIRI)
+   ========================================================= */
+document.getElementById("btnShareWA").addEventListener("click", function() {
+    const nama = dataSiswa.nama || "-";
+    const sekolah = dataSiswa.sekolah || "-";
+    const kelas = dataSiswa.kelas || "-";
+    const nilai = document.getElementById("nilaiAkhir").textContent;
+    const status = document.getElementById("statusHasil").textContent;
+
+    const pesan =
+        "Selamat sore,\n" +
+        "Saya sudah menyelesaikan tugas mengikuti latihan/trayout TKA berikut ini scrensotnya\n\n" +
+        "━━━━━━━━━━━━━━━━━━\n" +
+        "📋 *HASIL TKA " + DATA_QUIZ.mapel.toUpperCase() + " " + DATA_QUIZ.jenjang + "*\n" +
+        "━━━━━━━━━━━━━━━━━━\n" +
+        "👤 Nama    : " + nama + "\n" +
+        "🏫 Sekolah : " + sekolah + "\n" +
+        "🎓 Kelas   : " + kelas + "\n" +
+        "📊 Nilai   : " + nilai + "\n" +
+        "✅ Status  : " + status + "\n" +
+        "━━━━━━━━━━━━━━━━━━\n\n" +
+        "📎 Screenshot hasil terlampir.";
+
+    const url = "https://wa.me/?text=" + encodeURIComponent(pesan);
+    window.open(url, "_blank");
+});
+
+/* =========================================================
+   ULANGI & KEMBALI
+   ========================================================= */
+document.getElementById("btnUlangi").addEventListener("click", function() {
+    nomorSoalSekarang = 0;
+    jawabanSiswa = [];
+    quizSelesai = false;
+    document.getElementById("halamanHasil").classList.add("hidden");
+    document.getElementById("halamanIdentitas").classList.remove("hidden");
+    document.getElementById("nama").value = dataSiswa.nama;
+    document.getElementById("sekolah").value = dataSiswa.sekolah;
+    document.getElementById("kelas").value = dataSiswa.kelas;
+    document.getElementById("nomor").value = dataSiswa.nomor;
+});
+
+document.getElementById("btnBeranda").addEventListener("click", function() {
+    quizSelesai = true;
+    hentikanLoopPeringatan();
+    location.reload();
+});
+</script>
+</body>
+</html>
