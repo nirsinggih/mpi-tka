@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz TKA Sosiologi SMA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #eef5ff, #fff8e6);
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .quiz-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+            margin-bottom: 25px;
+        }
+        .logo-box {
+            width: 90px;
+            height: 90px;
+            margin: auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .answer-option {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .answer-option:hover {
+            border-color: #0d6efd;
+            background: #f0f7ff;
+        }
+        .answer-option:has(input:checked) {
+            border-color: #0d6efd;
+            background: #eaf3ff;
+        }
+        .answer-option label { cursor: pointer; }
+        .question-box {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 22px;
+            border-left: 5px solid #0d6efd;
+            white-space: pre-line;
+        }
+        .progress { height: 10px; border-radius: 20px; }
+        .result-score {
+            font-size: 70px;
+            font-weight: bold;
+            color: #0d6efd;
+        }
+        .hidden { display: none !important; }
+        .statement-box {
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #ffffff;
+        }
+        @media (max-width: 576px) {
+            .quiz-card { padding: 20px; border-radius: 15px; }
+            .result-score { font-size: 55px; }
+        }
+
+        #warningOverlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            animation: kedip 0.6s infinite alternate;
+        }
+        @keyframes kedip {
+            from { background: rgba(0, 0, 0, 0.9); }
+            to   { background: rgba(120, 0, 0, 0.95); }
+        }
+        #warningOverlay .box {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            border: 3px solid #ef4444;
+        }
+        #warningOverlay h2 { color: #f87171; }
+        #warningOverlay .countdown {
+            font-size: 80px;
+            font-weight: bold;
+            color: #fbbf24;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Overlay Peringatan -->
+<div id="warningOverlay" class="hidden">
+    <div class="box">
+        <h2><i class="fa-solid fa-triangle-exclamation"></i> PERINGATAN!</h2>
+        <p class="fs-5 mt-3">Anda terdeteksi keluar dari halaman quiz.</p>
+        <p>Halaman akan dikembalikan ke awal dalam</p>
+        <div class="countdown" id="countdownDetik">10</div>
+        <p class="text-muted small">Jangan tinggalkan halaman ini sebelum quiz selesai.</p>
+    </div>
+</div>
+
+<div class="container py-4">
+    <!-- HALAMAN IDENTITAS -->
+    <div id="halamanIdentitas">
+        <div class="quiz-card">
+            <div class="text-center mb-4">
+                <div class="logo-box">
+                    <img src="assets/logo.png" alt="Logo Sekolah" onerror="this.style.display='none'">
+                </div>
+                <h1 class="fw-bold text-primary mt-3">
+                    <i class="fa-solid fa-users"></i> Quiz TKA Sosiologi SMA
+                </h1>
+                <p class="text-muted">Tes Kemampuan Akademik – Sosiologi Jenjang SMA</p>
+            </div>
+            <div class="alert alert-info">
+                <i class="fa-solid fa-circle-info"></i> Silakan isi identitas sebelum memulai quiz.
+            </div>
+            <form id="formIdentitas">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nama Siswa</label>
+                    <input type="text" id="nama" class="form-control form-control-lg" placeholder="Masukkan nama lengkap" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Asal Sekolah</label>
+                    <input type="text" id="sekolah" class="form-control form-control-lg" placeholder="Contoh: SMAN 1 Contoh" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Kelas</label>
+                    <input type="text" id="kelas" class="form-control form-control-lg" placeholder="Contoh: XII-IPS 1" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Nomor Peserta</label>
+                    <input type="text" id="nomor" class="form-control form-control-lg" placeholder="Opsional">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                    <i class="fa-solid fa-play"></i> Mulai Quiz
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HALAMAN QUIZ -->
+    <div id="halamanQuiz" class="hidden">
+        <div class="quiz-card">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <div>
+                    <h4 class="fw-bold text-primary mb-1">Quiz TKA Sosiologi SMA</h4>
+                    <div class="text-muted"><i class="fa-solid fa-user"></i> <span id="namaTampil"></span></div>
+                </div>
+                <div class="badge bg-primary fs-6 p-2"><span id="nomorSoal">1</span></div>
+            </div>
+            <div class="progress mb-4"><div id="progressBar" class="progress-bar" style="width: 0%"></div></div>
+            <div id="petunjuk" class="alert alert-warning small"></div>
+            <div class="question-box mb-4"><h5 id="pertanyaan" class="fw-bold mb-0"></h5></div>
+            <div id="containerJawaban"></div>
+            <div class="d-flex justify-content-between mt-4 gap-2">
+                <button id="btnSebelumnya" type="button" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-arrow-left"></i> Sebelumnya
+                </button>
+                <button id="btnBerikutnya" type="button" class="btn btn-primary">
+                    Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button id="btnSelesai" type="button" class="btn btn-success hidden">
+                    <i class="fa-solid fa-check"></i> Selesai
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN HASIL -->
+    <div id="halamanHasil" class="hidden">
+        <div class="quiz-card text-center">
+            <div class="mb-3"><i class="fa-solid fa-circle-check text-success" style="font-size:70px"></i></div>
+            <h2 class="fw-bold">Quiz Selesai</h2>
+            <p class="text-muted">Berikut hasil pengerjaan:</p>
+            <div id="hasilNama" class="fw-bold fs-5"></div>
+            <div id="hasilSekolah" class="text-muted"></div>
+            <div id="hasilKelas" class="text-muted mb-3"></div>
+            <div class="result-score"><span id="nilaiAkhir">0</span></div>
+            <div id="statusHasil" class="badge fs-5 p-2 mb-4"></div>
+            <div class="row g-3 text-start mb-4">
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">Skor</div><strong id="skorHasil">0</strong></div></div>
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">Skor Maksimal</div><strong id="maksimalHasil">0</strong></div></div>
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">KKM</div><strong id="kkmHasil">70</strong></div></div>
+            </div>
+            <div class="d-grid gap-2">
+                <button id="btnShareWA" class="btn btn-success btn-lg">
+                    <i class="fa-brands fa-whatsapp"></i> Share ke WhatsApp
+                </button>
+                <button id="btnUlangi" class="btn btn-primary btn-lg">
+                    <i class="fa-solid fa-rotate"></i> Ulangi Quiz
+                </button>
+                <button id="btnBeranda" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-house"></i> Kembali
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+/* =========================================================
+   DATA QUIZ - SOSIOLOGI SMA
+   ========================================================= */
+const DATA_QUIZ = {
+    judul: "Quiz TKA Sosiologi SMA",
+    mapel: "Sosiologi",
+    jenjang: "SMA",
+    kkm: 70,
+    acak_soal: true,
+    acak_opsi: true,
+    soal: [
+        // ===== PENGERTIAN, PERKEMBANGAN, MANFAAT SOSIOLOGI =====
+        {
+            id: 1,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sosiologi sebagai ilmu pengetahuan memiliki ciri ...",
+            opsi: [
+                "Empiris, teoretis, kumulatif, dan non-etis",
+                "Empiris, spekulatif, dan etis",
+                "Abstrak, tidak berdasarkan fakta, dan subjektif",
+                "Berdasarkan khayalan dan mitos"
+            ],
+            jawaban: "Empiris, teoretis, kumulatif, dan non-etis"
+        },
+        {
+            id: 2,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Tokoh yang dikenal sebagai Bapak Sosiologi adalah ...",
+            opsi: ["Auguste Comte", "Karl Marx", "Max Weber", "Emile Durkheim"],
+            jawaban: "Auguste Comte"
+        },
+        {
+            id: 3,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Manfaat mempelajari sosiologi bagi masyarakat adalah ...",
+            opsi: [
+                "Membantu memahami dan mengatasi masalah sosial",
+                "Menambah konflik sosial",
+                "Membuat masyarakat acuh tak acuh",
+                "Mengurangi kepedulian sosial"
+            ],
+            jawaban: "Membantu memahami dan mengatasi masalah sosial"
+        },
+        {
+            id: 4,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua ciri sosiologi sebagai ilmu pengetahuan.",
+            opsi: [
+                "Empiris",
+                "Teoretis",
+                "Kumulatif",
+                "Subjektif"
+            ],
+            jawaban: ["Empiris", "Teoretis", "Kumulatif"]
+        },
+
+        // ===== KONSEP & BENTUK HUBUNGAN SOSIAL =====
+        {
+            id: 5,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Hubungan sosial yang terjadi antara individu dengan individu, individu dengan kelompok, dan kelompok dengan kelompok disebut ...",
+            opsi: [
+                "Interaksi sosial",
+                "Akulturasi",
+                "Asimilasi",
+                "Difusi"
+            ],
+            jawaban: "Interaksi sosial"
+        },
+        {
+            id: 6,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Proses sosial yang terjadi ketika individu atau kelompok berusaha memenuhi kebutuhan tanpa mengorbankan pihak lain disebut ...",
+            opsi: ["Kerja sama", "Persaingan", "Konflik", "Akomodasi"],
+            jawaban: "Kerja sama"
+        },
+        {
+            id: 7,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Bentuk hubungan sosial yang ditandai dengan usaha meredakan pertentangan untuk mencapai kestabilan disebut ...",
+            opsi: ["Akomodasi", "Konflik", "Persaingan", "Kontravensi"],
+            jawaban: "Akomodasi"
+        },
+        {
+            id: 8,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kontak sosial dan komunikasi merupakan syarat terjadinya ...",
+            opsi: [
+                "Interaksi sosial",
+                "Perubahan sosial",
+                "Konflik sosial",
+                "Stratifikasi sosial"
+            ],
+            jawaban: "Interaksi sosial"
+        },
+
+        // ===== LEMBAGA SOSIAL =====
+        {
+            id: 9,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Lembaga sosial yang berfungsi mengatur kehidupan keluarga adalah ...",
+            opsi: [
+                "Lembaga keluarga",
+                "Lembaga pendidikan",
+                "Lembaga ekonomi",
+                "Lembaga politik"
+            ],
+            jawaban: "Lembaga keluarga"
+        },
+        {
+            id: 10,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Fungsi utama lembaga pendidikan adalah ...",
+            opsi: [
+                "Mentransfer ilmu pengetahuan dan nilai budaya",
+                "Mengatur ekonomi negara",
+                "Menjalankan kekuasaan politik",
+                "Mengelola keuangan masyarakat"
+            ],
+            jawaban: "Mentransfer ilmu pengetahuan dan nilai budaya"
+        },
+        {
+            id: 11,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua lembaga sosial yang ada di masyarakat.",
+            opsi: [
+                "Keluarga",
+                "Pendidikan",
+                "Agama",
+                "Perusahaan asing"
+            ],
+            jawaban: ["Keluarga", "Pendidikan", "Agama"]
+        },
+
+        // ===== GEJALA SOSIAL =====
+        {
+            id: 12,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Contoh gejala sosial yang sering terjadi di lingkungan masyarakat adalah ...",
+            opsi: [
+                "Kemiskinan, pengangguran, dan kenakalan remaja",
+                "Gempa bumi dan tsunami",
+                "Gerhana matahari",
+                "Hujan deras"
+            ],
+            jawaban: "Kemiskinan, pengangguran, dan kenakalan remaja"
+        },
+        {
+            id: 13,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Faktor utama penyebab terjadinya gejala sosial adalah ...",
+            opsi: [
+                "Perubahan sosial dan ketidaksesuaian nilai norma",
+                "Bencana alam",
+                "Kepadatan penduduk saja",
+                "Cuaca ekstrem"
+            ],
+            jawaban: "Perubahan sosial dan ketidaksesuaian nilai norma"
+        },
+        {
+            id: 14,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Contoh gejala sosial yang berdampak positif bagi masyarakat adalah ...",
+            opsi: [
+                "Meningkatnya kesadaran pendidikan",
+                "Meningkatnya kriminalitas",
+                "Meningkatnya pengangguran",
+                "Meningkatnya kemiskinan"
+            ],
+            jawaban: "Meningkatnya kesadaran pendidikan"
+        },
+
+        // ===== DINAMIKA MASYARAKAT MULTIKULTURAL =====
+        {
+            id: 15,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Masyarakat multikultural adalah masyarakat yang ...",
+            opsi: [
+                "Terdiri atas beragam suku, agama, ras, dan budaya",
+                "Hanya terdiri dari satu suku",
+                "Tidak memiliki keberagaman",
+                "Tertutup dari pengaruh luar"
+            ],
+            jawaban: "Terdiri atas beragam suku, agama, ras, dan budaya"
+        },
+        {
+            id: 16,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sikap yang tepat dalam menghadapi masyarakat multikultural adalah ...",
+            opsi: [
+                "Toleransi dan menghargai perbedaan",
+                "Menganggap budayanya paling unggul",
+                "Menjauhi kelompok yang berbeda",
+                "Memaksakan budaya sendiri"
+            ],
+            jawaban: "Toleransi dan menghargai perbedaan"
+        },
+        {
+            id: 17,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Dampak positif masyarakat multikultural adalah ...",
+            opsi: [
+                "Kaya akan budaya dan memperkaya wawasan",
+                "Menimbulkan perpecahan",
+                "Menghambat kemajuan",
+                "Mengurangi rasa persatuan"
+            ],
+            jawaban: "Kaya akan budaya dan memperkaya wawasan"
+        },
+
+        // ===== METODE PENELITIAN SOSIAL =====
+        {
+            id: 18,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Metode penelitian sosial yang menggunakan wawancara mendalam untuk memahami fenomena sosial disebut ...",
+            opsi: [
+                "Kualitatif",
+                "Kuantitatif",
+                "Eksperimen",
+                "Survei statistik"
+            ],
+            jawaban: "Kualitatif"
+        },
+        {
+            id: 19,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Metode penelitian yang menggunakan data berupa angka dan statistik disebut ...",
+            opsi: [
+                "Kuantitatif",
+                "Kualitatif",
+                "Etnografi",
+                "Studi kasus"
+            ],
+            jawaban: "Kuantitatif"
+        },
+        {
+            id: 20,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Langkah pertama dalam penelitian sosial adalah ...",
+            opsi: [
+                "Menentukan masalah penelitian",
+                "Menyusun kesimpulan",
+                "Mengumpulkan data",
+                "Menganalisis data"
+            ],
+            jawaban: "Menentukan masalah penelitian"
+        },
+        {
+            id: 21,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Teknik pengumpulan data dengan cara mengamati langsung objek penelitian disebut ...",
+            opsi: ["Observasi", "Wawancara", "Kuesioner", "Dokumentasi"],
+            jawaban: "Observasi"
+        },
+
+        // ===== KELOMPOK SOSIAL =====
+        {
+            id: 22,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kelompok sosial yang terbentuk karena adanya ikatan darah atau keturunan disebut ...",
+            opsi: [
+                "Kelompok kekerabatan",
+                "Kelompok okupasional",
+                "Kelompok volunter",
+                "Kelompok formal"
+            ],
+            jawaban: "Kelompok kekerabatan"
+        },
+        {
+            id: 23,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kelompok sosial yang anggotanya memiliki kesamaan profesi disebut ...",
+            opsi: [
+                "Kelompok okupasional",
+                "Kelompok kekerabatan",
+                "Kelompok volunter",
+                "Kelompok informal"
+            ],
+            jawaban: "Kelompok okupasional"
+        },
+        {
+            id: 24,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kelompok sosial yang bersifat sementara dan biasanya terbentuk karena kepentingan tertentu disebut ...",
+            opsi: [
+                "Kelompok volunter",
+                "Kelompok kekerabatan",
+                "Kelompok primer",
+                "Kelompok formal"
+            ],
+            jawaban: "Kelompok volunter"
+        },
+        {
+            id: 25,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua jenis kelompok sosial berdasarkan cara pembentukannya.",
+            opsi: [
+                "Kelompok kekerabatan",
+                "Kelompok okupasional",
+                "Kelompok volunter",
+                "Kelompok usia"
+            ],
+            jawaban: ["Kelompok kekerabatan", "Kelompok okupasional", "Kelompok volunter"]
+        },
+
+        // ===== KETIDAKSETARAAN SOSIAL =====
+        {
+            id: 26,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Ketidaksetaraan sosial di masyarakat dipengaruhi oleh faktor ...",
+            opsi: [
+                "Ekonomi, pendidikan, dan kekuasaan",
+                "Warna rambut",
+                "Tinggi badan",
+                "Hobi dan kesukaan"
+            ],
+            jawaban: "Ekonomi, pendidikan, dan kekuasaan"
+        },
+        {
+            id: 27,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Upaya mewujudkan kesetaraan sosial di masyarakat adalah ...",
+            opsi: [
+                "Memberikan pendidikan dan akses yang setara untuk semua",
+                "Membatasi hak golongan tertentu",
+                "Menutup akses pendidikan",
+                "Membiarkan diskriminasi terjadi"
+            ],
+            jawaban: "Memberikan pendidikan dan akses yang setara untuk semua"
+        },
+        {
+            id: 28,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Stratifikasi sosial adalah ...",
+            opsi: [
+                "Penggolongan masyarakat ke dalam lapisan-lapisan tertentu",
+                "Penyatuan semua golongan masyarakat",
+                "Penghapusan kelas sosial",
+                "Penyetaraan status sosial"
+            ],
+            jawaban: "Penggolongan masyarakat ke dalam lapisan-lapisan tertentu"
+        },
+
+        // ===== KONFLIK SOSIAL =====
+        {
+            id: 29,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Konflik sosial adalah ...",
+            opsi: [
+                "Proses sosial yang ditandai pertentangan antarindividu atau kelompok",
+                "Proses kerja sama antarwarga",
+                "Proses penyatuan golongan",
+                "Proses perdamaian sosial"
+            ],
+            jawaban: "Proses sosial yang ditandai pertentangan antarindividu atau kelompok"
+        },
+        {
+            id: 30,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Upaya penanganan konflik sosial melalui pihak ketiga yang netral disebut ...",
+            opsi: ["Mediasi", "Konfrontasi", "Provokasi", "Eskalasi"],
+            jawaban: "Mediasi"
+        },
+        {
+            id: 31,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Cara penyelesaian konflik dengan cara memisahkan kedua pihak yang berkonflik disebut ...",
+            opsi: ["Pemisahan", "Ajudikasi", "Mediasi", "Arbitrasi"],
+            jawaban: "Pemisahan"
+        },
+
+        // ===== PERUBAHAN SOSIAL =====
+        {
+            id: 32,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Perubahan sosial adalah ...",
+            opsi: [
+                "Perubahan struktur dan fungsi dalam masyarakat",
+                "Perubahan cuaca di suatu wilayah",
+                "Perubahan warna kulit individu",
+                "Perubahan bentuk fisik bangunan"
+            ],
+            jawaban: "Perubahan struktur dan fungsi dalam masyarakat"
+        },
+        {
+            id: 33,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Bentuk perubahan sosial yang berlangsung cepat dan mendasar disebut ...",
+            opsi: ["Revolusi", "Evolusi", "Difusi", "Akulturasi"],
+            jawaban: "Revolusi"
+        },
+        {
+            id: 34,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Bentuk perubahan sosial yang berlangsung lambat dan bertahap disebut ...",
+            opsi: ["Evolusi", "Revolusi", "Asimilasi", "Difusi"],
+            jawaban: "Evolusi"
+        },
+        {
+            id: 35,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Dampak positif perubahan sosial adalah ...",
+            opsi: [
+                "Kemajuan dan peningkatan kualitas hidup",
+                "Disintegrasi sosial",
+                "Kemunduran budaya",
+                "Konflik berkepanjangan"
+            ],
+            jawaban: "Kemajuan dan peningkatan kualitas hidup"
+        },
+        {
+            id: 36,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Faktor pendorong perubahan sosial adalah ...",
+            opsi: [
+                "Adanya penemuan baru dan kebutuhan masyarakat",
+                "Sikap tradisional yang kaku",
+                "Menolak hal baru",
+                "Isolasi wilayah"
+            ],
+            jawaban: "Adanya penemuan baru dan kebutuhan masyarakat"
+        },
+
+        // ===== GLOBALISASI =====
+        {
+            id: 37,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Globalisasi adalah ...",
+            opsi: [
+                "Proses masuknya pengaruh dari berbagai negara ke seluruh dunia",
+                "Proses pengasingan diri suatu negara",
+                "Proses penolakan budaya asing",
+                "Proses penyatuan satu negara saja"
+            ],
+            jawaban: "Proses masuknya pengaruh dari berbagai negara ke seluruh dunia"
+        },
+        {
+            id: 38,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Pengaruh positif globalisasi bagi masyarakat Indonesia adalah ...",
+            opsi: [
+                "Kemajuan teknologi dan informasi",
+                "Hilangnya budaya lokal",
+                "Meningkatnya konsumerisme",
+                "Melemahnya identitas bangsa"
+            ],
+            jawaban: "Kemajuan teknologi dan informasi"
+        },
+        {
+            id: 39,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Dampak negatif globalisasi adalah ...",
+            opsi: [
+                "Tergerusnya budaya lokal dan meningkatnya konsumerisme",
+                "Kemajuan teknologi",
+                "Peningkatan pendidikan",
+                "Kemajuan komunikasi"
+            ],
+            jawaban: "Tergerusnya budaya lokal dan meningkatnya konsumerisme"
+        },
+        {
+            id: 40,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sikap kritis dalam menghadapi globalisasi adalah ...",
+            opsi: [
+                "Menyaring pengaruh asing sesuai nilai budaya bangsa",
+                "Menerima semua pengaruh asing",
+                "Menolak semua pengaruh asing",
+                "Mengabaikan budaya sendiri"
+            ],
+            jawaban: "Menyaring pengaruh asing sesuai nilai budaya bangsa"
+        },
+        {
+            id: 41,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Contoh fenomena sosial yang dipengaruhi globalisasi adalah ...",
+            opsi: [
+                "Penggunaan media sosial di kalangan remaja",
+                "Gotong royong di kampung",
+                "Upacara adat tradisional",
+                "Pasar tradisional"
+            ],
+            jawaban: "Penggunaan media sosial di kalangan remaja"
+        },
+        {
+            id: 42,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua dampak positif globalisasi bagi masyarakat Indonesia.",
+            opsi: [
+                "Kemajuan teknologi informasi",
+                "Kemudahan komunikasi",
+                "Peningkatan kualitas pendidikan",
+                "Hilangnya identitas budaya"
+            ],
+            jawaban: [
+                "Kemajuan teknologi informasi",
+                "Kemudahan komunikasi",
+                "Peningkatan kualitas pendidikan"
+            ]
+        },
+
+        // ===== BENAR SALAH KOMPLEKS =====
+        {
+            id: 43,
+            tipe: "benar_salah_kompleks",
+            pertanyaan: "Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+            pernyataan: [
+                {
+                    teks: "Auguste Comte dikenal sebagai Bapak Sosiologi.",
+                    jawaban: "Benar"
+                },
+                {
+                    teks: "Sosiologi bersifat subjektif dan tidak berdasarkan fakta.",
+                    jawaban: "Salah"
+                },
+                {
+                    teks: "Konflik sosial selalu berdampak negatif bagi masyarakat.",
+                    jawaban: "Salah"
+                },
+                {
+                    teks: "Globalisasi membawa dampak positif dan negatif bagi masyarakat.",
+                    jawaban: "Benar"
+                }
+            ]
+        }
+    ]
+};
+
+/* =========================================================
+   VARIABEL GLOBAL
+   ========================================================= */
+let daftarSoal = [];
+let jawabanSiswa = [];
+let nomorSoalSekarang = 0;
+let dataSiswa = {};
+let quizSelesai = false;
+let warningAktif = false;
+let countdownInterval = null;
+let audioLoopInterval = null;
+
+/* =========================================================
+   FUNGSI SUARA PERINGATAN
+   ========================================================= */
+function buatTit(freq = 1200, durasi = 0.18) {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.35, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + durasi);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + durasi);
+        setTimeout(() => ctx.close(), (durasi + 0.2) * 1000);
+    } catch (e) {}
+}
+
+function bunyiPeringatan() {
+    buatTit(1200, 0.18);
+    setTimeout(() => buatTit(1200, 0.18), 220);
+    setTimeout(() => buatTit(1200, 0.18), 440);
+}
+
+function mulaiLoopPeringatan() {
+    if (audioLoopInterval) clearInterval(audioLoopInterval);
+    bunyiPeringatan();
+    audioLoopInterval = setInterval(bunyiPeringatan, 1000);
+}
+
+function hentikanLoopPeringatan() {
+    if (audioLoopInterval) {
+        clearInterval(audioLoopInterval);
+        audioLoopInterval = null;
+    }
+}
+
+/* =========================================================
+   FUNGSI ACAK & ESCAPE
+   ========================================================= */
+function acakArray(array) {
+    const hasil = [...array];
+    for (let i = hasil.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [hasil[i], hasil[j]] = [hasil[j], hasil[i]];
+    }
+    return hasil;
+}
+
+function escapeHTML(text) {
+    if (text === null || text === undefined) return "";
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+/* =========================================================
+   DETEKSI KELUAR HALAMAN
+   ========================================================= */
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden && !quizSelesai && !warningAktif) {
+        tampilkanPeringatan();
+    }
+});
+
+window.addEventListener('beforeunload', function(e) {
+    if (!quizSelesai) {
+        bunyiPeringatan();
+        e.preventDefault();
+        e.returnValue = 'Apakah Anda yakin ingin keluar? Quiz akan direset.';
+        return e.returnValue;
+    }
+});
+
+document.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (link && link.target === '_blank' && !quizSelesai && !warningAktif) {
+        e.preventDefault();
+        tampilkanPeringatan();
+    }
+});
+
+/* =========================================================
+   TAMPILKAN PERINGATAN (10 DETIK)
+   ========================================================= */
+function tampilkanPeringatan() {
+    if (warningAktif || quizSelesai) return;
+    warningAktif = true;
+
+    const overlay = document.getElementById('warningOverlay');
+    overlay.classList.remove('hidden');
+
+    let detik = 10;
+    document.getElementById('countdownDetik').textContent = detik;
+
+    mulaiLoopPeringatan();
+
+    countdownInterval = setInterval(() => {
+        detik--;
+        document.getElementById('countdownDetik').textContent = detik;
+
+        if (detik <= 0) {
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+            hentikanLoopPeringatan();
+            resetKeAwal();
+        }
+    }, 1000);
+}
+
+/* =========================================================
+   RESET KE AWAL
+   ========================================================= */
+function resetKeAwal() {
+    hentikanLoopPeringatan();
+    warningAktif = false;
+    document.getElementById('warningOverlay').classList.add('hidden');
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+    }
+
+    nomorSoalSekarang = 0;
+    jawabanSiswa = [];
+    daftarSoal = [];
+    dataSiswa = {};
+    quizSelesai = false;
+
+    document.getElementById('halamanQuiz').classList.add('hidden');
+    document.getElementById('halamanHasil').classList.add('hidden');
+    document.getElementById('halamanIdentitas').classList.remove('hidden');
+
+    document.getElementById('formIdentitas').reset();
+    window.scrollTo(0, 0);
+}
+
+/* =========================================================
+   FORM IDENTITAS
+   ========================================================= */
+document.getElementById("formIdentitas").addEventListener("submit", function(event) {
+    event.preventDefault();
+    dataSiswa = {
+        nama: document.getElementById("nama").value.trim(),
+        sekolah: document.getElementById("sekolah").value.trim(),
+        kelas: document.getElementById("kelas").value.trim(),
+        nomor: document.getElementById("nomor").value.trim()
+    };
+    if (!dataSiswa.nama) { alert("Nama siswa wajib diisi."); return; }
+    if (!dataSiswa.sekolah) { alert("Asal sekolah wajib diisi."); return; }
+    if (!dataSiswa.kelas) { alert("Kelas wajib diisi."); return; }
+    mulaiQuiz();
+});
+
+/* =========================================================
+   MULAI QUIZ
+   ========================================================= */
+function mulaiQuiz() {
+    daftarSoal = DATA_QUIZ.soal.map(function(soal) {
+        const salinan = { ...soal };
+        if (Array.isArray(soal.opsi)) salinan.opsi = [...soal.opsi];
+        if (Array.isArray(soal.pernyataan)) salinan.pernyataan = soal.pernyataan.map(item => ({ ...item }));
+        return salinan;
+    });
+
+    if (DATA_QUIZ.acak_soal) daftarSoal = acakArray(daftarSoal);
+    if (DATA_QUIZ.acak_opsi) {
+        daftarSoal.forEach(function(soal) {
+            if (soal.tipe === "pilihan_ganda" || soal.tipe === "pilihan_ganda_kompleks") {
+                soal.opsi = acakArray(soal.opsi);
+            }
+        });
+    }
+
+    jawabanSiswa = daftarSoal.map(function(soal) {
+        if (soal.tipe === "pilihan_ganda_kompleks") return [];
+        if (soal.tipe === "benar_salah_kompleks") return [];
+        return null;
+    });
+
+    document.getElementById("namaTampil").textContent = dataSiswa.nama;
+    document.getElementById("halamanIdentitas").classList.add("hidden");
+    document.getElementById("halamanQuiz").classList.remove("hidden");
+
+    quizSelesai = false;
+    tampilkanSoal();
+}
+
+/* =========================================================
+   TAMPILKAN SOAL
+   ========================================================= */
+function tampilkanSoal() {
+    const soal = daftarSoal[nomorSoalSekarang];
+    if (!soal) return;
+
+    document.getElementById("nomorSoal").textContent = "Soal " + (nomorSoalSekarang + 1) + " / " + daftarSoal.length;
+    document.getElementById("pertanyaan").textContent = soal.pertanyaan;
+
+    const persen = ((nomorSoalSekarang + 1) / daftarSoal.length) * 100;
+    document.getElementById("progressBar").style.width = persen + "%";
+
+    let petunjuk = "";
+    if (soal.tipe === "pilihan_ganda") petunjuk = "Pilih satu jawaban yang paling tepat.";
+    else if (soal.tipe === "pilihan_ganda_kompleks") petunjuk = "Pilih semua jawaban yang benar.";
+    else if (soal.tipe === "benar_salah_kompleks") petunjuk = "Tentukan Benar atau Salah untuk setiap pernyataan.";
+    document.getElementById("petunjuk").textContent = petunjuk;
+
+    const container = document.getElementById("containerJawaban");
+    container.innerHTML = "";
+
+    if (soal.tipe === "pilihan_ganda") {
+        soal.opsi.forEach(function(opsi, index) {
+            const id = "opsi_" + nomorSoalSekarang + "_" + index;
+            const checked = jawabanSiswa[nomorSoalSekarang] === opsi ? "checked" : "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="form-check answer-option mb-3">
+                    <input class="form-check-input" type="radio" name="jawaban" id="${id}" value="${escapeHTML(opsi)}" ${checked}>
+                    <label class="form-check-label w-100" for="${id}">
+                        <strong>${String.fromCharCode(65 + index)}.</strong> ${escapeHTML(opsi)}
+                    </label>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[name="jawaban"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                jawabanSiswa[nomorSoalSekarang] = this.value;
+            });
+        });
+    }
+    else if (soal.tipe === "pilihan_ganda_kompleks") {
+        const jawabanSebelumnya = Array.isArray(jawabanSiswa[nomorSoalSekarang]) ? jawabanSiswa[nomorSoalSekarang] : [];
+        soal.opsi.forEach(function(opsi, index) {
+            const id = "kompleks_" + nomorSoalSekarang + "_" + index;
+            const checked = jawabanSebelumnya.includes(opsi) ? "checked" : "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="form-check answer-option mb-3">
+                    <input class="form-check-input" type="checkbox" name="jawabanKompleks" id="${id}" value="${escapeHTML(opsi)}" ${checked}>
+                    <label class="form-check-label w-100" for="${id}">
+                        <strong>${String.fromCharCode(65 + index)}.</strong> ${escapeHTML(opsi)}
+                    </label>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[name="jawabanKompleks"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                jawabanSiswa[nomorSoalSekarang] = Array.from(
+                    container.querySelectorAll('input[name="jawabanKompleks"]:checked')
+                ).map(item => item.value);
+            });
+        });
+    }
+    else if (soal.tipe === "benar_salah_kompleks") {
+        const jawabanSebelumnya = Array.isArray(jawabanSiswa[nomorSoalSekarang]) ? jawabanSiswa[nomorSoalSekarang] : [];
+        soal.pernyataan.forEach(function(item, index) {
+            const jawaban = jawabanSebelumnya[index] || "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="statement-box">
+                    <div class="fw-semibold mb-3">${index + 1}. ${escapeHTML(item.teks)}</div>
+                    <div class="d-flex gap-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="bs_${index}" id="benar_${index}" value="Benar" ${jawaban === "Benar" ? "checked" : ""}>
+                            <label class="form-check-label" for="benar_${index}">
+                                <i class="fa-solid fa-check text-success"></i> Benar
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="bs_${index}" id="salah_${index}" value="Salah" ${jawaban === "Salah" ? "checked" : ""}>
+                            <label class="form-check-label" for="salah_${index}">
+                                <i class="fa-solid fa-xmark text-danger"></i> Salah
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[type="radio"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                const bagian = this.name.split("_");
+                const index = parseInt(bagian[1]);
+                if (!Array.isArray(jawabanSiswa[nomorSoalSekarang])) jawabanSiswa[nomorSoalSekarang] = [];
+                jawabanSiswa[nomorSoalSekarang][index] = this.value;
+            });
+        });
+    }
+    updateNavigasi();
+}
+
+/* =========================================================
+   NAVIGASI
+   ========================================================= */
+function updateNavigasi() {
+    const sebelumnya = document.getElementById("btnSebelumnya");
+    const berikutnya = document.getElementById("btnBerikutnya");
+    const selesai = document.getElementById("btnSelesai");
+
+    sebelumnya.disabled = nomorSoalSekarang === 0;
+
+    if (nomorSoalSekarang === daftarSoal.length - 1) {
+        berikutnya.classList.add("hidden");
+        selesai.classList.remove("hidden");
+    } else {
+        berikutnya.classList.remove("hidden");
+        selesai.classList.add("hidden");
+    }
+}
+
+document.getElementById("btnSebelumnya").addEventListener("click", function() {
+    if (nomorSoalSekarang > 0) {
+        nomorSoalSekarang--;
+        tampilkanSoal();
+        window.scrollTo(0, 0);
+    }
+});
+
+document.getElementById("btnBerikutnya").addEventListener("click", function() {
+    if (nomorSoalSekarang < daftarSoal.length - 1) {
+        nomorSoalSekarang++;
+        tampilkanSoal();
+        window.scrollTo(0, 0);
+    }
+});
+
+document.getElementById("btnSelesai").addEventListener("click", function() {
+    if (!confirm("Apakah Anda yakin ingin menyelesaikan quiz?")) return;
+    hitungNilai();
+});
+
+/* =========================================================
+   HITUNG NILAI
+   ========================================================= */
+function hitungNilai() {
+    let totalSkor = 0;
+    let totalMaksimal = 0;
+
+    daftarSoal.forEach(function(soal, index) {
+        const jawaban = jawabanSiswa[index];
+        if (soal.tipe === "pilihan_ganda") {
+            totalMaksimal += 1;
+            if (jawaban === soal.jawaban) totalSkor += 1;
+        } else if (soal.tipe === "pilihan_ganda_kompleks") {
+            totalMaksimal += 1;
+            const benar = [...soal.jawaban].sort();
+            const dipilih = Array.isArray(jawaban) ? [...jawaban].sort() : [];
+            if (JSON.stringify(benar) === JSON.stringify(dipilih)) totalSkor += 1;
+        } else if (soal.tipe === "benar_salah_kompleks") {
+            totalMaksimal += soal.pernyataan.length;
+            soal.pernyataan.forEach(function(item, i) {
+                if (jawaban && jawaban[i] === item.jawaban) totalSkor += 1;
+            });
+        }
+    });
+
+    const nilai = totalMaksimal > 0 ? Math.round((totalSkor / totalMaksimal) * 100) : 0;
+    const tuntas = nilai >= DATA_QUIZ.kkm;
+
+    document.getElementById("nilaiAkhir").textContent = nilai;
+    document.getElementById("hasilNama").textContent = dataSiswa.nama;
+    document.getElementById("hasilSekolah").textContent = dataSiswa.sekolah;
+    document.getElementById("hasilKelas").textContent = "Kelas " + dataSiswa.kelas;
+    document.getElementById("skorHasil").textContent = totalSkor;
+    document.getElementById("maksimalHasil").textContent = totalMaksimal;
+    document.getElementById("kkmHasil").textContent = DATA_QUIZ.kkm;
+
+    const status = document.getElementById("statusHasil");
+    status.textContent = tuntas ? "TUNTAS" : "BELUM TUNTAS";
+    status.className = tuntas ? "badge bg-success fs-5 p-2 mb-4" : "badge bg-danger fs-5 p-2 mb-4";
+
+    document.getElementById("halamanQuiz").classList.add("hidden");
+    document.getElementById("halamanHasil").classList.remove("hidden");
+
+    quizSelesai = true;
+    window.scrollTo(0, 0);
+}
+
+/* =========================================================
+   SHARE KE WHATSAPP (CHAT BARU - PILIH KONTAK SENDIRI)
+   ========================================================= */
+document.getElementById("btnShareWA").addEventListener("click", function() {
+    const nama = dataSiswa.nama || "-";
+    const sekolah = dataSiswa.sekolah || "-";
+    const kelas = dataSiswa.kelas || "-";
+    const nilai = document.getElementById("nilaiAkhir").textContent;
+    const status = document.getElementById("statusHasil").textContent;
+
+    const pesan =
+        "Selamat sore,\n" +
+        "Saya sudah menyelesaikan tugas mengikuti latihan/trayout TKA berikut ini scrensotnya\n\n" +
+        "━━━━━━━━━━━━━━━━━━\n" +
+        "📋 *HASIL TKA " + DATA_QUIZ.mapel.toUpperCase() + " " + DATA_QUIZ.jenjang + "*\n" +
+        "━━━━━━━━━━━━━━━━━━\n" +
+        "👤 Nama    : " + nama + "\n" +
+        "🏫 Sekolah : " + sekolah + "\n" +
+        "🎓 Kelas   : " + kelas + "\n" +
+        "📊 Nilai   : " + nilai + "\n" +
+        "✅ Status  : " + status + "\n" +
+        "━━━━━━━━━━━━━━━━━━\n\n" +
+        "📎 Screenshot hasil terlampir.";
+
+    const url = "https://wa.me/?text=" + encodeURIComponent(pesan);
+    window.open(url, "_blank");
+});
+
+/* =========================================================
+   ULANGI & KEMBALI
+   ========================================================= */
+document.getElementById("btnUlangi").addEventListener("click", function() {
+    nomorSoalSekarang = 0;
+    jawabanSiswa = [];
+    quizSelesai = false;
+    document.getElementById("halamanHasil").classList.add("hidden");
+    document.getElementById("halamanIdentitas").classList.remove("hidden");
+    document.getElementById("nama").value = dataSiswa.nama;
+    document.getElementById("sekolah").value = dataSiswa.sekolah;
+    document.getElementById("kelas").value = dataSiswa.kelas;
+    document.getElementById("nomor").value = dataSiswa.nomor;
+});
+
+document.getElementById("btnBeranda").addEventListener("click", function() {
+    quizSelesai = true;
+    hentikanLoopPeringatan();
+    location.reload();
+});
+</script>
+</body>
+</html>
