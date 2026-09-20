@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz TKA Layanan Kesehatan SMK</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #eef5ff, #fff8e6);
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .quiz-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+            margin-bottom: 25px;
+        }
+        .logo-box {
+            width: 90px;
+            height: 90px;
+            margin: auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .answer-option {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .answer-option:hover {
+            border-color: #0d6efd;
+            background: #f0f7ff;
+        }
+        .answer-option:has(input:checked) {
+            border-color: #0d6efd;
+            background: #eaf3ff;
+        }
+        .answer-option label { cursor: pointer; }
+        .question-box {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 22px;
+            border-left: 5px solid #0d6efd;
+            white-space: pre-line;
+        }
+        .progress { height: 10px; border-radius: 20px; }
+        .result-score {
+            font-size: 70px;
+            font-weight: bold;
+            color: #0d6efd;
+        }
+        .hidden { display: none !important; }
+        .statement-box {
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #ffffff;
+        }
+        @media (max-width: 576px) {
+            .quiz-card { padding: 20px; border-radius: 15px; }
+            .result-score { font-size: 55px; }
+        }
+
+        #warningOverlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            animation: kedip 0.6s infinite alternate;
+        }
+        @keyframes kedip {
+            from { background: rgba(0, 0, 0, 0.9); }
+            to   { background: rgba(120, 0, 0, 0.95); }
+        }
+        #warningOverlay .box {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            border: 3px solid #ef4444;
+        }
+        #warningOverlay h2 { color: #f87171; }
+        #warningOverlay .countdown {
+            font-size: 80px;
+            font-weight: bold;
+            color: #fbbf24;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Overlay Peringatan -->
+<div id="warningOverlay" class="hidden">
+    <div class="box">
+        <h2><i class="fa-solid fa-triangle-exclamation"></i> PERINGATAN!</h2>
+        <p class="fs-5 mt-3">Anda terdeteksi keluar dari halaman quiz.</p>
+        <p>Halaman akan dikembalikan ke awal dalam</p>
+        <div class="countdown" id="countdownDetik">10</div>
+        <p class="text-muted small">Jangan tinggalkan halaman ini sebelum quiz selesai.</p>
+    </div>
+</div>
+
+<div class="container py-4">
+    <!-- HALAMAN IDENTITAS -->
+    <div id="halamanIdentitas">
+        <div class="quiz-card">
+            <div class="text-center mb-4">
+                <div class="logo-box">
+                    <img src="assets/logo.png" alt="Logo Sekolah" onerror="this.style.display='none'">
+                </div>
+                <h1 class="fw-bold text-primary mt-3">
+                    <i class="fa-solid fa-heart-pulse"></i> Quiz TKA Layanan Kesehatan SMK
+                </h1>
+                <p class="text-muted">Tes Kemampuan Akademik – Layanan Kesehatan Jenjang SMK</p>
+            </div>
+            <div class="alert alert-info">
+                <i class="fa-solid fa-circle-info"></i> Silakan isi identitas sebelum memulai quiz.
+            </div>
+            <form id="formIdentitas">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nama Siswa</label>
+                    <input type="text" id="nama" class="form-control form-control-lg" placeholder="Masukkan nama lengkap" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Asal Sekolah</label>
+                    <input type="text" id="sekolah" class="form-control form-control-lg" placeholder="Contoh: SMKN 1 Contoh" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Kelas</label>
+                    <input type="text" id="kelas" class="form-control form-control-lg" placeholder="Contoh: XII-AK 1" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Nomor Peserta</label>
+                    <input type="text" id="nomor" class="form-control form-control-lg" placeholder="Opsional">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                    <i class="fa-solid fa-play"></i> Mulai Quiz
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HALAMAN QUIZ -->
+    <div id="halamanQuiz" class="hidden">
+        <div class="quiz-card">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <div>
+                    <h4 class="fw-bold text-primary mb-1">Quiz TKA Layanan Kesehatan SMK</h4>
+                    <div class="text-muted"><i class="fa-solid fa-user"></i> <span id="namaTampil"></span></div>
+                </div>
+                <div class="badge bg-primary fs-6 p-2"><span id="nomorSoal">1</span></div>
+            </div>
+            <div class="progress mb-4"><div id="progressBar" class="progress-bar" style="width: 0%"></div></div>
+            <div id="petunjuk" class="alert alert-warning small"></div>
+            <div class="question-box mb-4"><h5 id="pertanyaan" class="fw-bold mb-0"></h5></div>
+            <div id="containerJawaban"></div>
+            <div class="d-flex justify-content-between mt-4 gap-2">
+                <button id="btnSebelumnya" type="button" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-arrow-left"></i> Sebelumnya
+                </button>
+                <button id="btnBerikutnya" type="button" class="btn btn-primary">
+                    Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button id="btnSelesai" type="button" class="btn btn-success hidden">
+                    <i class="fa-solid fa-check"></i> Selesai
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN HASIL -->
+    <div id="halamanHasil" class="hidden">
+        <div class="quiz-card text-center">
+            <div class="mb-3"><i class="fa-solid fa-circle-check text-success" style="font-size:70px"></i></div>
+            <h2 class="fw-bold">Quiz Selesai</h2>
+            <p class="text-muted">Berikut hasil pengerjaan:</p>
+            <div id="hasilNama" class="fw-bold fs-5"></div>
+            <div id="hasilSekolah" class="text-muted"></div>
+            <div id="hasilKelas" class="text-muted mb-3"></div>
+            <div class="result-score"><span id="nilaiAkhir">0</span></div>
+            <div id="statusHasil" class="badge fs-5 p-2 mb-4"></div>
+            <div class="row g-3 text-start mb-4">
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">Skor</div><strong id="skorHasil">0</strong></div></div>
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">Skor Maksimal</div><strong id="maksimalHasil">0</strong></div></div>
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">KKM</div><strong id="kkmHasil">70</strong></div></div>
+            </div>
+            <div class="d-grid gap-2">
+                <button id="btnShareWA" class="btn btn-success btn-lg">
+                    <i class="fa-brands fa-whatsapp"></i> Share ke WhatsApp
+                </button>
+                <button id="btnUlangi" class="btn btn-primary btn-lg">
+                    <i class="fa-solid fa-rotate"></i> Ulangi Quiz
+                </button>
+                <button id="btnBeranda" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-house"></i> Kembali
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+/* =========================================================
+   DATA QUIZ - LAYANAN KESEHATAN SMK
+   ========================================================= */
+const DATA_QUIZ = {
+    judul: "Quiz TKA Layanan Kesehatan SMK",
+    mapel: "Layanan Kesehatan",
+    jenjang: "SMK",
+    kkm: 70,
+    acak_soal: true,
+    acak_opsi: true,
+    soal: [
+        // ===== AKTIVITAS KERJA & DESKRIPSI PEKERJAAN =====
+        {
+            id: 1,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Tenaga kesehatan yang bertugas memberikan asuhan keperawatan langsung kepada pasien adalah ...",
+            opsi: ["Perawat", "Apoteker", "Radiografer", "Analis laboratorium"],
+            jawaban: "Perawat"
+        },
+        {
+            id: 2,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Profesi yang bertugas menyiapkan dan menyerahkan obat sesuai resep dokter adalah ...",
+            opsi: ["Apoteker", "Perawat", "Bidan", "Fisioterapis"],
+            jawaban: "Apoteker"
+        },
+        {
+            id: 3,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Tenaga kesehatan yang bertugas membantu proses persalinan adalah ...",
+            opsi: ["Bidan", "Perawat", "Dokter umum", "Ahli gizi"],
+            jawaban: "Bidan"
+        },
+        {
+            id: 4,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua tenaga kesehatan yang bekerja di rumah sakit.",
+            opsi: ["Dokter", "Perawat", "Apoteker", "Polisi"],
+            jawaban: ["Dokter", "Perawat", "Apoteker"]
+        },
+
+        // ===== PENGELOLAAN FASILITAS PELAYANAN KESEHATAN =====
+        {
+            id: 5,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Fasilitas pelayanan kesehatan tingkat pertama di Indonesia adalah ...",
+            opsi: ["Puskesmas", "Rumah sakit umum", "Rumah sakit khusus", "Klinik internasional"],
+            jawaban: "Puskesmas"
+        },
+        {
+            id: 6,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Standar minimal yang harus dimiliki rumah sakit meliputi ...",
+            opsi: [
+                "Instalasi gawat darurat (IGD), rawat inap, dan kamar operasi",
+                "Hanya poliklinik umum",
+                "Hanya apotek",
+                "Hanya ruang tunggu"
+            ],
+            jawaban: "Instalasi gawat darurat (IGD), rawat inap, dan kamar operasi"
+        },
+        {
+            id: 7,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Pengelolaan fasilitas pelayanan kesehatan meliputi ...",
+            opsi: [
+                "Perencanaan, pengorganisasian, pelaksanaan, dan pengawasan",
+                "Hanya pembelian alat medis",
+                "Hanya perekrutan tenaga kerja",
+                "Hanya pencatatan pasien"
+            ],
+            jawaban: "Perencanaan, pengorganisasian, pelaksanaan, dan pengawasan"
+        },
+
+        // ===== PELUANG KERJA & USAHA =====
+        {
+            id: 8,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Peluang usaha di bidang layanan kesehatan contohnya adalah ...",
+            opsi: [
+                "Membuka apotek atau klinik kesehatan",
+                "Membuka toko mainan",
+                "Membuka bengkel motor",
+                "Membuka warung kopi"
+            ],
+            jawaban: "Membuka apotek atau klinik kesehatan"
+        },
+        {
+            id: 9,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Peluang kerja di bidang layanan kesehatan yang berhubungan dengan pemeriksaan laboratorium adalah ...",
+            opsi: ["Analis laboratorium", "Perawat gigi", "Bidan", "Fisioterapis"],
+            jawaban: "Analis laboratorium"
+        },
+        {
+            id: 10,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua bidang pekerjaan di layanan kesehatan yang dapat dijalani lulusan SMK.",
+            opsi: [
+                "Asisten keperawatan",
+                "Teknisi farmasi",
+                "Radiografer",
+                "Hakim pengadilan"
+            ],
+            jawaban: [
+                "Asisten keperawatan",
+                "Teknisi farmasi",
+                "Radiografer"
+            ]
+        },
+
+        // ===== ANATOMI & FISIOLOGI =====
+        {
+            id: 11,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sistem tubuh manusia yang berfungsi mengedarkan darah ke seluruh tubuh adalah ...",
+            opsi: [
+                "Sistem sirkulasi",
+                "Sistem respirasi",
+                "Sistem ekskresi",
+                "Sistem pencernaan"
+            ],
+            jawaban: "Sistem sirkulasi"
+        },
+        {
+            id: 12,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Organ tubuh manusia yang berfungsi sebagai pusat pernapasan adalah ...",
+            opsi: ["Paru-paru", "Jantung", "Hati", "Ginjal"],
+            jawaban: "Paru-paru"
+        },
+        {
+            id: 13,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Gangguan pada sistem sirkulasi yang ditandai dengan tekanan darah tinggi disebut ...",
+            opsi: ["Hipertensi", "Hipotensi", "Anemia", "Leukemia"],
+            jawaban: "Hipertensi"
+        },
+        {
+            id: 14,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Gangguan pada sistem pencernaan yang disebabkan oleh infeksi bakteri Helicobacter pylori adalah ...",
+            opsi: ["Tukak lambung", "Diare", "Sembelit", "Maag kronis"],
+            jawaban: "Tukak lambung"
+        },
+        {
+            id: 15,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua organ yang termasuk sistem ekskresi.",
+            opsi: ["Ginjal", "Kulit", "Paru-paru", "Jantung"],
+            jawaban: ["Ginjal", "Kulit", "Paru-paru"]
+        },
+
+        // ===== TUMBUH KEMBANG MANUSIA =====
+        {
+            id: 16,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Tahap tumbuh kembang manusia yang paling pesat terjadi pada ...",
+            opsi: ["Masa bayi dan balita", "Masa remaja", "Masa dewasa", "Masa lansia"],
+            jawaban: "Masa bayi dan balita"
+        },
+        {
+            id: 17,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Gangguan tumbuh kembang akibat kekurangan gizi kronis pada anak disebut ...",
+            opsi: ["Stunting", "Obesitas", "Autisme", "ADHD"],
+            jawaban: "Stunting"
+        },
+        {
+            id: 18,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Salah satu ciri tumbuh kembang remaja pada laki-laki adalah ...",
+            opsi: [
+                "Tumbuhnya jakun dan perubahan suara",
+                "Mulai menstruasi",
+                "Pertumbuhan payudara",
+                "Pelebaran pinggul"
+            ],
+            jawaban: "Tumbuhnya jakun dan perubahan suara"
+        },
+        {
+            id: 19,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Gangguan siklus hidup pada masa lansia yang sering terjadi adalah ...",
+            opsi: ["Osteoporosis", "Stunting", "Autisme", "ADHD"],
+            jawaban: "Osteoporosis"
+        },
+
+        // ===== APD & K3 =====
+        {
+            id: 20,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Alat Pelindung Diri (APD) yang berfungsi melindungi tangan dari cairan tubuh pasien adalah ...",
+            opsi: ["Sarung tangan", "Masker", "Gown", "Kacamata"],
+            jawaban: "Sarung tangan"
+        },
+        {
+            id: 21,
+            tipe: "pilihan_ganda",
+            pertanyaan: "APD yang wajib digunakan perawat saat menangani pasien dengan penyakit menular melalui udara adalah ...",
+            opsi: ["Masker N95", "Sarung tangan", "Apron", "Sepatu boot"],
+            jawaban: "Masker N95"
+        },
+        {
+            id: 22,
+            tipe: "pilihan_ganda",
+            pertanyaan: "K3 dalam pelayanan kesehatan bertujuan untuk ...",
+            opsi: [
+                "Menjamin keselamatan dan kesehatan tenaga kerja serta pasien",
+                "Menambah beban kerja",
+                "Mengurangi kualitas pelayanan",
+                "Menghambat pekerjaan"
+            ],
+            jawaban: "Menjamin keselamatan dan kesehatan tenaga kerja serta pasien"
+        },
+        {
+            id: 23,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua APD yang digunakan tenaga kesehatan.",
+            opsi: [
+                "Sarung tangan",
+                "Masker",
+                "Gown",
+                "Helm proyek"
+            ],
+            jawaban: [
+                "Sarung tangan",
+                "Masker",
+                "Gown"
+            ]
+        },
+
+        // ===== PEMERIKSAAN TANDA-TANDA VITAL =====
+        {
+            id: 24,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Tanda-tanda vital (TTV) meliputi ...",
+            opsi: [
+                "Suhu, denyut nadi, pernapasan, dan tekanan darah",
+                "Tinggi badan, berat badan, dan lingkar kepala",
+                "Nama, umur, dan alamat",
+                "Golongan darah dan jenis kelamin"
+            ],
+            jawaban: "Suhu, denyut nadi, pernapasan, dan tekanan darah"
+        },
+        {
+            id: 25,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Alat yang digunakan untuk mengukur suhu tubuh adalah ...",
+            opsi: ["Termometer", "Tensimeter", "Stetoskop", "Spirometer"],
+            jawaban: "Termometer"
+        },
+        {
+            id: 26,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Alat yang digunakan untuk mengukur tekanan darah adalah ...",
+            opsi: ["Tensimeter", "Termometer", "Stetoskop", "Refleks hammer"],
+            jawaban: "Tensimeter"
+        },
+        {
+            id: 27,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Suhu tubuh normal manusia dewasa berkisar antara ...",
+            opsi: [
+                "36,5°C – 37,5°C",
+                "35°C – 36°C",
+                "38°C – 39°C",
+                "40°C – 41°C"
+            ],
+            jawaban: "36,5°C – 37,5°C"
+        },
+        {
+            id: 28,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Denyut nadi normal orang dewasa saat istirahat adalah ...",
+            opsi: [
+                "60 – 100 kali per menit",
+                "20 – 40 kali per menit",
+                "100 – 150 kali per menit",
+                "150 – 200 kali per menit"
+            ],
+            jawaban: "60 – 100 kali per menit"
+        },
+        {
+            id: 29,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Pemeriksaan tanda-tanda vital bertujuan untuk ...",
+            opsi: [
+                "Mengetahui kondisi fisiologis tubuh pasien",
+                "Mengetahui nama pasien",
+                "Mengetahui alamat pasien",
+                "Mengetahui pekerjaan pasien"
+            ],
+            jawaban: "Mengetahui kondisi fisiologis tubuh pasien"
+        },
+
+        // ===== ETIKA & ETIKET KOMUNIKASI EFEKTIF =====
+        {
+            id: 30,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sikap tenaga kesehatan yang baik dalam berkomunikasi dengan klien adalah ...",
+            opsi: [
+                "Mendengarkan dengan penuh perhatian dan empati",
+                "Memotong pembicaraan klien",
+                "Mengabaikan keluhan klien",
+                "Berbicara dengan nada tinggi"
+            ],
+            jawaban: "Mendengarkan dengan penuh perhatian dan empati"
+        },
+        {
+            id: 31,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Etika dalam pelayanan kesehatan yang berkaitan dengan kerahasiaan data pasien disebut ...",
+            opsi: [
+                "Kerahasiaan (confidentiality)",
+                "Autonomi",
+                "Beneficence",
+                "Justice"
+            ],
+            jawaban: "Kerahasiaan (confidentiality)"
+        },
+        {
+            id: 32,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Komunikasi efektif dengan klien harus memperhatikan ...",
+            opsi: [
+                "Bahasa yang mudah dipahami, sikap ramah, dan kontak mata",
+                "Bahasa medis yang rumit",
+                "Nada bicara tinggi",
+                "Menghindari kontak mata"
+            ],
+            jawaban: "Bahasa yang mudah dipahami, sikap ramah, dan kontak mata"
+        },
+        {
+            id: 33,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Prinsip etika yang menghormati hak pasien untuk menentukan pilihan sendiri disebut ...",
+            opsi: ["Autonomi", "Beneficence", "Non-maleficence", "Justice"],
+            jawaban: "Autonomi"
+        },
+        {
+            id: 34,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Contoh komunikasi terapeutik antara perawat dan pasien adalah ...",
+            opsi: [
+                "Menanyakan keluhan pasien dengan penuh perhatian",
+                "Membahas masalah pribadi perawat",
+                "Membicarakan pasien lain",
+                "Mengabaikan pertanyaan pasien"
+            ],
+            jawaban: "Menanyakan keluhan pasien dengan penuh perhatian"
+        },
+        {
+            id: 35,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua prinsip etika dalam pelayanan kesehatan.",
+            opsi: [
+                "Autonomi",
+                "Beneficence",
+                "Non-maleficence",
+                "Diskriminasi"
+            ],
+            jawaban: [
+                "Autonomi",
+                "Beneficence",
+                "Non-maleficence"
+            ]
+        },
+
+        // ===== BENAR SALAH KOMPLEKS =====
+        {
+            id: 36,
+            tipe: "benar_salah_kompleks",
+            pertanyaan: "Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+            pernyataan: [
+                {
+                    teks: "Puskesmas adalah fasilitas pelayanan kesehatan tingkat pertama.",
+                    jawaban: "Benar"
+                },
+                {
+                    teks: "Suhu tubuh normal manusia dewasa berkisar 38°C – 39°C.",
+                    jawaban: "Salah"
+                },
+                {
+                    teks: "APD wajib digunakan tenaga kesehatan saat menangani pasien.",
+                    jawaban: "Benar"
+                },
+                {
+                    teks: "Etika komunikasi dengan klien tidak penting dalam pelayanan kesehatan.",
+                    jawaban: "Salah"
+                }
+            ]
+        }
+    ]
+};
+
+/* =========================================================
+   VARIABEL GLOBAL
+   ========================================================= */
+let daftarSoal = [];
+let jawabanSiswa = [];
+let nomorSoalSekarang = 0;
+let dataSiswa = {};
+let quizSelesai = false;
+let warningAktif = false;
+let countdownInterval = null;
+let audioLoopInterval = null;
+
+/* =========================================================
+   FUNGSI SUARA PERINGATAN
+   ========================================================= */
+function buatTit(freq = 1200, durasi = 0.18) {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.35, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + durasi);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + durasi);
+        setTimeout(() => ctx.close(), (durasi + 0.2) * 1000);
+    } catch (e) {}
+}
+
+function bunyiPeringatan() {
+    buatTit(1200, 0.18);
+    setTimeout(() => buatTit(1200, 0.18), 220);
+    setTimeout(() => buatTit(1200, 0.18), 440);
+}
+
+function mulaiLoopPeringatan() {
+    if (audioLoopInterval) clearInterval(audioLoopInterval);
+    bunyiPeringatan();
+    audioLoopInterval = setInterval(bunyiPeringatan, 1000);
+}
+
+function hentikanLoopPeringatan() {
+    if (audioLoopInterval) {
+        clearInterval(audioLoopInterval);
+        audioLoopInterval = null;
+    }
+}
+
+/* =========================================================
+   FUNGSI ACAK & ESCAPE
+   ========================================================= */
+function acakArray(array) {
+    const hasil = [...array];
+    for (let i = hasil.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [hasil[i], hasil[j]] = [hasil[j], hasil[i]];
+    }
+    return hasil;
+}
+
+function escapeHTML(text) {
+    if (text === null || text === undefined) return "";
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+/* =========================================================
+   DETEKSI KELUAR HALAMAN
+   ========================================================= */
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden && !quizSelesai && !warningAktif) {
+        tampilkanPeringatan();
+    }
+});
+
+window.addEventListener('beforeunload', function(e) {
+    if (!quizSelesai) {
+        bunyiPeringatan();
+        e.preventDefault();
+        e.returnValue = 'Apakah Anda yakin ingin keluar? Quiz akan direset.';
+        return e.returnValue;
+    }
+});
+
+document.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (link && link.target === '_blank' && !quizSelesai && !warningAktif) {
+        e.preventDefault();
+        tampilkanPeringatan();
+    }
+});
+
+/* =========================================================
+   TAMPILKAN PERINGATAN (10 DETIK)
+   ========================================================= */
+function tampilkanPeringatan() {
+    if (warningAktif || quizSelesai) return;
+    warningAktif = true;
+
+    const overlay = document.getElementById('warningOverlay');
+    overlay.classList.remove('hidden');
+
+    let detik = 10;
+    document.getElementById('countdownDetik').textContent = detik;
+
+    mulaiLoopPeringatan();
+
+    countdownInterval = setInterval(() => {
+        detik--;
+        document.getElementById('countdownDetik').textContent = detik;
+
+        if (detik <= 0) {
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+            hentikanLoopPeringatan();
+            resetKeAwal();
+        }
+    }, 1000);
+}
+
+/* =========================================================
+   RESET KE AWAL
+   ========================================================= */
+function resetKeAwal() {
+    hentikanLoopPeringatan();
+    warningAktif = false;
+    document.getElementById('warningOverlay').classList.add('hidden');
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+    }
+
+    nomorSoalSekarang = 0;
+    jawabanSiswa = [];
+    daftarSoal = [];
+    dataSiswa = {};
+    quizSelesai = false;
+
+    document.getElementById('halamanQuiz').classList.add('hidden');
+    document.getElementById('halamanHasil').classList.add('hidden');
+    document.getElementById('halamanIdentitas').classList.remove('hidden');
+
+    document.getElementById('formIdentitas').reset();
+    window.scrollTo(0, 0);
+}
+
+/* =========================================================
+   FORM IDENTITAS
+   ========================================================= */
+document.getElementById("formIdentitas").addEventListener("submit", function(event) {
+    event.preventDefault();
+    dataSiswa = {
+        nama: document.getElementById("nama").value.trim(),
+        sekolah: document.getElementById("sekolah").value.trim(),
+        kelas: document.getElementById("kelas").value.trim(),
+        nomor: document.getElementById("nomor").value.trim()
+    };
+    if (!dataSiswa.nama) { alert("Nama siswa wajib diisi."); return; }
+    if (!dataSiswa.sekolah) { alert("Asal sekolah wajib diisi."); return; }
+    if (!dataSiswa.kelas) { alert("Kelas wajib diisi."); return; }
+    mulaiQuiz();
+});
+
+/* =========================================================
+   MULAI QUIZ
+   ========================================================= */
+function mulaiQuiz() {
+    daftarSoal = DATA_QUIZ.soal.map(function(soal) {
+        const salinan = { ...soal };
+        if (Array.isArray(soal.opsi)) salinan.opsi = [...soal.opsi];
+        if (Array.isArray(soal.pernyataan)) salinan.pernyataan = soal.pernyataan.map(item => ({ ...item }));
+        return salinan;
+    });
+
+    if (DATA_QUIZ.acak_soal) daftarSoal = acakArray(daftarSoal);
+    if (DATA_QUIZ.acak_opsi) {
+        daftarSoal.forEach(function(soal) {
+            if (soal.tipe === "pilihan_ganda" || soal.tipe === "pilihan_ganda_kompleks") {
+                soal.opsi = acakArray(soal.opsi);
+            }
+        });
+    }
+
+    jawabanSiswa = daftarSoal.map(function(soal) {
+        if (soal.tipe === "pilihan_ganda_kompleks") return [];
+        if (soal.tipe === "benar_salah_kompleks") return [];
+        return null;
+    });
+
+    document.getElementById("namaTampil").textContent = dataSiswa.nama;
+    document.getElementById("halamanIdentitas").classList.add("hidden");
+    document.getElementById("halamanQuiz").classList.remove("hidden");
+
+    quizSelesai = false;
+    tampilkanSoal();
+}
+
+/* =========================================================
+   TAMPILKAN SOAL
+   ========================================================= */
+function tampilkanSoal() {
+    const soal = daftarSoal[nomorSoalSekarang];
+    if (!soal) return;
+
+    document.getElementById("nomorSoal").textContent = "Soal " + (nomorSoalSekarang + 1) + " / " + daftarSoal.length;
+    document.getElementById("pertanyaan").textContent = soal.pertanyaan;
+
+    const persen = ((nomorSoalSekarang + 1) / daftarSoal.length) * 100;
+    document.getElementById("progressBar").style.width = persen + "%";
+
+    let petunjuk = "";
+    if (soal.tipe === "pilihan_ganda") petunjuk = "Pilih satu jawaban yang paling tepat.";
+    else if (soal.tipe === "pilihan_ganda_kompleks") petunjuk = "Pilih semua jawaban yang benar.";
+    else if (soal.tipe === "benar_salah_kompleks") petunjuk = "Tentukan Benar atau Salah untuk setiap pernyataan.";
+    document.getElementById("petunjuk").textContent = petunjuk;
+
+    const container = document.getElementById("containerJawaban");
+    container.innerHTML = "";
+
+    if (soal.tipe === "pilihan_ganda") {
+        soal.opsi.forEach(function(opsi, index) {
+            const id = "opsi_" + nomorSoalSekarang + "_" + index;
+            const checked = jawabanSiswa[nomorSoalSekarang] === opsi ? "checked" : "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="form-check answer-option mb-3">
+                    <input class="form-check-input" type="radio" name="jawaban" id="${id}" value="${escapeHTML(opsi)}" ${checked}>
+                    <label class="form-check-label w-100" for="${id}">
+                        <strong>${String.fromCharCode(65 + index)}.</strong> ${escapeHTML(opsi)}
+                    </label>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[name="jawaban"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                jawabanSiswa[nomorSoalSekarang] = this.value;
+            });
+        });
+    }
+    else if (soal.tipe === "pilihan_ganda_kompleks") {
+        const jawabanSebelumnya = Array.isArray(jawabanSiswa[nomorSoalSekarang]) ? jawabanSiswa[nomorSoalSekarang] : [];
+        soal.opsi.forEach(function(opsi, index) {
+            const id = "kompleks_" + nomorSoalSekarang + "_" + index;
+            const checked = jawabanSebelumnya.includes(opsi) ? "checked" : "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="form-check answer-option mb-3">
+                    <input class="form-check-input" type="checkbox" name="jawabanKompleks" id="${id}" value="${escapeHTML(opsi)}" ${checked}>
+                    <label class="form-check-label w-100" for="${id}">
+                        <strong>${String.fromCharCode(65 + index)}.</strong> ${escapeHTML(opsi)}
+                    </label>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[name="jawabanKompleks"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                jawabanSiswa[nomorSoalSekarang] = Array.from(
+                    container.querySelectorAll('input[name="jawabanKompleks"]:checked')
+                ).map(item => item.value);
+            });
+        });
+    }
+    else if (soal.tipe === "benar_salah_kompleks") {
+        const jawabanSebelumnya = Array.isArray(jawabanSiswa[nomorSoalSekarang]) ? jawabanSiswa[nomorSoalSekarang] : [];
+        soal.pernyataan.forEach(function(item, index) {
+            const jawaban = jawabanSebelumnya[index] || "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="statement-box">
+                    <div class="fw-semibold mb-3">${index + 1}. ${escapeHTML(item.teks)}</div>
+                    <div class="d-flex gap-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="bs_${index}" id="benar_${index}" value="Benar" ${jawaban === "Benar" ? "checked" : ""}>
+                            <label class="form-check-label" for="benar_${index}">
+                                <i class="fa-solid fa-check text-success"></i> Benar
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="bs_${index}" id="salah_${index}" value="Salah" ${jawaban === "Salah" ? "checked" : ""}>
+                            <label class="form-check-label" for="salah_${index}">
+                                <i class="fa-solid fa-xmark text-danger"></i> Salah
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[type="radio"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                const bagian = this.name.split("_");
+                const index = parseInt(bagian[1]);
+                if (!Array.isArray(jawabanSiswa[nomorSoalSekarang])) jawabanSiswa[nomorSoalSekarang] = [];
+                jawabanSiswa[nomorSoalSekarang][index] = this.value;
+            });
+        });
+    }
+    updateNavigasi();
+}
+
+/* =========================================================
+   NAVIGASI
+   ========================================================= */
+function updateNavigasi() {
+    const sebelumnya = document.getElementById("btnSebelumnya");
+    const berikutnya = document.getElementById("btnBerikutnya");
+    const selesai = document.getElementById("btnSelesai");
+
+    sebelumnya.disabled = nomorSoalSekarang === 0;
+
+    if (nomorSoalSekarang === daftarSoal.length - 1) {
+        berikutnya.classList.add("hidden");
+        selesai.classList.remove("hidden");
+    } else {
+        berikutnya.classList.remove("hidden");
+        selesai.classList.add("hidden");
+    }
+}
+
+document.getElementById("btnSebelumnya").addEventListener("click", function() {
+    if (nomorSoalSekarang > 0) {
+        nomorSoalSekarang--;
+        tampilkanSoal();
+        window.scrollTo(0, 0);
+    }
+});
+
+document.getElementById("btnBerikutnya").addEventListener("click", function() {
+    if (nomorSoalSekarang < daftarSoal.length - 1) {
+        nomorSoalSekarang++;
+        tampilkanSoal();
+        window.scrollTo(0, 0);
+    }
+});
+
+document.getElementById("btnSelesai").addEventListener("click", function() {
+    if (!confirm("Apakah Anda yakin ingin menyelesaikan quiz?")) return;
+    hitungNilai();
+});
+
+/* =========================================================
+   HITUNG NILAI
+   ========================================================= */
+function hitungNilai() {
+    let totalSkor = 0;
+    let totalMaksimal = 0;
+
+    daftarSoal.forEach(function(soal, index) {
+        const jawaban = jawabanSiswa[index];
+        if (soal.tipe === "pilihan_ganda") {
+            totalMaksimal += 1;
+            if (jawaban === soal.jawaban) totalSkor += 1;
+        } else if (soal.tipe === "pilihan_ganda_kompleks") {
+            totalMaksimal += 1;
+            const benar = [...soal.jawaban].sort();
+            const dipilih = Array.isArray(jawaban) ? [...jawaban].sort() : [];
+            if (JSON.stringify(benar) === JSON.stringify(dipilih)) totalSkor += 1;
+        } else if (soal.tipe === "benar_salah_kompleks") {
+            totalMaksimal += soal.pernyataan.length;
+            soal.pernyataan.forEach(function(item, i) {
+                if (jawaban && jawaban[i] === item.jawaban) totalSkor += 1;
+            });
+        }
+    });
+
+    const nilai = totalMaksimal > 0 ? Math.round((totalSkor / totalMaksimal) * 100) : 0;
+    const tuntas = nilai >= DATA_QUIZ.kkm;
+
+    document.getElementById("nilaiAkhir").textContent = nilai;
+    document.getElementById("hasilNama").textContent = dataSiswa.nama;
+    document.getElementById("hasilSekolah").textContent = dataSiswa.sekolah;
+    document.getElementById("hasilKelas").textContent = "Kelas " + dataSiswa.kelas;
+    document.getElementById("skorHasil").textContent = totalSkor;
+    document.getElementById("maksimalHasil").textContent = totalMaksimal;
+    document.getElementById("kkmHasil").textContent = DATA_QUIZ.kkm;
+
+    const status = document.getElementById("statusHasil");
+    status.textContent = tuntas ? "TUNTAS" : "BELUM TUNTAS";
+    status.className = tuntas ? "badge bg-success fs-5 p-2 mb-4" : "badge bg-danger fs-5 p-2 mb-4";
+
+    document.getElementById("halamanQuiz").classList.add("hidden");
+    document.getElementById("halamanHasil").classList.remove("hidden");
+
+    quizSelesai = true;
+    window.scrollTo(0, 0);
+}
+
+/* =========================================================
+   SHARE KE WHATSAPP (CHAT BARU - PILIH KONTAK SENDIRI)
+   ========================================================= */
+document.getElementById("btnShareWA").addEventListener("click", function() {
+    const nama = dataSiswa.nama || "-";
+    const sekolah = dataSiswa.sekolah || "-";
+    const kelas = dataSiswa.kelas || "-";
+    const nilai = document.getElementById("nilaiAkhir").textContent;
+    const status = document.getElementById("statusHasil").textContent;
+
+    const pesan =
+        "Selamat sore,\n" +
+        "Saya sudah menyelesaikan tugas mengikuti latihan/trayout TKA berikut ini scrensotnya\n\n" +
+        "━━━━━━━━━━━━━━━━━━\n" +
+        "📋 *HASIL TKA " + DATA_QUIZ.mapel.toUpperCase() + " " + DATA_QUIZ.jenjang + "*\n" +
+        "━━━━━━━━━━━━━━━━━━\n" +
+        "👤 Nama    : " + nama + "\n" +
+        "🏫 Sekolah : " + sekolah + "\n" +
+        "🎓 Kelas   : " + kelas + "\n" +
+        "📊 Nilai   : " + nilai + "\n" +
+        "✅ Status  : " + status + "\n" +
+        "━━━━━━━━━━━━━━━━━━\n\n" +
+        "📎 Screenshot hasil terlampir.";
+
+    const url = "https://wa.me/?text=" + encodeURIComponent(pesan);
+    window.open(url, "_blank");
+});
+
+/* =========================================================
+   ULANGI & KEMBALI
+   ========================================================= */
+document.getElementById("btnUlangi").addEventListener("click", function() {
+    nomorSoalSekarang = 0;
+    jawabanSiswa = [];
+    quizSelesai = false;
+    document.getElementById("halamanHasil").classList.add("hidden");
+    document.getElementById("halamanIdentitas").classList.remove("hidden");
+    document.getElementById("nama").value = dataSiswa.nama;
+    document.getElementById("sekolah").value = dataSiswa.sekolah;
+    document.getElementById("kelas").value = dataSiswa.kelas;
+    document.getElementById("nomor").value = dataSiswa.nomor;
+});
+
+document.getElementById("btnBeranda").addEventListener("click", function() {
+    quizSelesai = true;
+    hentikanLoopPeringatan();
+    location.reload();
+});
+</script>
+</body>
+</html>
