@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz TKA Teknik Otomotif SMK</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #eef5ff, #fff8e6);
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .quiz-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+            margin-bottom: 25px;
+        }
+        .logo-box {
+            width: 90px;
+            height: 90px;
+            margin: auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .answer-option {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .answer-option:hover {
+            border-color: #0d6efd;
+            background: #f0f7ff;
+        }
+        .answer-option:has(input:checked) {
+            border-color: #0d6efd;
+            background: #eaf3ff;
+        }
+        .answer-option label { cursor: pointer; }
+        .question-box {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 22px;
+            border-left: 5px solid #0d6efd;
+            white-space: pre-line;
+        }
+        .progress { height: 10px; border-radius: 20px; }
+        .result-score {
+            font-size: 70px;
+            font-weight: bold;
+            color: #0d6efd;
+        }
+        .hidden { display: none !important; }
+        .statement-box {
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #ffffff;
+        }
+        @media (max-width: 576px) {
+            .quiz-card { padding: 20px; border-radius: 15px; }
+            .result-score { font-size: 55px; }
+        }
+
+        #warningOverlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            animation: kedip 0.6s infinite alternate;
+        }
+        @keyframes kedip {
+            from { background: rgba(0, 0, 0, 0.9); }
+            to   { background: rgba(120, 0, 0, 0.95); }
+        }
+        #warningOverlay .box {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            border: 3px solid #ef4444;
+        }
+        #warningOverlay h2 { color: #f87171; }
+        #warningOverlay .countdown {
+            font-size: 80px;
+            font-weight: bold;
+            color: #fbbf24;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Overlay Peringatan -->
+<div id="warningOverlay" class="hidden">
+    <div class="box">
+        <h2><i class="fa-solid fa-triangle-exclamation"></i> PERINGATAN!</h2>
+        <p class="fs-5 mt-3">Anda terdeteksi keluar dari halaman quiz.</p>
+        <p>Halaman akan dikembalikan ke awal dalam</p>
+        <div class="countdown" id="countdownDetik">10</div>
+        <p class="text-muted small">Jangan tinggalkan halaman ini sebelum quiz selesai.</p>
+    </div>
+</div>
+
+<div class="container py-4">
+    <!-- HALAMAN IDENTITAS -->
+    <div id="halamanIdentitas">
+        <div class="quiz-card">
+            <div class="text-center mb-4">
+                <div class="logo-box">
+                    <img src="assets/logo.png" alt="Logo Sekolah" onerror="this.style.display='none'">
+                </div>
+                <h1 class="fw-bold text-primary mt-3">
+                    <i class="fa-solid fa-gears"></i> Quiz TKA Teknik Otomotif SMK
+                </h1>
+                <p class="text-muted">Tes Kemampuan Akademik – Teknik Otomotif Jenjang SMK</p>
+            </div>
+            <div class="alert alert-info">
+                <i class="fa-solid fa-circle-info"></i> Silakan isi identitas sebelum memulai quiz.
+            </div>
+            <form id="formIdentitas">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nama Siswa</label>
+                    <input type="text" id="nama" class="form-control form-control-lg" placeholder="Masukkan nama lengkap" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Asal Sekolah</label>
+                    <input type="text" id="sekolah" class="form-control form-control-lg" placeholder="Contoh: SMKN 1 Contoh" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Kelas</label>
+                    <input type="text" id="kelas" class="form-control form-control-lg" placeholder="Contoh: XII-TKR 1" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Nomor Peserta</label>
+                    <input type="text" id="nomor" class="form-control form-control-lg" placeholder="Opsional">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                    <i class="fa-solid fa-play"></i> Mulai Quiz
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HALAMAN QUIZ -->
+    <div id="halamanQuiz" class="hidden">
+        <div class="quiz-card">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <div>
+                    <h4 class="fw-bold text-primary mb-1">Quiz TKA Teknik Otomotif SMK</h4>
+                    <div class="text-muted"><i class="fa-solid fa-user"></i> <span id="namaTampil"></span></div>
+                </div>
+                <div class="badge bg-primary fs-6 p-2"><span id="nomorSoal">1</span></div>
+            </div>
+            <div class="progress mb-4"><div id="progressBar" class="progress-bar" style="width: 0%"></div></div>
+            <div id="petunjuk" class="alert alert-warning small"></div>
+            <div class="question-box mb-4"><h5 id="pertanyaan" class="fw-bold mb-0"></h5></div>
+            <div id="containerJawaban"></div>
+            <div class="d-flex justify-content-between mt-4 gap-2">
+                <button id="btnSebelumnya" type="button" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-arrow-left"></i> Sebelumnya
+                </button>
+                <button id="btnBerikutnya" type="button" class="btn btn-primary">
+                    Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button id="btnSelesai" type="button" class="btn btn-success hidden">
+                    <i class="fa-solid fa-check"></i> Selesai
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HALAMAN HASIL -->
+    <div id="halamanHasil" class="hidden">
+        <div class="quiz-card text-center">
+            <div class="mb-3"><i class="fa-solid fa-circle-check text-success" style="font-size:70px"></i></div>
+            <h2 class="fw-bold">Quiz Selesai</h2>
+            <p class="text-muted">Berikut hasil pengerjaan:</p>
+            <div id="hasilNama" class="fw-bold fs-5"></div>
+            <div id="hasilSekolah" class="text-muted"></div>
+            <div id="hasilKelas" class="text-muted mb-3"></div>
+            <div class="result-score"><span id="nilaiAkhir">0</span></div>
+            <div id="statusHasil" class="badge fs-5 p-2 mb-4"></div>
+            <div class="row g-3 text-start mb-4">
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">Skor</div><strong id="skorHasil">0</strong></div></div>
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">Skor Maksimal</div><strong id="maksimalHasil">0</strong></div></div>
+                <div class="col-md-4"><div class="border rounded p-3"><div class="text-muted small">KKM</div><strong id="kkmHasil">70</strong></div></div>
+            </div>
+            <div class="d-grid gap-2">
+                <button id="btnShareWA" class="btn btn-success btn-lg">
+                    <i class="fa-brands fa-whatsapp"></i> Share ke WhatsApp
+                </button>
+                <button id="btnUlangi" class="btn btn-primary btn-lg">
+                    <i class="fa-solid fa-rotate"></i> Ulangi Quiz
+                </button>
+                <button id="btnBeranda" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-house"></i> Kembali
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+/* =========================================================
+   DATA QUIZ - TEKNIK OTOMOTIF SMK
+   ========================================================= */
+const DATA_QUIZ = {
+    judul: "Quiz TKA Teknik Otomotif SMK",
+    mapel: "Teknik Otomotif",
+    jenjang: "SMK",
+    kkm: 70,
+    acak_soal: true,
+    acak_opsi: true,
+    soal: [
+        // ===== INOVASI TEKNOLOGI OTOMOTIF =====
+        {
+            id: 1,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Teknologi pada mesin kendaraan modern yang bertujuan menghemat bahan bakar dan mengurangi emisi adalah ...",
+            opsi: [
+                "Electronic Fuel Injection (EFI)",
+                "Karburator konvensional",
+                "Sistem pengapian platina",
+                "Karburator mekanik"
+            ],
+            jawaban: "Electronic Fuel Injection (EFI)"
+        },
+        {
+            id: 2,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Jenis transmisi otomatis yang menggunakan sabuk baja dan puli variabel adalah ...",
+            opsi: ["CVT", "Manual", "Torque converter", "Dual clutch"],
+            jawaban: "CVT"
+        },
+        {
+            id: 3,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sistem rem modern yang mencegah roda terkunci saat pengereman mendadak adalah ...",
+            opsi: ["ABS", "EBD", "ESP", "TCS"],
+            jawaban: "ABS"
+        },
+        {
+            id: 4,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sistem kemudi yang menggunakan tenaga hidrolik atau elektrik untuk meringankan pengemudian disebut ...",
+            opsi: [
+                "Power steering",
+                "Rack and pinion",
+                "Recirculating ball",
+                "Worm and sector"
+            ],
+            jawaban: "Power steering"
+        },
+
+        // ===== K3 & LINGKUNGAN BENGKEL =====
+        {
+            id: 5,
+            tipe: "pilihan_ganda",
+            pertanyaan: "APD yang wajib digunakan saat mengelas di bengkel otomotif adalah ...",
+            opsi: [
+                "Helm las, sarung tangan kulit, dan apron",
+                "Topi biasa dan sandal",
+                "Kacamata renang dan celana pendek",
+                "Jas hujan dan sepatu kets"
+            ],
+            jawaban: "Helm las, sarung tangan kulit, dan apron"
+        },
+        {
+            id: 6,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Limbah B3 di bengkel otomotif contohnya adalah ...",
+            opsi: [
+                "Oli bekas, baterai bekas, dan cairan pembersih",
+                "Kertas bekas dan kardus",
+                "Sisa makanan dan daun",
+                "Air bersih dan sabun"
+            ],
+            jawaban: "Oli bekas, baterai bekas, dan cairan pembersih"
+        },
+        {
+            id: 7,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Prosedur tanggap darurat saat terjadi kebakaran di bengkel adalah ...",
+            opsi: [
+                "Matikan sumber listrik, gunakan APAR, dan evakuasi",
+                "Membiarkan api menyebar",
+                "Menuangkan air ke semua peralatan listrik",
+                "Melanjutkan pekerjaan"
+            ],
+            jawaban: "Matikan sumber listrik, gunakan APAR, dan evakuasi"
+        },
+        {
+            id: 8,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua potensi bahaya di bengkel otomotif.",
+            opsi: [
+                "Percikan api saat mengelas",
+                "Kebocoran oli di lantai",
+                "Sengatan listrik dari alat",
+                "Aroma bunga di taman"
+            ],
+            jawaban: [
+                "Percikan api saat mengelas",
+                "Kebocoran oli di lantai",
+                "Sengatan listrik dari alat"
+            ]
+        },
+
+        // ===== SIKAP KERJA PROFESIONAL =====
+        {
+            id: 9,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sikap disiplin dalam bekerja di bengkel ditunjukkan dengan ...",
+            opsi: [
+                "Datang tepat waktu dan mengikuti SOP",
+                "Datang terlambat dan mengabaikan SOP",
+                "Bekerja tanpa memperhatikan keselamatan",
+                "Bermain-main saat bekerja"
+            ],
+            jawaban: "Datang tepat waktu dan mengikuti SOP"
+        },
+        {
+            id: 10,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kerja sama tim di bengkel otomotif bertujuan untuk ...",
+            opsi: [
+                "Menyelesaikan pekerjaan lebih cepat dan efisien",
+                "Memperlambat pekerjaan",
+                "Menambah beban kerja",
+                "Menimbulkan konflik"
+            ],
+            jawaban: "Menyelesaikan pekerjaan lebih cepat dan efisien"
+        },
+        {
+            id: 11,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua sikap profesional yang harus dimiliki teknisi otomotif.",
+            opsi: [
+                "Disiplin",
+                "Tanggung jawab",
+                "Integritas",
+                "Malas"
+            ],
+            jawaban: [
+                "Disiplin",
+                "Tanggung jawab",
+                "Integritas"
+            ]
+        },
+
+        // ===== GAMBAR TEKNIK OTOMOTIF =====
+        {
+            id: 12,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Gambar teknik yang menampilkan tiga pandangan utama (depan, atas, samping) disebut ...",
+            opsi: [
+                "Proyeksi ortogonal",
+                "Proyeksi perspektif",
+                "Proyeksi isometrik",
+                "Proyeksi miring"
+            ],
+            jawaban: "Proyeksi ortogonal"
+        },
+        {
+            id: 13,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Standar gambar teknik yang sering digunakan di Indonesia adalah ...",
+            opsi: ["ISO dan JIS", "APEC dan ASEAN", "FDA dan CE", "NATO dan UN"],
+            jawaban: "ISO dan JIS"
+        },
+        {
+            id: 14,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Gambar teknik yang menunjukkan bagian dalam komponen dengan garis potong disebut ...",
+            opsi: [
+                "Gambar potongan (section)",
+                "Gambar tampak depan",
+                "Gambar tampak samping",
+                "Gambar isometrik"
+            ],
+            jawaban: "Gambar potongan (section)"
+        },
+
+        // ===== PEMILIHAN ALAT =====
+        {
+            id: 15,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Alat yang digunakan untuk mengukur diameter luar poros dengan tingkat ketelitian 0,01 mm adalah ...",
+            opsi: [
+                "Mikrometer sekrup",
+                "Mistar baja",
+                "Jangka sorong",
+                "Roll meter"
+            ],
+            jawaban: "Mikrometer sekrup"
+        },
+        {
+            id: 16,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Alat yang digunakan untuk mengukur celah katup (valve clearance) adalah ...",
+            opsi: [
+                "Feeler gauge",
+                "Multimeter",
+                "Torque wrench",
+                "Dial indicator"
+            ],
+            jawaban: "Feeler gauge"
+        },
+        {
+            id: 17,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Alat yang digunakan untuk mengencangkan baut dengan torsi tertentu adalah ...",
+            opsi: [
+                "Torque wrench",
+                "Kunci pas",
+                "Kunci inggris",
+                "Tang kombinasi"
+            ],
+            jawaban: "Torque wrench"
+        },
+        {
+            id: 18,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua alat ukur yang digunakan di bengkel otomotif.",
+            opsi: [
+                "Jangka sorong",
+                "Mikrometer sekrup",
+                "Multimeter",
+                "Palu besi"
+            ],
+            jawaban: [
+                "Jangka sorong",
+                "Mikrometer sekrup",
+                "Multimeter"
+            ]
+        },
+
+        // ===== PENGGUNAAN PERALATAN =====
+        {
+            id: 19,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sebelum menggunakan alat ukur presisi, hal yang harus dilakukan adalah ...",
+            opsi: [
+                "Memeriksa kalibrasi dan kebersihan alat",
+                "Langsung digunakan tanpa diperiksa",
+                "Dibanting agar berfungsi",
+                "Diberi oli berlebih"
+            ],
+            jawaban: "Memeriksa kalibrasi dan kebersihan alat"
+        },
+        {
+            id: 20,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Penggunaan alat yang benar sesuai prosedur operasi standar (SOP) bertujuan untuk ...",
+            opsi: [
+                "Menjamin keselamatan dan hasil kerja yang akurat",
+                "Memperlambat pekerjaan",
+                "Mengurangi kualitas kerja",
+                "Menambah biaya produksi"
+            ],
+            jawaban: "Menjamin keselamatan dan hasil kerja yang akurat"
+        },
+
+        // ===== PERAWATAN ALAT =====
+        {
+            id: 21,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Kegiatan kalibrasi alat ukur bertujuan untuk ...",
+            opsi: [
+                "Memastikan ketelitian alat sesuai standar",
+                "Mengubah fungsi alat",
+                "Mempercepat kerusakan alat",
+                "Mengurangi akurasi alat"
+            ],
+            jawaban: "Memastikan ketelitian alat sesuai standar"
+        },
+        {
+            id: 22,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Setelah digunakan, alat ukur presisi sebaiknya ...",
+            opsi: [
+                "Dibersihkan, dilumasi, dan disimpan di tempat khusus",
+                "Dibiarkan di lantai bengkel",
+                "Dibanting ke kotak alat",
+                "Direndam dalam air"
+            ],
+            jawaban: "Dibersihkan, dilumasi, dan disimpan di tempat khusus"
+        },
+        {
+            id: 23,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Perawatan alat yang rutin bertujuan untuk ...",
+            opsi: [
+                "Menjaga kinerja dan memperpanjang umur alat",
+                "Mempercepat kerusakan alat",
+                "Menambah biaya perawatan",
+                "Mengurangi kinerja alat"
+            ],
+            jawaban: "Menjaga kinerja dan memperpanjang umur alat"
+        },
+
+        // ===== LISTRIK & ELEKTRONIKA OTOMOTIF =====
+        {
+            id: 24,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Satuan tegangan listrik adalah ...",
+            opsi: ["Volt", "Ampere", "Ohm", "Watt"],
+            jawaban: "Volt"
+        },
+        {
+            id: 25,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Hukum Ohm menyatakan bahwa ...",
+            opsi: [
+                "V = I × R",
+                "I = V × R",
+                "R = I × V",
+                "V = I / R"
+            ],
+            jawaban: "V = I × R"
+        },
+        {
+            id: 26,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Rangkaian listrik di mana arus mengalir melalui satu jalur saja disebut ...",
+            opsi: ["Rangkaian seri", "Rangkaian paralel", "Rangkaian campuran", "Rangkaian terbuka"],
+            jawaban: "Rangkaian seri"
+        },
+        {
+            id: 27,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Komponen elektronika yang berfungsi menyimpan muatan listrik adalah ...",
+            opsi: ["Kapasitor", "Resistor", "Dioda", "Transistor"],
+            jawaban: "Kapasitor"
+        },
+        {
+            id: 28,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Komponen elektronika yang berfungsi menyearahkan arus listrik adalah ...",
+            opsi: ["Dioda", "Resistor", "Kapasitor", "Relay"],
+            jawaban: "Dioda"
+        },
+        {
+            id: 29,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Komponen yang berfungsi sebagai sakelar elektromagnetik pada sistem kelistrikan otomotif adalah ...",
+            opsi: ["Relay", "Resistor", "Kapasitor", "Dioda"],
+            jawaban: "Relay"
+        },
+        {
+            id: 30,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sensor pada kendaraan modern yang berfungsi mendeteksi posisi poros engkol adalah ...",
+            opsi: [
+                "Crankshaft Position Sensor (CKP)",
+                "Oxygen sensor",
+                "MAP sensor",
+                "Throttle Position Sensor"
+            ],
+            jawaban: "Crankshaft Position Sensor (CKP)"
+        },
+        {
+            id: 31,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua komponen elektronika otomotif.",
+            opsi: [
+                "Resistor",
+                "Kapasitor",
+                "Dioda",
+                "Piston"
+            ],
+            jawaban: [
+                "Resistor",
+                "Kapasitor",
+                "Dioda"
+            ]
+        },
+
+        // ===== KOMPONEN UTAMA MESIN =====
+        {
+            id: 32,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Komponen mesin yang berfungsi sebagai rumah bagi piston dan silinder adalah ...",
+            opsi: ["Blok silinder", "Crankshaft", "Camshaft", "Kepala silinder"],
+            jawaban: "Blok silinder"
+        },
+        {
+            id: 33,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Komponen mesin yang mengubah gerak naik-turun piston menjadi gerak putar adalah ...",
+            opsi: ["Crankshaft", "Camshaft", "Katup", "Batang piston"],
+            jawaban: "Crankshaft"
+        },
+        {
+            id: 34,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Komponen mesin yang berfungsi mengatur buka-tutup katup adalah ...",
+            opsi: ["Camshaft", "Crankshaft", "Piston", "Rocker arm"],
+            jawaban: "Camshaft"
+        },
+        {
+            id: 35,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Proses perubahan energi panas menjadi energi gerak pada mesin terjadi di ...",
+            opsi: [
+                "Ruang bakar silinder",
+                "Karter oli",
+                "Radiator",
+                "Knalpot"
+            ],
+            jawaban: "Ruang bakar silinder"
+        },
+
+        // ===== KOMPONEN TAMBAHAN MESIN =====
+        {
+            id: 36,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sistem pada mesin yang berfungsi menyuplai bahan bakar ke ruang bakar adalah ...",
+            opsi: [
+                "Sistem bahan bakar",
+                "Sistem pendingin",
+                "Sistem pelumasan",
+                "Sistem pengapian"
+            ],
+            jawaban: "Sistem bahan bakar"
+        },
+        {
+            id: 37,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sistem yang berfungsi menjaga suhu mesin tetap stabil adalah ...",
+            opsi: [
+                "Sistem pendingin",
+                "Sistem bahan bakar",
+                "Sistem pelumasan",
+                "Sistem pembuangan"
+            ],
+            jawaban: "Sistem pendingin"
+        },
+        {
+            id: 38,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sistem yang berfungsi mengurangi gesekan antar komponen mesin adalah ...",
+            opsi: [
+                "Sistem pelumasan",
+                "Sistem pendingin",
+                "Sistem pengapian",
+                "Sistem pembuangan"
+            ],
+            jawaban: "Sistem pelumasan"
+        },
+        {
+            id: 39,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sistem yang berfungsi membuang gas sisa hasil pembakaran adalah ...",
+            opsi: [
+                "Sistem pembuangan",
+                "Sistem bahan bakar",
+                "Sistem pendingin",
+                "Sistem pelumasan"
+            ],
+            jawaban: "Sistem pembuangan"
+        },
+        {
+            id: 40,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sistem yang berfungsi menghasilkan percikan api untuk pembakaran pada mesin bensin adalah ...",
+            opsi: [
+                "Sistem pengapian",
+                "Sistem bahan bakar",
+                "Sistem pendingin",
+                "Sistem pelumasan"
+            ],
+            jawaban: "Sistem pengapian"
+        },
+
+        // ===== HIDROLIK & PNEUMATIK =====
+        {
+            id: 41,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Hukum Pascal menyatakan bahwa ...",
+            opsi: [
+                "Tekanan yang diberikan pada fluida tertutup diteruskan sama besar ke segala arah",
+                "Tekanan fluida selalu berkurang",
+                "Tekanan hanya diteruskan ke bawah",
+                "Tekanan tidak dipengaruhi gaya"
+            ],
+            jawaban: "Tekanan yang diberikan pada fluida tertutup diteruskan sama besar ke segala arah"
+        },
+        {
+            id: 42,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sistem yang menggunakan udara bertekanan sebagai tenaga penggerak disebut ...",
+            opsi: ["Pneumatik", "Hidrolik", "Mekanik", "Elektrik"],
+            jawaban: "Pneumatik"
+        },
+        {
+            id: 43,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Sistem rem pada kendaraan yang menggunakan prinsip hidrolik adalah ...",
+            opsi: [
+                "Sistem rem hidrolik",
+                "Sistem rem mekanik",
+                "Sistem rem pneumatik",
+                "Sistem rem elektromagnetik"
+            ],
+            jawaban: "Sistem rem hidrolik"
+        },
+        {
+            id: 44,
+            tipe: "pilihan_ganda",
+            pertanyaan: "Komponen sistem hidrolik yang berfungsi mengubah energi fluida menjadi gerak mekanik adalah ...",
+            opsi: [
+                "Silinder aktuator",
+                "Pompa hidrolik",
+                "Tangki fluida",
+                "Selang hidrolik"
+            ],
+            jawaban: "Silinder aktuator"
+        },
+        {
+            id: 45,
+            tipe: "pilihan_ganda_kompleks",
+            pertanyaan: "Pilih semua komponen sistem hidrolik.",
+            opsi: [
+                "Pompa hidrolik",
+                "Silinder aktuator",
+                "Katup kontrol",
+                "Radiator"
+            ],
+            jawaban: [
+                "Pompa hidrolik",
+                "Silinder aktuator",
+                "Katup kontrol"
+            ]
+        },
+
+        // ===== BENAR SALAH KOMPLEKS =====
+        {
+            id: 46,
+            tipe: "benar_salah_kompleks",
+            pertanyaan: "Tentukan Benar atau Salah untuk setiap pernyataan berikut.",
+            pernyataan: [
+                {
+                    teks: "APD wajib digunakan saat bekerja di bengkel otomotif.",
+                    jawaban: "Benar"
+                },
+                {
+                    teks: "Oli bekas dapat dibuang langsung ke saluran air.",
+                    jawaban: "Salah"
+                },
+                {
+                    teks: "Hukum Ohm menyatakan V = I × R.",
+                    jawaban: "Benar"
+                },
+                {
+                    teks: "Crankshaft berfungsi mengubah gerak putar menjadi gerak naik-turun piston.",
+                    jawaban: "Salah"
+                }
+            ]
+        }
+    ]
+};
+
+/* =========================================================
+   VARIABEL GLOBAL
+   ========================================================= */
+let daftarSoal = [];
+let jawabanSiswa = [];
+let nomorSoalSekarang = 0;
+let dataSiswa = {};
+let quizSelesai = false;
+let warningAktif = false;
+let countdownInterval = null;
+let audioLoopInterval = null;
+
+/* =========================================================
+   FUNGSI SUARA PERINGATAN
+   ========================================================= */
+function buatTit(freq = 1200, durasi = 0.18) {
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.35, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + durasi);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + durasi);
+        setTimeout(() => ctx.close(), (durasi + 0.2) * 1000);
+    } catch (e) {}
+}
+
+function bunyiPeringatan() {
+    buatTit(1200, 0.18);
+    setTimeout(() => buatTit(1200, 0.18), 220);
+    setTimeout(() => buatTit(1200, 0.18), 440);
+}
+
+function mulaiLoopPeringatan() {
+    if (audioLoopInterval) clearInterval(audioLoopInterval);
+    bunyiPeringatan();
+    audioLoopInterval = setInterval(bunyiPeringatan, 1000);
+}
+
+function hentikanLoopPeringatan() {
+    if (audioLoopInterval) {
+        clearInterval(audioLoopInterval);
+        audioLoopInterval = null;
+    }
+}
+
+/* =========================================================
+   FUNGSI ACAK & ESCAPE
+   ========================================================= */
+function acakArray(array) {
+    const hasil = [...array];
+    for (let i = hasil.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [hasil[i], hasil[j]] = [hasil[j], hasil[i]];
+    }
+    return hasil;
+}
+
+function escapeHTML(text) {
+    if (text === null || text === undefined) return "";
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+/* =========================================================
+   DETEKSI KELUAR HALAMAN
+   ========================================================= */
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden && !quizSelesai && !warningAktif) {
+        tampilkanPeringatan();
+    }
+});
+
+window.addEventListener('beforeunload', function(e) {
+    if (!quizSelesai) {
+        bunyiPeringatan();
+        e.preventDefault();
+        e.returnValue = 'Apakah Anda yakin ingin keluar? Quiz akan direset.';
+        return e.returnValue;
+    }
+});
+
+document.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (link && link.target === '_blank' && !quizSelesai && !warningAktif) {
+        e.preventDefault();
+        tampilkanPeringatan();
+    }
+});
+
+/* =========================================================
+   TAMPILKAN PERINGATAN (10 DETIK)
+   ========================================================= */
+function tampilkanPeringatan() {
+    if (warningAktif || quizSelesai) return;
+    warningAktif = true;
+
+    const overlay = document.getElementById('warningOverlay');
+    overlay.classList.remove('hidden');
+
+    let detik = 10;
+    document.getElementById('countdownDetik').textContent = detik;
+
+    mulaiLoopPeringatan();
+
+    countdownInterval = setInterval(() => {
+        detik--;
+        document.getElementById('countdownDetik').textContent = detik;
+
+        if (detik <= 0) {
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+            hentikanLoopPeringatan();
+            resetKeAwal();
+        }
+    }, 1000);
+}
+
+/* =========================================================
+   RESET KE AWAL
+   ========================================================= */
+function resetKeAwal() {
+    hentikanLoopPeringatan();
+    warningAktif = false;
+    document.getElementById('warningOverlay').classList.add('hidden');
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+    }
+
+    nomorSoalSekarang = 0;
+    jawabanSiswa = [];
+    daftarSoal = [];
+    dataSiswa = {};
+    quizSelesai = false;
+
+    document.getElementById('halamanQuiz').classList.add('hidden');
+    document.getElementById('halamanHasil').classList.add('hidden');
+    document.getElementById('halamanIdentitas').classList.remove('hidden');
+
+    document.getElementById('formIdentitas').reset();
+    window.scrollTo(0, 0);
+}
+
+/* =========================================================
+   FORM IDENTITAS
+   ========================================================= */
+document.getElementById("formIdentitas").addEventListener("submit", function(event) {
+    event.preventDefault();
+    dataSiswa = {
+        nama: document.getElementById("nama").value.trim(),
+        sekolah: document.getElementById("sekolah").value.trim(),
+        kelas: document.getElementById("kelas").value.trim(),
+        nomor: document.getElementById("nomor").value.trim()
+    };
+    if (!dataSiswa.nama) { alert("Nama siswa wajib diisi."); return; }
+    if (!dataSiswa.sekolah) { alert("Asal sekolah wajib diisi."); return; }
+    if (!dataSiswa.kelas) { alert("Kelas wajib diisi."); return; }
+    mulaiQuiz();
+});
+
+/* =========================================================
+   MULAI QUIZ
+   ========================================================= */
+function mulaiQuiz() {
+    daftarSoal = DATA_QUIZ.soal.map(function(soal) {
+        const salinan = { ...soal };
+        if (Array.isArray(soal.opsi)) salinan.opsi = [...soal.opsi];
+        if (Array.isArray(soal.pernyataan)) salinan.pernyataan = soal.pernyataan.map(item => ({ ...item }));
+        return salinan;
+    });
+
+    if (DATA_QUIZ.acak_soal) daftarSoal = acakArray(daftarSoal);
+    if (DATA_QUIZ.acak_opsi) {
+        daftarSoal.forEach(function(soal) {
+            if (soal.tipe === "pilihan_ganda" || soal.tipe === "pilihan_ganda_kompleks") {
+                soal.opsi = acakArray(soal.opsi);
+            }
+        });
+    }
+
+    jawabanSiswa = daftarSoal.map(function(soal) {
+        if (soal.tipe === "pilihan_ganda_kompleks") return [];
+        if (soal.tipe === "benar_salah_kompleks") return [];
+        return null;
+    });
+
+    document.getElementById("namaTampil").textContent = dataSiswa.nama;
+    document.getElementById("halamanIdentitas").classList.add("hidden");
+    document.getElementById("halamanQuiz").classList.remove("hidden");
+
+    quizSelesai = false;
+    tampilkanSoal();
+}
+
+/* =========================================================
+   TAMPILKAN SOAL
+   ========================================================= */
+function tampilkanSoal() {
+    const soal = daftarSoal[nomorSoalSekarang];
+    if (!soal) return;
+
+    document.getElementById("nomorSoal").textContent = "Soal " + (nomorSoalSekarang + 1) + " / " + daftarSoal.length;
+    document.getElementById("pertanyaan").textContent = soal.pertanyaan;
+
+    const persen = ((nomorSoalSekarang + 1) / daftarSoal.length) * 100;
+    document.getElementById("progressBar").style.width = persen + "%";
+
+    let petunjuk = "";
+    if (soal.tipe === "pilihan_ganda") petunjuk = "Pilih satu jawaban yang paling tepat.";
+    else if (soal.tipe === "pilihan_ganda_kompleks") petunjuk = "Pilih semua jawaban yang benar.";
+    else if (soal.tipe === "benar_salah_kompleks") petunjuk = "Tentukan Benar atau Salah untuk setiap pernyataan.";
+    document.getElementById("petunjuk").textContent = petunjuk;
+
+    const container = document.getElementById("containerJawaban");
+    container.innerHTML = "";
+
+    if (soal.tipe === "pilihan_ganda") {
+        soal.opsi.forEach(function(opsi, index) {
+            const id = "opsi_" + nomorSoalSekarang + "_" + index;
+            const checked = jawabanSiswa[nomorSoalSekarang] === opsi ? "checked" : "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="form-check answer-option mb-3">
+                    <input class="form-check-input" type="radio" name="jawaban" id="${id}" value="${escapeHTML(opsi)}" ${checked}>
+                    <label class="form-check-label w-100" for="${id}">
+                        <strong>${String.fromCharCode(65 + index)}.</strong> ${escapeHTML(opsi)}
+                    </label>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[name="jawaban"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                jawabanSiswa[nomorSoalSekarang] = this.value;
+            });
+        });
+    }
+    else if (soal.tipe === "pilihan_ganda_kompleks") {
+        const jawabanSebelumnya = Array.isArray(jawabanSiswa[nomorSoalSekarang]) ? jawabanSiswa[nomorSoalSekarang] : [];
+        soal.opsi.forEach(function(opsi, index) {
+            const id = "kompleks_" + nomorSoalSekarang + "_" + index;
+            const checked = jawabanSebelumnya.includes(opsi) ? "checked" : "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="form-check answer-option mb-3">
+                    <input class="form-check-input" type="checkbox" name="jawabanKompleks" id="${id}" value="${escapeHTML(opsi)}" ${checked}>
+                    <label class="form-check-label w-100" for="${id}">
+                        <strong>${String.fromCharCode(65 + index)}.</strong> ${escapeHTML(opsi)}
+                    </label>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[name="jawabanKompleks"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                jawabanSiswa[nomorSoalSekarang] = Array.from(
+                    container.querySelectorAll('input[name="jawabanKompleks"]:checked')
+                ).map(item => item.value);
+            });
+        });
+    }
+    else if (soal.tipe === "benar_salah_kompleks") {
+        const jawabanSebelumnya = Array.isArray(jawabanSiswa[nomorSoalSekarang]) ? jawabanSiswa[nomorSoalSekarang] : [];
+        soal.pernyataan.forEach(function(item, index) {
+            const jawaban = jawabanSebelumnya[index] || "";
+            container.insertAdjacentHTML("beforeend", `
+                <div class="statement-box">
+                    <div class="fw-semibold mb-3">${index + 1}. ${escapeHTML(item.teks)}</div>
+                    <div class="d-flex gap-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="bs_${index}" id="benar_${index}" value="Benar" ${jawaban === "Benar" ? "checked" : ""}>
+                            <label class="form-check-label" for="benar_${index}">
+                                <i class="fa-solid fa-check text-success"></i> Benar
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="bs_${index}" id="salah_${index}" value="Salah" ${jawaban === "Salah" ? "checked" : ""}>
+                            <label class="form-check-label" for="salah_${index}">
+                                <i class="fa-solid fa-xmark text-danger"></i> Salah
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            `);
+        });
+        container.querySelectorAll('input[type="radio"]').forEach(function(input) {
+            input.addEventListener("change", function() {
+                const bagian = this.name.split("_");
+                const index = parseInt(bagian[1]);
+                if (!Array.isArray(jawabanSiswa[nomorSoalSekarang])) jawabanSiswa[nomorSoalSekarang] = [];
+                jawabanSiswa[nomorSoalSekarang][index] = this.value;
+            });
+        });
+    }
+    updateNavigasi();
+}
+
+/* =========================================================
+   NAVIGASI
+   ========================================================= */
+function updateNavigasi() {
+    const sebelumnya = document.getElementById("btnSebelumnya");
+    const berikutnya = document.getElementById("btnBerikutnya");
+    const selesai = document.getElementById("btnSelesai");
+
+    sebelumnya.disabled = nomorSoalSekarang === 0;
+
+    if (nomorSoalSekarang === daftarSoal.length - 1) {
+        berikutnya.classList.add("hidden");
+        selesai.classList.remove("hidden");
+    } else {
+        berikutnya.classList.remove("hidden");
+        selesai.classList.add("hidden");
+    }
+}
+
+document.getElementById("btnSebelumnya").addEventListener("click", function() {
+    if (nomorSoalSekarang > 0) {
+        nomorSoalSekarang--;
+        tampilkanSoal();
+        window.scrollTo(0, 0);
+    }
+});
+
+document.getElementById("btnBerikutnya").addEventListener("click", function() {
+    if (nomorSoalSekarang < daftarSoal.length - 1) {
+        nomorSoalSekarang++;
+        tampilkanSoal();
+        window.scrollTo(0, 0);
+    }
+});
+
+document.getElementById("btnSelesai").addEventListener("click", function() {
+    if (!confirm("Apakah Anda yakin ingin menyelesaikan quiz?")) return;
+    hitungNilai();
+});
+
+/* =========================================================
+   HITUNG NILAI
+   ========================================================= */
+function hitungNilai() {
+    let totalSkor = 0;
+    let totalMaksimal = 0;
+
+    daftarSoal.forEach(function(soal, index) {
+        const jawaban = jawabanSiswa[index];
+        if (soal.tipe === "pilihan_ganda") {
+            totalMaksimal += 1;
+            if (jawaban === soal.jawaban) totalSkor += 1;
+        } else if (soal.tipe === "pilihan_ganda_kompleks") {
+            totalMaksimal += 1;
+            const benar = [...soal.jawaban].sort();
+            const dipilih = Array.isArray(jawaban) ? [...jawaban].sort() : [];
+            if (JSON.stringify(benar) === JSON.stringify(dipilih)) totalSkor += 1;
+        } else if (soal.tipe === "benar_salah_kompleks") {
+            totalMaksimal += soal.pernyataan.length;
+            soal.pernyataan.forEach(function(item, i) {
+                if (jawaban && jawaban[i] === item.jawaban) totalSkor += 1;
+            });
+        }
+    });
+
+    const nilai = totalMaksimal > 0 ? Math.round((totalSkor / totalMaksimal) * 100) : 0;
+    const tuntas = nilai >= DATA_QUIZ.kkm;
+
+    document.getElementById("nilaiAkhir").textContent = nilai;
+    document.getElementById("hasilNama").textContent = dataSiswa.nama;
+    document.getElementById("hasilSekolah").textContent = dataSiswa.sekolah;
+    document.getElementById("hasilKelas").textContent = "Kelas " + dataSiswa.kelas;
+    document.getElementById("skorHasil").textContent = totalSkor;
+    document.getElementById("maksimalHasil").textContent = totalMaksimal;
+    document.getElementById("kkmHasil").textContent = DATA_QUIZ.kkm;
+
+    const status = document.getElementById("statusHasil");
+    status.textContent = tuntas ? "TUNTAS" : "BELUM TUNTAS";
+    status.className = tuntas ? "badge bg-success fs-5 p-2 mb-4" : "badge bg-danger fs-5 p-2 mb-4";
+
+    document.getElementById("halamanQuiz").classList.add("hidden");
+    document.getElementById("halamanHasil").classList.remove("hidden");
+
+    quizSelesai = true;
+    window.scrollTo(0, 0);
+}
+
+/* =========================================================
+   SHARE KE WHATSAPP (CHAT BARU - PILIH KONTAK SENDIRI)
+   ========================================================= */
+document.getElementById("btnShareWA").addEventListener("click", function() {
+    const nama = dataSiswa.nama || "-";
+    const sekolah = dataSiswa.sekolah || "-";
+    const kelas = dataSiswa.kelas || "-";
+    const nilai = document.getElementById("nilaiAkhir").textContent;
+    const status = document.getElementById("statusHasil").textContent;
+
+    const pesan =
+        "Selamat sore,\n" +
+        "Saya sudah menyelesaikan tugas mengikuti latihan/trayout TKA berikut ini scrensotnya\n\n" +
+        "━━━━━━━━━━━━━━━━━━\n" +
+        "📋 *HASIL TKA " + DATA_QUIZ.mapel.toUpperCase() + " " + DATA_QUIZ.jenjang + "*\n" +
+        "━━━━━━━━━━━━━━━━━━\n" +
+        "👤 Nama    : " + nama + "\n" +
+        "🏫 Sekolah : " + sekolah + "\n" +
+        "🎓 Kelas   : " + kelas + "\n" +
+        "📊 Nilai   : " + nilai + "\n" +
+        "✅ Status  : " + status + "\n" +
+        "━━━━━━━━━━━━━━━━━━\n\n" +
+        "📎 Screenshot hasil terlampir.";
+
+    const url = "https://wa.me/?text=" + encodeURIComponent(pesan);
+    window.open(url, "_blank");
+});
+
+/* =========================================================
+   ULANGI & KEMBALI
+   ========================================================= */
+document.getElementById("btnUlangi").addEventListener("click", function() {
+    nomorSoalSekarang = 0;
+    jawabanSiswa = [];
+    quizSelesai = false;
+    document.getElementById("halamanHasil").classList.add("hidden");
+    document.getElementById("halamanIdentitas").classList.remove("hidden");
+    document.getElementById("nama").value = dataSiswa.nama;
+    document.getElementById("sekolah").value = dataSiswa.sekolah;
+    document.getElementById("kelas").value = dataSiswa.kelas;
+    document.getElementById("nomor").value = dataSiswa.nomor;
+});
+
+document.getElementById("btnBeranda").addEventListener("click", function() {
+    quizSelesai = true;
+    hentikanLoopPeringatan();
+    location.reload();
+});
+</script>
+</body>
+</html>
