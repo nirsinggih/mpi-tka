@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cetak ID Card ANBK</title>
+  <title>Cetak ID Card Tes Kemampuan Akademik (TKA)</title>
 
   <!-- Meta Description -->
-  <meta name="description" content="Cetak ID Card ANBK secara online dengan mudah. Upload logo sekolah, foto, isi nama, jabatan, lalu unduh ID Card dalam format PDF siap cetak ukuran B3.">
+  <meta name="description" content="Cetak ID Card Tes Kemampuan Akademik (TKA) secara online dengan mudah. Upload logo sekolah, foto, isi nama, jabatan, lalu unduh ID Card dalam format PDF siap cetak ukuran B3.">
 
   <!-- Open Graph (Facebook) -->
-  <meta property="og:title" content="Cetak ID Card ANBK">
-  <meta property="og:description" content="Buat dan cetak ID Card ANBK online dengan cepat. Dukungan logo sekolah, foto, jabatan, serta unduhan otomatis dalam PDF ukuran B3.">
+  <meta property="og:title" content="Cetak ID Card Tes Kemampuan Akademik (TKA)">
+  <meta property="og:description" content="Buat dan cetak ID Card Tes Kemampuan Akademik (TKA) online dengan cepat. Dukungan logo sekolah, foto, jabatan, serta unduhan otomatis dalam PDF ukuran B3.">
   <meta property="og:image" content="https://idcard.snp.my.id/anbk1/preview.jpg">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="1200">
@@ -20,8 +20,8 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Cetak ID Card ANBK">
-  <meta name="twitter:description" content="Cetak ID Card ANBK online, praktis dan cepat. Unduh PDF siap cetak ukuran B3.">
+  <meta name="twitter:title" content="Cetak ID Card Tes Kemampuan Akademik (TKA)">
+  <meta name="twitter:description" content="Cetak ID Card Tes Kemampuan Akademik (TKA) online, praktis dan cepat. Unduh PDF siap cetak ukuran B3.">
   <meta name="twitter:image" content="https://idcard.snp.my.id/anbk1/preview.jpg">
 
   <!-- jsPDF CDN -->
@@ -137,7 +137,7 @@
 </head>
 <body>
   <div class="container">
-    <h2>Cetak ID Card ANBK</h2>
+    <h2>Cetak ID Card TKA</h2>
     <form id="idcardForm">
       <label for="nama">Nama Lengkap dan Gelar</label>
       <input type="text" name="nama" id="nama" required>
@@ -317,13 +317,10 @@
     ctx.drawImage(circleImg, fotoX, fotoY, fotoSize, fotoSize);
 
     // 4) Nama
-    const namaFontSize = 11 * scale * 0.3528; // pt -> mm? Sebenarnya ukuran font di canvas pakai px.
-    // Di PHP: font Arial 11pt. Di canvas, kita pakai px langsung supaya proporsional.
-    // Konversi: 1pt = 1.333px pada 96dpi. Kita pakai pendekatan: ukuran font px = pt * (scale*0.3528) * (1/0.3528) = pt * scale? 
-    // Lebih simpel: gunakan skala relatif terhadap mm. 11pt ≈ 3.88mm. Jadi font px = 3.88 * scale.
+    // 11pt ≈ 3.88mm, 14pt ≈ 4.94mm, 10pt ≈ 3.53mm
     const fontPx11 = 3.88 * scale;
-    const fontPx14 = 4.94 * scale; // 14pt ≈ 4.94mm
-    const fontPx10 = 3.53 * scale; // 10pt ≈ 3.53mm
+    const fontPx14 = 4.94 * scale;
+    const fontPx10 = 3.53 * scale;
 
     ctx.fillStyle = '#000';
     ctx.textAlign = 'center';
@@ -347,10 +344,10 @@
     ctx.fillStyle = `rgb(${jabTextColor[0]},${jabTextColor[1]},${jabTextColor[2]})`;
     ctx.fillText(jabatan, c.width / 2, jabBoxY + jabBoxH / 2);
 
-    // 6) Nama sekolah
+    // 6) Nama sekolah — turun 1 baris (offset +6mm dari sebelumnya)
     ctx.font = `bold ${fontPx10}px Helvetica, Arial, sans-serif`;
     ctx.fillStyle = 'rgb(0,51,102)';
-    const sekolahY = (jabBoxY / scale + 8 + 4) * scale; // y2 + 12 (cell 6mm) => tengah
+    const sekolahY = (jabBoxY / scale + 8 + 10) * scale; // sebelumnya +4, sekarang +10 (turun 6mm)
     ctx.fillText(sekolah, c.width / 2, sekolahY);
 
     return {
@@ -425,13 +422,6 @@
     } finally {
       btnDownload.disabled = false;
     }
-  });
-
-  // Sembunyikan preview lama saat input berubah
-  ['nama','sekolah','jabatan','logo','foto'].forEach(id => {
-    $(id).addEventListener('input', () => {
-      // tidak auto-hide, biarkan user tetap lihat preview terakhir
-    });
   });
 })();
 </script>
